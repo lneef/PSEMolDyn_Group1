@@ -72,13 +72,25 @@ int main(int argc, char *argsv[]) {
   return 0;
 }
 
+double calculateNorm(std::array<double, 3> x){
+    double norm = sqrt(pow(abs(x[1]), 2) + pow(abs(x[2]), 2) + pow(abs(x[3]), 2));
+    return norm;
+}
+
 void calculateF() {
   std::list<Particle>::iterator iterator;
   iterator = particles.begin();
 
   for (auto &p1 : particles) {
+      std::array<double, 3> newF;
     for (auto &p2 : particles) {
       // @TODO: insert calculation of forces here!
+        if (p1 == p2){
+            continue;
+        }
+      std::array<double, 3> xij = p1.getX() - p2.getX();
+      double norm = calculateNorm(xij);
+      newF += (p1.getM() * p2.getM() * (p2.getX() - p1.getX())) / (norm);
     }
   }
 }
