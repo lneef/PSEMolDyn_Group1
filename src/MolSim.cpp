@@ -44,9 +44,9 @@ int main(int argc, char *argsv[]) {
     }
 
     //input t_end and delta_t
-    std::cout << "Please enter the endtime:";
+    std::cout << "Please enter the endtime:\n";
     std::cin >> end_time;
-    std::cout << "Please enter the default time";
+    std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
 
     FileReader fileReader;
@@ -103,7 +103,7 @@ void calculateF() {
             std::array<double, 3> xji;
             for (int i = 0; i < 3; i++) {
                 xji[i] = p2.getX()[i] - p1.getX()[i];
-                newF[i] += (p1.getM()[i] * p2.getM() * (xji)) / (norm);
+                newF[i] += (p1.getM() * p2.getM() * (xji[i])) / (norm);
             }
         }
     }
