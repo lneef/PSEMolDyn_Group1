@@ -60,9 +60,17 @@ std::string Particle::toString() const {
   return stream.str();
 }
 
-void Particle::setF(std::array<double, 3> newF){
-    old_f = f;
-    f = newF;
+void Particle::setF(const std::array<double, 3>& f){
+    this->old_f = this->f;
+    this->f = f;
+}
+
+void Particle::setV(const std::array<double, 3>& v){
+	this->v = v;
+}
+
+void Particle::setX(const std::array<double, 3>& x){
+	this->x = x;
 }
 
 bool Particle::operator==(Particle &other) {

@@ -28,7 +28,7 @@ private:
    */
   std::array<double, 3> f;
 
-  /**
+  /**3
    * Force which was effective on this particle
    */
   std::array<double, 3> old_f;
@@ -73,7 +73,11 @@ public:
 
   std::string toString() const;
 
-  void setF(const std::array<double, 3> newF);
+  void setF(const std::array<double, 3>& f);
+
+  void setX(const std::array<double, 3>& x);
+
+  void setV(const std::array<double, 3>& v);
 };
 
 std::ostream &operator<<(std::ostream &stream, Particle &p);
