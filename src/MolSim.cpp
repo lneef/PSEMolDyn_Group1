@@ -73,7 +73,7 @@ int main(int argc, char *argsv[]) {
 }
 
 double calculateNorm(std::array<double, 3> x){
-    double norm = sqrt(pow(abs(x[1]), 2) + pow(abs(x[2]), 2) + pow(abs(x[3]), 2));
+    double norm = sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2));
     return norm;
 }
 
@@ -98,14 +98,36 @@ void calculateF() {
 void calculateX() {
   for (auto &p : particles) {
     // @TODO: insert calculation of position updates here!
+	const std::array<double, 3>& tempV{p.getV()};
+	const std::array<double ,3>& tempOldF{p.getOldF()};
+	const std::array<double, 3>& tempX{p.getX()};
+
+	std::array<double,3> newX;
+
+	for(int i=0; i<3; i++)
+		newX[i] = tempX[i] + delta_t * tempV[i] + pow(delta_t, 2) * tempOldF[i]/ (2 * p.getM()); 
+
+	p.setX(newX);
   }
 }
 
 void calculateV() {
   for (auto &p : particles) {
     // @TODO: insert calculation of veclocity updates here!
+	const std::array<double, 3>& tempV{p.getV()};
+	const std::array<double, 3>& tempOldF{p.getOldF()};
+	const std::array<double, 3>& tempF{p.getF()};
+	
+	std::array<double,3> newV;
+	
+	for(int i=0; i<3; i++){
+		newV[i] = tempV[i] + delta_t * (tempOldF[i] + tempF[i]) / (2 * p.getM());
+	}
+	
+	p.setV(newV);
   }
 }
+
 
 void plotParticles(int iteration) {
 
