@@ -88,7 +88,7 @@ void calculateF() {
     iterator = particles.begin();
 
     for (auto &p1: particles) {
-        std::array<double, 3> newF;
+        std::array<double, 3> newF{};
         for (auto &p2: particles) {
             // @TODO: insert calculation of forces here!
             if (p1 == p2) {
@@ -103,9 +103,10 @@ void calculateF() {
             std::array<double, 3> xji;
             for (int i = 0; i < 3; i++) {
                 xji[i] = p2.getX()[i] - p1.getX()[i];
-                newF[i] += (p1.getM() * p2.getM() * (xji[i])) / (norm);
+                newF[i] += (p1.getM() * p2.getM() * (xji[i])) / pow(norm, 3);
             }
         }
+		p1.setF(newF);
     }
 }
 
@@ -116,7 +117,7 @@ void calculateX() {
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempX{p.getX()};
 
-        std::array<double, 3> newX;
+        std::array<double, 3> newX{};
 
         for (int i = 0; i < 3; i++)
             newX[i] = tempX[i] + delta_t * tempV[i] + pow(delta_t, 2) * tempOldF[i] / (2 * p.getM());
@@ -132,7 +133,7 @@ void calculateV() {
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempF{p.getF()};
 
-        std::array<double, 3> newV;
+        std::array<double, 3> newV{};
 
         for (int i = 0; i < 3; i++) {
             newV[i] = tempV[i] + delta_t * (tempOldF[i] + tempF[i]) / (2 * p.getM());
