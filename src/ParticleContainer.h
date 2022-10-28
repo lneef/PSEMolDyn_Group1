@@ -1,7 +1,12 @@
+
+
+#pragma once
+
 #include<list>
 #include<iterator>
 
 #include "Particle.h"
+
 
 class ParticleContainer{
 	private:
