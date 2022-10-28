@@ -6,6 +6,8 @@
 #include <iostream>
 #include <list>
 
+#include "SimpleForceCalc.h"
+
 /**** forward declaration of the calculation functions ****/
 
 /**
@@ -56,12 +58,15 @@ int main(int argc, char *argsv[]) {
 
     int iteration = 0;
 
+    SimpleForceCalc forceCalc;
+
     // for this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         // calculate new x
         calculateX();
         // calculate new f
-        calculateF();
+//        calculateF();
+        forceCalc.calculateF(particles);
         // calculate new v
         calculateV();
 
@@ -78,12 +83,12 @@ int main(int argc, char *argsv[]) {
     return 0;
 }
 
-double calculateNorm(std::array<double, 3> x) {
+/*double calculateNorm(std::array<double, 3> x) {
     double norm = sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2));
     return norm;
-}
+}*/
 
-void calculateF() {
+/*void calculateF() {
     std::list<Particle>::iterator iterator;
     iterator = particles.begin();
 
@@ -108,7 +113,7 @@ void calculateF() {
         }
 		p1.setF(newF);
     }
-}
+}*/
 
 void calculateX() {
     for (auto &p: particles) {
