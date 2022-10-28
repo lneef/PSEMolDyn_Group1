@@ -27,7 +27,8 @@ class ParticleContainer{
 				bool operator!=(iterator it);
 
 		};
-
+		const std::list<Particle>& getParticles() const;
+		void setParticles(const std::list<Particle>& particles);
 		iterator begin();
 		iterator end();
 };
