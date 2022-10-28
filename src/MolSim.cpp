@@ -7,6 +7,7 @@
 #include <list>
 
 #include "SimpleForceCalc.h"
+#include "DefaultForce.h"
 
 /**** forward declaration of the calculation functions ****/
 
@@ -35,7 +36,7 @@ double end_time = 1000;
 double delta_t = 0.014;
 
 // TODO: what data structure to pick?
-std::list<Particle> particles;
+std::list <Particle> particles;
 
 int main(int argc, char *argsv[]) {
 
@@ -58,28 +59,60 @@ int main(int argc, char *argsv[]) {
 
     int iteration = 0;
 
+    //TODO: Wie forceCalc sicher deklarieren?
+    /*int forceType;
+    std::cout << "Decide which forcetype should be used.\n";
+    std::cout << "Following forcetypes are at the moment posible:\n";
+    std::cout << "1. simple force\n";
+    std::cout << "Please enter the number of theforcetype:\n";
+    std::cin >> forceType;
+    bool forceChosen = false;
+    while (!forceChosen) {
+        switch (forceType) {
+            case 1:
+                SimpleForceCalc forceCalc;
+                break;
+        }
+        if(forceChosen){
+            break;
+        }
+        std::cout << "You typed in a wrong type. Try again!\n";
+        std::cout << "Following forcetypes are at the moment posible:\n";
+        std::cout << "simple force\n";
+        std::cout << "Please enter the number of theforcetype:\n";
+        std::cin >> forceType;
+    }*/
+
     SimpleForceCalc forceCalc;
 
-    // for this loop, we assume: current x, current f and current v are known
+
+//    SimpleForceCalc forceCalc;
+
+// for this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
-        // calculate new x
+// calculate new x
         calculateX();
-        // calculate new f
+
+// calculate new f
 //        calculateF();
         forceCalc.calculateF(particles);
-        // calculate new v
+
+// calculate new v
         calculateV();
 
         iteration++;
         if (iteration % 10 == 0) {
             plotParticles(iteration);
         }
-        std::cout << "Iteration " << iteration << " finished." << std::endl;
+        std::cout << "Iteration " << iteration << " finished." <<
+                  std::endl;
 
-        current_time += delta_t;
+        current_time +=
+                delta_t;
     }
 
-    std::cout << "output written. Terminating..." << std::endl;
+    std::cout << "output written. Terminating..." <<
+              std::endl;
     return 0;
 }
 
