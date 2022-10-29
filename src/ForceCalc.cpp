@@ -5,5 +5,5 @@
 #include "ForceCalc.h"
 
 //virtual ForceCalc::ForceCalc() {};
-//virtual ForceCalc::~ForceCalc() {};
+ForceCalc::~ForceCalc() = default;
 //void ForceCalc::calculateF() = 0;

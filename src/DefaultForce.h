@@ -4,7 +4,7 @@
 
 #include "ForceCalc.h"
 
-class DefaultForce : ForceCalc{
+class DefaultForce : public ForceCalc{
 public:
     void calculateF(std::list <Particle> &particles) override;
 };

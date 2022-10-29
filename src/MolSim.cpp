@@ -8,6 +8,7 @@
 
 #include "SimpleForceCalc.h"
 #include "DefaultForce.h"
+#include "ForceStrategy.h"
 
 /**** forward declaration of the calculation functions ****/
 
@@ -26,6 +27,8 @@ void calculateX();
  */
 void calculateV();
 
+int checkForceInput();
+
 /**
  * plot the particles to a xyz-file
  */
@@ -37,6 +40,7 @@ double delta_t = 0.014;
 
 // TODO: what data structure to pick?
 std::list <Particle> particles;
+
 
 int main(int argc, char *argsv[]) {
 
@@ -59,34 +63,13 @@ int main(int argc, char *argsv[]) {
 
     int iteration = 0;
 
-    //TODO: Wie forceCalc sicher deklarieren?
-    /*int forceType;
-    std::cout << "Decide which forcetype should be used.\n";
-    std::cout << "Following forcetypes are at the moment posible:\n";
-    std::cout << "1. simple force\n";
-    std::cout << "Please enter the number of theforcetype:\n";
-    std::cin >> forceType;
-    bool forceChosen = false;
-    while (!forceChosen) {
-        switch (forceType) {
-            case 1:
-                SimpleForceCalc forceCalc;
-                break;
-        }
-        if(forceChosen){
+    ForceStrategy forceCalc(std::make_unique<DefaultForce>());
+    int forceType = checkForceInput();
+    switch (forceType) {
+        case 1:
+            forceCalc.set_force(std::make_unique<SimpleForceCalc>());
             break;
-        }
-        std::cout << "You typed in a wrong type. Try again!\n";
-        std::cout << "Following forcetypes are at the moment posible:\n";
-        std::cout << "simple force\n";
-        std::cout << "Please enter the number of theforcetype:\n";
-        std::cin >> forceType;
-    }*/
-
-    SimpleForceCalc forceCalc;
-
-
-//    SimpleForceCalc forceCalc;
+    }
 
 // for this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
@@ -94,7 +77,6 @@ int main(int argc, char *argsv[]) {
         calculateX();
 
 // calculate new f
-//        calculateF();
         forceCalc.calculateF(particles);
 
 // calculate new v
@@ -116,37 +98,24 @@ int main(int argc, char *argsv[]) {
     return 0;
 }
 
-/*double calculateNorm(std::array<double, 3> x) {
-    double norm = sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2));
-    return norm;
-}*/
-
-/*void calculateF() {
-    std::list<Particle>::iterator iterator;
-    iterator = particles.begin();
-
-    for (auto &p1: particles) {
-        std::array<double, 3> newF{};
-        for (auto &p2: particles) {
-            // @TODO: insert calculation of forces here!
-            if (p1 == p2) {
-                continue;
-            }
-            std::array<double, 3> xij;
-            for (int i = 0; i < 3; i++) {
-                xij[i] = p1.getX()[i] - p2.getX()[i];
-            }
-            double norm = calculateNorm(xij);
-
-            std::array<double, 3> xji;
-            for (int i = 0; i < 3; i++) {
-                xji[i] = p2.getX()[i] - p1.getX()[i];
-                newF[i] += (p1.getM() * p2.getM() * (xji[i])) / pow(norm, 3);
-            }
+int checkForceInput() {
+    int result;
+    std::cout << "Decide which forcetype should be used.\n";
+    std::cout << "Following forcetypes are at the moment posible:\n";
+    std::cout << "1. simple force\n";
+    std::cout << "Please enter the number of theforcetype:\n";
+    std::cin >> result;
+    while (true) {
+        if (result > 0 && result < 2) {
+            return result;
         }
-		p1.setF(newF);
+        std::cout << "You typed in a wrong type. Try again!\n";
+        std::cout << "Following forcetypes are at the moment posible:\n";
+        std::cout << "1. simple force\n";
+        std::cout << "Please enter the number of theforcetype:\n";
+        std::cin >> result;
     }
-}*/
+}
 
 void calculateX() {
     for (auto &p: particles) {

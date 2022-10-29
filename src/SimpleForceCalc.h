@@ -4,7 +4,7 @@
 #include "ForceCalc.h"
 #include <cmath>
 
-class SimpleForceCalc : ForceCalc {
+class SimpleForceCalc : public ForceCalc {
 public:
     void calculateF(std::list <Particle> &particles) override;
 private:
