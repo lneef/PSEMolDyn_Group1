@@ -9,6 +9,7 @@ ForceStrategy::ForceStrategy(std::unique_ptr <ForceCalc> &&forceType) : forceTyp
 void ForceStrategy::set_force(std::unique_ptr <ForceCalc> &&newForceType) {
     this->forceType = std::move(newForceType);
 }
-void ForceStrategy::calculateF(std::list <Particle> &particles){
+
+void ForceStrategy::calculateF(std::list <Particle> &particles) {
     forceType->calculateF(particles);
 }

@@ -7,10 +7,9 @@
 #include "Particle.h"
 
 class ForceCalc {
-    // ForceCalc();
 
 public:
     ~ForceCalc();
+
     virtual void calculateF(std::list <Particle> &particles) = 0;
 };
-

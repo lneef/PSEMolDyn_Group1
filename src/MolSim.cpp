@@ -9,6 +9,7 @@
 #include "SimpleForceCalc.h"
 #include "DefaultForce.h"
 #include "ForceStrategy.h"
+#include "InStrategy.h"
 
 /**** forward declaration of the calculation functions ****/
 
@@ -56,7 +57,9 @@ int main(int argc, char *argsv[]) {
     std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
 
-    FileReader fileReader;
+//    FileReader fileReader;
+//    fileReader.readFile(particles, argsv[1]);
+    InStrategy fileReader(std::make_unique<FileReader>());
     fileReader.readFile(particles, argsv[1]);
 
     double current_time = start_time;

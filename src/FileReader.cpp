@@ -12,9 +12,9 @@
 #include <iostream>
 #include <sstream>
 
-FileReader::FileReader() = default;
+//FileReader::FileReader() = default;
 
-FileReader::~FileReader() = default;
+//FileReader::~FileReader() = default;
 
 void FileReader::readFile(std::list<Particle> &particles, char *filename) {
   std::array<double, 3> x;
