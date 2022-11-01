@@ -1,5 +1,5 @@
 
-#include "inputReader/FileReader.h"
+#include "inputReader/TxtReader.h"
 #include "outputWriter/VTKWriter.h"
 #include "utils/ArrayUtils.h"
 
@@ -56,7 +56,7 @@ int main(int argc, char *argsv[]) {
     std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
 
-	std::unique_ptr<inputReader::InputTemplate> fileReader = std::make_unique<inputReader::FileReader>();
+	std::unique_ptr<inputReader::FileReader> fileReader = std::make_unique<inputReader::TxtReader>();
 	fileReader->readFile(particles, argsv[1]);
     
 	std::unique_ptr<Force> force = std::make_unique<Gravitation>();
@@ -113,7 +113,6 @@ int checkForceInput() {
 
 void calculateX() {
     for (auto &p: particles) {
-        // @TODO: insert calculation of position updates here!
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempX{p.getX()};
@@ -129,7 +128,6 @@ void calculateX() {
 
 void calculateV() {
     for (auto &p: particles) {
-        // @TODO: insert calculation of veclocity updates here!
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempF{p.getF()};
@@ -149,6 +147,6 @@ void plotParticles(int iteration) {
 
     std::string out_name("MD_vtk");
 
-	std::unique_ptr<outputWriter::OutputTemplate> writer = std::make_unique<outputWriter::VTKWriter>();
+	std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
     writer->plotParticles(particles, out_name, iteration);
 }

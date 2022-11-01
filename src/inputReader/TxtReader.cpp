@@ -5,18 +5,18 @@
  *      Author: eckhardw
  */
 
-#include "FileReader.h"
+#include "TxtReader.h"
 
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 namespace inputReader{
-FileReader::FileReader() = default;
+TxtReader::TxtReader() = default;
 
-FileReader::~FileReader() = default;
+TxtReader::~TxtReader() = default;
 
-void FileReader::readFile(ParticleContainer &particles, char *filename) {
+void TxtReader::readFile(ParticleContainer &particles, char *filename) {
   std::array<double, 3> x;
   std::array<double, 3> v;
   double m;

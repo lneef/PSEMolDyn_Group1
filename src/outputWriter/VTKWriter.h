@@ -9,16 +9,16 @@
 
 #include "Particle.h"
 #include "outputWriter/vtk-unstructured.h"
-#include "OutputTemplate.h"
+#include "FileWriter.h"
 #include "../ParticleContainer.h"
 
 namespace outputWriter {
 
 /**
  * This class implements the functionality to generate vtk output from
- * particles.
+ * particles. It implements the interface provided by FileWriter. 
  */
-class VTKWriter : public OutputTemplate{
+class VTKWriter : public FileWriter {
 
 public:
   VTKWriter();
@@ -47,6 +47,16 @@ public:
   void writeFile(const std::string &filename, int iteration);
 
   /**
+   * This function:
+   *  1. initializes the internal data structure via initializeOutput()
+   *  2. plots all passed particles via plotParticle()
+   *  3. writes final output to an output file via writeFile()
+   * 
+   * Particles are written using the VTK-format.
+   * 
+   * @param particles ParticleContainer containing the particles to be plotted
+   * @param filename string specifing output file
+   * @param iteration Number of th current iteration, used to generate the name of the output file
    */
   void plotParticles(ParticleContainer& particles, const std::string& filename, int iteration) override;
 

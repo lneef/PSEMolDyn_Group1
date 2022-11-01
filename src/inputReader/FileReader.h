@@ -1,25 +1,26 @@
-/*
- * FileReader.h
- *
- *  Created on: 23.02.2010
- *      Author: eckhardw
- */
-
+//
+// Created by dominik on 29.10.22.
+//
 #pragma once
 
-#include "../Particle.h"
-
 #include "../ParticleContainer.h"
+#include "Particle.h"
 
-#include "InputTemplate.h"
 namespace inputReader{
-class FileReader : public InputTemplate {
 
+/**
+ * @brief FileReader provides a uniform interface for reading particles from a file
+ * 
+*/
+class FileReader {
 public:
-    FileReader();
-
-    virtual ~FileReader();
-
-    void readFile(ParticleContainer &particles, char *filename);
+    /**
+     * @brief reads particles from file and stores them in an instance of ParticleContainer
+     * 
+     * @param particles ParticleContainer where the read particles are stored.
+     * 
+     * @param filename Name of the file from where particles are read
+    */
+    virtual void readFile(ParticleContainer &particles, char *filename) = 0;
 };
 }

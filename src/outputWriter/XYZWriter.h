@@ -9,21 +9,31 @@
 
 #include "../Particle.h"
 #include "../ParticleContainer.h"
-#include "OutputTemplate.h"
+#include "FileWriter.h"
 #include <fstream>
 
 
 namespace outputWriter {
 
-class XYZWriter : public OutputTemplate{
+/**
+ * XYZWriter implements the uniform interface provided by FileWriter for writing file using the XYZ-format
+*/
+class XYZWriter : public FileWriter{
 
 public:
   XYZWriter();
 
   virtual ~XYZWriter();
 
-  void plotParticles(ParticleContainer& particles, const std::string &filename,
-                     int iteration) override;
+  /**
+   * @brief Writes particles from instance of ParticleContainer to an output file using the XYZ-format
+   * 
+   * @param particles ParticleContainer containing the particles to be plotted
+   * @param filename filename specifies the name of the output file
+   * @param iteration Number of the current iteration, used to generate the name of the output fule
+   * 
+  */
+  void plotParticles(ParticleContainer& particles, const std::string &filename, int iteration) override;
 };
 
 } // namespace outputWriter
