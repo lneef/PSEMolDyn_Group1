@@ -9,8 +9,8 @@
 
 #include "Particle.h"
 #include "outputWriter/vtk-unstructured.h"
-
-#include <list>
+#include "OutputTemplate.h"
+#include "../ParticleContainer.h"
 
 namespace outputWriter {
 
@@ -18,7 +18,7 @@ namespace outputWriter {
  * This class implements the functionality to generate vtk output from
  * particles.
  */
-class VTKWriter {
+class VTKWriter : public OutputTemplate{
 
 public:
   VTKWriter();
@@ -45,6 +45,10 @@ public:
    *        which is used to generate an unique filename
    */
   void writeFile(const std::string &filename, int iteration);
+
+  /**
+   */
+  void plotParticles(ParticleContainer& particles, const std::string& filename, int iteration) override;
 
 private:
   VTKFile_t *vtkFile;

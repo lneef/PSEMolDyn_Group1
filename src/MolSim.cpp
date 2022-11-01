@@ -1,15 +1,14 @@
 
-#include "FileReader.h"
-#include "outputWriter/XYZWriter.h"
+#include "inputReader/FileReader.h"
+#include "outputWriter/VTKWriter.h"
 #include "utils/ArrayUtils.h"
 
 #include <iostream>
-#include <list>
+#include <memory>
 
-#include "SimpleForceCalc.h"
-#include "DefaultForce.h"
-#include "ForceStrategy.h"
-#include "InStrategy.h"
+#include "Gravitation.h"
+#include "Force.h"
+#include "ParticleContainer.h"
 
 /**** forward declaration of the calculation functions ****/
 
@@ -39,8 +38,8 @@ constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
 
-// TODO: what data structure to pick?
-std::list <Particle> particles;
+
+ParticleContainer particles;
 
 
 int main(int argc, char *argsv[]) {
@@ -57,22 +56,14 @@ int main(int argc, char *argsv[]) {
     std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
 
-//    FileReader fileReader;
-//    fileReader.readFile(particles, argsv[1]);
-    InStrategy fileReader(std::make_unique<FileReader>());
-    fileReader.readFile(particles, argsv[1]);
+	std::unique_ptr<InputTemplate> fileReader = std::make_unique<FileReader>();
+	fileReader->readFile(particles, argsv[1]);
+    
+	std::unique_ptr<Force> force = std::make_unique<Gravitation>();
 
     double current_time = start_time;
-
+	
     int iteration = 0;
-
-    ForceStrategy forceCalc(std::make_unique<DefaultForce>());
-    int forceType = checkForceInput();
-    switch (forceType) {
-        case 1:
-            forceCalc.set_force(std::make_unique<SimpleForceCalc>());
-            break;
-    }
 
 // for this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
@@ -80,7 +71,7 @@ int main(int argc, char *argsv[]) {
         calculateX();
 
 // calculate new f
-        forceCalc.calculateF(particles);
+        force->calculateF(particles);
 
 // calculate new v
         calculateV();
@@ -158,6 +149,6 @@ void plotParticles(int iteration) {
 
     std::string out_name("MD_vtk");
 
-    outputWriter::XYZWriter writer;
-    writer.plotParticles(particles, out_name, iteration);
+	std::unique_ptr<outputWriter::OutputTemplate> writer = std::make_unique<outputWriter::VTKWriter>();
+    writer->plotParticles(particles, out_name, iteration);
 }

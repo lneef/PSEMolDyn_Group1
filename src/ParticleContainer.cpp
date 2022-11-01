@@ -2,7 +2,7 @@
 
 using p_iterator = ParticleContainer::iterator;
 
-p_iterator::iterator(std::list<Particle>::iterator current){
+p_iterator::iterator(std::vector<Particle>::iterator current){
 	this->current = current;
 }
 
@@ -37,12 +37,18 @@ p_iterator p_iterator::operator++(int){
 	return tmp;
 }
 
-void ParticleContainer::setParticles(const std::list<Particle>& particles){
+void ParticleContainer::setParticles(const std::vector<Particle>& particles){
 	this->particles = particles;
 }
 
-const std::list<Particle>& ParticleContainer::getParticles() const{
+const std::vector<Particle>& ParticleContainer::getParticles() const{
 	return this->particles;
 }
 
+void ParticleContainer::addParticle(Particle&& particle){
+	particles.push_back(particle);
+}
 
+size_t ParticleContainer::size(){
+	return particles.size();
+}

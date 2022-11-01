@@ -52,4 +52,12 @@ target_compile_options(MolSim
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
-include(doxygen)
+option(DISABLE_DOXYGEN OFF)
+
+if(NOT DISABLE_DOXYGEN)
+	include(doxygen)
+	add_custom_target(doc_doxygen
+		COMMAND doxygen Doxyfile
+		VERBATIM
+		)
+endif()
