@@ -11,7 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
+namespace inputReader{
 FileReader::FileReader() = default;
 
 FileReader::~FileReader() = default;
@@ -66,4 +66,5 @@ void FileReader::readFile(ParticleContainer &particles, char *filename) {
     std::cout << "Error: could not open file " << filename << std::endl;
     exit(-1);
   }
+}
 }

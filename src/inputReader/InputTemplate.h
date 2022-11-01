@@ -6,8 +6,10 @@
 #include "../ParticleContainer.h"
 #include "Particle.h"
 
+namespace inputReader{
 class InputTemplate {
 public:
 
     virtual void readFile(ParticleContainer &particles, char *filename) = 0;
 };
+}

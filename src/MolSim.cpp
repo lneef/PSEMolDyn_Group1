@@ -56,7 +56,7 @@ int main(int argc, char *argsv[]) {
     std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
 
-	std::unique_ptr<InputTemplate> fileReader = std::make_unique<FileReader>();
+	std::unique_ptr<inputReader::InputTemplate> fileReader = std::make_unique<inputReader::FileReader>();
 	fileReader->readFile(particles, argsv[1]);
     
 	std::unique_ptr<Force> force = std::make_unique<Gravitation>();

@@ -12,7 +12,7 @@
 #include "../ParticleContainer.h"
 
 #include "InputTemplate.h"
-
+namespace inputReader{
 class FileReader : public InputTemplate {
 
 public:
@@ -22,3 +22,4 @@ public:
 
     void readFile(ParticleContainer &particles, char *filename);
 };
+}
