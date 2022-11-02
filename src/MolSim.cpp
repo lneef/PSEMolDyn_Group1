@@ -92,25 +92,6 @@ int main(int argc, char *argsv[]) {
     return 0;
 }
 
-int checkForceInput() {
-    int result;
-    std::cout << "Decide which forcetype should be used.\n";
-    std::cout << "Following forcetypes are at the moment posible:\n";
-    std::cout << "1. simple force\n";
-    std::cout << "Please enter the number of theforcetype:\n";
-    std::cin >> result;
-    while (true) {
-        if (result > 0 && result < 2) {
-            return result;
-        }
-        std::cout << "You typed in a wrong type. Try again!\n";
-        std::cout << "Following forcetypes are at the moment posible:\n";
-        std::cout << "1. simple force\n";
-        std::cout << "Please enter the number of theforcetype:\n";
-        std::cin >> result;
-    }
-}
-
 void calculateX() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
