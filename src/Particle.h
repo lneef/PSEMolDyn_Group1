@@ -75,11 +75,24 @@ public:
   
   /**
    * @brief Setter for the effective force acting on the particle. Before f is set to the new value, old_f is set to the old value of f.
+   * 
+   * @param f Array representing three dimensional vector of forces acting on the particle
   */
   void setF(const std::array<double, 3>& f);
 
+  /**
+   * @brief Setter for the position of the particle.
+   * 
+   * @param x Array represention three dimensional position of the particle
+  */
+
   void setX(const std::array<double, 3>& x);
 
+  /**
+   * @brief Setter for the velocity of the particle 
+   * 
+   * @param v three dimensional vector of the velocities of the particle in all three dimensions 
+  */
   void setV(const std::array<double, 3>& v);
 };
 
