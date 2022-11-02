@@ -23,6 +23,9 @@ namespace inputReader {
         */
         virtual void readFile(ParticleContainer &particles, char *filename) = 0;
 
+        /**
+         * @brief virtual deconstructor ro prevent memory leaks
+        */
         virtual ~FileReader();
     };
 }

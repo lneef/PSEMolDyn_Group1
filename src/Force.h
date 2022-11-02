@@ -21,5 +21,8 @@ public:
     */
     virtual void calculateF(ParticleContainer &particles) = 0;
 
+    /**
+     * @brief virtual deconstructor to prevent memory leaks
+    */
     virtual ~Force();
 };

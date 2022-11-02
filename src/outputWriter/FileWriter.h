@@ -19,6 +19,9 @@ namespace outputWriter {
         */
         virtual void plotParticles(ParticleContainer &particles, const std::string &filename, int iteration) = 0;
 
+        /**
+         * @brief virtual deconstructor to prevent memory leaks
+        */
         virtual ~FileWriter();
     };
 }
