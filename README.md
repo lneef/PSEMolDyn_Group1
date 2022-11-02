@@ -13,8 +13,10 @@ Members:
 
 # Run Instructions #
 * Compiler: GNU 12.2.0, 11.3.0
-* cmake .
-* make all
+* run cmake .
+* run make or make all
+* run the application via ./MolSim path-to-file, where path-to-file is a valid path to a file containing the particles
+* you will be then asked to enter the end time and the duration of a timestep
 
 # Doxygen #
 * Per default cmake . creates a target for generating a doxygen documentation
