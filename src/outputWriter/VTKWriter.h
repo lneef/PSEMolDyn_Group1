@@ -15,8 +15,10 @@
 namespace outputWriter {
 
 /**
+ * @brief VTKWriter implements the interface provided by FileWriter. 
+ * 
  * This class implements the functionality to generate vtk output from
- * particles. It implements the interface provided by FileWriter. 
+ * particles. 
  */
     class VTKWriter : public FileWriter {
 

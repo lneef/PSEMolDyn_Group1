@@ -16,7 +16,8 @@
 namespace outputWriter {
 
 /**
- * XYZWriter implements the uniform interface provided by FileWriter for writing file using the XYZ-format
+ * @brief XYZWriter implements the interface provided by FileWriter
+ * 
 */
     class XYZWriter : public FileWriter {
 

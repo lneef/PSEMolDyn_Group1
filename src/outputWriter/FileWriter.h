@@ -3,10 +3,16 @@
 #include<string>
 #include "../ParticleContainer.h"
 
+/**
+ * @brief The namespace outputWriter contains the functionality to output particles to files
+*/
 namespace outputWriter {
 /**
  * 
  * @brief FileWriter provides a uniform interface for writing particles to an output file
+ * 
+ * FileWriter provides an abstract method plotParticles() which is implemented by its subclasses, This enables easier extension of the methods for writing to files and
+ * higher modularity by using the interface.
 */
     class FileWriter {
     public:

@@ -16,6 +16,8 @@
 namespace inputReader {
 /**
  * @brief TxtReader implements the interface provided by FileReader for reading .txt files
+ * 
+ * TxtReader implements the abstract method provided by the class FileReader for reading particles from .txt files into an instance of ParticleContainer.
 */
     class TxtReader : public FileReader {
 

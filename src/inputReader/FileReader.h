@@ -9,6 +9,9 @@ namespace inputReader {
 /**
  * @brief FileReader provides a uniform interface for reading particles from a file
  * 
+ * FileReader provides the abstract method readFile() which is implemented by its subclasses. This enables easier extension of the methods used to read from files and
+ * a higher modularity by using the interface.
+ * 
 */
     class FileReader {
     public:

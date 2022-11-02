@@ -8,8 +8,9 @@
 #include "Particle.h"
 
 /**
- * The Class ParticleContainer provides a container for storing particles.
- * That way it encapsulates the data structure used to store the particles.
+ * @brief Class ParticleContainer provides a container for storing particles.
+ * 
+ * It encapsulates the data structure used to store the particles.
  * To enable simple iteration over the stored particles, ParticleContainer implements the iterator pattern.
 */
 
@@ -23,7 +24,9 @@ private:
 
 public:
     /**
-     * Custom iterator for the container ParticleContainer.
+     * @brief The class iterator implements the iterator pattern for ParticleContainer.
+     * 
+     * It provides an iterator over the particles stored in the field particles of ParticleContainer.
     */
     class iterator {
 

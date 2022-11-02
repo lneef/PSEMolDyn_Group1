@@ -5,6 +5,8 @@
 #include <cmath>
 
 /**
+ * @brief Gravitation implements the interface provided by Force
+ * 
  * Gravitation implements the interface provided by Force for calculating the gravitation between particles.
 */
 class Gravitation : public Force {
