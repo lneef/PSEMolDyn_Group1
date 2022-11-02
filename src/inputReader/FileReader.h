@@ -23,6 +23,6 @@ namespace inputReader {
         */
         virtual void readFile(ParticleContainer &particles, char *filename) = 0;
 
-        virtual ~FileReader() {};
+        virtual ~FileReader();
     };
 }

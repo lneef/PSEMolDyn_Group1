@@ -21,5 +21,5 @@ public:
     */
     virtual void calculateF(ParticleContainer &particles) = 0;
 
-    virtual ~Force() {};
+    virtual ~Force();
 };
