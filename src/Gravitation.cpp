@@ -36,3 +36,5 @@ double Gravitation::calculateNorm(std::array<double, 3> x) {
     double norm = sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2));
     return norm;
 }
+
+Gravitation::~Gravitation() = default;
