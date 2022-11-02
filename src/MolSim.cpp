@@ -56,13 +56,15 @@ int main(int argc, char *argsv[]) {
     std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
 
-	std::unique_ptr<inputReader::FileReader> fileReader = std::make_unique<inputReader::TxtReader>();
-	fileReader->readFile(particles, argsv[1]);
-    
-	std::unique_ptr<Force> force = std::make_unique<Gravitation>();
+    //unique pointer to the input method
+    std::unique_ptr <inputReader::FileReader> fileReader = std::make_unique<inputReader::TxtReader>();
+    fileReader->readFile(particles, argsv[1]);
+
+    //unique pointer to the force calculation method
+    std::unique_ptr <Force> force = std::make_unique<Gravitation>();
 
     double current_time = start_time;
-	
+
     int iteration = 0;
 
 // for this loop, we assume: current x, current f and current v are known
@@ -92,6 +94,7 @@ int main(int argc, char *argsv[]) {
     return 0;
 }
 
+//calculate new position
 void calculateX() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
@@ -101,12 +104,14 @@ void calculateX() {
         std::array<double, 3> newX{};
 
         for (int i = 0; i < 3; i++)
+            //Velocity-Störmer-Verlet-Algorithm
             newX[i] = tempX[i] + delta_t * tempV[i] + pow(delta_t, 2) * tempOldF[i] / (2 * p.getM());
 
         p.setX(newX);
     }
 }
 
+//calculate new velocity
 void calculateV() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
@@ -116,6 +121,7 @@ void calculateV() {
         std::array<double, 3> newV{};
 
         for (int i = 0; i < 3; i++) {
+            //Velocity-Störmer-Verlet-Algorithm
             newV[i] = tempV[i] + delta_t * (tempOldF[i] + tempF[i]) / (2 * p.getM());
         }
 
@@ -128,6 +134,7 @@ void plotParticles(int iteration) {
 
     std::string out_name("MD_vtk");
 
-	std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
+    //unique pointer to the input method
+    std::unique_ptr <outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
     writer->plotParticles(particles, out_name, iteration);
 }

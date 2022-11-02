@@ -16,6 +16,8 @@ public:
     */
     void calculateF(ParticleContainer &particles) override;
 
+    virtual  ~Gravitation();
+
 private:
     /**
      * @brief Calculates Euclidean norm for three dimensional vector.
