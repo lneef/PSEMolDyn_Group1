@@ -49,6 +49,8 @@ namespace outputWriter {
         void writeFile(const std::string &filename, int iteration);
 
         /**
+         * @brief Writes particles from passed container to a file.
+         * 
          * This function:
          *  1. initializes the internal data structure via initializeOutput()
          *  2. plots all passed particles via plotParticle()

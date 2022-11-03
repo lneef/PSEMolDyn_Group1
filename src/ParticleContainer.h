@@ -17,7 +17,7 @@
 class ParticleContainer {
 private:
     /**
-     * The data structure where the particles are stored internally.
+     * @brief The data structure where the particles are stored internally.
     */
     std::vector <Particle> particles;
 
@@ -31,34 +31,34 @@ public:
     class iterator {
 
         /**
-         * @brief iterator enables iteration over stored particles and thus is of type forward_iterator
+         * @brief iterator should enable iteration over stored particles and thus is of type forward_iterator.
         */
         using iterator_category = std::forward_iterator_tag;
 
         /**
-         * @brief iteration happens over value of type Particle
+         * @brief iteration happens over value of type Particle.
         */
         using value_type = Particle;
 
         /**
-         * @brief difference between iterator is of type std::ptrdiff_t
+         * @brief difference between iterator is of type std::ptrdiff_t.
          *
         */
         using difference_type = std::ptrdiff_t;
 
         /**
-         * @brief iterates over Particles with pointers of type Particle*
+         * @brief iteration over Particles with pointers of type Particle*.
         */
         using pointer = Particle *;
 
         /**
-         * @brief  iterates over Particles wither references of type Particle&
+         * @brief iteration over Particles with references of type Particle&.
         */
         using reference = Particle &;
 
     private:
         /**
-         * iterator uses a iterator for the data structure where the particles are stored internally to enable iteration
+         * @brief iteration uses a iterator for the data structure where the particles are stored internally to enable iteration
          *
          * @see particles
         */
@@ -73,17 +73,17 @@ public:
         explicit iterator(std::vector<Particle>::iterator current);
 
         /**
-         * Pre-increment operator for class iterator.
+         * @brief Pre-increment operator for class iterator.
         */
         iterator &operator++();
 
         /**
-         * Post-increment operator for class iterator.
+         * @brief Post-increment operator for class iterator.
         */
         iterator operator++(int);
 
         /**
-         * Dereference operator for class iterator.
+         * @brief Dereference operator for class iterator.
         */
         reference operator*() const;
 

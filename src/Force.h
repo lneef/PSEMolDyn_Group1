@@ -9,8 +9,8 @@
 /**
  * @brief Force provides a uniform interface for calculating the effective force between particles
  * 
- * The class provides an abstract method calculateF() which is then implemented by its subclasses. This enables easier extension of the methods for calculating the force
- * between the particles and higher modularity by using the interface.
+ * The class provides an abstract method calculateF() which is then implemented by its subclasses. This enables easier extensibility of the methods for calculating the force
+ * between the particles.
 */
 class Force {
 

@@ -11,8 +11,7 @@ namespace outputWriter {
  * 
  * @brief FileWriter provides a uniform interface for writing particles to an output file
  * 
- * FileWriter provides an abstract method plotParticles() which is implemented by its subclasses, This enables easier extension of the methods for writing to files and
- * higher modularity by using the interface.
+ * The class provides an abstract method plotParticles() which is implemented by its subclasses, This enables easier extensibility of the methods for writing to files.
 */
     class FileWriter {
     public:
