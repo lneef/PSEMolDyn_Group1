@@ -98,14 +98,14 @@ int main(int argc, char *argsv[]) {
 void calculateX() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
-        const std::array<double, 3> &tempOldF{p.getOldF()};
+        const std::array<double, 3> &tempF{p.getF()};
         const std::array<double, 3> &tempX{p.getX()};
 
         std::array<double, 3> newX{};
 
         for (int i = 0; i < 3; i++)
             //Velocity-Störmer-Verlet-Algorithm
-            newX[i] = tempX[i] + delta_t * tempV[i] + pow(delta_t, 2) * tempOldF[i] / (2 * p.getM());
+            newX[i] = tempX[i] + delta_t * tempV[i] + pow(delta_t, 2) * tempF[i] / (2 * p.getM());
 
         p.setX(newX);
     }
