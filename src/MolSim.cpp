@@ -9,6 +9,7 @@
 #include "forceCalculation/Gravitation.h"
 #include "forceCalculation/Force.h"
 #include "ParticleContainer.h"
+#include "forceCalculation/LennardJones.h"
 
 /**** forward declaration of the calculation functions ****/
 
@@ -61,7 +62,7 @@ int main(int argc, char *argsv[]) {
     fileReader->readFile(particles, argsv[1]);
 
     //unique pointer to the force calculation method
-    std::unique_ptr <Force> force = std::make_unique<Gravitation>();
+    std::unique_ptr <Force> force = std::make_unique<LennardJones>();
 
     double current_time = start_time;
 

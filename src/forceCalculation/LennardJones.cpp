@@ -21,11 +21,13 @@ void LennardJones::calculateF(ParticleContainer &particles) {
                 continue;
             }
             std::array<double, 3> xij;
+            for (int i = 0; i < 3; i++) {
+                xij[i] = p1.getX()[i] - p2.getX()[i];
+            }
             double norm = calculateNorm(xij);
             double pow_6 = pow((zeroCrossing / norm), 6);
             for (int i = 0; i < 3; i++) {
-                xij[i] = p1.getX()[i] - p2.getX()[i];
-                double force_value = ((-24 * depthOfPotentialWell) / pow(xij, 2)) * (pow_6 - 2 * pow(pow_6, 2));
+                double force_value = ((-24 * depthOfPotentialWell) / pow(norm, 2)) * (pow_6 - 2 * pow(pow_6, 2));
                 newF1[i] += force_value;
                 newF2[i] -= force_value;
             }
@@ -35,7 +37,7 @@ void LennardJones::calculateF(ParticleContainer &particles) {
     }
 }
 
-double Gravitation::calculateNorm(std::array<double, 3> x) {
+double LennardJones::calculateNorm(std::array<double, 3> x) {
     double norm = sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2));
     return norm;
 }
