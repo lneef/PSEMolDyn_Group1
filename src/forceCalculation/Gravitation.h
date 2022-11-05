@@ -2,7 +2,6 @@
 // Created by dominik on 27.10.22.
 //
 #include "Force.h"
-#include <cmath>
 
 /**
  * @brief Gravitation implements the interface provided by Force

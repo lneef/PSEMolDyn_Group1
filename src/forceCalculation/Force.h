@@ -3,8 +3,9 @@
 //
 #pragma once
 
-#include "ParticleContainer.h"
-#include "Particle.h"
+#include "../ParticleContainer.h"
+#include "../Particle.h"
+#include <cmath>
 
 /**
  * @brief Force provides a uniform interface for calculating the effective force between particles

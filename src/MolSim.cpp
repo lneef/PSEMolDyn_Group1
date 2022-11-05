@@ -6,8 +6,8 @@
 #include <iostream>
 #include <memory>
 
-#include "Gravitation.h"
-#include "Force.h"
+#include "forceCalculation/Gravitation.h"
+#include "forceCalculation/Force.h"
 #include "ParticleContainer.h"
 
 /**** forward declaration of the calculation functions ****/
