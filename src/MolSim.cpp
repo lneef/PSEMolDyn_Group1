@@ -10,6 +10,7 @@
 #include "forceCalculation/Force.h"
 #include "ParticleContainer.h"
 #include "forceCalculation/LennardJones.h"
+#include "inputReader/Cuboid_cl.h"
 
 /**** forward declaration of the calculation functions ****/
 
@@ -56,6 +57,10 @@ int main(int argc, char *argsv[]) {
     std::cin >> end_time;
     std::cout << "Please enter the default time:\n";
     std::cin >> delta_t;
+
+    //ToDo: make switch between Cl and File
+//    std::unique_ptr<inputReader::Cuboid_cl> clReader= std::make_unique<inputReader::Cuboid_cl>();
+//    clReader->readInput(particles);
 
     //unique pointer to the input method
     std::unique_ptr <inputReader::FileReader> fileReader = std::make_unique<inputReader::TxtReader>();
