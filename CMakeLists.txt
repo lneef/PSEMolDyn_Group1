@@ -53,4 +53,6 @@ target_compile_options(MolSim
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 include(doxygen)
-include(googletest)
+
+add_subdirectory(tests)
+
