@@ -8,14 +8,10 @@
 */
 TEST(ParticleContainerTest, IteratorTest){
     ParticleContainer par{};
-
-    Particle p1({0.,0.,0.},{0.,0., 0.}, 1.);
-    Particle p2({1., 1. , 1.}, {1.5, 0., 0.}, 0.5);
-    Particle p3({1., 0., 1.}, {1., 2., 0}, 0.01); 
     
-    par.addParticle(p1);
-    par.addParticle(p2);
-    par.addParticle(p3);
+    par.addParticle( Particle ({0.,0.,0.},{0.,0., 0.}, 1.));
+    par.addParticle(Particle ({1., 1. , 1.}, {1.5, 0., 0.}, 0.5));
+    par.addParticle(Particle ({1., 0., 1.}, {1., 2., 0}, 0.01));
 
     const std::vector<Particle>& tmp = par.getParticles();
     
