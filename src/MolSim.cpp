@@ -1,7 +1,7 @@
 #include <getopt.h>
 #include "inputReader/TxtReader.h"
 #include "outputWriter/VTKWriter.h"
-#include "utils/ArrayUtils.h"
+#include "inputReader/InputReader.h"
 
 #include <iostream>
 #include <memory>
@@ -27,11 +27,10 @@ struct option long_option[]{
 int main(int argc, char *argsv[]) {
 
     ParticleContainer particles{};
-    std::unique_ptr<inputReader::FileReader> input;
-    int optionindex;
+    std::unique_ptr<inputReader::InputReader> input;
     bool file_flag = 0;
     int arg = 0;
-    while((arg = getopt_long(argc, argsv, "t:e:f:", long_option, &optionindex)) > 0){
+    while((arg = getopt_long(argc, argsv, "t:e:f:", long_option, 0)) > 0){
         switch(arg){
             case 'a':
                 break;
@@ -42,8 +41,8 @@ int main(int argc, char *argsv[]) {
                 end_time = std::stod(optarg);
                 break;
             case 'f':
-                input = std::make_unique<inputReader::TxtReader>();
-                input->readFile(particles, optarg);
+                input = std::make_unique<inputReader::TxtReader>(optarg);
+
                 file_flag = 1;
                 break;
             default:
@@ -53,10 +52,9 @@ int main(int argc, char *argsv[]) {
         }
     }
     if(!file_flag){
-        inputReader::Cuboid_cl c{};
-        c.readInput(particles);
+        input = std::make_unique<inputReader::Cuboid_cl>();
     }
-
+    input->read(particles);
     Simulation simulation(particles, delta_t, end_time, std::make_unique<outputWriter::VTKWriter>(), std::make_unique<LennardJones>());
     simulation.run();
 

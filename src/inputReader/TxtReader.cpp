@@ -13,17 +13,19 @@
 #include <sstream>
 
 namespace inputReader {
-    TxtReader::TxtReader() = default;
+    TxtReader::TxtReader(char* filenae) {
+        this-> filename = filename;
+    }
 
     TxtReader::~TxtReader() = default;
 
-    void TxtReader::readFile(ParticleContainer &particles, char *filename) {
+    void TxtReader::read(ParticleContainer &particles) {
         std::array<double, 3> x;
         std::array<double, 3> v;
         double m;
         int num_particles = 0;
 
-        std::ifstream input_file(filename);
+        std::ifstream input_file(filename.c_str());
         std::string tmp_string;
 
         if (input_file.is_open()) {

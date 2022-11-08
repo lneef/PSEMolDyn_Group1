@@ -6,14 +6,15 @@
 
 #include "../Particle.h"
 #include "../ParticleContainer.h"
+#include "InputReader.h"
 
 namespace inputReader {
-    class Cuboid_cl {
+    class Cuboid_cl : public InputReader{
     public:
         Cuboid_cl();
 
         virtual ~Cuboid_cl();
 
-        void readInput(ParticleContainer &particles);
+        void read(ParticleContainer &particles) override;
     };
 }

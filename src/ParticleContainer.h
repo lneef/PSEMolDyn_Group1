@@ -148,4 +148,6 @@ public:
      * @return Number of particles stored in the respective ParticleContainer.
     */
     size_t size();
+
+    template<class T> void apply2(T fun);
 };

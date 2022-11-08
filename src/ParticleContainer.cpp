@@ -54,3 +54,13 @@ void ParticleContainer::addParticle(Particle &&particle) {
 size_t ParticleContainer::size() {
     return particles.size();
 }
+template<typename T>
+void ParticleContainer::apply2(T fun) {
+    size_t len = particles.size();
+
+    for(size_t i = 0; i < len; ++i){
+        for(size_t j = 0; j < len; ++j){
+
+        }
+    }
+}
