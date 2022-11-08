@@ -57,7 +57,7 @@ int main(int argc, char *argsv[]) {
         c.readInput(particles);
     }
 
-    Simulation<outputWriter::VTKWriter, Gravitation> simulation(particles, delta_t, end_time);
+    Simulation simulation(particles, delta_t, end_time, std::make_unique<outputWriter::VTKWriter>(), std::make_unique<LennardJones>());
     simulation.run();
 
     std::cout << "output written. Terminating..." <<
