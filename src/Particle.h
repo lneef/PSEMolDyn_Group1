@@ -95,6 +95,12 @@ public:
     */
     void setV(const std::array<double, 3> &v);
 
+    /**
+     * @brief function which sets f to a new value, it does not update old_f
+     * @param f Array representing three dimensional vector of the forces acting on the particle
+     *
+     * @warning old_f is not updated
+     */
     void updateF(const std::array<double, 3> &f);
 };
 
