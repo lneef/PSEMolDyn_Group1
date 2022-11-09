@@ -19,9 +19,15 @@ jobs:
         run: sudo apt install libxerces-c-dev
 
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build  -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DLINTER=ON
+        run: cmake -B ${{github.workspace}}/build  -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Add Sanitizer
+        run: cmake -B ${{github.workspace}}/build -DLINTER=ON
+
+      - name: Build with Sanitizer
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Test
