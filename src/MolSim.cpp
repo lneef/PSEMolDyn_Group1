@@ -23,35 +23,43 @@ double delta_t = 0.014;
 
 struct option long_option[]{
         {"help", no_argument, 0, 'a'},
-        {"file", required_argument, 0, 'f'},
+        {"cub", optional_argument, 0, 'c'},
+        {"planet", required_argument, 0 , 'p'},
         {0,0,0,0}
 };
-enum Option {Planet, Cuboid};
+enum Option {None, Planet, Cuboid};
 
 int main(int argc, char *argsv[]) {
 
     ParticleContainer particles{};
     std::unique_ptr<inputReader::InputReader> input;
-    std::unique_ptr<Force> force = std::make_unique<Gravitation>();
-    bool changed = false;
-    bool file_flag = false;
+    std::unique_ptr<Force> force;
     int arg = 0;
-    Option opt = Cuboid;
-
+    Option opt = None;
     while((arg = getopt_long(argc, argsv, "t:e:", long_option, 0)) != -1){
         switch(arg){
             case 'a':
-                break;
+                print_help();
+                return 0;
             case 't':
                 delta_t = std::stod(optarg);
+                std::cout << "lol";
                 break;
             case 'e':
                 end_time = std::stod(optarg);
                 break;
-            case 'f':
+            case 'p':
                 input = std::make_unique<inputReader::TxtReader>(optarg);
-                std::cout<< optarg << std::endl;
-                file_flag = true;
+                force = std::make_unique<Gravitation>();
+                opt = Planet;
+                break;
+            case 'c':
+                if(optarg == NULL)
+                    input = std::make_unique<inputReader::Cuboid_cl>();
+                else
+
+                force = std::make_unique<LennardJones>();
+                opt = Cuboid;
                 break;
             default:
                 std::cout<<"Invalid command line argument" << arg << std::endl;
@@ -59,11 +67,11 @@ int main(int argc, char *argsv[]) {
 
         }
 
-        if(!file_flag){
-            input = std::make_unique<inputReader::Cuboid_cl>();
-        }
     }
-
+    if(opt == None){
+        std::cout<<"You did not specify which simulation should be run"<< std::endl;
+        exit(-1);
+    }
     input->read(particles);
     Simulation simulation(particles, delta_t, end_time, std::make_unique<outputWriter::VTKWriter>(), force);
     simulation.run();
