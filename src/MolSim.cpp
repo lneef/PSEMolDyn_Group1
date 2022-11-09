@@ -28,15 +28,17 @@ struct option long_option[]{
         {0,0,0,0}
 };
 enum Option {None, Planet, Cuboid};
+enum LogLevel{Log_0, Log_1, Log_2};
 
 int main(int argc, char *argsv[]) {
 
     ParticleContainer particles{};
     std::unique_ptr<inputReader::InputReader> input;
     std::unique_ptr<Force> force;
+    int8_t log_level = 0;
     int arg = 0;
     Option opt = None;
-    while((arg = getopt_long(argc, argsv, "t:e:", long_option, 0)) != -1){
+    while((arg = getopt_long(argc, argsv, "t:e:l:", long_option, 0)) != -1){
         switch(arg){
             case 'a':
                 print_help();
@@ -60,6 +62,9 @@ int main(int argc, char *argsv[]) {
 
                 force = std::make_unique<LennardJones>();
                 opt = Cuboid;
+                break;
+            case 'l':
+                //loglevel
                 break;
             default:
                 std::cout<<"Invalid command line argument" << arg << std::endl;
