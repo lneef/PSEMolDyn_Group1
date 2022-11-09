@@ -13,7 +13,7 @@
 #include <sstream>
 
 namespace inputReader {
-    TxtReader::TxtReader(char* filenae) {
+    TxtReader::TxtReader(char* filename) {
         this-> filename = filename;
     }
 
@@ -26,6 +26,7 @@ namespace inputReader {
         int num_particles = 0;
 
         std::ifstream input_file(filename.c_str());
+
         std::string tmp_string;
 
         if (input_file.is_open()) {

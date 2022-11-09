@@ -94,6 +94,8 @@ public:
      * @param v three dimensional vector of the velocities of the particle in all three dimensions
     */
     void setV(const std::array<double, 3> &v);
+
+    void updateF(const std::array<double, 3> &f);
 };
 
 std::ostream &operator<<(std::ostream &stream, Particle &p);

@@ -62,7 +62,7 @@ void Simulation::run() {
     }
 }
 Simulation::Simulation( ParticleContainer& particles, double delta_t, double end_time,  std::unique_ptr <outputWriter::FileWriter>&& writer
-, std::unique_ptr <Force>&& force){
+, std::unique_ptr <Force>& force){
 this -> delta_t=delta_t;
 this -> end_time = end_time;
 this -> writer = std::move(writer);

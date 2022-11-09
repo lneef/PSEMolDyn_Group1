@@ -1,6 +1,3 @@
-//
-// Created by dominik on 05.11.22.
-//
 #include "Cuboid_cl.h"
 #include <iostream>
 

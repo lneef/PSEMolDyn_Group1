@@ -149,5 +149,18 @@ public:
     */
     size_t size();
 
-    template<class T> void apply2(T fun);
+    template<class T> void apply(T fun){
+        for(auto &p : particles){
+            fun(p);
+        }
+    }
+
+    template<class T> void apply2(T fun){
+        size_t len = particles.size();
+        for(size_t i = 0; i < len; ++i){
+            for(size_t j = i + 1; j < len; ++j){
+                fun(particles[i], particles[j]);
+            }
+        }
+    }
 };

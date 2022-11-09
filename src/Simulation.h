@@ -24,7 +24,7 @@ public:
     void calculateV();
     void run();
     Simulation( ParticleContainer& particles, double delta_t, double end_time, std::unique_ptr <outputWriter::FileWriter>&& writer
-    , std::unique_ptr <Force>&& force);
+    , std::unique_ptr <Force>& force);
 
 };
 
