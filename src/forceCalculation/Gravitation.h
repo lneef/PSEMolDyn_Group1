@@ -18,14 +18,4 @@ public:
     void calculateF(ParticleContainer &particles) override;
 
     virtual  ~Gravitation();
-
-private:
-    /**
-     * @brief Calculates Euclidean norm for three dimensional vector.
-     * 
-     * @param x array of size three representing a three dimensional vector.
-     * 
-     * @return Euclidian norm of passed vector.
-    */
-    double calculateNorm(std::array<double, 3> x);
 };

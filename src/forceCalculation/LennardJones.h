@@ -7,6 +7,9 @@ class LennardJones : public Force{
 public:
     void calculateF(ParticleContainer &particles) override;
     virtual ~LennardJones();
+    LennardJones();
+
 private:
-    double calculateNorm(std::array<double, 3> x);
+    double depthOfPotentialWell;
+    double zeroCrossing;
 };

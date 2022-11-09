@@ -54,3 +54,4 @@ void ParticleContainer::addParticle(Particle &&particle) {
 size_t ParticleContainer::size() {
     return particles.size();
 }
+
