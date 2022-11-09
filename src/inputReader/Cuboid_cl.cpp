@@ -17,43 +17,151 @@ namespace inputReader {
         std::array<double, 3> v;
         double mean_v;
 
-//ToDo: check correct input
         input:
-        std::cout << "Specify coordinate of lower left front-side corner\n";
-        std::cout << "Please enter x coordinate\n";
-        std::cin >> x[0];
-        std::cout << "Please enter y coordinate\n";
-        std::cin >> x[1];
-        std::cout << "Please enter z coordinate\n";
-        std::cin >> x[2];
+        std::cout << "Specify the coordinate of lower left front-side corner\n";
+        while(true) {
+            std::cout << "Please enter x coordinate as double value\n";
+            std::cin >> x[0];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for coordinates\n";
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            std::cout << "Please enter y coordinate as double value\n";
+            std::cin >> x[1];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for coordinates\n";
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            std::cout << "Please enter z coordinate as double value\n";
+            std::cin >> x[2];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for coordinates\n";
+                continue;
+            }
+            break;
+        }
 
-        std::cout << "Specify number of particles per dimension\n";
-        std::cout << "Please enter number in x dimension\n";
-        std::cin >> n[0];
-        std::cout << "Please enter number in y dimension\n";
-        std::cin >> n[1];
-        std::cout << "Please enter number in z dimension\n";
-        std::cin >> n[2];
+        std::cout << "Specify the number of particles per dimension\n";
+        while(true) {
+            std::cout << "Please enter number in x dimension as double value\n";
+            std::cin >> n[0];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for quantities\n";
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            std::cout << "Please enter number in y dimension as double value\n";
+            std::cin >> n[1];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for quantities\n";
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            std::cout << "Please enter number in z dimension as double value\n";
+            std::cin >> n[2];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for quantities\n";
+                continue;
+            }
+            break;
+        }
 
-        std::cout << "Specify distance between the particles\n";
-        std::cout << "Please enter the distance\n";
-        std::cin >> h;
+        std::cout << "Specify the distance between the particles\n";
+        while(true) {
+            std::cout << "Please enter the distance as double value\n";
+            std::cin >> h;
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for the distance\n";
+                continue;
+            }
+            break;
+        }
 
-        std::cout << "Specify mass of one particle\n";
-        std::cout << "Please enter the mass\n";
-        std::cin >> m;
+        std::cout << "Specify the mass of one particle\n";
+        while(true) {
+            std::cout << "Please enter the mass as double value\n";
+            std::cin >> m;
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for the mass\n";
+                continue;
+            }
+            break;
+        }
 
-        std::cout << "Specify velocity of the particles\n";
-        std::cout << "Please enter velocity in x dimension\n";
-        std::cin >> v[0];
-        std::cout << "Please enter velocity in y dimension\n";
-        std::cin >> v[1];
-        std::cout << "Please enter velocity in z dimension\n";
-        std::cin >> v[2];
 
-        std::cout << "Specify mean velocity\n";
-        std::cout << "Please enter velocity\n";
-        std::cin >> mean_v;
+        std::cout << "Specify the velocity of the particles\n";
+        while(true) {
+            std::cout << "Please enter velocity in x dimension as double value\n";
+            std::cin >> v[0];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for velocities\n";
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            std::cout << "Please enter velocity in y dimension as double value\n";
+            std::cin >> v[1];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for velocities\n";
+                continue;
+            }
+            break;
+        }
+        while(true) {
+            std::cout << "Please enter velocity in z dimension as double value\n";
+            std::cin >> v[2];
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for velocities\n";
+                continue;
+            }
+            break;
+        }
+
+        std::cout << "Specify the mean velocity\n";
+        while(true) {
+            std::cout << "Please enter the velocity as double value\n";
+            std::cin >> mean_v;
+            if(std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore();
+                std::cout << "Please use a double value as input for velocities\n";
+                continue;
+            }
+            break;
+        }
 
 
         std::string more;

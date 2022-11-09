@@ -7,7 +7,6 @@
 LennardJones::~LennardJones() = default;
 
 void LennardJones::calculateF(ParticleContainer &particles) {
-    //ToDo: Parameter mit Übergabe und nicht Hardcode values?
     int depthOfPotentialWell = 5;
     int zeroCrossing = 1;
 
