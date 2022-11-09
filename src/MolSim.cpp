@@ -21,7 +21,6 @@ constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
 
-int p[1]={0};
 
 struct option long_option[]{
         {"help", no_argument, 0, 'a'},
@@ -85,7 +84,7 @@ int main(int argc, char *argsv[]) {
 
     std::cout << "output written. Terminating..." <<
               std::endl;
-    return p[1];
+    return 0;
 }
 
 void print_help(){
