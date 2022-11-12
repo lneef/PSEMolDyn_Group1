@@ -11,6 +11,7 @@
 #include "ParticleContainer.h"
 #include "forceCalculation/LennardJones.h"
 #include "inputReader/Cuboid_cl.h"
+#include "inputReader/Cuboid_file.h"
 
 #include "Simulation.h"
 
@@ -57,9 +58,11 @@ int main(int argc, char *argsv[]) {
                 opt = Planet;
                 break;
             case 'c':
-                if(optarg == NULL)
+                if(optarg == NULL) {
                     input = std::make_unique<inputReader::Cuboid_cl>();
-                else
+                }else{
+                    input = std::make_unique<inputReader::Cuboid_file>(optarg);
+                }
 
                 force = std::make_unique<LennardJones>();
                 opt = Cuboid;
