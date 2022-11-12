@@ -150,24 +150,9 @@ public:
     size_t size();
 
     /**
-     * @brief function to iterate over particles and to call function passed as argument for each particle
-     * @tparam T function taking Particle& and returning void
-     * @param fun function working on particle passed as argument
+     * @brief overloaded access operator for ParticleContainer
+     * @param i index which is accessed
+     * @return lvalue reference to Particle at the passed index
      */
-    template<class T>
-    void apply(T fun) {
-        for (auto &p: particles) {
-            fun(p);
-        }
-    }
-
-    template<class T>
-    void apply2(T fun) {
-        size_t len = particles.size();
-        for (size_t i = 0; i < len; ++i) {
-            for (size_t j = i + 1; j < len; ++j) {
-                fun(particles[i], particles[j]);
-            }
-        }
-    }
+    Particle &operator[](size_t i);
 };

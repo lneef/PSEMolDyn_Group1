@@ -39,11 +39,11 @@ p_iterator p_iterator::operator++(int) {
     return tmp;
 }
 
-void ParticleContainer::setParticles(const std::vector <Particle> &particles) {
+void ParticleContainer::setParticles(const std::vector<Particle> &particles) {
     this->particles = particles;
 }
 
-const std::vector <Particle> &ParticleContainer::getParticles() const {
+const std::vector<Particle> &ParticleContainer::getParticles() const {
     return this->particles;
 }
 
@@ -54,4 +54,6 @@ void ParticleContainer::addParticle(Particle &&particle) {
 size_t ParticleContainer::size() {
     return particles.size();
 }
-
+Particle& ParticleContainer::operator[](size_t i){
+    return particles[i];
+}
