@@ -1,9 +1,9 @@
 include(FetchContent)
 
 FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG 58d77fa8070e8cec2dc1ed015d66b454c8d78850
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG  ad0e89cbfb4d0c1ce4d097e134eb7be67baebb36
   )
 
-  FetchContent_MakeAvailable(googletest)
+  FetchContent_MakeAvailable(spdlog)
