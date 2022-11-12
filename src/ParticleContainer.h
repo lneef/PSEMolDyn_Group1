@@ -19,7 +19,7 @@ private:
     /**
      * @brief The data structure where the particles are stored internally.
     */
-    std::vector <Particle> particles;
+    std::vector<Particle> particles;
 
 
 public:
@@ -112,14 +112,14 @@ public:
      *
      * @return vector of particles
     */
-    const std::vector <Particle> &getParticles() const;
+    const std::vector<Particle> &getParticles() const;
 
     /**
      * @brief Setter for field particles
      *
      * @param particles vector of Particles
     */
-    void setParticles(const std::vector <Particle> &particles);
+    void setParticles(const std::vector<Particle> &particles);
 
     /**
      * @brief return iterator pointing to the first element of the field particles
@@ -149,5 +149,25 @@ public:
     */
     size_t size();
 
-    template<class T> void apply2(T fun);
+    /**
+     * @brief function to iterate over particles and to call function passed as argument for each particle
+     * @tparam T function taking Particle& and returning void
+     * @param fun function working on particle passed as argument
+     */
+    template<class T>
+    void apply(T fun) {
+        for (auto &p: particles) {
+            fun(p);
+        }
+    }
+
+    template<class T>
+    void apply2(T fun) {
+        size_t len = particles.size();
+        for (size_t i = 0; i < len; ++i) {
+            for (size_t j = i + 1; j < len; ++j) {
+                fun(particles[i], particles[j]);
+            }
+        }
+    }
 };

@@ -6,35 +6,23 @@
 
 //calculation new force
 void Gravitation::calculateF(ParticleContainer &particles) {
-    //iterate over all pairs of particles
-    for (auto &p1: particles) {
+
+    particles.apply([](Particle &par){
+       std::array<double, 3> zero{};
+       par.setF(zero);
+    });
+
+    particles.apply2([](Particle& p1,Particle& p2) {
+        std::array<double, 3> xij = p1.getX() - p2.getX();
+        std::array<double, 3> xji = p2.getX() - p1.getX();
+        double norm = ArrayUtils::L2Norm(xij);
         std::array<double, 3> newF{};
-        for (auto &p2: particles) {
-            //check if it the same particle
-            if (p1 == p2) {
-                continue;
-            }
-            std::array<double, 3> xij;
-            for (int i = 0; i < 3; i++) {
-                xij[i] = p1.getX()[i] - p2.getX()[i];
-            }
-            double norm = calculateNorm(xij);
+        double scalar = p1.getM() * p2.getM() / pow(norm , 3);
+        newF = scalar * xji;
+        p1.updateF(p1.getF() + newF);
+        p2.updateF(-1 * newF + p2.getF());
 
-            std::array<double, 3> xji;
-            //simple force calculation for all dimensions
-            for (int i = 0; i < 3; i++) {
-                xji[i] = p2.getX()[i] - p1.getX()[i];
-                newF[i] += (p1.getM() * p2.getM() * (xji[i])) / pow(norm, 3);
-            }
-        }
-        p1.setF(newF);
-    }
-}
-
-//calculate norm of a vector
-double Gravitation::calculateNorm(std::array<double, 3> x) {
-    double norm = sqrt(pow(x[0], 2) + pow(x[1], 2) + pow(x[2], 2));
-    return norm;
+    });
 }
 
 Gravitation::~Gravitation() = default;

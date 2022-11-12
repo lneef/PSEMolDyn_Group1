@@ -1,11 +1,16 @@
 //
 // Created by lukas on 08.11.22.
 //
+
+#pragma once
+
 #include "../ParticleContainer.h"
-#ifndef PSEMOLDYN_GROUP1_INPUTREADER_H
-#define PSEMOLDYN_GROUP1_INPUTREADER_H
+
 
 namespace inputReader {
+    /**
+     * @brief InputReader provides a uniform interface for reading particles for any input type
+     */
     class InputReader {
     public:
         /**
@@ -20,4 +25,4 @@ namespace inputReader {
     };
 
 }
-#endif //PSEMOLDYN_GROUP1_INPUTREADER_H
+

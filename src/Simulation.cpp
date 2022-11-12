@@ -3,7 +3,7 @@
 //
 #include "Simulation.h"
 
-void Simulation::calculateX(){
+void Simulation::calculateX() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempF{p.getF()};
@@ -18,7 +18,8 @@ void Simulation::calculateX(){
         p.setX(newX);
     }
 }
-void Simulation::calculateV(){
+
+void Simulation::calculateV() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
@@ -34,6 +35,7 @@ void Simulation::calculateV(){
         p.setV(newV);
     }
 }
+
 void Simulation::run() {
     std::string out_name("MD_vtk");
 
@@ -41,7 +43,7 @@ void Simulation::run() {
 
     int iteration = 0;
 
-    force -> calculateF(particles);
+    force->calculateF(particles);
 
     while (current_time < end_time) {
 
@@ -53,20 +55,21 @@ void Simulation::run() {
 
         iteration++;
         if (iteration % 10 == 0) {
-            writer->plotParticles(particles, out_name,iteration);
+            writer->plotParticles(particles, out_name, iteration);
         }
         std::cout << "Iteration " << iteration << " finished." <<
                   std::endl;
 
-        current_time +=delta_t;
+        current_time += delta_t;
     }
 }
-Simulation::Simulation( ParticleContainer& particles, double delta_t, double end_time,  std::unique_ptr <outputWriter::FileWriter>&& writer
-, std::unique_ptr <Force>&& force){
-this -> delta_t=delta_t;
-this -> end_time = end_time;
-this -> writer = std::move(writer);
-this -> force = std::move(force);
-this -> particles.setParticles(particles.getParticles());
+
+Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
+                       std::unique_ptr<outputWriter::FileWriter> &&writer, std::unique_ptr<Force> &force) {
+    this->delta_t = delta_t;
+    this->end_time = end_time;
+    this->writer = std::move(writer);
+    this->force = std::move(force);
+    this->particles.setParticles(particles.getParticles());
 
 }
