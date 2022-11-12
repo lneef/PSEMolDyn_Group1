@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../Particle.h"
 #include "../ParticleContainer.h"
 #include "InputReader.h"
+#include "CuboidGenerator.h"
 
 namespace inputReader {
     class Cuboid_cl : public InputReader{
