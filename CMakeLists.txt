@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.9)
 # define project name, version
 project(PSEMolDyn_Group1 VERSION 0.0.1)
 
-
+#option to enable compilation with linter
 option(LINTER "Enable compilation with sanitizer" OFF)
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
@@ -41,9 +41,12 @@ target_link_libraries(MolSim
         PUBLIC
         xerces-c
         )
+
+# if the option is set, the program will be compiled with fsanitize=address
 if (LINTER)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 endif ()
+
 # activate all compiler warnings. Clean up your code :P
 # depending on the compiler different flags are used
 target_compile_options(MolSim
@@ -92,6 +95,8 @@ target_link_libraries(ParticleContainer_Test
 include(GoogleTest)
 
 gtest_discover_tests(ParticleContainer_Test)
+
+include(spdlog)
 
 
 
