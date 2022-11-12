@@ -58,8 +58,6 @@ int main(int argc, char *argsv[]) {
             case 'c':
                 if(optarg == NULL)
                     input = std::make_unique<inputReader::Cuboid_cl>();
-                else
-
                 force = std::make_unique<LennardJones>();
                 opt = Cuboid;
                 break;
