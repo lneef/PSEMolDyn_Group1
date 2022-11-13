@@ -1,12 +1,14 @@
 #include <gtest/gtest.h>
 #include "../src/Particle.h"
 #include "../src/ParticleContainer.h"
+#include "../src/MolSimLogger.h"
 #include <vector>
 
 /**
 * @brief check whether iterator of ParticleContainer enables iteration over all stored particles
 */
 TEST(ParticleContainerTest, IteratorTest){
+    MolSimLogger::init();
     ParticleContainer par{};
     
     par.addParticle( Particle ({0.,0.,0.},{0.,0., 0.}, 1.));
