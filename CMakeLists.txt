@@ -82,19 +82,22 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+file(GLOB_RECURSE MY_TEST
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cc"
+        )
 add_executable(
-        ParticleContainer_Test
-        tests/ParticleContainer_Test.cc
+        MolSimTest
+        ${MY_TEST}
 )
 
 
 add_library(Particle ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp)
 target_link_libraries(Particle PRIVATE spdlog::spdlog)
-target_include_directories(ParticleContainer_Test
+target_include_directories(MolSimTest
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/
         )
-target_link_libraries(ParticleContainer_Test
+target_link_libraries(MolSimTest
         GTest::gtest_main
         Particle
         spdlog::spdlog
@@ -103,7 +106,7 @@ target_link_libraries(ParticleContainer_Test
 
 include(GoogleTest)
 
-gtest_discover_tests(ParticleContainer_Test)
+gtest_discover_tests(MolSimTest)
 
 include(spdlog)
 
