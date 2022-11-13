@@ -3,6 +3,7 @@
 //
 
 #include "CuboidGenerator.h"
+#include <iostream>
 
 CuboidGenerator::CuboidGenerator() = default;
 
