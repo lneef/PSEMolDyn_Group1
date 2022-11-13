@@ -5,6 +5,9 @@ project(PSEMolDyn_Group1 VERSION 0.0.1)
 
 #option to enable compilation with linter
 option(LINTER "Enable compilation with sanitizer" OFF)
+
+# option to disable logging in performance critical regions
+option(N_LOG "DISABLE LOGGING" OFF)
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
 
@@ -28,7 +31,9 @@ target_compile_features(MolSim
         PRIVATE
         cxx_std_20
         )
-
+if(N_LOG)
+    target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF)
+endif()
 target_include_directories(MolSim
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd
@@ -40,8 +45,10 @@ target_link_libraries(MolSim
         # stuff that is used in headers and source files
         PUBLIC
         xerces-c
+        PRIVATE
+        spdlog::spdlog
         )
-
+add_compile_definitions(WITH_OPENCV2)
 # if the option is set, the program will be compiled with fsanitize=address
 if (LINTER)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
@@ -82,7 +89,7 @@ add_executable(
 
 
 add_library(Particle ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp)
-
+target_link_libraries(Particle PRIVATE spdlog::spdlog)
 target_include_directories(ParticleContainer_Test
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/

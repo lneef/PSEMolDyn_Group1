@@ -2,7 +2,7 @@
 // Created by lukas on 08.11.22.
 //
 #include "Simulation.h"
-
+#include "MolSimLogger.h"
 void Simulation::calculateX() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
@@ -56,11 +56,12 @@ void Simulation::run() {
         calculateV();
 
         iteration++;
+        /**
         if (iteration % 10 == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
-        std::cout << "Iteration " << iteration << " finished." <<
-                  std::endl;
+         */
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Itertation {} finished. ", iteration);
 
         current_time += delta_t;
     }

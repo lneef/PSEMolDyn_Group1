@@ -1,6 +1,6 @@
 #include "Cuboid_cl.h"
 #include <iostream>
-
+#include "../MolSimLogger.h"
 namespace inputReader {
     Cuboid_cl::Cuboid_cl() = default;
 
@@ -28,6 +28,7 @@ namespace inputReader {
             }
             break;
         }
+        MolSimLogger::logInfo("{} Cuboids will be generated.", num_particles);
 
         for (int i = 0; i < num_particles; i++) {
             std::cout << "Specify the coordinate of lower left front-side corner\n";
@@ -65,6 +66,8 @@ namespace inputReader {
                 break;
             }
 
+            MolSimLogger::logDebug("Lower left front side corner: {} {} {}", x[0], x[1], x[2]);
+
             std::cout << "Specify the number of particles per dimension\n";
             while (true) {
                 std::cout << "Please enter the quantity in x dimension as an integer\n";
@@ -99,7 +102,7 @@ namespace inputReader {
                 }
                 break;
             }
-
+            MolSimLogger::logDebug("Number of particles per dimension: {} {} {}", n[0], n[1], n[2]);
             std::cout << "Specify the distance between the particles\n";
             while (true) {
                 std::cout << "Please enter the distance as double value\n";
@@ -125,6 +128,8 @@ namespace inputReader {
                 }
                 break;
             }
+
+            MolSimLogger::logDebug("Mass of each Particle: {}", m);
 
 
             std::cout << "Specify the velocity of the particles\n";
@@ -161,7 +166,10 @@ namespace inputReader {
                 }
                 break;
             }
+
+            MolSimLogger::logDebug("Mean velocity of the particles: {} {} {}", v[0], v[1], v[2]);
             cuboidGenerator.generateCuboid(particles, x, n, h, m, v);
+            MolSimLogger::logInfo("Cuboid generated!");
         }
     }
 }
