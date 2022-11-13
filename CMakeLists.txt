@@ -88,7 +88,7 @@ add_executable(
 )
 
 
-add_library(Particle ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp)
+add_library(Particle ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp)
 target_link_libraries(Particle PRIVATE spdlog::spdlog)
 target_include_directories(ParticleContainer_Test
         PRIVATE
@@ -97,6 +97,8 @@ target_include_directories(ParticleContainer_Test
 target_link_libraries(ParticleContainer_Test
         GTest::gtest_main
         Particle
+        spdlog::spdlog
+
         )
 
 include(GoogleTest)
