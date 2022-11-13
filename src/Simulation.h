@@ -9,6 +9,7 @@
 #include "ParticleContainer.h"
 #include "outputWriter/FileWriter.h"
 #include "forceCalculation/Force.h"
+#include <chrono>
 
 /**
  * @brief The class Simulation provides the functionality for running the simulation. It can be tailored to a specific

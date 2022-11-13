@@ -63,7 +63,6 @@ int main(int argc, char *argsv[]) {
                 }else{
                     input = std::make_unique<inputReader::Cuboid_file>(optarg);
                 }
-
                 force = std::make_unique<LennardJones>();
                 opt = Cuboid;
                 break;

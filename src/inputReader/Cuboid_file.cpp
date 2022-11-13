@@ -23,9 +23,10 @@ namespace inputReader {
         double m;
         std::array<double, 3> v;
 
-        CuboidGenerator cuboidGenerator;
+        CuboidGenerator generator;
 
         int num_particles = 0;
+
         std::ifstream input_file(filename.c_str());
         std::string tmp_string;
 
@@ -59,16 +60,7 @@ namespace inputReader {
                 for (auto &vj: v) {
                     datastream >> vj;
                 }
-                //ToDo Warum nur hier überprüft? Vgl mit TxtReader
-                if (datastream.eof()) {
-                    std::cout
-                            << "Error reading file: eof reached unexpectedly reading from line "
-                            << i << std::endl;
-                    exit(-1);
-                }
-
-                datastream >> m;
-                particles.addParticle(Particle(x, v, m));
+                generator.generateCuboid(particles,x,n,h,m,v);
 
                 getline(input_file, tmp_string);
                 std::cout << "Read line: " << tmp_string << std::endl;

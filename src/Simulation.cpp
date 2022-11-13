@@ -39,6 +39,8 @@ void Simulation::calculateV() {
 void Simulation::run() {
     std::string out_name("MD_vtk");
 
+    auto start = std::chrono::high_resolution_clock::now();
+
     double current_time = start_time;
 
     int iteration = 0;
@@ -62,10 +64,15 @@ void Simulation::run() {
 
         current_time += delta_t;
     }
+
+    //ToDo time measure: avoid cout,etc
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    std::cout << difference.count() << "ms" << std::endl;
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
-                       std::unique_ptr<outputWriter::FileWriter> &&writer, std::unique_ptr<Force> &force) {
+                       std::unique_ptr <outputWriter::FileWriter> &&writer, std::unique_ptr <Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
     this->writer = std::move(writer);
