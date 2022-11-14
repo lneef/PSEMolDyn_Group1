@@ -7,7 +7,7 @@ Members:
 * Dominik Rammelsberger
 
 # Code #
-* Link: https://gitlab.lrz.de/molsim1/psemoldyn_group1
+* Link: https://github.com/lneef/PSEMolDyn_Group1
 * Branch: main
 * Revision: 
 
@@ -17,6 +17,7 @@ Members:
 * run cmake ..
 * run make or make all
 * run ./MolSim --help for further information on usage or see Usage
+* run ctest for running all tests
 
 # Doxygen #
 * Per default cmake .. creates a target for generating a doxygen documentation
