@@ -16,6 +16,7 @@ namespace inputReader {
 
     Cuboid_file::~Cuboid_file() = default;
 
+    //reads values from file
     void Cuboid_file::read(ParticleContainer &particles) {
         std::array<double, 3> x;
         std::array<int, 3> n;
@@ -40,12 +41,14 @@ namespace inputReader {
                 std::cout << "Read line: " << tmp_string << std::endl;
             }
 
+            //read number of particles
             std::istringstream numstream(tmp_string);
             numstream >> num_particles;
             std::cout << "Reading " << num_particles << "." << std::endl;
             getline(input_file, tmp_string);
             std::cout << "Read line: " << tmp_string << std::endl;
 
+            //read actual values
             for (int i = 0; i < num_particles; i++) {
                 std::istringstream datastream(tmp_string);
 
@@ -60,7 +63,8 @@ namespace inputReader {
                 for (auto &vj: v) {
                     datastream >> vj;
                 }
-                generator.generateCuboid(particles,x,n,h,m,v);
+                //passes values to CuboidGenerator
+                generator.generateCuboid(particles, x, n, h, m, v);
 
                 getline(input_file, tmp_string);
                 std::cout << "Read line: " << tmp_string << std::endl;
