@@ -1,7 +1,3 @@
-//
-// Created by lukas on 13.11.22.
-//
-
 
 #include "MolSimLogger.h"
 #include "spdlog/sinks/basic_file_sink.h"

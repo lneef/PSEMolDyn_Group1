@@ -1,6 +1,3 @@
-//
-// Created by dominik on 09.11.22.
-//
 
 #include "CuboidGenerator.h"
 #include <iostream>
@@ -13,7 +10,7 @@ std::array<double, 3> CuboidGenerator::calculateV(std::array<double, 3> v) {
     MaxwellBoltzmannDistribution mb;
     //calculate velocity with thermal friction
     std::array<double, 3> mbV = mb.maxwellBoltzmannDistributedVelocity(meanV, sizeof(v) / sizeof(v[0]));
-    std::array<double, 3> newV;
+    std::array<double, 3> newV{};
     for (int i = 0; i < 3; i++) {
         newV[i] = v[i] + mbV[i];
     }
@@ -23,7 +20,7 @@ std::array<double, 3> CuboidGenerator::calculateV(std::array<double, 3> v) {
 void CuboidGenerator::generateCuboid(ParticleContainer &particles, std::array<double, 3> x, std::array<int, 3> n,
                                      double h, double m, std::array<double, 3> v) {
     std::array<double, 3> newV = calculateV(v);
-    std::array<double, 3> newX;
+    std::array<double, 3> newX{};
     //iterate over cuboid in each dimension
     for (int x_cord = 0; x_cord < n[0]; x_cord++) {
         newX[0] = x[0] + (x_cord * h);

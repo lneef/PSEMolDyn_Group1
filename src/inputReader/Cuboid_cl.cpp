@@ -8,11 +8,11 @@ namespace inputReader {
     Cuboid_cl::~Cuboid_cl() = default;
 
     void Cuboid_cl::read(ParticleContainer &particles) {
-        std::array<double, 3> x;
-        std::array<int, 3> n;
+        std::array<double, 3> x{};
+        std::array<int, 3> n{};
         double h;
         double m;
-        std::array<double, 3> v;
+        std::array<double, 3> v{};
 
         CuboidGenerator cuboidGenerator;
 

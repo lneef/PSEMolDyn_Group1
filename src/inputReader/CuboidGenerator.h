@@ -1,6 +1,4 @@
-//
-// Created by dominik on 09.11.22.
-//
+
 #pragma once
 
 #include "../ParticleContainer.h"
