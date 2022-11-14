@@ -16,6 +16,8 @@ namespace inputReader {
         CuboidGenerator cuboidGenerator;
 
         int num_particles;
+
+        //command line queries
         std::cout << "How many cuboids you want to generate?\n";
         while (true) {
             std::cout << "Please enter a number as integer greater than or equal to 1\n";
@@ -161,6 +163,7 @@ namespace inputReader {
                 }
                 break;
             }
+            //passes values to CuboidGenerator
             cuboidGenerator.generateCuboid(particles, x, n, h, m, v);
         }
     }
