@@ -1,6 +1,4 @@
-//
-// Created by dominik on 05.11.22.
-//
+
 
 #include "LennardJones.h"
 

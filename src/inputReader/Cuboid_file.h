@@ -15,9 +15,9 @@ namespace inputReader {
 */
     class Cuboid_file : public FileReader {
     public:
-        Cuboid_file(char *filename);
+        explicit Cuboid_file(char *filename);
 
-        virtual ~Cuboid_file();
+        ~Cuboid_file() override;
 
         /**
          * @brief Reads values of cuboids from input file and passes them to an instance of CuboidGenerator

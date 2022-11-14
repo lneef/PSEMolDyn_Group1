@@ -1,9 +1,3 @@
-/*
- * FileReader.h
- *
- *  Created on: 23.02.2010
- *      Author: eckhardw
- */
 
 #pragma once
 
@@ -23,9 +17,9 @@ namespace inputReader {
 class TxtReader : public FileReader{
 
     public:
-        TxtReader(char* filename);
+        explicit TxtReader(char* filename);
 
-        virtual ~TxtReader();
+        ~TxtReader() override;
 
         /**
          * @brief Reads particles from input file and stores them in instance of ParticleContainer
