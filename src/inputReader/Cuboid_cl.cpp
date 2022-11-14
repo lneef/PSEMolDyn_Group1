@@ -1,6 +1,7 @@
 #include "Cuboid_cl.h"
 #include <iostream>
 #include "../MolSimLogger.h"
+
 namespace inputReader {
     Cuboid_cl::Cuboid_cl() = default;
 
@@ -168,12 +169,11 @@ namespace inputReader {
                 }
                 break;
             }
-<<<<<<< HEAD
+
 
             MolSimLogger::logDebug("Mean velocity of the particles: {} {} {}", v[0], v[1], v[2]);
-=======
+
             //passes values to CuboidGenerator
->>>>>>> 837df6dbe3d19d40c22fc9a0dceef2ddf1bc6699
             cuboidGenerator.generateCuboid(particles, x, n, h, m, v);
             MolSimLogger::logInfo("Cuboid generated!");
         }

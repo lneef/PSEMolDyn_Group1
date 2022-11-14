@@ -9,6 +9,7 @@
 #include <iostream>
 #include <sstream>
 #include "../MolSimLogger.h"
+
 namespace inputReader {
     Cuboid_file::Cuboid_file(char *filename) {
         this->filename = filename;
@@ -64,10 +65,8 @@ namespace inputReader {
                 for (auto &vj: v) {
                     datastream >> vj;
                 }
-<<<<<<< HEAD
-=======
                 //passes values to CuboidGenerator
->>>>>>> 837df6dbe3d19d40c22fc9a0dceef2ddf1bc6699
+
                 generator.generateCuboid(particles, x, n, h, m, v);
 
                 getline(input_file, tmp_string);
