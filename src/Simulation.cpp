@@ -3,6 +3,7 @@
 //
 #include "Simulation.h"
 #include "MolSimLogger.h"
+
 void Simulation::calculateX() {
     for (auto &p: particles) {
         const std::array<double, 3> &tempV{p.getV()};
@@ -56,15 +57,17 @@ void Simulation::run() {
         calculateV();
 
         iteration++;
-        /**
+#ifndef BENCHMARK
         if (iteration % 10 == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
-         */
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Itertation {} finished. ", iteration);
 
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Itertation {} finished. ", iteration);
+#endif
         current_time += delta_t;
     }
+
+
 
     //ToDo time measure: avoid cout,etc
     auto stop = std::chrono::high_resolution_clock::now();
@@ -73,7 +76,7 @@ void Simulation::run() {
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
-                       std::unique_ptr <outputWriter::FileWriter> &&writer, std::unique_ptr <Force> &force) {
+                       std::unique_ptr<outputWriter::FileWriter> &&writer, std::unique_ptr<Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
     this->writer = std::move(writer);

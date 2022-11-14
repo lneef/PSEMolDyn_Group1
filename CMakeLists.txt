@@ -7,7 +7,7 @@ project(PSEMolDyn_Group1 VERSION 0.0.1)
 option(LINTER "Enable compilation with sanitizer" OFF)
 
 # option to disable logging in performance critical regions
-option(N_LOG "DISABLE LOGGING" OFF)
+option(BMARK "Disable io in benchmark region" OFF)
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
 
@@ -31,8 +31,8 @@ target_compile_features(MolSim
         PRIVATE
         cxx_std_20
         )
-if(N_LOG)
-    target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF)
+if(BMARK)
+    target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF BENCHMARK)
 endif()
 target_include_directories(MolSim
         PUBLIC
