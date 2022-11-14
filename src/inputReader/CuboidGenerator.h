@@ -15,6 +15,12 @@ class CuboidGenerator {
 private:
     double meanV = 0.1;
 
+    /**
+     * @brief Calculates velocity of particles with given velocity and the MaxwellBoltzmannDistribution
+     *
+     * @param v Array representaion of the velocities of the particles in all three dimensions
+     * @return velocity with thermal friction
+    */
     std::array<double, 3> calculateV(std::array<double, 3> v);
 
 public:
