@@ -23,9 +23,9 @@ namespace inputReader {
 class TxtReader : public FileReader{
 
     public:
-        TxtReader(char* filename);
+        explicit TxtReader(char* filename);
 
-        virtual ~TxtReader();
+        ~TxtReader() override;
 
         /**
          * @brief Reads particles from input file and stores them in instance of ParticleContainer

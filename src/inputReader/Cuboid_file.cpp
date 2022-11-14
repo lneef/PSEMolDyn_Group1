@@ -16,6 +16,7 @@ namespace inputReader {
 
     Cuboid_file::~Cuboid_file() = default;
 
+    //reads values from file
     void Cuboid_file::read(ParticleContainer &particles) {
         std::array<double, 3> x;
         std::array<int, 3> n;
@@ -40,6 +41,7 @@ namespace inputReader {
                 MolSimLogger::logDebug("Read line: {}", tmp_string);
             }
 
+            //read number of particles
             std::istringstream numstream(tmp_string);
             numstream >> num_particles;
             MolSimLogger::logInfo("Reading {} Particles.", num_particles);
@@ -47,6 +49,7 @@ namespace inputReader {
             MolSimLogger::logDebug("Read line: {}", tmp_string);
 
 
+            //read actual values
             for (int i = 0; i < num_particles; i++) {
                 std::istringstream datastream(tmp_string);
 
@@ -61,6 +64,10 @@ namespace inputReader {
                 for (auto &vj: v) {
                     datastream >> vj;
                 }
+<<<<<<< HEAD
+=======
+                //passes values to CuboidGenerator
+>>>>>>> 837df6dbe3d19d40c22fc9a0dceef2ddf1bc6699
                 generator.generateCuboid(particles, x, n, h, m, v);
 
                 getline(input_file, tmp_string);

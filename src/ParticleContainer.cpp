@@ -57,3 +57,8 @@ size_t ParticleContainer::size() {
 Particle& ParticleContainer::operator[](size_t i){
     return particles[i];
 }
+
+void ParticleContainer::prealloc(size_t len){
+    size_t size = particles.size();
+    particles.resize(size + len);
+}

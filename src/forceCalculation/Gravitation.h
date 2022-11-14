@@ -17,5 +17,5 @@ public:
     */
     void calculateF(ParticleContainer &particles) override;
 
-    virtual  ~Gravitation();
+     ~Gravitation() override;
 };

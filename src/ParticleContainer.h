@@ -80,7 +80,7 @@ public:
         /**
          * @brief Post-increment operator for class iterator.
         */
-        iterator operator++(int);
+        iterator &operator++(int);
 
         /**
          * @brief Dereference operator for class iterator.
@@ -154,5 +154,11 @@ public:
      * @param i index which is accessed
      * @return lvalue reference to Particle at the passed index
      */
-    Particle &operator[](size_t i);
+    inline Particle &operator[](size_t i);
+
+    /**
+     * @brief preallocate memory for storing particles
+     * @param len number of particles for which memory should be allocated
+     */
+     void prealloc(size_t len);
 };
