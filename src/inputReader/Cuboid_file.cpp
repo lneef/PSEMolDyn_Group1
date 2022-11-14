@@ -42,10 +42,10 @@ namespace inputReader {
                 MolSimLogger::logDebug("Read line: {}", tmp_string);
             }
 
-            //read number of particles
+            //read number of cuboids
             std::istringstream numstream(tmp_string);
             numstream >> num_particles;
-            MolSimLogger::logInfo("Reading {} Particles.", num_particles);
+            MolSimLogger::logInfo("Reading {} Cuboids." , num_particles);
             getline(input_file, tmp_string);
             MolSimLogger::logDebug("Read line: {}", tmp_string);
 
@@ -68,6 +68,7 @@ namespace inputReader {
                 //passes values to CuboidGenerator
 
                 generator.generateCuboid(particles, x, n, h, m, v);
+                MolSimLogger::logInfo("Cuboids generated!");
 
                 getline(input_file, tmp_string);
                 MolSimLogger::logDebug("Read line: {}", tmp_string);
