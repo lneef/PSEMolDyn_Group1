@@ -6,7 +6,7 @@
 #include "utils/ArrayUtils.h"
 
 void Simulation::calculateX() {
-    particles.apply([this](Particle &p){
+    particles.apply([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempF{p.getF()};
         const std::array<double, 3> &tempX{p.getX()};
@@ -22,7 +22,7 @@ void Simulation::calculateX() {
 }
 
 void Simulation::calculateV() {
-    particles.apply([this](Particle &p){
+    particles.apply([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempF{p.getF()};
@@ -54,10 +54,10 @@ void Simulation::run() {
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
 
         force->calculateF(particles);
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}" , iteration);
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
 
         calculateV();
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}" , iteration);
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
 
         iteration++;
 #ifndef BENCHMARK
@@ -77,7 +77,7 @@ void Simulation::run() {
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
-                       std::unique_ptr<outputWriter::FileWriter> &&writer, std::unique_ptr<Force> &force) {
+                       std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
     this->writer = std::move(writer);

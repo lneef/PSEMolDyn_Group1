@@ -92,9 +92,14 @@ add_executable(
 file(GLOB_RECURSE FORCE
         "${CMAKE_CURRENT_SOURCE_DIR}/src/forceCalculation/*.cpp"
         )
+file(GLOB_RECURSE INPUT
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/inputReader/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/*.cpp"
+        )
 
 add_library(lib_test
         ${FORCE}
+        ${INPUT}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp
