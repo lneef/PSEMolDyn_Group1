@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../src/Particle.h"
-#include "../src/ParticleContainer.h"
+#include "Particle.h"
+#include "ParticleContainer.h"
 #include <vector>
 
 

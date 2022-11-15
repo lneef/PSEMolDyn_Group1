@@ -1,4 +1,4 @@
-#include "../src/forceCalculation/LennardJones.h"
+#include "forceCalculation/LennardJones.h"
 #include "gtest/gtest.h"
 
 
