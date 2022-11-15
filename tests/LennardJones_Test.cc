@@ -1,5 +1,6 @@
 #include "forceCalculation/LennardJones.h"
 #include "gtest/gtest.h"
+#include "MolSimTest.h"
 
 
 /**
@@ -19,9 +20,9 @@ TEST(LennardJonesTest, CalcTest){
     lj.calculateF(par);
     const std::array<double, 3> f1{-120., 0. ,0.};
     const std::array<double, 3> f2{120, 0., 0.};
-    EXPECT_EQ(par[0].getF(),f1);
-    EXPECT_EQ(par[1].getF(),f2);
-    EXPECT_EQ(par[0].getOldF(), oldf);
+    MolSimTest::test_equ(par[0].getF(), f1);
+    MolSimTest::test_equ(par[1].getF(), f2);
+    MolSimTest::test_equ(par[0].getOldF(), oldf);
 
 
 }

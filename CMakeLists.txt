@@ -84,6 +84,8 @@ enable_testing()
 
 file(GLOB_RECURSE MY_TEST
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.h"
         )
 add_executable(
         MolSimTest

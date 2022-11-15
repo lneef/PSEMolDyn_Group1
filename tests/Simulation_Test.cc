@@ -17,7 +17,9 @@ public:
     MOCK_METHOD(void, plotParticles, (ParticleContainer &particles, const std::string &filename, int iteration) , (override));
 
 };
-
+/**
+ * @brief test that calculation of f and output is called as often as expected
+ */
 TEST(SimulationTest, CallNumber){
     ParticleContainer par{};
     testing::Sequence s1, s2;

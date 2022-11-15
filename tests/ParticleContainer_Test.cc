@@ -21,10 +21,9 @@ TEST(ParticleContainerTest, AppyTest){
     const std::vector<Particle>& tmp = par.getParticles();
 
 
-
-    EXPECT_FLOAT_EQ(0., tmp[0].getM());
-    EXPECT_FLOAT_EQ(0., tmp[1].getM());
-    EXPECT_FLOAT_EQ(0., tmp[2].getM());
+    EXPECT_DOUBLE_EQ(0., tmp[0].getM());
+    EXPECT_DOUBLE_EQ(0., tmp[1].getM());
+    EXPECT_DOUBLE_EQ(0., tmp[2].getM());
 
 }
 
