@@ -13,7 +13,7 @@ LennardJones::LennardJones() {
 void LennardJones::calculateF(ParticleContainer &particles) {
 
     particles.apply([](Particle &p){
-        p.setF({});
+        p.updateF({});
     });
 
     size_t len = particles.size();

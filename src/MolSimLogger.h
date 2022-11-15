@@ -8,6 +8,10 @@
 class MolSimLogger {
 
 private:
+    /**
+     * @brief static variable for saving pointer to logger for performance reasons
+     * @see https://github.com/gabime/spdlog/wiki/2.-Creating-loggers#creating-multiple-file-loggers-with-the-same-output-file
+     */
     static std::shared_ptr<spdlog::logger> loggerMolSim;
 
 public:

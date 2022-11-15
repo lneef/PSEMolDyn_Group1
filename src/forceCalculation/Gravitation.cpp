@@ -6,7 +6,7 @@
 void Gravitation::calculateF(ParticleContainer &particles) {
 
     particles.apply([](Particle &p){
-       p.setF({});
+       p.updateF({});
     });
 
     size_t len = particles.size();
@@ -23,8 +23,8 @@ void Gravitation::calculateF(ParticleContainer &particles) {
             double scalar = p1.getM() * p2.getM() / pow(norm, 3);
 
             newF = scalar * xji;
-            particles[i].updateF(p1.getF() + newF);
-            p2.updateF(-1 * newF + p2.getF());
+            p1.setF(p1.getF() + newF);
+            p2.setF(-1 * newF + p2.getF());
         }
     }
 }
