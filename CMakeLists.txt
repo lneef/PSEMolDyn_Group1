@@ -99,7 +99,8 @@ add_library(lib_test
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp)
 
 target_link_libraries(lib_test PRIVATE spdlog::spdlog)
 target_include_directories(MolSimTest
