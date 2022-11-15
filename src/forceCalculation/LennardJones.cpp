@@ -12,8 +12,9 @@ LennardJones::LennardJones() {
 //calculation new force with Lennard-Jones potential
 void LennardJones::calculateF(ParticleContainer &particles) {
 
-    for (auto &p: particles)
+    particles.apply([](Particle &p){
         p.setF({});
+    });
 
     size_t len = particles.size();
 

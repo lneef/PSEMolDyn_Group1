@@ -3,9 +3,10 @@
 //
 #include "Simulation.h"
 #include "MolSimLogger.h"
+#include "utils/ArrayUtils.h"
 
 void Simulation::calculateX() {
-    for (auto &p: particles) {
+    particles.apply([this](Particle &p){
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempF{p.getF()};
         const std::array<double, 3> &tempX{p.getX()};
@@ -17,24 +18,23 @@ void Simulation::calculateX() {
             newX[i] = tempX[i] + delta_t * tempV[i] + pow(delta_t, 2) * tempF[i] / (2 * p.getM());
 
         p.setX(newX);
-    }
+    });
 }
 
 void Simulation::calculateV() {
-    for (auto &p: particles) {
+    particles.apply([this](Particle &p){
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempF{p.getF()};
 
         std::array<double, 3> newV{};
-
         for (int i = 0; i < 3; i++) {
             //Velocity-Störmer-Verlet-Algorithm
             newV[i] = tempV[i] + delta_t * (tempOldF[i] + tempF[i]) / (2 * p.getM());
         }
 
         p.setV(newV);
-    }
+    });
 }
 
 void Simulation::run() {

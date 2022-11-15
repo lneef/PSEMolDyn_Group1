@@ -35,6 +35,7 @@ namespace inputReader {
 
             std::istringstream numstream(tmp_string);
             numstream >> num_particles;
+            particles.prealloc(num_particles);
             MolSimLogger::logInfo("Reading {} Particles.", num_particles);
             getline(input_file, tmp_string);
             MolSimLogger::logDebug("Read line: {}", tmp_string);

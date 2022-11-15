@@ -86,3 +86,7 @@ std::ostream &operator<<(std::ostream &stream, Particle &p) {
     stream << p.toString();
     return stream;
 }
+
+void Particle::setM(const double m) {
+    this->m = m;
+}

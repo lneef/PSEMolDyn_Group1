@@ -102,6 +102,8 @@ public:
      * @warning old_f is not updated
      */
     void updateF(const std::array<double, 3> &f);
+
+    void setM(const double m);
 };
 
 std::ostream &operator<<(std::ostream &stream, Particle &p);

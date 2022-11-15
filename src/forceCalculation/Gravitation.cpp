@@ -5,8 +5,9 @@
 //calculation new force
 void Gravitation::calculateF(ParticleContainer &particles) {
 
-    for (auto &p: particles)
-        p.setF({});
+    particles.apply([](Particle &p){
+       p.setF({});
+    });
 
     size_t len = particles.size();
 
