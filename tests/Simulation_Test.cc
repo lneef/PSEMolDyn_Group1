@@ -4,6 +4,8 @@
 #include "outputWriter/FileWriter.h"
 #include "Simulation.h"
 
+
+
 class ForceMock : virtual public Force{
 public:
     MOCK_METHOD(void , calculateF, (ParticleContainer &particles), (override));
@@ -17,6 +19,7 @@ class OutMock : public outputWriter::FileWriter{
 
 TEST(SimulationTest, CallNumber){
     ParticleContainer par{};
+    testing::Sequence s1, s2;
     std::unique_ptr<Force> force = std::make_unique<ForceMock>();
     EXPECT_CALL(dynamic_cast<ForceMock&>(*force), calculateF).Times(12);
     Simulation sim(par, 1, 11, std::make_unique<OutMock>(), force);
