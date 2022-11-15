@@ -1,6 +1,5 @@
 #include "../src/forceCalculation/LennardJones.h"
 #include "gtest/gtest.h"
-#include
 
 
 
