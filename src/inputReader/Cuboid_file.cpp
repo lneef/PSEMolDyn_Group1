@@ -11,7 +11,7 @@
 #include "../MolSimLogger.h"
 
 namespace inputReader {
-    Cuboid_file::Cuboid_file(char *filename) {
+    Cuboid_file::Cuboid_file(std::string filename) {
         this->filename = filename;
     }
 
@@ -67,7 +67,6 @@ namespace inputReader {
                     datastream >> vj;
                 }
                 //passes values to CuboidGenerator
-                particles.prealloc(n[0]*n[1]*n[2]);
                 generator.generateCuboid(particles, x, n, h, m, v);
                 MolSimLogger::logInfo("Cuboids generated!");
 

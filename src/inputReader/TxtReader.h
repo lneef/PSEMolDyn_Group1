@@ -17,7 +17,7 @@ namespace inputReader {
 class TxtReader : public FileReader{
 
     public:
-        explicit TxtReader(char* filename);
+        explicit TxtReader(std::string filename);
 
         ~TxtReader() override;
 

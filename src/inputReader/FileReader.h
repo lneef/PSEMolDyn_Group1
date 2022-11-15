@@ -2,7 +2,7 @@
 #pragma once
 
 #include "../ParticleContainer.h"
-#include "Particle.h"
+#include "../Particle.h"
 #include "InputReader.h"
 namespace inputReader {
 
@@ -17,8 +17,11 @@ namespace inputReader {
         /**
          * @brief virtual destructor to prevent memory leaks
         */
-        virtual ~FileReader();
+        ~FileReader() override;
     protected:
+        /**
+         * @brief filename of the file from where the input is read
+         */
         std::string filename;
     };
 }

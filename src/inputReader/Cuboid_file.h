@@ -15,7 +15,7 @@ namespace inputReader {
 */
     class Cuboid_file : public FileReader {
     public:
-        explicit Cuboid_file(char *filename);
+        explicit Cuboid_file(std::string filename);
 
         ~Cuboid_file() override;
 

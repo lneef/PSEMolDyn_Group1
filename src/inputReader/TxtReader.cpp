@@ -7,7 +7,7 @@
 #include <sstream>
 #include "../MolSimLogger.h"
 namespace inputReader {
-    TxtReader::TxtReader(char* filename) {
+    TxtReader::TxtReader(std::string filename) {
         this-> filename = filename;
     }
 
