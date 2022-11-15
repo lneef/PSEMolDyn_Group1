@@ -1,6 +1,6 @@
+#include <gmock/gmock-matchers.h>
 #include "forceCalculation/LennardJones.h"
 #include "gtest/gtest.h"
-#include "MolSimTest.h"
 
 
 /**
@@ -20,9 +20,9 @@ TEST(LennardJonesTest, CalcTest){
     lj.calculateF(par);
     const std::array<double, 3> f1{-120., 0. ,0.};
     const std::array<double, 3> f2{120, 0., 0.};
-    MolSimTest::test_equ(par[0].getF(), f1);
-    MolSimTest::test_equ(par[1].getF(), f2);
-    MolSimTest::test_equ(par[0].getOldF(), oldf);
+    EXPECT_THAT(par[0].getF(), testing::Pointwise(testing::DoubleEq(),f1));
+    EXPECT_THAT(par[1].getF(), testing::Pointwise(testing::DoubleEq(), f2));
+    EXPECT_THAT(par[0].getOldF(), testing::Pointwise(testing::DoubleEq(), oldf));
 
 
 }
