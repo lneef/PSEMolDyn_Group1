@@ -89,17 +89,33 @@ add_executable(
         MolSimTest
         ${MY_TEST}
 )
+file(GLOB_RECURSE FORCE
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/forceCalculation/*.cpp"
+        )
+file(GLOB_RECURSE INPUT
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/inputReader/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/*.cpp"
+        )
 
+add_library(lib_test
+        ${FORCE}
+        ${INPUT}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp)
 
-add_library(Particle ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp)
-target_link_libraries(Particle PRIVATE spdlog::spdlog)
+target_link_libraries(lib_test PRIVATE spdlog::spdlog)
 target_include_directories(MolSimTest
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/
         )
 target_link_libraries(MolSimTest
-        GTest::gtest_main
-        Particle
+        GTest::gtest
+        gmock
+        lib_test
         spdlog::spdlog
 
         )

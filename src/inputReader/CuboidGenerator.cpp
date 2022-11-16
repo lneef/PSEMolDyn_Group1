@@ -9,7 +9,7 @@ CuboidGenerator::~CuboidGenerator() = default;
 std::array<double, 3> CuboidGenerator::calculateV(std::array<double, 3> v) {
     MaxwellBoltzmannDistribution mb;
     //calculate velocity with thermal friction
-    std::array<double, 3> mbV = mb.maxwellBoltzmannDistributedVelocity(meanV, sizeof(v) / sizeof(v[0]));
+    std::array<double, 3> mbV = mb.maxwellBoltzmannDistributedVelocity(meanV, 2);
     std::array<double, 3> newV{};
     for (int i = 0; i < 3; i++) {
         newV[i] = v[i] + mbV[i];

@@ -7,15 +7,15 @@
 #include <sstream>
 #include "../MolSimLogger.h"
 namespace inputReader {
-    TxtReader::TxtReader(char* filename) {
+    TxtReader::TxtReader(std::string filename) {
         this-> filename = filename;
     }
 
     TxtReader::~TxtReader() = default;
 
     void TxtReader::read(ParticleContainer &particles) {
-        std::array<double, 3> x;
-        std::array<double, 3> v;
+        std::array<double, 3> x{};
+        std::array<double, 3> v{};
         double m;
         int num_particles = 0;
 

@@ -62,7 +62,7 @@ int main(int argc, char *argsv[]) {
                 opt = Planet;
                 break;
             case 'c':
-                if(optarg == NULL) {
+                if(optarg == nullptr) {
                     input = std::make_unique<inputReader::Cuboid_cl>();
                 }else{
                     input = std::make_unique<inputReader::Cuboid_file>(optarg);
@@ -88,7 +88,8 @@ int main(int argc, char *argsv[]) {
         exit(-1);
     }
     input->read(particles);
-    Simulation simulation(particles, delta_t, end_time, std::make_unique<outputWriter::VTKWriter>(), force);
+    std::unique_ptr<outputWriter::FileWriter> writer= std::make_unique<outputWriter::VTKWriter>();
+    Simulation simulation(particles, delta_t, end_time, writer, force);
     simulation.run();
 
     MolSimLogger::logInfo("Output written. Terminating...");

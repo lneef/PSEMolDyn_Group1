@@ -101,9 +101,10 @@ namespace outputWriter {
     void VTKWriter::plotParticles(ParticleContainer &particles, const std::string &filename, int iteration) {
         size_t numParticles = particles.size();
         initializeOutput(numParticles);
-
-        for (auto &p: particles)
+        particles.apply([this](Particle &p){
             plotParticle(p);
+        });
+
 
         writeFile(filename, iteration);
     }

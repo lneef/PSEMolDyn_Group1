@@ -83,7 +83,7 @@ public:
     /**
      * @brief Setter for the position of the particle.
      *
-     * @param x Array represention three dimensional position of the particle
+     * @param x Array representing three dimensional position of the particle
     */
 
     void setX(const std::array<double, 3> &x);
@@ -99,9 +99,21 @@ public:
      * @brief function which sets f to a new value, it does not update old_f
      * @param f Array representing three dimensional vector of the forces acting on the particle
      *
-     * @warning old_f is not updated
+     * @warning old_f is set to old value of f
      */
     void updateF(const std::array<double, 3> &f);
+
+    /**
+     * @brief Setter for mass of the particle
+     * @param m double representing new mass of the particle
+     */
+    void setM(double m);
+
+    /**
+     * @brief Setter for old_f of the particle
+     * @param oldf Array representing three dimensional vector of forces that were effective on the particle
+     */
+    void setOldF(const std::array<double, 3> &oldf);
 };
 
 std::ostream &operator<<(std::ostream &stream, Particle &p);
