@@ -32,7 +32,6 @@ struct option long_option[]{
         {0, 0,                        0, 0}
 };
 
-//map stores mapping cmd option -> log level
 std::map<std::string, std::function<void()>> levels{{"off",   []() { spdlog::set_level(spdlog::level::off); }},
                                                     {"info",  []() { spdlog::set_level(spdlog::level::info); }},
                                                     {"debug", []() { spdlog::set_level(spdlog::level::debug); }},
@@ -62,13 +61,11 @@ int main(int argc, char *argsv[]) {
                 end_time = std::stod(optarg);
                 break;
             case 'p':
-                //planet simulation
                 input = std::make_unique<inputReader::TxtReader>(optarg);
                 force = std::make_unique<Gravitation>();
                 opt = Planet;
                 break;
             case 'c':
-                //molecular simualtion
                 if (optarg == nullptr) {
                     input = std::make_unique<inputReader::Cuboid_cl>();
                 } else {
@@ -81,7 +78,6 @@ int main(int argc, char *argsv[]) {
                 if (!levels.contains(optarg)) {
                     exit(-1);
                 }
-                //set log_level
                 levels[optarg]();
                 break;
             default:
@@ -97,10 +93,7 @@ int main(int argc, char *argsv[]) {
     }
     input->read(particles);
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
-
     Simulation simulation(particles, delta_t, end_time, writer, force);
-
-    //start simulation
     simulation.run();
 
     MolSimLogger::logInfo("Output written. Terminating...");
@@ -108,7 +101,6 @@ int main(int argc, char *argsv[]) {
 }
 
 void print_help() {
-    //read help page from file
     std::ifstream file("../input/man.txt");
     std::string tmp;
     if (!file.is_open()) {

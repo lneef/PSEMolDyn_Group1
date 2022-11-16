@@ -62,7 +62,7 @@ public:
      * @brief preallocates memory for storing particles
      * @param len number of particles for which memory should be allocated
      */
-     void prealloc(size_t len) ;
+    void prealloc(size_t len);
 
     /**
      * @brief takes a function and applies is to the given particle
