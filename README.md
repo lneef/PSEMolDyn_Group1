@@ -39,7 +39,7 @@ The following command line options are supported:
     -f      Expects an argument of type double. Using this option the time step (delta\_t) of the simulation can be set.
             The default time step is 0.014
 
-    -l     Expects as argument either off, info or debug. Using this option the global log_level can be set
+    -l     Expects as argument either off, info, debug, trace or error. Using this option the global log_level can be set
 
     --planet Usage: --planet path-to-file. Using this command line option particles are read from the specified file and
              the planet simulation is started.
