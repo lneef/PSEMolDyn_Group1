@@ -20,6 +20,7 @@ TEST(LennardJonesTest, CalcTest){
     lj.calculateF(par);
     const std::array<double, 3> f1{-120., 0. ,0.};
     const std::array<double, 3> f2{120, 0., 0.};
+
     EXPECT_THAT(par[0].getF(), testing::Pointwise(testing::DoubleEq(),f1));
     EXPECT_THAT(par[1].getF(), testing::Pointwise(testing::DoubleEq(), f2));
     EXPECT_THAT(par[0].getOldF(), testing::Pointwise(testing::DoubleEq(), oldf));
