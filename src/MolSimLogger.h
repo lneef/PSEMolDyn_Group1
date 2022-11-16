@@ -23,6 +23,12 @@ public:
     static void init();
 
     /**
+     * @brief function to init the logger, A logger with MolSimLogger is created and registered globally, it is specifically
+     * designed for test, as log_level is set to debug
+     */
+    static void init_test();
+
+    /**
      * @brief function to access the global logger
      * @return shared pointer pointing to the global logger MolSimLogger
      */
