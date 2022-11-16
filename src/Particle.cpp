@@ -50,6 +50,7 @@ const std::array<double, 3> &Particle::getF() const { return f; }
 const std::array<double, 3> &Particle::getOldF() const { return old_f; }
 
 void Particle::updateF(const std::array<double, 3> &f) {
+    this->old_f = this->f;
     this-> f = f;
 }
 
@@ -65,7 +66,6 @@ std::string Particle::toString() const {
 }
 
 void Particle::setF(const std::array<double, 3> &f) {
-    this->old_f = this->f;
     this->f = f;
 }
 
@@ -85,4 +85,12 @@ bool Particle::operator==(Particle &other) {
 std::ostream &operator<<(std::ostream &stream, Particle &p) {
     stream << p.toString();
     return stream;
+}
+
+void Particle::setM(const double m) {
+    this->m = m;
+}
+
+void Particle::setOldF(const std::array<double, 3> &oldf) {
+    this->old_f = oldf;
 }

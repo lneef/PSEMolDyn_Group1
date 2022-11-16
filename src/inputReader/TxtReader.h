@@ -17,7 +17,7 @@ namespace inputReader {
 class TxtReader : public FileReader{
 
     public:
-        explicit TxtReader(char* filename);
+        explicit TxtReader(std::string filename);
 
         ~TxtReader() override;
 
@@ -25,7 +25,6 @@ class TxtReader : public FileReader{
          * @brief Reads particles from input file and stores them in instance of ParticleContainer
          *
          * @param particles ParticleContainer where the particles are stored
-         * @param filename filename of the input file from where the particles are read
         */
         void read(ParticleContainer &particles) override;
     };

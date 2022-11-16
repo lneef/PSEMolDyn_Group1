@@ -1,28 +1,31 @@
 #include <gtest/gtest.h>
-#include "../src/Particle.h"
-#include "../src/ParticleContainer.h"
-#include "../src/MolSimLogger.h"
+#include "Particle.h"
+#include "ParticleContainer.h"
 #include <vector>
-#include "gtest/gtest.h"
+
 
 /**
-* @brief check whether iterator of ParticleContainer enables iteration over all stored particles
+* @brief check if apply acts on particles in the container as expected
 */
-TEST(ParticleContainerTest, IteratorTest){
+TEST(ParticleContainerTest, AppyTest){
     ParticleContainer par{};
 
     par.addParticle( Particle ({0.,0.,0.},{0.,0., 0.}, 1.));
     par.addParticle(Particle ({1., 1. , 1.}, {1.5, 0., 0.}, 0.5));
     par.addParticle(Particle ({1., 0., 1.}, {1., 2., 0}, 0.01));
 
+    par.apply([](Particle &p){
+       p.setM(0);
+    });
+
     const std::vector<Particle>& tmp = par.getParticles();
 
-    ParticleContainer::iterator it = par.begin();
 
-    EXPECT_EQ(&(*it++), &tmp[0]);
-    EXPECT_EQ(&(*it++), &tmp[1]);
-    EXPECT_EQ(&(*it++), &tmp[2]);
-
+    EXPECT_DOUBLE_EQ(0., tmp[0].getM());
+    EXPECT_DOUBLE_EQ(0., tmp[1].getM());
+    EXPECT_DOUBLE_EQ(0., tmp[2].getM());
 
 }
+
+
 

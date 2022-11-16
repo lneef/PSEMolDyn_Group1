@@ -34,7 +34,15 @@ class Simulation {
      * @brief time at which the simulation ends
      */
     double end_time;
+
+    /**
+     * @brief FileWriter to print the VTK files
+     */
     std::unique_ptr<outputWriter::FileWriter> writer;
+
+    /**
+     * @brief Force to calculate the force between particles
+     */
     std::unique_ptr<Force> force;
 
 public:
@@ -62,7 +70,7 @@ public:
      * @param force object to specify the type of force calculation used during the simulation
      */
     Simulation(ParticleContainer &particles, double delta_t, double end_time,
-               std::unique_ptr<outputWriter::FileWriter> &&writer, std::unique_ptr<Force> &force);
+               std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force);
 
 };
 

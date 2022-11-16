@@ -15,7 +15,7 @@ namespace inputReader {
 */
     class Cuboid_file : public FileReader {
     public:
-        explicit Cuboid_file(char *filename);
+        explicit Cuboid_file(std::string filename);
 
         ~Cuboid_file() override;
 
@@ -23,7 +23,6 @@ namespace inputReader {
          * @brief Reads values of cuboids from input file and passes them to an instance of CuboidGenerator
          *
          * @param particles ParticleContainer where the particles are stored
-         * @param filename filename of the input file from where the values are read
         */
         void read(ParticleContainer &particles) override;
     };
