@@ -8,7 +8,6 @@
 #include "outputWriter/XYZWriter.h"
 #include <iomanip>
 #include <sstream>
-
 namespace outputWriter {
 
     XYZWriter::XYZWriter() = default;

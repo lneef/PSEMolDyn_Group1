@@ -1,6 +1,3 @@
-//
-// Created by dominik on 05.11.22.
-//
 
 #pragma once
 
@@ -18,7 +15,7 @@ namespace inputReader {
     public:
         Cuboid_cl();
 
-        virtual ~Cuboid_cl();
+        ~Cuboid_cl() override;
 
         /**
          * @brief Performs queries from the command line regarding the values of cuboids and pass them to an instance of CuboidGenerator

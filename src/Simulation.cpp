@@ -2,6 +2,7 @@
 // Created by lukas on 08.11.22.
 //
 #include "Simulation.h"
+#include "MolSimLogger.h"
 
 void Simulation::calculateX() {
     for (auto &p: particles) {
@@ -50,29 +51,33 @@ void Simulation::run() {
     while (current_time < end_time) {
 
         calculateX();
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
 
         force->calculateF(particles);
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}" , iteration);
 
         calculateV();
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}" , iteration);
 
         iteration++;
+#ifndef BENCHMARK
         if (iteration % 10 == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
-        std::cout << "Iteration " << iteration << " finished." <<
-                  std::endl;
+#endif
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Itertation {} finished. ", iteration);
 
         current_time += delta_t;
     }
 
-    //ToDo time measure: avoid cout,etc
+
     auto stop = std::chrono::high_resolution_clock::now();
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
     std::cout << difference.count() << "ms" << std::endl;
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
-                       std::unique_ptr <outputWriter::FileWriter> &&writer, std::unique_ptr <Force> &force) {
+                       std::unique_ptr<outputWriter::FileWriter> &&writer, std::unique_ptr<Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
     this->writer = std::move(writer);

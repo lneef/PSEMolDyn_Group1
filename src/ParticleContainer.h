@@ -155,4 +155,10 @@ public:
      * @return lvalue reference to Particle at the passed index
      */
     Particle &operator[](size_t i);
+
+    /**
+     * @brief preallocate memory for storing particles
+     * @param len number of particles for which memory should be allocated
+     */
+     void prealloc(size_t len);
 };

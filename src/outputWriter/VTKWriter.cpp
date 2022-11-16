@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-
+#include "../MolSimLogger.h"
 namespace outputWriter {
 
     VTKWriter::VTKWriter() = default;
@@ -63,9 +63,9 @@ namespace outputWriter {
 
     void VTKWriter::plotParticle(Particle &p) {
         if (vtkFile->UnstructuredGrid().present()) {
-            std::cout << "UnstructuredGrid is present" << std::endl;
+            MolSimLogger::logDebug("UnstructuredGrid is present");
         } else {
-            std::cout << "ERROR: No UnstructuredGrid present" << std::endl;
+            MolSimLogger::logError("ERROR: No UnstructuredGrid present");
         }
 
         PointData::DataArray_sequence &pointDataSequence =

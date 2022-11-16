@@ -1,9 +1,3 @@
-/*
- * FileReader.cpp
- *
- *  Created on: 23.02.2010
- *      Author: eckhardw
- */
 
 #include "TxtReader.h"
 
@@ -11,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
+#include "../MolSimLogger.h"
 namespace inputReader {
     TxtReader::TxtReader(char* filename) {
         this-> filename = filename;
@@ -32,18 +26,18 @@ namespace inputReader {
         if (input_file.is_open()) {
 
             getline(input_file, tmp_string);
-            std::cout << "Read line: " << tmp_string << std::endl;
+            MolSimLogger::logDebug("Read line: {}", tmp_string);
 
             while (tmp_string.empty() or tmp_string[0] == '#') {
                 getline(input_file, tmp_string);
-                std::cout << "Read line: " << tmp_string << std::endl;
+                MolSimLogger::logDebug("Read line: {}", tmp_string);
             }
 
             std::istringstream numstream(tmp_string);
             numstream >> num_particles;
-            std::cout << "Reading " << num_particles << "." << std::endl;
+            MolSimLogger::logInfo("Reading {} Particles.", num_particles);
             getline(input_file, tmp_string);
-            std::cout << "Read line: " << tmp_string << std::endl;
+            MolSimLogger::logDebug("Read line: {}", tmp_string);
 
             for (int i = 0; i < num_particles; i++) {
                 std::istringstream datastream(tmp_string);
@@ -55,19 +49,16 @@ namespace inputReader {
                     datastream >> vj;
                 }
                 if (datastream.eof()) {
-                    std::cout
-                            << "Error reading file: eof reached unexpectedly reading from line "
-                            << i << std::endl;
+                    MolSimLogger::logError("Error reading file: eof reached unexpectedly reading from line {}", i);
                     exit(-1);
                 }
                 datastream >> m;
                 particles.addParticle(Particle(x, v, m));
-
                 getline(input_file, tmp_string);
-                std::cout << "Read line: " << tmp_string << std::endl;
+                MolSimLogger::logDebug("Read line: {}", tmp_string);
             }
         } else {
-            std::cout << "Error: could not open file " << filename << std::endl;
+            MolSimLogger::logError("Error: could not open file {}", filename);
             exit(-1);
         }
     }
