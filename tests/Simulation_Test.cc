@@ -9,7 +9,6 @@
 class ForceMock : virtual public Force{
 public:
     MOCK_METHOD(void , calculateF, (ParticleContainer &particles), (override));
-
 };
 
 class OutMock : public outputWriter::FileWriter{
