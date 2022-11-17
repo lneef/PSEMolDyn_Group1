@@ -16,7 +16,7 @@ Members:
 * run mkdir build and cd build/
 * run cmake ..
 * run make or make all
-* run ./MolSim --help for further information on usage or see Usage
+* run ./MolSim --help for further information on usage or see section Usage
 * run ctest for running all tests
 
 # Doxygen #
@@ -49,3 +49,11 @@ The following command line options are supported:
             --cub.
 
     --help  This page is printed.
+
+# Logging #
+* One Logger for MolSim(MolSimLogger) which writes to logs.txt
+* One Logger for tests(MolSimLogger_test) with loglevel debug which writes to logs_test.txt
+
+# Input #
+* for cuboids see input/eingabe-cuboid.txt
+* for planets see input/eingabe-sonne.txt

@@ -18,12 +18,12 @@ void MolSimLogger::init() {
 
 void MolSimLogger::init_test(){
     //sink to write messages to log file
-    auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs.txt", false);
-    auto logger = std::make_shared<spdlog::logger>("MolSimLogger", sink);
+    auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs_test.txt", false);
+    auto logger = std::make_shared<spdlog::logger>("MolSimLogger_Test", sink);
     spdlog::register_logger(logger);
     //set loglevel for test on debug
     spdlog::set_level(spdlog::level::debug);
-    loggerMolSim = spdlog::get("MolSimLogger");
+    loggerMolSim = spdlog::get("MolSimLogger_Test");
 }
 
 
