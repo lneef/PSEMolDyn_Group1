@@ -18,3 +18,5 @@ The following command line options are supported:
             --cub.
 
     --help  This page is printed.
+
+    You must use the options --planet or --cub if you want to run a simulation.
