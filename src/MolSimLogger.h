@@ -12,6 +12,7 @@ private:
      * @brief static variable for saving pointer to logger for performance reasons
      * @see https://github.com/gabime/spdlog/wiki/2.-Creating-loggers#creating-multiple-file-loggers-with-the-same-output-file
      */
+    //https://stackoverflow.com/q/73744273
     static std::shared_ptr<spdlog::logger> loggerMolSim;
 
 public:
@@ -34,7 +35,7 @@ public:
      * @brief function to access the global logger
      * @return shared pointer pointing to the global logger MolSimLogger
      */
-    static std::shared_ptr<spdlog::logger> logger();
+    static std::shared_ptr<spdlog::logger>& logger();
 
     /**
      * @brief Wrapper function to log information for log_level info
@@ -43,6 +44,8 @@ public:
      */
     template<class ...Args>
     static void logInfo(fmt::format_string<Args...> fmt, Args &&... args) {
+        if(!loggerMolSim)
+            return;
         loggerMolSim->info(fmt, std::forward<Args>(args)...);
     }
 
@@ -54,6 +57,8 @@ public:
      */
     template<class... Args>
     static void logTrace(fmt::format_string<Args...> fmt, Args &&... args) {
+        if(!loggerMolSim)
+            return;
         loggerMolSim->trace(fmt, std::forward<Args>(args)...);
     }
 
@@ -65,6 +70,8 @@ public:
      */
     template<class... Args>
     static void logDebug(fmt::format_string<Args...> fmt, Args &&... args) {
+        if(!loggerMolSim)
+            return;
         loggerMolSim->debug(fmt, std::forward<Args>(args)...);
     }
 
@@ -76,6 +83,8 @@ public:
      */
     template<class... Args>
     static void logError(fmt::format_string<Args...> fmt, Args &&... args) {
+        if(!loggerMolSim)
+            return;
         loggerMolSim->error(fmt, std::forward<Args>(args)...);
     }
 
@@ -87,6 +96,8 @@ public:
      */
     template<class... Args>
     static void logCritical(fmt::format_string<Args...> fmt, Args &&... args) {
+        if(!loggerMolSim)
+            return;
         loggerMolSim->critical(fmt, std::forward<Args>(args)...);
     }
 
@@ -98,6 +109,8 @@ public:
      */
     template<class ...Args>
     static void logWarn(fmt::format_string<Args...> fmt, Args &&... args) {
+        if(!loggerMolSim)
+            return;
         loggerMolSim->template warn(fmt, std::forward<Args>(args)...);
     }
 

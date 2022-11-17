@@ -19,7 +19,7 @@
 
 
 void print_help();
-
+int p[1] = {0};
 constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
@@ -55,7 +55,8 @@ int main(int argc, char *argsv[]) {
         switch (arg) {
             case 'a':
                 print_help();
-                return 0;
+
+                return p[1];
             case 't':
                 delta_t = std::stod(optarg);
                 arg_flag = true;
