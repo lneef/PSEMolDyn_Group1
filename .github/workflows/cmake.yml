@@ -2,7 +2,7 @@ name: CMake
 
 on:
   push:
-    branches: [ "release" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -25,11 +25,10 @@ jobs:
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Add Sanitizer
-        run: cmake -B ${{github.workspace}}/build -DLINTER=ON
+        run: cmake -B ${{github.workspace}}/build -DSANITIZE=ON
 
       - name: Build with Sanitizer
-        run: cmake --build ${{github.workspace}}/build --config Debug
-
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{env.BUILD_TYPE}}
