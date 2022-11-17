@@ -28,8 +28,7 @@ jobs:
         run: cmake -B ${{github.workspace}}/build -DSANITIZE=ON
 
       - name: Build with Sanitizer
-        run: cmake --build ${{github.workspace}}/build --config=Debug
-
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{env.BUILD_TYPE}}
