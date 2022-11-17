@@ -44,8 +44,6 @@ public:
      */
     template<class ...Args>
     static void logInfo(fmt::format_string<Args...> fmt, Args &&... args) {
-        if(!loggerMolSim)
-            return;
         loggerMolSim->info(fmt, std::forward<Args>(args)...);
     }
 
@@ -57,8 +55,6 @@ public:
      */
     template<class... Args>
     static void logTrace(fmt::format_string<Args...> fmt, Args &&... args) {
-        if(!loggerMolSim)
-            return;
         loggerMolSim->trace(fmt, std::forward<Args>(args)...);
     }
 
@@ -70,8 +66,6 @@ public:
      */
     template<class... Args>
     static void logDebug(fmt::format_string<Args...> fmt, Args &&... args) {
-        if(!loggerMolSim)
-            return;
         loggerMolSim->debug(fmt, std::forward<Args>(args)...);
     }
 
@@ -83,8 +77,6 @@ public:
      */
     template<class... Args>
     static void logError(fmt::format_string<Args...> fmt, Args &&... args) {
-        if(!loggerMolSim)
-            return;
         loggerMolSim->error(fmt, std::forward<Args>(args)...);
     }
 
@@ -96,8 +88,6 @@ public:
      */
     template<class... Args>
     static void logCritical(fmt::format_string<Args...> fmt, Args &&... args) {
-        if(!loggerMolSim)
-            return;
         loggerMolSim->critical(fmt, std::forward<Args>(args)...);
     }
 
@@ -109,8 +99,6 @@ public:
      */
     template<class ...Args>
     static void logWarn(fmt::format_string<Args...> fmt, Args &&... args) {
-        if(!loggerMolSim)
-            return;
         loggerMolSim->template warn(fmt, std::forward<Args>(args)...);
     }
 
