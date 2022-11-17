@@ -25,7 +25,7 @@ Members:
 * to create the doxygen documentation run make doc\_doxygen
 
 # CMake #
-* by setting LINTER=ON compilation with fsanitize=address is enables
+* by setting SANITIZE=ON compilation with fsanitize=address is enables
 * by setting BMARK=ON compilation in benchmark mode is enabled, i.e. all io in benchmark region is disabled
 
 # Usage #
