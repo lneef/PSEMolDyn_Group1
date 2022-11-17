@@ -7,8 +7,8 @@
 #
 # Molecule data consists of 
 # * xyz-coordinates (3 double values)
-# * quantity in xyz-direction
-# * mesh width of the grid
+# * quantity in xyz-direction (3 double values)
+# * mesh width of the grid (1 double value)
 # * mass (1 double value)
 # * velocities (2 or 3 double values)
 # xyz-coord      quantity  distance  mass   velocity
