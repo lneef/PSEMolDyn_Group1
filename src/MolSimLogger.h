@@ -18,13 +18,15 @@ public:
     /**
      * @brief function to init the logger. A logger with name MolSimLogger is created and registered globally
      *
-     * @warning this function has to be called before any other function of this class is called
+     * @warning this function or init_test() has to be called before any other function of this class is called
      */
     static void init();
 
     /**
      * @brief function to init the logger, A logger with MolSimLogger is created and registered globally, it is specifically
      * designed for test, as log_level is set to debug
+     *
+     * @warning this function or init() has to be called before using the lgger
      */
     static void init_test();
 
