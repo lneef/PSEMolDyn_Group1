@@ -4,7 +4,7 @@
 
 std::shared_ptr<spdlog::logger> MolSimLogger::loggerMolSim = nullptr;
 
-std::shared_ptr<spdlog::logger> MolSimLogger::logger() {
+std::shared_ptr<spdlog::logger>& MolSimLogger::logger() {
     return loggerMolSim;
 }
 
