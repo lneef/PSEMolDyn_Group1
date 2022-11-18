@@ -19,7 +19,7 @@
 
 
 void print_help();
-int p[1] = {0};
+
 constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
@@ -33,8 +33,8 @@ struct option long_option[]{
 };
 
 //map storing mapping argument -> lamda setting log level
-std::map<std::string, std::function<void()>> levels{{"off", []() { spdlog::set_level(spdlog::level::off); }},
-                                                    {"info", []() { spdlog::set_level(spdlog::level::info); }},
+std::map<std::string, std::function<void()>> levels{{"off",   []() { spdlog::set_level(spdlog::level::off); }},
+                                                    {"info",  []() { spdlog::set_level(spdlog::level::info); }},
                                                     {"debug", []() { spdlog::set_level(spdlog::level::debug); }},
                                                     {"trace", []() { spdlog::set_level(spdlog::level::trace); }},
                                                     {"error", []() { spdlog::set_level(spdlog::level::err); }}};
@@ -56,7 +56,7 @@ int main(int argc, char *argsv[]) {
             case 'a':
                 print_help();
 
-                return p[1];
+                return 0;
             case 't':
                 delta_t = std::stod(optarg);
                 arg_flag = true;
@@ -97,7 +97,7 @@ int main(int argc, char *argsv[]) {
         }
 
     }
-    if(!arg_flag){
+    if (!arg_flag) {
         print_help();
         return 0;
     }
