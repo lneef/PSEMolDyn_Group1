@@ -71,7 +71,7 @@ void Simulation::run() {
         if (iteration % 10 == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
-        
+
         MolSimLogger::logInfo("Itertation {} finished. ", iteration);
 #endif
         current_time += delta_t;
@@ -80,7 +80,7 @@ void Simulation::run() {
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    MolSimLogger::logInfo("{} ms", difference.count());
+    std::cout<<difference.count()<<"ms"<<std::endl;
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
