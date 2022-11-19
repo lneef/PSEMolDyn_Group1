@@ -5,11 +5,12 @@
 # The first line not being a comment has to be one integer, indicating the number of
 # molecule data sets.
 #
-# Molecule data consists of
+# Cuboid data consists of
 # * xyz-coordinates (3 double values)
-# * velocities (2 or 3 double values)
+# * quantity in xyz-direction (3 double values)
+# * mesh width of the grid (1 double value)
 # * mass (1 double value)
-#
+# * velocities (2 or 3 double values)
 # xyz-coord      quantity  distance  mass   velocity
 1
 0.0  0.0  0.0    2 2 1    1.0    1.0    0.0 0.0 0.0

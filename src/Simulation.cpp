@@ -38,6 +38,10 @@ void Simulation::calculateV() {
 }
 
 void Simulation::run() {
+    //flush logger in benchmark mode
+#ifdef BENCHMARK
+    MolSimLogger::logger()->flush();
+#endif
     std::string out_name("MD_vtk");
 
     auto start = std::chrono::high_resolution_clock::now();
@@ -51,29 +55,32 @@ void Simulation::run() {
     while (current_time < end_time) {
 
         calculateX();
+
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
 
         force->calculateF(particles);
+
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
 
+
         calculateV();
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(),"Velocities of particles calculated for iteration {}", iteration);
 
         iteration++;
 #ifndef BENCHMARK
         if (iteration % 10 == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
-#endif
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Itertation {} finished. ", iteration);
 
+        MolSimLogger::logInfo("Itertation {} finished. ", iteration);
+#endif
         current_time += delta_t;
     }
 
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    std::cout << difference.count() << "ms" << std::endl;
+    std::cout<<difference.count()<<"ms"<<std::endl;
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,

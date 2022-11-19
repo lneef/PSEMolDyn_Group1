@@ -12,21 +12,30 @@ private:
      * @brief static variable for saving pointer to logger for performance reasons
      * @see https://github.com/gabime/spdlog/wiki/2.-Creating-loggers#creating-multiple-file-loggers-with-the-same-output-file
      */
+    //inspired by: https://stackoverflow.com/q/73744273
     static std::shared_ptr<spdlog::logger> loggerMolSim;
 
 public:
     /**
      * @brief function to init the logger. A logger with name MolSimLogger is created and registered globally
      *
-     * @warning this function has to be called before any other function of this class is called
+     * @warning this function or init_test() has to be called before any other function of this class is called
      */
     static void init();
+
+    /**
+     * @brief function to init the logger, A logger with MolSimLogger is created and registered globally, it is specifically
+     * designed for test, as log_level is set to debug
+     *
+     * @warning this function or init() has to be called before using the lgger
+     */
+    static void init_test();
 
     /**
      * @brief function to access the global logger
      * @return shared pointer pointing to the global logger MolSimLogger
      */
-    static std::shared_ptr<spdlog::logger> logger();
+    static std::shared_ptr<spdlog::logger>& logger();
 
     /**
      * @brief Wrapper function to log information for log_level info

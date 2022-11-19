@@ -6,6 +6,6 @@
 
 int main(int argc, char **argv){
     ::testing::InitGoogleTest(&argc, argv);
-    MolSimLogger::init();
+    MolSimLogger::init_test();
     return RUN_ALL_TESTS();
 }

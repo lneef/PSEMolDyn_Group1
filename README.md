@@ -16,7 +16,7 @@ Members:
 * run mkdir build and cd build/
 * run cmake ..
 * run make or make all
-* run ./MolSim --help for further information on usage or see Usage
+* run ./MolSim --help for further information on usage or see section Usage
 * run ctest for running all tests
 
 # Doxygen #
@@ -25,7 +25,7 @@ Members:
 * to create the doxygen documentation run make doc\_doxygen
 
 # CMake #
-* by setting LINTER=ON compilation with fsanitize=address is enables
+* by setting SANITIZE=ON compilation with fsanitize=address is enables
 * by setting BMARK=ON compilation in benchmark mode is enabled, i.e. all io in benchmark region is disabled
 
 # Usage #
@@ -39,7 +39,7 @@ The following command line options are supported:
     -f      Expects an argument of type double. Using this option the time step (delta\_t) of the simulation can be set.
             The default time step is 0.014
 
-    -l     Expects as argument either off, info or debug. Using this option the global log_level can be set
+    -l     Expects as argument either off, info, debug, trace or error. Using this option the global log_level can be set
 
     --planet Usage: --planet path-to-file. Using this command line option particles are read from the specified file and
              the planet simulation is started.
@@ -49,3 +49,13 @@ The following command line options are supported:
             --cub.
 
     --help  This page is printed.
+
+    You must use the options --planet or --cub if you want to run a simulation. 
+
+# Logging #
+* One Logger for MolSim(MolSimLogger) which writes to logs.txt
+* One Logger for tests(MolSimLogger_test) with loglevel debug which writes to logs_test.txt
+
+# Input #
+* for cuboids see input/eingabe-cuboid.txt
+* for planets see input/eingabe-sonne.txt

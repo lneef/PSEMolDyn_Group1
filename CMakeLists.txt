@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.9)
 project(PSEMolDyn_Group1 VERSION 0.0.1)
 
 #option to enable compilation with linter
-option(LINTER "Enable compilation with sanitizer" OFF)
+option(SANITIZE "Enable compilation with sanitizer" OFF)
 
 # option to disable logging in performance critical regions
 option(BMARK "Disable io in benchmark region" OFF)
@@ -48,9 +48,8 @@ target_link_libraries(MolSim
         PRIVATE
         spdlog::spdlog
         )
-add_compile_definitions(WITH_OPENCV2)
 # if the option is set, the program will be compiled with fsanitize=address
-if (LINTER)
+if (SANITIZE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 endif ()
 
@@ -117,7 +116,6 @@ target_link_libraries(MolSimTest
         gmock
         lib_test
         spdlog::spdlog
-
         )
 
 include(GoogleTest)

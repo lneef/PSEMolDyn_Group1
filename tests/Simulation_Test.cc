@@ -5,13 +5,17 @@
 #include "Simulation.h"
 
 
-
+/**
+ * @brief mocks the class Force
+ */
 class ForceMock : virtual public Force{
 public:
     MOCK_METHOD(void , calculateF, (ParticleContainer &particles), (override));
-
 };
 
+/**
+ * @brief mocks the class FileWriter
+ */
 class OutMock : public outputWriter::FileWriter{
 public:
     MOCK_METHOD(void, plotParticles, (ParticleContainer &particles, const std::string &filename, int iteration) , (override));
