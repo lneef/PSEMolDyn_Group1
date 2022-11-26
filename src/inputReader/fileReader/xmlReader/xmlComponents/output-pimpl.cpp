@@ -5,24 +5,19 @@
 #include "output-pimpl.h"
 #include <iostream>
 
-void output_pimpl::
-pre ()
-{
+void output_pimpl::pre() {}
+
+void output_pimpl::name(const ::std::string &name) {
+    out_name = name;
 }
 
-void output_pimpl::
-name (const ::std::string& name)
-{
-    std::cout << "name: " << name << std::endl;
+void output_pimpl::frequency(double frequency) {
+    out_frequency = frequency;
 }
 
-void output_pimpl::
-frequency (double frequency)
-{
-    std::cout << "frequency: " << frequency << std::endl;
-}
-
-void output_pimpl::
-post_output ()
-{
+std::vector<std::string> output_pimpl::post_output() {
+    std::vector<std::string> out;
+    out.push_back(out_name);
+    out.push_back(out_frequency);
+    return out;
 }

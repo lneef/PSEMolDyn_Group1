@@ -4,12 +4,9 @@
 
 #include "../cuboid-pskel.h"
 
-class boundaries_pimpl: public virtual boundaries_pskel
-{
+class boundaries_pimpl : public virtual boundaries_pskel {
 public:
-    virtual void
-    pre ();
+    virtual void pre();
 
-    virtual void
-    post_boundaries ();
+    virtual void post_boundaries();
 };

@@ -5,18 +5,12 @@
 #include "input-pimpl.h"
 #include <iostream>
 
-void input_pimpl::
-pre ()
-{
+void input_pimpl::pre() {}
+
+void input_pimpl::path(const ::std::string &path) {
+    input_path = path;
 }
 
-void input_pimpl::
-path (const ::std::string& path)
-{
-    std::cout << "path: " << path << std::endl;
-}
-
-void input_pimpl::
-post_input ()
-{
+std::string input_pimpl::post_input() {
+    return input_path;
 }

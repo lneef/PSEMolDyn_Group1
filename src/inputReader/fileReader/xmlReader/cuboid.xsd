@@ -36,4 +36,14 @@
 			<xs:element name="path" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="all">
+		<xs:sequence>
+			<xs:element name="cuboid" type="cuboid"></xs:element>
+			<xs:element name="simulation" type="simulation"></xs:element>
+			<xs:element name="output" type="output"></xs:element>
+			<xs:element name="boundaries" type="boundaries"></xs:element>
+			<xs:element name="input" type="input"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>

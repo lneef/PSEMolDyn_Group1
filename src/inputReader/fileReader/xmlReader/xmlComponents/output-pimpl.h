@@ -4,18 +4,16 @@
 
 #include "../cuboid-pskel.h"
 
-class output_pimpl: public virtual output_pskel
-{
+class output_pimpl : public virtual output_pskel {
+protected:
+    std::string out_name;
+    std::string out_frequency;
 public:
-    virtual void
-    pre ();
+    virtual void pre();
 
-    virtual void
-    name (const ::std::string&);
+    virtual void name(const ::std::string &);
 
-    virtual void
-    frequency (double);
+    virtual void frequency(double);
 
-    virtual void
-    post_output ();
+    virtual std::vector<std::string> post_output();
 };

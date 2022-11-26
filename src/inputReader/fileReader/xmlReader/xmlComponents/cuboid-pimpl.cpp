@@ -3,44 +3,40 @@
 //
 
 #include "cuboid-pimpl.h"
-#include <iostream>
 
-void cuboid_pimpl::
-pre ()
-{
+void cuboid_pimpl::pre() {
+
 }
 
-void cuboid_pimpl::
-x (double x)
-{
-    std::cout << "x: " << x << std::endl;
+void cuboid_pimpl::x(double x) {
+    position.push_back(x);
 }
 
-void cuboid_pimpl::
-n (int n)
-{
-    std::cout << "n: " << n << std::endl;
+void cuboid_pimpl::n(int n) {
+    quantity.push_back(n);
 }
 
-void cuboid_pimpl::
-h (double h)
-{
-    std::cout << "h: " << h << std::endl;
+void cuboid_pimpl::h(double h) {
+    distance = h;
 }
 
-void cuboid_pimpl::
-m (double m)
-{
-    std::cout << "m: " << m << std::endl;
+void cuboid_pimpl::m(double m) {
+    mass = m;
 }
 
-void cuboid_pimpl::
-v (double v)
-{
-    std::cout << "v: " << v << std::endl;
+void cuboid_pimpl::v(double v) {
+    velocity.push_back(v);
 }
 
-void cuboid_pimpl::
-post_cuboid ()
-{
+void cuboid_pimpl::post_cuboid() {
+    std::array<double, 3> pos;
+    std::array<int, 3> quan;
+    std::array<double, 3> vel;
+    for (int i = 0; i < 3; i++) {
+        pos[i] = position[i];
+        quan[i] = quantity[i];
+        vel[i] = velocity[i];
+    }
+    CuboidGenerator generator;
+    generator.generateCuboid(particles, pos, quan, distance, mass, vel);
 }
