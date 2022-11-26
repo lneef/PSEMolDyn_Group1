@@ -42,7 +42,7 @@ void Simulation::run() {
 #ifdef BENCHMARK
     MolSimLogger::logger()->flush();
 #endif
-    std::string out_name("MD_vtk");
+//    std::string out_name("MD_vtk");
 
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -68,7 +68,7 @@ void Simulation::run() {
 
         iteration++;
 #ifndef BENCHMARK
-        if (iteration % 10 == 0) {
+        if (iteration % out_frequency == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
 

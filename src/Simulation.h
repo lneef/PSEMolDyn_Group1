@@ -45,6 +45,10 @@ class Simulation {
      */
     std::unique_ptr<Force> force;
 
+
+    std::string out_name ="MD_vtk";
+    int out_frequency = 10;
+
 public:
     /**
      * @brief Calculats next position for each particle in particles
