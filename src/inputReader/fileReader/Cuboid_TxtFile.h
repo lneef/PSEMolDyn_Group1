@@ -5,19 +5,19 @@
 #pragma once
 
 #include "FileReader.h"
-#include "CuboidGenerator.h"
+#include "../CuboidGenerator.h"
 
 namespace inputReader {
 /**
- * @brief Cuboid_file implements the interface provided by FileReader for reading .txt files
+ * @brief Cuboid_TxtFile implements the interface provided by FileReader for reading .txt files
  *
  * TxtReader implements the abstract method provided by the class FileReader for reading the values of cuboids from .txt files to pass them to an instance of CuboidGenerator.
 */
-    class Cuboid_file : public FileReader {
+    class Cuboid_TxtFile : public FileReader {
     public:
-        explicit Cuboid_file(std::string filename);
+        explicit Cuboid_TxtFile(std::string filename);
 
-        ~Cuboid_file() override;
+        ~Cuboid_TxtFile() override;
 
         /**
          * @brief Reads values of cuboids from input file and passes them to an instance of CuboidGenerator

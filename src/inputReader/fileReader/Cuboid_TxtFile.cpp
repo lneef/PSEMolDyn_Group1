@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "../MolSimLogger.h"
+#include "../../MolSimLogger.h"
 
 namespace inputReader {
     Cuboid_file::Cuboid_file(std::string filename) {
