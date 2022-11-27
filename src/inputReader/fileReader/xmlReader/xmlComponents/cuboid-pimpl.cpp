@@ -4,8 +4,8 @@
 
 #include "cuboid-pimpl.h"
 
-void cuboid_pimpl::pre() {
-
+void cuboid_pimpl::pre(ParticleContainer part) {
+    particles = part;
 }
 
 void cuboid_pimpl::x(double x) {

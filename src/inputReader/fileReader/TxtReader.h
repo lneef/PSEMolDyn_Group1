@@ -1,12 +1,12 @@
 
 #pragma once
 
-#include "InputReader.h"
-#include "../Particle.h"
+#include "../InputReader.h"
+#include "../../Particle.h"
 
-#include "../ParticleContainer.h"
+#include "../../ParticleContainer.h"
 
-#include "FileReader.h"
+#include "../fileReader/FileReader.h"
 
 namespace inputReader {
 /**

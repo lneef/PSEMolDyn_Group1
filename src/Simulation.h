@@ -76,6 +76,8 @@ public:
     Simulation(ParticleContainer &particles, double delta_t, double end_time,
                std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force);
 
+    void setOut_name(std::string &out_name);
+    void setOut_frequency(int &out_frequency);
 };
 
 

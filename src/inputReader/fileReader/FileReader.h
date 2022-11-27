@@ -1,9 +1,10 @@
 
 #pragma once
 
-#include "../ParticleContainer.h"
-#include "../Particle.h"
-#include "InputReader.h"
+#include "../InputReader.h"
+#include "../../ParticleContainer.h"
+#include "../../Particle.h"
+
 namespace inputReader {
 
 /**

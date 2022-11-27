@@ -7,7 +7,7 @@
 /**
  * @brief CuboidGenerator generates cuboids of particles form input values
  *
- * CuboidGenerator generates cuboids of particles form input values, which are collected by instances of Cuboid_file or Cuboid_cl.
+ * CuboidGenerator generates cuboids of particles form input values, which are collected by instances of Cuboid_TxtFile or Cuboid_cl.
 */
 class CuboidGenerator {
 private:

@@ -20,7 +20,7 @@ protected:
     ParticleContainer particles;
 
 public:
-    virtual void pre();
+    virtual void pre(ParticleContainer part);
 
     virtual void x(double);
 

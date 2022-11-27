@@ -2,7 +2,7 @@
 // Created by dominik on 09.11.22.
 //
 
-#include "Cuboid_file.h"
+#include "Cuboid_TxtFile.h"
 
 #include <cstdlib>
 #include <fstream>
@@ -11,14 +11,14 @@
 #include "../../MolSimLogger.h"
 
 namespace inputReader {
-    Cuboid_file::Cuboid_file(std::string filename) {
+    Cuboid_TxtFile::Cuboid_TxtFile(std::string filename) {
         this->filename = filename;
     }
 
-    Cuboid_file::~Cuboid_file() = default;
+    Cuboid_TxtFile::~Cuboid_TxtFile() = default;
 
     //reads values from file
-    void Cuboid_file::read(ParticleContainer &particles) {
+    void Cuboid_TxtFile::read(ParticleContainer &particles) {
         std::array<double, 3> x{};
         std::array<int, 3> n{};
         double h;

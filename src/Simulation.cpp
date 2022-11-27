@@ -64,7 +64,7 @@ void Simulation::run() {
 
 
         calculateV();
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(),"Velocities of particles calculated for iteration {}", iteration);
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
 
         iteration++;
 #ifndef BENCHMARK
@@ -80,7 +80,7 @@ void Simulation::run() {
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    std::cout<<difference.count()<<"ms"<<std::endl;
+    std::cout << difference.count() << "ms" << std::endl;
 }
 
 Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
@@ -91,4 +91,12 @@ Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_
     this->force = std::move(force);
     this->particles.setParticles(particles.getParticles());
 
+}
+
+void Simulation::setOut_name(std::string &out_name) {
+    this->out_name = out_name;
+}
+
+void Simulation::setOut_frequency(int &out_frequency) {
+    this->out_frequency=out_frequency;
 }
