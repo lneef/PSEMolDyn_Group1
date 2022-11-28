@@ -37,7 +37,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="all">
+	<xs:complexType name="reader">
 		<xs:sequence>
 			<xs:element name="cuboid" type="cuboid"></xs:element>
 			<xs:element name="simulation" type="simulation"></xs:element>

@@ -5,8 +5,8 @@
 #include "Cuboid_XMLFile.h"
 
 namespace inputReader {
-    Cuboid_XMLFile::Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> force,
-                                   std::unique_ptr<outputWriter::FileWriter> writer) {
+    Cuboid_XMLFile::Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> &force,
+                                   std::unique_ptr<outputWriter::FileWriter> &writer) {
         this->filename = filename;
         this->force = std::move(force);
         this->writer = std::move(writer);
@@ -20,28 +20,29 @@ namespace inputReader {
         cuboid_parser.h_parser(double_parser);
         cuboid_parser.m_parser(double_parser);
         cuboid_parser.v_parser(double_parser);
+        input_parser.path_parser(string_parser);
+        output_parser.frequency_parser(double_parser);
+        output_parser.name_parser(string_parser);
         simulation_parser.t_end_parser(double_parser);
         simulation_parser.delta_t_parser(double_parser);
+        reader_parser.cuboid_parser(cuboid_parser);
+        reader_parser.simulation_parser(simulation_parser);
+        reader_parser.output_parser(output_parser);
+        reader_parser.boundaries_parser(boundaries_parser);
+        reader_parser.input_parser(input_parser);
+
+        xml_schema::document doc(reader_parser, "cuboid");
 
         boundaries_parser.pre();
         cuboid_parser.pre(particles);
         input_parser.pre();
         output_parser.pre();
         simulation_parser.pre();
+        reader_parser.pre(filename, force, writer, particles);
 
-        boundaries_parser.post_boundaries();
-        cuboid_parser.post_cuboid();
-        std::string input_path;
-        input_path = input_parser.post_input();
-        std::vector<std::string> out;
-        out = output_parser.post_output();
-        std::vector<double> sim;
-        sim = simulation_parser.post_simulation();
+        doc.parse("cuboid.xml");
 
-        Simulation simulation(particles, sim[1], sim[0], writer, force);
-        simulation.setOut_name(out[0]);
-        int frequency = stoi(out[1]);
-        simulation.setOut_frequency(frequency);
+        Simulation simulation = reader_parser.post_reader();
         simulation.run();
     }
 }

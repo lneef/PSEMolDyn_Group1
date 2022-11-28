@@ -93,7 +93,8 @@ cuboid_pskel ()
   n_parser_ (0),
   h_parser_ (0),
   m_parser_ (0),
-  v_parser_ (0)
+  v_parser_ (0),
+  v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
@@ -123,7 +124,8 @@ parsers (::xml_schema::double_pskel& t_end,
 simulation_pskel::
 simulation_pskel ()
 : t_end_parser_ (0),
-  delta_t_parser_ (0)
+  delta_t_parser_ (0),
+  v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
@@ -153,7 +155,8 @@ parsers (::xml_schema::string_pskel& name,
 output_pskel::
 output_pskel ()
 : name_parser_ (0),
-  frequency_parser_ (0)
+  frequency_parser_ (0),
+  v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
@@ -174,7 +177,66 @@ parsers (::xml_schema::string_pskel& path)
 
 input_pskel::
 input_pskel ()
-: path_parser_ (0)
+: path_parser_ (0),
+  v_state_stack_ (sizeof (v_state_), &v_state_first_)
+{
+}
+
+// reader_pskel
+//
+
+void reader_pskel::
+cuboid_parser (::cuboid_pskel& p)
+{
+  this->cuboid_parser_ = &p;
+}
+
+void reader_pskel::
+simulation_parser (::simulation_pskel& p)
+{
+  this->simulation_parser_ = &p;
+}
+
+void reader_pskel::
+output_parser (::output_pskel& p)
+{
+  this->output_parser_ = &p;
+}
+
+void reader_pskel::
+boundaries_parser (::boundaries_pskel& p)
+{
+  this->boundaries_parser_ = &p;
+}
+
+void reader_pskel::
+input_parser (::input_pskel& p)
+{
+  this->input_parser_ = &p;
+}
+
+void reader_pskel::
+parsers (::cuboid_pskel& cuboid,
+         ::simulation_pskel& simulation,
+         ::output_pskel& output,
+         ::boundaries_pskel& boundaries,
+         ::input_pskel& input)
+{
+  this->cuboid_parser_ = &cuboid;
+  this->simulation_parser_ = &simulation;
+  this->output_parser_ = &output;
+  this->boundaries_parser_ = &boundaries;
+  this->input_parser_ = &input;
+}
+
+reader_pskel::
+reader_pskel ()
+: cuboid_parser_ (0),
+  simulation_parser_ (0),
+  output_parser_ (0),
+  boundaries_parser_ (0),
+  input_parser_ (0),
+  v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
@@ -211,119 +273,6 @@ post_cuboid ()
 {
 }
 
-bool cuboid_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
-
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
-
-  if (n == "x" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->x_parser_;
-
-    if (this->x_parser_)
-      this->x_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "n" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->n_parser_;
-
-    if (this->n_parser_)
-      this->n_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "h" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->h_parser_;
-
-    if (this->h_parser_)
-      this->h_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "m" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->m_parser_;
-
-    if (this->m_parser_)
-      this->m_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "v" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->v_parser_;
-
-    if (this->v_parser_)
-      this->v_parser_->pre ();
-
-    return true;
-  }
-
-  return false;
-}
-
-bool cuboid_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
-
-  if (n == "x" && ns.empty ())
-  {
-    if (this->x_parser_)
-      this->x (this->x_parser_->post_double ());
-
-    return true;
-  }
-
-  if (n == "n" && ns.empty ())
-  {
-    if (this->n_parser_)
-      this->n (this->n_parser_->post_int ());
-
-    return true;
-  }
-
-  if (n == "h" && ns.empty ())
-  {
-    if (this->h_parser_)
-      this->h (this->h_parser_->post_double ());
-
-    return true;
-  }
-
-  if (n == "m" && ns.empty ())
-  {
-    if (this->m_parser_)
-      this->m (this->m_parser_->post_double ());
-
-    return true;
-  }
-
-  if (n == "v" && ns.empty ())
-  {
-    if (this->v_parser_)
-      this->v (this->v_parser_->post_double ());
-
-    return true;
-  }
-
-  return false;
-}
-
 // simulation_pskel
 //
 
@@ -342,65 +291,6 @@ post_simulation ()
 {
 }
 
-bool simulation_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
-
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
-
-  if (n == "t_end" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->t_end_parser_;
-
-    if (this->t_end_parser_)
-      this->t_end_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "delta_t" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->delta_t_parser_;
-
-    if (this->delta_t_parser_)
-      this->delta_t_parser_->pre ();
-
-    return true;
-  }
-
-  return false;
-}
-
-bool simulation_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
-
-  if (n == "t_end" && ns.empty ())
-  {
-    if (this->t_end_parser_)
-      this->t_end (this->t_end_parser_->post_double ());
-
-    return true;
-  }
-
-  if (n == "delta_t" && ns.empty ())
-  {
-    if (this->delta_t_parser_)
-      this->delta_t (this->delta_t_parser_->post_double ());
-
-    return true;
-  }
-
-  return false;
-}
-
 // output_pskel
 //
 
@@ -417,65 +307,6 @@ frequency (double)
 std::vector<std::string> output_pskel::
 post_output ()
 {
-}
-
-bool output_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
-
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
-
-  if (n == "name" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->name_parser_;
-
-    if (this->name_parser_)
-      this->name_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "frequency" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->frequency_parser_;
-
-    if (this->frequency_parser_)
-      this->frequency_parser_->pre ();
-
-    return true;
-  }
-
-  return false;
-}
-
-bool output_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
-
-  if (n == "name" && ns.empty ())
-  {
-    if (this->name_parser_)
-      this->name (this->name_parser_->post_string ());
-
-    return true;
-  }
-
-  if (n == "frequency" && ns.empty ())
-  {
-    if (this->frequency_parser_)
-      this->frequency (this->frequency_parser_->post_double ());
-
-    return true;
-  }
-
-  return false;
 }
 
 // boundaries_pskel
@@ -499,6 +330,799 @@ post_input ()
 {
 }
 
+// reader_pskel
+//
+
+void reader_pskel::
+cuboid ()
+{
+}
+
+void reader_pskel::
+simulation ()
+{
+}
+
+void reader_pskel::
+output ()
+{
+}
+
+void reader_pskel::
+boundaries ()
+{
+}
+
+void reader_pskel::
+input ()
+{
+}
+
+Simulation reader_pskel::
+post_reader ()
+{
+}
+
+#include <cassert>
+
+// Element validation and dispatch functions for cuboid_pskel.
+//
+bool cuboid_pskel::
+_start_element_impl (const ::xml_schema::ro_string& ns,
+                     const ::xml_schema::ro_string& n,
+                     const ::xml_schema::ro_string* t)
+{
+  XSD_UNUSED (t);
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  if (vd->func == 0 && vd->state == 0)
+  {
+    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
+      return true;
+    else
+      vd->state = 1;
+  }
+
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
+
+    vd = vs.data + (vs.size - 1);
+
+    if (vd->state == ~0UL)
+      vd = vs.data + (--vs.size - 1);
+    else
+      break;
+  }
+
+  if (vd->func == 0)
+  {
+    if (vd->state != ~0UL)
+    {
+      unsigned long s = ~0UL;
+
+      if (n == "x" && ns.empty ())
+        s = 0UL;
+
+      if (s != ~0UL)
+      {
+        vd->count++;
+        vd->state = ~0UL;
+
+        vd = vs.data + vs.size++;
+        vd->func = &cuboid_pskel::sequence_0;
+        vd->state = s;
+        vd->count = 0;
+
+        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
+      }
+      else
+      {
+        if (vd->count < 1UL)
+          this->_expected_element (
+            "", "x",
+            ns, n);
+        return false;
+      }
+    }
+    else
+      return false;
+  }
+
+  return true;
+}
+
+bool cuboid_pskel::
+_end_element_impl (const ::xml_schema::ro_string& ns,
+                   const ::xml_schema::ro_string& n)
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size - 1];
+
+  if (vd.func == 0 && vd.state == 0)
+  {
+    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
+      assert (false);
+    return true;
+  }
+
+  assert (vd.func != 0);
+  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
+
+  if (vd.state == ~0UL)
+    vs.size--;
+
+  return true;
+}
+
+void cuboid_pskel::
+_pre_e_validate ()
+{
+  this->v_state_stack_.push ();
+  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size++];
+
+  vd.func = 0;
+  vd.state = 0;
+  vd.count = 0;
+}
+
+void cuboid_pskel::
+_post_e_validate ()
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  ::xml_schema::ro_string empty;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
+    assert (vd->state == ~0UL);
+    vd = vs.data + (--vs.size - 1);
+  }
+
+  if (vd->count < 1UL)
+    this->_expected_element (
+      "", "x");
+
+  this->v_state_stack_.pop ();
+}
+
+void cuboid_pskel::
+sequence_0 (unsigned long& state,
+            unsigned long& count,
+            const ::xml_schema::ro_string& ns,
+            const ::xml_schema::ro_string& n,
+            const ::xml_schema::ro_string* t,
+            bool start)
+{
+  XSD_UNUSED (t);
+
+  switch (state)
+  {
+    case 0UL:
+    {
+      if (n == "x" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->x_parser_;
+
+          if (this->x_parser_)
+            this->x_parser_->pre ();
+        }
+        else
+        {
+          if (this->x_parser_)
+          {
+            this->x (this->x_parser_->post_double ());
+          }
+
+          count = 0;
+          state = 1UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "x",
+            ns, n);
+        count = 0;
+        state = 1UL;
+        // Fall through.
+      }
+    }
+    case 1UL:
+    {
+      if (n == "n" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->n_parser_;
+
+          if (this->n_parser_)
+            this->n_parser_->pre ();
+        }
+        else
+        {
+          if (this->n_parser_)
+          {
+            this->n (this->n_parser_->post_int ());
+          }
+
+          count = 0;
+          state = 2UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "n",
+            ns, n);
+        count = 0;
+        state = 2UL;
+        // Fall through.
+      }
+    }
+    case 2UL:
+    {
+      if (n == "h" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->h_parser_;
+
+          if (this->h_parser_)
+            this->h_parser_->pre ();
+        }
+        else
+        {
+          if (this->h_parser_)
+          {
+            this->h (this->h_parser_->post_double ());
+          }
+
+          count = 0;
+          state = 3UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "h",
+            ns, n);
+        count = 0;
+        state = 3UL;
+        // Fall through.
+      }
+    }
+    case 3UL:
+    {
+      if (n == "m" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->m_parser_;
+
+          if (this->m_parser_)
+            this->m_parser_->pre ();
+        }
+        else
+        {
+          if (this->m_parser_)
+          {
+            this->m (this->m_parser_->post_double ());
+          }
+
+          count = 0;
+          state = 4UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "m",
+            ns, n);
+        count = 0;
+        state = 4UL;
+        // Fall through.
+      }
+    }
+    case 4UL:
+    {
+      if (n == "v" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->v_parser_;
+
+          if (this->v_parser_)
+            this->v_parser_->pre ();
+        }
+        else
+        {
+          if (this->v_parser_)
+          {
+            this->v (this->v_parser_->post_double ());
+          }
+
+          count = 0;
+          state = ~0UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "v",
+            ns, n);
+        count = 0;
+        state = ~0UL;
+        // Fall through.
+      }
+    }
+    case ~0UL:
+      break;
+  }
+}
+
+// Element validation and dispatch functions for simulation_pskel.
+//
+bool simulation_pskel::
+_start_element_impl (const ::xml_schema::ro_string& ns,
+                     const ::xml_schema::ro_string& n,
+                     const ::xml_schema::ro_string* t)
+{
+  XSD_UNUSED (t);
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  if (vd->func == 0 && vd->state == 0)
+  {
+    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
+      return true;
+    else
+      vd->state = 1;
+  }
+
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
+
+    vd = vs.data + (vs.size - 1);
+
+    if (vd->state == ~0UL)
+      vd = vs.data + (--vs.size - 1);
+    else
+      break;
+  }
+
+  if (vd->func == 0)
+  {
+    if (vd->state != ~0UL)
+    {
+      unsigned long s = ~0UL;
+
+      if (n == "t_end" && ns.empty ())
+        s = 0UL;
+
+      if (s != ~0UL)
+      {
+        vd->count++;
+        vd->state = ~0UL;
+
+        vd = vs.data + vs.size++;
+        vd->func = &simulation_pskel::sequence_0;
+        vd->state = s;
+        vd->count = 0;
+
+        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
+      }
+      else
+      {
+        if (vd->count < 1UL)
+          this->_expected_element (
+            "", "t_end",
+            ns, n);
+        return false;
+      }
+    }
+    else
+      return false;
+  }
+
+  return true;
+}
+
+bool simulation_pskel::
+_end_element_impl (const ::xml_schema::ro_string& ns,
+                   const ::xml_schema::ro_string& n)
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size - 1];
+
+  if (vd.func == 0 && vd.state == 0)
+  {
+    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
+      assert (false);
+    return true;
+  }
+
+  assert (vd.func != 0);
+  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
+
+  if (vd.state == ~0UL)
+    vs.size--;
+
+  return true;
+}
+
+void simulation_pskel::
+_pre_e_validate ()
+{
+  this->v_state_stack_.push ();
+  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size++];
+
+  vd.func = 0;
+  vd.state = 0;
+  vd.count = 0;
+}
+
+void simulation_pskel::
+_post_e_validate ()
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  ::xml_schema::ro_string empty;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
+    assert (vd->state == ~0UL);
+    vd = vs.data + (--vs.size - 1);
+  }
+
+  if (vd->count < 1UL)
+    this->_expected_element (
+      "", "t_end");
+
+  this->v_state_stack_.pop ();
+}
+
+void simulation_pskel::
+sequence_0 (unsigned long& state,
+            unsigned long& count,
+            const ::xml_schema::ro_string& ns,
+            const ::xml_schema::ro_string& n,
+            const ::xml_schema::ro_string* t,
+            bool start)
+{
+  XSD_UNUSED (t);
+
+  switch (state)
+  {
+    case 0UL:
+    {
+      if (n == "t_end" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->t_end_parser_;
+
+          if (this->t_end_parser_)
+            this->t_end_parser_->pre ();
+        }
+        else
+        {
+          if (this->t_end_parser_)
+          {
+            this->t_end (this->t_end_parser_->post_double ());
+          }
+
+          count = 0;
+          state = 1UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "t_end",
+            ns, n);
+        count = 0;
+        state = 1UL;
+        // Fall through.
+      }
+    }
+    case 1UL:
+    {
+      if (n == "delta_t" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->delta_t_parser_;
+
+          if (this->delta_t_parser_)
+            this->delta_t_parser_->pre ();
+        }
+        else
+        {
+          if (this->delta_t_parser_)
+          {
+            this->delta_t (this->delta_t_parser_->post_double ());
+          }
+
+          count = 0;
+          state = ~0UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "delta_t",
+            ns, n);
+        count = 0;
+        state = ~0UL;
+        // Fall through.
+      }
+    }
+    case ~0UL:
+      break;
+  }
+}
+
+// Element validation and dispatch functions for output_pskel.
+//
+bool output_pskel::
+_start_element_impl (const ::xml_schema::ro_string& ns,
+                     const ::xml_schema::ro_string& n,
+                     const ::xml_schema::ro_string* t)
+{
+  XSD_UNUSED (t);
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  if (vd->func == 0 && vd->state == 0)
+  {
+    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
+      return true;
+    else
+      vd->state = 1;
+  }
+
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
+
+    vd = vs.data + (vs.size - 1);
+
+    if (vd->state == ~0UL)
+      vd = vs.data + (--vs.size - 1);
+    else
+      break;
+  }
+
+  if (vd->func == 0)
+  {
+    if (vd->state != ~0UL)
+    {
+      unsigned long s = ~0UL;
+
+      if (n == "name" && ns.empty ())
+        s = 0UL;
+
+      if (s != ~0UL)
+      {
+        vd->count++;
+        vd->state = ~0UL;
+
+        vd = vs.data + vs.size++;
+        vd->func = &output_pskel::sequence_0;
+        vd->state = s;
+        vd->count = 0;
+
+        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
+      }
+      else
+      {
+        if (vd->count < 1UL)
+          this->_expected_element (
+            "", "name",
+            ns, n);
+        return false;
+      }
+    }
+    else
+      return false;
+  }
+
+  return true;
+}
+
+bool output_pskel::
+_end_element_impl (const ::xml_schema::ro_string& ns,
+                   const ::xml_schema::ro_string& n)
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size - 1];
+
+  if (vd.func == 0 && vd.state == 0)
+  {
+    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
+      assert (false);
+    return true;
+  }
+
+  assert (vd.func != 0);
+  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
+
+  if (vd.state == ~0UL)
+    vs.size--;
+
+  return true;
+}
+
+void output_pskel::
+_pre_e_validate ()
+{
+  this->v_state_stack_.push ();
+  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size++];
+
+  vd.func = 0;
+  vd.state = 0;
+  vd.count = 0;
+}
+
+void output_pskel::
+_post_e_validate ()
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  ::xml_schema::ro_string empty;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
+    assert (vd->state == ~0UL);
+    vd = vs.data + (--vs.size - 1);
+  }
+
+  if (vd->count < 1UL)
+    this->_expected_element (
+      "", "name");
+
+  this->v_state_stack_.pop ();
+}
+
+void output_pskel::
+sequence_0 (unsigned long& state,
+            unsigned long& count,
+            const ::xml_schema::ro_string& ns,
+            const ::xml_schema::ro_string& n,
+            const ::xml_schema::ro_string* t,
+            bool start)
+{
+  XSD_UNUSED (t);
+
+  switch (state)
+  {
+    case 0UL:
+    {
+      if (n == "name" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->name_parser_;
+
+          if (this->name_parser_)
+            this->name_parser_->pre ();
+        }
+        else
+        {
+          if (this->name_parser_)
+          {
+            this->name (this->name_parser_->post_string ());
+          }
+
+          count = 0;
+          state = 1UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "name",
+            ns, n);
+        count = 0;
+        state = 1UL;
+        // Fall through.
+      }
+    }
+    case 1UL:
+    {
+      if (n == "frequency" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->frequency_parser_;
+
+          if (this->frequency_parser_)
+            this->frequency_parser_->pre ();
+        }
+        else
+        {
+          if (this->frequency_parser_)
+          {
+            this->frequency (this->frequency_parser_->post_double ());
+          }
+
+          count = 0;
+          state = ~0UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "frequency",
+            ns, n);
+        count = 0;
+        state = ~0UL;
+        // Fall through.
+      }
+    }
+    case ~0UL:
+      break;
+  }
+}
+
+// Element validation and dispatch functions for input_pskel.
+//
 bool input_pskel::
 _start_element_impl (const ::xml_schema::ro_string& ns,
                      const ::xml_schema::ro_string& n,
@@ -506,38 +1130,504 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
 {
   XSD_UNUSED (t);
 
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
 
-  if (n == "path" && ns.empty ())
+  if (vd->func == 0 && vd->state == 0)
   {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->path_parser_;
-
-    if (this->path_parser_)
-      this->path_parser_->pre ();
-
-    return true;
+    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
+      return true;
+    else
+      vd->state = 1;
   }
 
-  return false;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
+
+    vd = vs.data + (vs.size - 1);
+
+    if (vd->state == ~0UL)
+      vd = vs.data + (--vs.size - 1);
+    else
+      break;
+  }
+
+  if (vd->func == 0)
+  {
+    if (vd->state != ~0UL)
+    {
+      unsigned long s = ~0UL;
+
+      if (n == "path" && ns.empty ())
+        s = 0UL;
+
+      if (s != ~0UL)
+      {
+        vd->count++;
+        vd->state = ~0UL;
+
+        vd = vs.data + vs.size++;
+        vd->func = &input_pskel::sequence_0;
+        vd->state = s;
+        vd->count = 0;
+
+        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
+      }
+      else
+      {
+        if (vd->count < 1UL)
+          this->_expected_element (
+            "", "path",
+            ns, n);
+        return false;
+      }
+    }
+    else
+      return false;
+  }
+
+  return true;
 }
 
 bool input_pskel::
 _end_element_impl (const ::xml_schema::ro_string& ns,
                    const ::xml_schema::ro_string& n)
 {
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size - 1];
 
-  if (n == "path" && ns.empty ())
+  if (vd.func == 0 && vd.state == 0)
   {
-    if (this->path_parser_)
-      this->path (this->path_parser_->post_string ());
-
+    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
+      assert (false);
     return true;
   }
 
-  return false;
+  assert (vd.func != 0);
+  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
+
+  if (vd.state == ~0UL)
+    vs.size--;
+
+  return true;
+}
+
+void input_pskel::
+_pre_e_validate ()
+{
+  this->v_state_stack_.push ();
+  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size++];
+
+  vd.func = 0;
+  vd.state = 0;
+  vd.count = 0;
+}
+
+void input_pskel::
+_post_e_validate ()
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  ::xml_schema::ro_string empty;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
+    assert (vd->state == ~0UL);
+    vd = vs.data + (--vs.size - 1);
+  }
+
+  if (vd->count < 1UL)
+    this->_expected_element (
+      "", "path");
+
+  this->v_state_stack_.pop ();
+}
+
+void input_pskel::
+sequence_0 (unsigned long& state,
+            unsigned long& count,
+            const ::xml_schema::ro_string& ns,
+            const ::xml_schema::ro_string& n,
+            const ::xml_schema::ro_string* t,
+            bool start)
+{
+  XSD_UNUSED (t);
+
+  switch (state)
+  {
+    case 0UL:
+    {
+      if (n == "path" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->path_parser_;
+
+          if (this->path_parser_)
+            this->path_parser_->pre ();
+        }
+        else
+        {
+          if (this->path_parser_)
+          {
+            this->path (this->path_parser_->post_string ());
+          }
+
+          count = 0;
+          state = ~0UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "path",
+            ns, n);
+        count = 0;
+        state = ~0UL;
+        // Fall through.
+      }
+    }
+    case ~0UL:
+      break;
+  }
+}
+
+// Element validation and dispatch functions for reader_pskel.
+//
+bool reader_pskel::
+_start_element_impl (const ::xml_schema::ro_string& ns,
+                     const ::xml_schema::ro_string& n,
+                     const ::xml_schema::ro_string* t)
+{
+  XSD_UNUSED (t);
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  if (vd->func == 0 && vd->state == 0)
+  {
+    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
+      return true;
+    else
+      vd->state = 1;
+  }
+
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
+
+    vd = vs.data + (vs.size - 1);
+
+    if (vd->state == ~0UL)
+      vd = vs.data + (--vs.size - 1);
+    else
+      break;
+  }
+
+  if (vd->func == 0)
+  {
+    if (vd->state != ~0UL)
+    {
+      unsigned long s = ~0UL;
+
+      if (n == "cuboid" && ns.empty ())
+        s = 0UL;
+
+      if (s != ~0UL)
+      {
+        vd->count++;
+        vd->state = ~0UL;
+
+        vd = vs.data + vs.size++;
+        vd->func = &reader_pskel::sequence_0;
+        vd->state = s;
+        vd->count = 0;
+
+        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
+      }
+      else
+      {
+        if (vd->count < 1UL)
+          this->_expected_element (
+            "", "cuboid",
+            ns, n);
+        return false;
+      }
+    }
+    else
+      return false;
+  }
+
+  return true;
+}
+
+bool reader_pskel::
+_end_element_impl (const ::xml_schema::ro_string& ns,
+                   const ::xml_schema::ro_string& n)
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size - 1];
+
+  if (vd.func == 0 && vd.state == 0)
+  {
+    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
+      assert (false);
+    return true;
+  }
+
+  assert (vd.func != 0);
+  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
+
+  if (vd.state == ~0UL)
+    vs.size--;
+
+  return true;
+}
+
+void reader_pskel::
+_pre_e_validate ()
+{
+  this->v_state_stack_.push ();
+  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size++];
+
+  vd.func = 0;
+  vd.state = 0;
+  vd.count = 0;
+}
+
+void reader_pskel::
+_post_e_validate ()
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  ::xml_schema::ro_string empty;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
+    assert (vd->state == ~0UL);
+    vd = vs.data + (--vs.size - 1);
+  }
+
+  if (vd->count < 1UL)
+    this->_expected_element (
+      "", "cuboid");
+
+  this->v_state_stack_.pop ();
+}
+
+void reader_pskel::
+sequence_0 (unsigned long& state,
+            unsigned long& count,
+            const ::xml_schema::ro_string& ns,
+            const ::xml_schema::ro_string& n,
+            const ::xml_schema::ro_string* t,
+            bool start)
+{
+  XSD_UNUSED (t);
+
+  switch (state)
+  {
+    case 0UL:
+    {
+      if (n == "cuboid" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->cuboid_parser_;
+
+          if (this->cuboid_parser_)
+            this->cuboid_parser_->pre ();
+        }
+        else
+        {
+          if (this->cuboid_parser_)
+          {
+            this->cuboid_parser_->post_cuboid ();
+            this->cuboid ();
+          }
+
+          count = 0;
+          state = 1UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "cuboid",
+            ns, n);
+        count = 0;
+        state = 1UL;
+        // Fall through.
+      }
+    }
+    case 1UL:
+    {
+      if (n == "simulation" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->simulation_parser_;
+
+          if (this->simulation_parser_)
+            this->simulation_parser_->pre ();
+        }
+        else
+        {
+          if (this->simulation_parser_)
+          {
+            this->simulation_parser_->post_simulation ();
+            this->simulation ();
+          }
+
+          count = 0;
+          state = 2UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "simulation",
+            ns, n);
+        count = 0;
+        state = 2UL;
+        // Fall through.
+      }
+    }
+    case 2UL:
+    {
+      if (n == "output" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->output_parser_;
+
+          if (this->output_parser_)
+            this->output_parser_->pre ();
+        }
+        else
+        {
+          if (this->output_parser_)
+          {
+            this->output_parser_->post_output ();
+            this->output ();
+          }
+
+          count = 0;
+          state = 3UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "output",
+            ns, n);
+        count = 0;
+        state = 3UL;
+        // Fall through.
+      }
+    }
+    case 3UL:
+    {
+      if (n == "boundaries" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->boundaries_parser_;
+
+          if (this->boundaries_parser_)
+            this->boundaries_parser_->pre ();
+        }
+        else
+        {
+          if (this->boundaries_parser_)
+          {
+            this->boundaries_parser_->post_boundaries ();
+            this->boundaries ();
+          }
+
+          count = 0;
+          state = 4UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "boundaries",
+            ns, n);
+        count = 0;
+        state = 4UL;
+        // Fall through.
+      }
+    }
+    case 4UL:
+    {
+      if (n == "input" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->input_parser_;
+
+          if (this->input_parser_)
+            this->input_parser_->pre ();
+        }
+        else
+        {
+          if (this->input_parser_)
+          {
+            this->input_parser_->post_input ();
+            this->input ();
+          }
+
+          count = 0;
+          state = ~0UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "input",
+            ns, n);
+        count = 0;
+        state = ~0UL;
+        // Fall through.
+      }
+    }
+    case ~0UL:
+      break;
+  }
 }
 
 #include <xsd/cxx/post.hxx>
