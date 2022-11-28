@@ -1,5 +1,5 @@
 #include <getopt.h>
-#include "inputReader/TxtReader.h"
+#include "inputReader/fileReader/TxtReader.h"
 #include "outputWriter/VTKWriter.h"
 #include "inputReader/InputReader.h"
 
@@ -13,7 +13,7 @@
 #include "ParticleContainer.h"
 #include "forceCalculation/LennardJones.h"
 #include "inputReader/Cuboid_cl.h"
-#include "inputReader/Cuboid_file.h"
+#include "inputReader/fileReader/Cuboid_TxtFile.h"
 #include "MolSimLogger.h"
 #include "Simulation.h"
 
@@ -77,7 +77,7 @@ int main(int argc, char *argsv[]) {
                 if (optarg == nullptr) {
                     input = std::make_unique<inputReader::Cuboid_cl>();
                 } else {
-                    input = std::make_unique<inputReader::Cuboid_file>(optarg);
+                    input = std::make_unique<inputReader::Cuboid_TxtFile>(optarg);
                 }
                 force = std::make_unique<LennardJones>();
                 opt = Cuboid;
