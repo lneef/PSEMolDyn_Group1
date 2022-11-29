@@ -4,7 +4,6 @@
 #include "Simulation.h"
 #include "MolSimLogger.h"
 #include "utils/ArrayUtils.h"
-#include "outputWriter/VTKWriter.h"
 
 void Simulation::calculateX() {
     particles->apply([this](Particle &p) {
