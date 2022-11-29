@@ -1,7 +1,8 @@
 #pragma once
 
 #include<string>
-#include "../ParticleContainer.h"
+#include <memory>
+#include "container/Container.h"
 
 /**
  * @brief The namespace outputWriter contains the functionality to output particles to files
@@ -22,7 +23,7 @@ namespace outputWriter {
          * @param filename filename specifies the name of the outputfile
          * @param iteration Number of the current iteration, used to generate the name of the output file
         */
-        virtual void plotParticles(ParticleContainer &particles, const std::string &filename, int iteration) = 0;
+        virtual void plotParticles(std::unique_ptr<Container> &particles, const std::string &filename, int iteration) = 0;
 
         /**
          * @brief virtual destructor to prevent memory leaks

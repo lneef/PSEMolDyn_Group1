@@ -6,9 +6,10 @@
 #include <memory>
 #include <iostream>
 
-#include "ParticleContainer.h"
+
 #include "outputWriter/FileWriter.h"
 #include "forceCalculation/Force.h"
+#include "container/LinkedCellContainer.h"
 #include <chrono>
 
 /**
@@ -19,7 +20,7 @@ class Simulation {
     /**
      * @brief ParticleContainer containing the particles for the simulation
      */
-    ParticleContainer particles;
+    std::unique_ptr<Container>  particles;
     /**
      * @brief start time of the simulation
      */
@@ -69,8 +70,19 @@ public:
      * @param writer object to specify the output behaviour of the simualtion
      * @param force object to specify the type of force calculation used during the simulation
      */
-    Simulation(ParticleContainer &particles, double delta_t, double end_time,
+    Simulation(std::unique_ptr<Container>  &particles, double delta_t, double end_time,
                std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force);
+
+    Simulation(double delta_t_arg = 2, double end_time_arg = 0.0002);
+
+    void setDeltaT(double delta_t_arg);
+    void setEndTime(double end_time_arg);
+    void setForce(std::unique_ptr<Force> &force_arg);
+
+    void setParticle(std::unique_ptr<Container>  &particles_arg);
+    void setParticle(std::unique_ptr<ParticleContainer>  &particles_arg);
+    void setParticle(std::unique_ptr<LinkedCellContainer>  &particles_arg);
+
 
 };
 

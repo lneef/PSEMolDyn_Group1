@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "../ParticleContainer.h"
 #include "InputReader.h"
 #include "CuboidGenerator.h"
 
@@ -22,6 +21,6 @@ namespace inputReader {
          *
          * @param particles ParticleContainer where the particles are stored
         */
-        void read(ParticleContainer &particles) override;
+        void read(std::unique_ptr<ParticleContainer> &particles) override;
     };
 }

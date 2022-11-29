@@ -18,14 +18,14 @@ namespace inputReader {
     Cuboid_file::~Cuboid_file() = default;
 
     //reads values from file
-    void Cuboid_file::read(ParticleContainer &particles) {
+    void Cuboid_file::read(std::unique_ptr<ParticleContainer> &particles) {
         std::array<double, 3> x{};
         std::array<int, 3> n{};
         double h;
         double m;
         std::array<double, 3> v{};
 
-        CuboidGenerator generator;
+        CuboidGenerator<ParticleContainer> generator;
 
         int num_particles = 0;
 

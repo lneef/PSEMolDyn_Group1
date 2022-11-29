@@ -12,18 +12,19 @@
  */
 TEST(LennardJonesTest, CalcTest2){
     LennardJones lj;
-    ParticleContainer par{};
-
-    par.addParticle( Particle({0., 0., 0.}, {0., 0., 0.}, 0.));
-    par.addParticle(Particle({1., 1., 0.}, {0., 0., 0.}, 0.));
-    par.addParticle(Particle({1., 0., 0.}, {0., 0., 0}, 0.));
+    std::unique_ptr<Container> par = std::make_unique<ParticleContainer>();
+    par->addParticle( Particle({0., 0., 0.}, {0., 0., 0.}, 0.));
+    par->addParticle(Particle({1., 1., 0.}, {0., 0., 0.}, 0.));
+    par->addParticle(Particle({1., 0., 0.}, {0., 0., 0}, 0.));
 
     std::array<double, 3> f1 = {-114.375,5.625,0};
     std::array<double, 3> f2 = {-5.625,114.375,0};
     std::array<double, 3> f3 = {120,-120,0};
 
     lj.calculateF(par);
-    EXPECT_THAT(par[0].getF(), testing::Pointwise(testing::DoubleEq(),f1));
-    EXPECT_THAT(par[1].getF(), testing::Pointwise(testing::DoubleEq(), f2));
-    EXPECT_THAT(par[2].getF(), testing::Pointwise(testing::DoubleEq(), f3));
+
+    auto &p = dynamic_cast<ParticleContainer&>(*par);
+    EXPECT_THAT(p[0].getF(), testing::Pointwise(testing::DoubleEq(),f1));
+    EXPECT_THAT(p[1].getF(), testing::Pointwise(testing::DoubleEq(), f2));
+    EXPECT_THAT(p[2].getF(), testing::Pointwise(testing::DoubleEq(), f3));
 }

@@ -10,7 +10,6 @@
 
 #include "forceCalculation/Gravitation.h"
 #include "forceCalculation/Force.h"
-#include "ParticleContainer.h"
 #include "forceCalculation/LennardJones.h"
 #include "inputReader/Cuboid_cl.h"
 #include "inputReader/Cuboid_file.h"
@@ -43,8 +42,7 @@ enum Option {
 };
 
 int main(int argc, char *argsv[]) {
-
-    ParticleContainer particles{};
+    std::unique_ptr<ParticleContainer> particles=std::make_unique<ParticleContainer>();
     std::unique_ptr<inputReader::InputReader> input;
     std::unique_ptr<Force> force;
     MolSimLogger::init();
@@ -107,7 +105,8 @@ int main(int argc, char *argsv[]) {
     }
     input->read(particles);
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
-    Simulation simulation(particles, delta_t, end_time, writer, force);
+    std::unique_ptr<Container> con = std::move(particles);
+    Simulation simulation(con, delta_t, end_time, writer, force);
     simulation.run();
 
     MolSimLogger::logInfo("Output written. Terminating...");
