@@ -14,7 +14,25 @@ void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
 
 void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
     apply(fun);
+    update();
 
+}
+
+void LinkedCellContainer::update() {
+    size_t len = cells.size();
+    for (size_t i = 0; i < len; ++i) {
+        for (auto it = cells[i].begin(); it != cells[i].end();) {
+            auto &p = *it;
+            int ind = index(p);
+            if (ind == i) {
+                ++it;
+                continue;
+            }
+            addParticle(p);
+            it = cells[i].remove(it);
+
+        }
+    }
 }
 
 size_t LinkedCellContainer::size() {
@@ -41,6 +59,7 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
                 auto &neighbour = cells[i + mesh[0]];
                 neighbour.apply(partial);
             }
+
         }
     }
 
@@ -56,12 +75,16 @@ int LinkedCellContainer::index(Particle &p) {
 
 void LinkedCellContainer::addParticle(Particle &p) {
     int ind = index(p);
+    if(ind > cells.size())
+        return;
     cells[ind].addParticle(p);
 }
 
 void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     int ind = index(p1);
+    if(ind > cells.size())
+        return;
     cells[ind].addParticle(p);
 }
 

@@ -5,6 +5,7 @@
 
 #include "Container.h"
 #include "ParticleList.h"
+#include <vector>
 
 class LinkedCellContainer : public Container {
 public:
@@ -21,6 +22,8 @@ private:
 
     std::array<int, 3> mesh;
     double rcutoff;
+
+    void update();
 };
 
 

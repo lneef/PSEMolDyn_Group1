@@ -51,3 +51,7 @@ std::list<Particle>::iterator ParticleList::begin() {
 std::list<Particle>::iterator ParticleList::end() {
     return particles.end();
 }
+
+std::list<Particle>::iterator ParticleList::remove(std::list<Particle>::iterator &iterator){
+    return particles.erase(iterator);
+}

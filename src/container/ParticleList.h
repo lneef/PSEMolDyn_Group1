@@ -16,8 +16,10 @@ public:
     void addParticle(Particle&& p) override;
     std::list<Particle>::iterator begin();
     std::list<Particle>::iterator end();
+    std::list<Particle>::iterator remove(std::list<Particle>::iterator &iterator);
 private:
     std::list<Particle> particles;
+
 
 };
 
