@@ -17,6 +17,9 @@ public:
     void addParticle(Particle& p) override;
     void addParticle(Particle&& p) override;
     int index(Particle &p);
+    LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg, std::vector<ParticleList>& list);
+
+    std::vector<ParticleList> getCells() const;
 private:
     std::vector<ParticleList> cells;
 

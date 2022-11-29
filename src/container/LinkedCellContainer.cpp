@@ -20,7 +20,7 @@ void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
 
 void LinkedCellContainer::update() {
     size_t len = cells.size();
-    for (size_t i = 0; i < len; ++i) {
+    for (int i = 0; i < len; ++i) {
         for (auto it = cells[i].begin(); it != cells[i].end();) {
             auto &p = *it;
             int ind = index(p);
@@ -69,23 +69,32 @@ int LinkedCellContainer::index(Particle &p) {
     auto &pos = p.getX();
 
     int ind = floor(std::abs(pos[0]) / rcutoff) + floor(std::abs(pos[1]) / rcutoff) * mesh[0] +
-              floor(std::abs(pos[2]) / rcutoff) * mesh[0] + mesh[1];
+              floor(std::abs(pos[2]) / rcutoff) * mesh[0] * mesh[1];
     return ind;
 }
 
 void LinkedCellContainer::addParticle(Particle &p) {
     int ind = index(p);
-    if(ind > cells.size())
-        return;
-    cells[ind].addParticle(p);
+    if(ind < cells.size())
+        cells[ind].addParticle(p);
 }
 
 void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     int ind = index(p1);
-    if(ind > cells.size())
-        return;
-    cells[ind].addParticle(p);
+    if(ind < cells.size())
+        cells[ind].addParticle(p);
+}
+
+LinkedCellContainer::LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg, std::vector<ParticleList>& list) {
+    cells = list;
+    mesh = mesh_arg;
+    rcutoff = rcutoff_arg;
+
+}
+
+std::vector<ParticleList> LinkedCellContainer::getCells() const {
+    return cells;
 }
 
 LinkedCellContainer::~LinkedCellContainer() = default;

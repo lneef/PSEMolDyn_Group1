@@ -2,7 +2,6 @@
 // Created by dominik on 16.11.22.
 //
 #include <gtest/gtest.h>
-#include "gtest/gtest.h"
 #include "../src/forceCalculation/LennardJones.h"
 #include <vector>
 #include <gmock/gmock-matchers.h>

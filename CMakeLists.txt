@@ -114,7 +114,9 @@ add_library(lib_test
 target_link_libraries(lib_test PRIVATE spdlog::spdlog)
 target_include_directories(lib_test
         PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/
+        PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd/)
 target_include_directories(MolSimTest
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/
