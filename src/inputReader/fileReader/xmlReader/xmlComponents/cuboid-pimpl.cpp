@@ -4,8 +4,17 @@
 
 #include "cuboid-pimpl.h"
 
-void cuboid_pimpl::pre(inputReader::Cuboid_XMLFile file) {
-    this->file = file;
+void cuboid_pimpl::pre(std::vector<std::array<double, 3>> &positions,
+                       std::vector<std::array<int, 3>> &quantities,
+                       std::vector<double> &distances,
+                       std::vector<double> &masses,
+                       std::vector<std::array<double, 3>> &velocities) {
+    this->positions = positions;
+    this->quantities = quantities;
+    this->distances = distances;
+    this->masses = masses;
+    this->velocities = velocities;
+
 }
 
 void cuboid_pimpl::x(double x) {
@@ -37,9 +46,9 @@ void cuboid_pimpl::post_cuboid() {
         quan[i] = quantity[i];
         vel[i] = velocity[i];
     }
-    file.setPostitions(pos);
-    file.setQuantities(quan);
-    file.setDistances(distance);
-    file.setMasses(mass);
-    file.setVelocities(velocity);
+    positions.push_back(pos);
+    quantities.push_back(quan);
+    distances.push_back(distance);
+    masses.push_back(mass);
+    velocities.push_back(vel);
 }

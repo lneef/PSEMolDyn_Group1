@@ -5,13 +5,10 @@
 
 #include "../cuboid-pskel.h"
 #include "../../../../Simulation.h"
-#include "../Cuboid_XMLFile.h"
 
 class reader_pimpl : public virtual reader_pskel {
-protected:
-    inputReader::Cuboid_XMLFile file;
 public:
-    virtual void pre(inputReader::Cuboid_XMLFile file);
+    virtual void pre();
 
     virtual void cuboid();
 

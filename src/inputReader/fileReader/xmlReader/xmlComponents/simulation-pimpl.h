@@ -4,17 +4,17 @@
 #pragma once
 
 #include "../cuboid-pskel.h"
-#include "../Cuboid_XMLFile.h"
+#include "../../../../Simulation.h"
 
 class simulation_pimpl : public virtual simulation_pskel {
 protected:
     double end_time;
     double delta_time;
-    double dom_size;
-    double dom_cutOf;
-    inputReader::Cuboid_XMLFile file;
+    std::shared_ptr<Simulation> simulation;
+    double dom_size_ref;
+    double dom_cutOf_ref;
 public:
-    virtual void pre(inputReader::Cuboid_XMLFile file);
+    virtual void pre(std::shared_ptr<Simulation> &simulation, double &dom_size_ref, double &dom_cutOf_ref);
 
     virtual void t_end(double);
 

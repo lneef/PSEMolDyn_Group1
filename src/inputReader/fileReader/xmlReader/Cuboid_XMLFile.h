@@ -23,7 +23,7 @@ namespace inputReader {
         simulation_pimpl simulation_parser;
         reader_pimpl reader_parser;
         xml_schema::double_pimpl double_parser;
-        xml_schema::int_pimpl int_parser;
+        xml_schema::integer_pimpl integer_parser;
         xml_schema::string_pimpl string_parser;
         std::unique_ptr<Force> force;
         std::unique_ptr<outputWriter::FileWriter> writer;

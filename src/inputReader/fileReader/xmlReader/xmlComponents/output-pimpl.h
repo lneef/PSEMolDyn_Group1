@@ -4,13 +4,13 @@
 #pragma once
 
 #include "../cuboid-pskel.h"
-#include "../Cuboid_XMLFile.h"
+#include "../../../../Simulation.h"
 
 class output_pimpl : public virtual output_pskel {
 protected:
-    inputReader::Cuboid_XMLFile file;
+    std::shared_ptr<Simulation> simulation;
 public:
-    virtual void pre(inputReader::Cuboid_XMLFile file);
+    virtual void pre(std::shared_ptr<Simulation> &simulation);
 
     virtual void name(const ::std::string &);
 

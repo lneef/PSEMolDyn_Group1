@@ -78,8 +78,6 @@ class reader_pskel;
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
 
-#include "../../../Simulation.h"
-
 namespace xml_schema
 {
   // Built-in XML Schema types mapping.
@@ -285,7 +283,7 @@ class cuboid_pskel: public ::xml_schema::complex_content
   x (double);
 
   virtual void
-  n (int);
+  n (long long);
 
   virtual void
   h (double);
@@ -305,7 +303,7 @@ class cuboid_pskel: public ::xml_schema::complex_content
   x_parser (::xml_schema::double_pskel&);
 
   void
-  n_parser (::xml_schema::int_pskel&);
+  n_parser (::xml_schema::integer_pskel&);
 
   void
   h_parser (::xml_schema::double_pskel&);
@@ -318,7 +316,7 @@ class cuboid_pskel: public ::xml_schema::complex_content
 
   void
   parsers (::xml_schema::double_pskel& /* x */,
-           ::xml_schema::int_pskel& /* n */,
+           ::xml_schema::integer_pskel& /* n */,
            ::xml_schema::double_pskel& /* h */,
            ::xml_schema::double_pskel& /* m */,
            ::xml_schema::double_pskel& /* v */);
@@ -341,7 +339,7 @@ class cuboid_pskel: public ::xml_schema::complex_content
 
   protected:
   ::xml_schema::double_pskel* x_parser_;
-  ::xml_schema::int_pskel* n_parser_;
+  ::xml_schema::integer_pskel* n_parser_;
   ::xml_schema::double_pskel* h_parser_;
   ::xml_schema::double_pskel* m_parser_;
   ::xml_schema::double_pskel* v_parser_;
@@ -425,7 +423,7 @@ class output_pskel: public ::xml_schema::complex_content
   name (const ::std::string&);
 
   virtual void
-  frequency (double);
+  frequency (long long);
 
   virtual void
   post_output ();
@@ -436,11 +434,11 @@ class output_pskel: public ::xml_schema::complex_content
   name_parser (::xml_schema::string_pskel&);
 
   void
-  frequency_parser (::xml_schema::double_pskel&);
+  frequency_parser (::xml_schema::integer_pskel&);
 
   void
   parsers (::xml_schema::string_pskel& /* name */,
-           ::xml_schema::double_pskel& /* frequency */);
+           ::xml_schema::integer_pskel& /* frequency */);
 
   // Constructor.
   //
@@ -460,7 +458,7 @@ class output_pskel: public ::xml_schema::complex_content
 
   protected:
   ::xml_schema::string_pskel* name_parser_;
-  ::xml_schema::double_pskel* frequency_parser_;
+  ::xml_schema::integer_pskel* frequency_parser_;
 };
 
 class boundaries_pskel: public ::xml_schema::complex_content

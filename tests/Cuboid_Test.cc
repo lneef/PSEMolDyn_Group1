@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "inputReader/Cuboid_file.h"
+#include "inputReader/fileReader/Cuboid_TxtFile.h"
 /**
  * @brief test if particles generated form read cuboid are at the right position
  */
 TEST(CuboidTest, RightTest){
-    inputReader::Cuboid_file file("../tests/testinput/test.txt");
+    inputReader::Cuboid_TxtFile file("../tests/testinput/test.txt");
     std::unique_ptr<ParticleContainer> par = std::make_unique<ParticleContainer>();
     file.read(par);
     std::array<double, 3> pos{};

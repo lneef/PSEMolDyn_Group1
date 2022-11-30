@@ -50,7 +50,7 @@ x_parser (::xml_schema::double_pskel& p)
 }
 
 void cuboid_pskel::
-n_parser (::xml_schema::int_pskel& p)
+n_parser (::xml_schema::integer_pskel& p)
 {
   this->n_parser_ = &p;
 }
@@ -75,7 +75,7 @@ v_parser (::xml_schema::double_pskel& p)
 
 void cuboid_pskel::
 parsers (::xml_schema::double_pskel& x,
-         ::xml_schema::int_pskel& n,
+         ::xml_schema::integer_pskel& n,
          ::xml_schema::double_pskel& h,
          ::xml_schema::double_pskel& m,
          ::xml_schema::double_pskel& v)
@@ -155,14 +155,14 @@ name_parser (::xml_schema::string_pskel& p)
 }
 
 void output_pskel::
-frequency_parser (::xml_schema::double_pskel& p)
+frequency_parser (::xml_schema::integer_pskel& p)
 {
   this->frequency_parser_ = &p;
 }
 
 void output_pskel::
 parsers (::xml_schema::string_pskel& name,
-         ::xml_schema::double_pskel& frequency)
+         ::xml_schema::integer_pskel& frequency)
 {
   this->name_parser_ = &name;
   this->frequency_parser_ = &frequency;
@@ -262,7 +262,7 @@ x (double)
 }
 
 void cuboid_pskel::
-n (int)
+n (long long)
 {
 }
 
@@ -367,7 +367,7 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
   if (n == "n" && ns.empty ())
   {
     if (this->n_parser_)
-      this->n (this->n_parser_->post_int ());
+      this->n (this->n_parser_->post_integer ());
 
     return true;
   }
@@ -531,7 +531,7 @@ name (const ::std::string&)
 }
 
 void output_pskel::
-frequency (double)
+frequency (long long)
 {
 }
 
@@ -591,7 +591,7 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
   if (n == "frequency" && ns.empty ())
   {
     if (this->frequency_parser_)
-      this->frequency (this->frequency_parser_->post_double ());
+      this->frequency (this->frequency_parser_->post_integer ());
 
     return true;
   }

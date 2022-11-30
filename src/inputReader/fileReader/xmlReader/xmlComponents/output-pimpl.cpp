@@ -5,16 +5,16 @@
 #include "output-pimpl.h"
 #include <iostream>
 
-void output_pimpl::pre(inputReader::Cuboid_XMLFile file) {
-    this->file=file;
+void output_pimpl::pre(std::shared_ptr<Simulation> &simulation) {
+    this->simulation = simulation;
 }
 
 void output_pimpl::name(const ::std::string &name) {
-    file.setOut_name(name);
+    simulation->setOut_name(const_cast<std::string &>(name));
 }
 
 void output_pimpl::frequency(int frequency) {
-    file.setOut_frequency(frequency);
+    simulation->setOut_frequency(frequency);
 }
 
 void output_pimpl::post_output() {}

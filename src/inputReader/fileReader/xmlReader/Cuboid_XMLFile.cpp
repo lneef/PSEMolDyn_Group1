@@ -18,12 +18,12 @@ namespace inputReader {
 
     void Cuboid_XMLFile::read(std::unique_ptr<Container> &particles) {
         cuboid_parser.x_parser(double_parser);
-        cuboid_parser.n_parser(int_parser);
+        cuboid_parser.n_parser(integer_parser);
         cuboid_parser.h_parser(double_parser);
         cuboid_parser.m_parser(double_parser);
         cuboid_parser.v_parser(double_parser);
         input_parser.path_parser(string_parser);
-        output_parser.frequency_parser(double_parser);
+        output_parser.frequency_parser(integer_parser);
         output_parser.name_parser(string_parser);
         simulation_parser.t_end_parser(double_parser);
         simulation_parser.delta_t_parser(double_parser);
@@ -36,11 +36,11 @@ namespace inputReader {
         xml_schema::document doc(reader_parser, "cuboid");
 
         boundaries_parser.pre();
-        cuboid_parser.pre(this);
-        input_parser.pre(this);
-        output_parser.pre(this);
-        simulation_parser.pre(this);
-        reader_parser.pre(this);
+        cuboid_parser.pre(positions,quantities,distances,masses,velocities);
+        input_parser.pre(input_path);
+        output_parser.pre(simulation);
+        simulation_parser.pre(simulation, dom_size, dom_cutOf);
+        reader_parser.pre();
 
         doc.parse("cuboid.xml");
         reader_parser.post_reader();

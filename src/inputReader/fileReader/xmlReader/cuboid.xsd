@@ -4,7 +4,7 @@
 	<xs:complexType name="cuboid">
 		<xs:sequence>
 			<xs:element name="x" type="xs:double"/>
-			<xs:element name="n" type="xs:int"/>
+			<xs:element name="n" type="xs:integer"/>
 			<xs:element name="h" type="xs:double"/>
 			<xs:element name="m" type="xs:double"/>
 			<xs:element name="v" type="xs:double"/>

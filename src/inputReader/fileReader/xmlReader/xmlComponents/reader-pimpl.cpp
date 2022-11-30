@@ -4,9 +4,7 @@
 
 #include "reader-pimpl.h"
 
-void reader_pimpl::pre(inputReader::Cuboid_XMLFile file){
-    this->file = file;
-}
+void reader_pimpl::pre(){}
 
 void reader_pimpl::cuboid() {}
 

@@ -9,7 +9,6 @@
 #include <array>
 #include <iostream>
 #include <algorithm>
-#include "../Cuboid_XMLFile.h"
 
 class cuboid_pimpl : public virtual cuboid_pskel {
 protected:
@@ -18,10 +17,19 @@ protected:
     double distance;
     double mass;
     std::vector<double> velocity;
-    inputReader::Cuboid_XMLFile file;
+
+    std::vector<std::array<double, 3>> positions;
+    std::vector<std::array<int, 3>> quantities;
+    std::vector<double> distances;
+    std::vector<double> masses;
+    std::vector<std::array<double, 3>> velocities;
 
 public:
-    virtual void pre(inputReader::Cuboid_XMLFile file);
+    virtual void pre(std::vector<std::array<double, 3>> &positions,
+                     std::vector<std::array<int, 3>> &quantities,
+                     std::vector<double> &distances,
+                     std::vector<double> &masses,
+                     std::vector<std::array<double, 3>> &velocities);
 
     virtual void x(double);
 
