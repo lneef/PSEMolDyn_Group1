@@ -6,7 +6,8 @@
 
 namespace inputReader {
     Cuboid_XMLFile::Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> &force,
-                                   std::unique_ptr<outputWriter::FileWriter> &writer,Simulation &sim) : simulation(sim){
+                                   std::unique_ptr<outputWriter::FileWriter> &writer, Simulation &sim) : simulation(
+            sim) {
         this->filename = filename;
         this->force = std::move(force);
         this->writer = std::move(writer);

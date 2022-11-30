@@ -535,7 +535,7 @@ frequency (double)
 {
 }
 
-void output_pskel::
+std::vector<std::string> output_pskel::
 post_output ()
 {
 }
@@ -615,7 +615,7 @@ path (const ::std::string&)
 {
 }
 
-void input_pskel::
+std::string input_pskel::
 post_input ()
 {
 }
@@ -689,7 +689,7 @@ input ()
 {
 }
 
-void reader_pskel::
+Simulation reader_pskel::
 post_reader ()
 {
 }

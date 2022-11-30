@@ -25,6 +25,8 @@ namespace inputReader {
         xml_schema::string_pimpl string_parser;
         std::unique_ptr<Force> force;
         std::unique_ptr<outputWriter::FileWriter> writer;
+
+    public:
         Simulation &simulation;
     public:
         explicit Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> &force,

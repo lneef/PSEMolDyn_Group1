@@ -78,6 +78,8 @@ class reader_pskel;
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
 
+#include "../../../Simulation.h"
+
 namespace xml_schema
 {
   // Built-in XML Schema types mapping.
@@ -425,7 +427,7 @@ class output_pskel: public ::xml_schema::complex_content
   virtual void
   frequency (double);
 
-  virtual void
+  virtual std::vector<std::string>
   post_output ();
 
   // Parser construction API.
@@ -484,7 +486,7 @@ class input_pskel: public ::xml_schema::complex_content
   virtual void
   path (const ::std::string&);
 
-  virtual void
+  virtual std::string
   post_input ();
 
   // Parser construction API.
@@ -538,7 +540,7 @@ class reader_pskel: public ::xml_schema::complex_content
   virtual void
   input ();
 
-  virtual void
+  virtual Simulation
   post_reader ();
 
   // Parser construction API.

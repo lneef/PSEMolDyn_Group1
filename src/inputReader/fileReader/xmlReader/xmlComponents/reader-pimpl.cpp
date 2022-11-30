@@ -5,7 +5,7 @@
 #include "reader-pimpl.h"
 
 void reader_pimpl::pre(std::string filename, std::unique_ptr<Force> &force,
-                       std::unique_ptr<outputWriter::FileWriter> &writer,ParticleContainer &particles) {
+                       std::unique_ptr<outputWriter::FileWriter> &writer,ParticleContainer &particles){
     this->filename = filename;
     this->force = std::move(force);
     this->writer = std::move(writer);
