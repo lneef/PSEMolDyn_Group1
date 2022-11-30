@@ -15,6 +15,8 @@
 		<xs:sequence>
 			<xs:element name="t_end" type="xs:double"/>
 			<xs:element name="delta_t" type="xs:double"/>
+			<xs:element name="domain_size" type="xs:double"/>
+			<xs:element name="domain_cutOf" type="xs:double"/>
 		</xs:sequence>
 	</xs:complexType>
 
