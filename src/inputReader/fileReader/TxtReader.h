@@ -3,9 +3,6 @@
 
 #include "../InputReader.h"
 #include "../../Particle.h"
-
-#include "../../ParticleContainer.h"
-
 #include "../fileReader/FileReader.h"
 
 namespace inputReader {
@@ -26,6 +23,6 @@ class TxtReader : public FileReader{
          *
          * @param particles ParticleContainer where the particles are stored
         */
-        void read(ParticleContainer &particles) override;
+        void read(std::unique_ptr<ParticleContainer> &particles) override;
     };
 }

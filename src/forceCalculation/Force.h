@@ -3,9 +3,10 @@
 //
 #pragma once
 #include "../utils/ArrayUtils.h"
-#include "../ParticleContainer.h"
 #include "../Particle.h"
+#include "container/ParticleContainer.h"
 #include <cmath>
+#include <memory>
 
 /**
  * @brief Force provides a uniform interface for calculating the effective force between particles
@@ -23,7 +24,7 @@ public:
      *
      * @see Particle
     */
-    virtual void calculateF(ParticleContainer &particles) = 0;
+    virtual void calculateF(std::unique_ptr<Container> &particles) = 0;
 
     /**
      * @brief virtual destructor to prevent memory leaks

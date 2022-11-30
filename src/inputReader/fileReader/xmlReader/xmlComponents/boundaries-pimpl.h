@@ -1,6 +1,7 @@
 //
 // Created by dominik on 26.11.22.
 //
+#pragma once
 
 #include "../cuboid-pskel.h"
 

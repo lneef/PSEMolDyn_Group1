@@ -15,7 +15,7 @@ public:
      * 
      * @param particles ParticleContainer containing particles for which the effective force acting on the is calculated.
     */
-    void calculateF(ParticleContainer &particles) override;
+    void calculateF(std::unique_ptr<Container> &particles) override;
 
      ~Gravitation() override;
 };

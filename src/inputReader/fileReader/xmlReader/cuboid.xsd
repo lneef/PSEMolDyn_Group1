@@ -23,7 +23,7 @@
 	<xs:complexType name="output">
 		<xs:sequence>
 			<xs:element name="name" type="xs:string"/>
-			<xs:element name="frequency" type="xs:double"/>
+			<xs:element name="frequency" type="xs:integer"/>
 		</xs:sequence>
 	</xs:complexType>
 

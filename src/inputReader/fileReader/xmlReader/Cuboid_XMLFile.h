@@ -1,6 +1,7 @@
 //
 // Created by dominik on 27.11.22.
 //
+#pragma once
 
 #include "xmlComponents/boundaries-pimpl.h"
 #include "xmlComponents/cuboid-pimpl.h"
@@ -12,7 +13,7 @@
 #include "../FileReader.h"
 
 namespace inputReader {
-    class Cuboid_XMLFile : public inputReader::FileReader {
+    class Cuboid_XMLFile{
     protected:
         boundaries_pimpl boundaries_parser;
         cuboid_pimpl cuboid_parser;
@@ -25,15 +26,35 @@ namespace inputReader {
         xml_schema::string_pimpl string_parser;
         std::unique_ptr<Force> force;
         std::unique_ptr<outputWriter::FileWriter> writer;
+        std::shared_ptr<Simulation> simulation;
+        std::string filename;
 
-    public:
-        Simulation &simulation;
+        //input
+        std::vector<std::string> input_path;
+
+        //output
+        std::string out_name;
+        int out_frequency;
+
+        //simulation
+        double t_end;
+        double delta_t;
+        double dom_size;
+        double dom_cutOf;
     public:
         explicit Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> &force,
-                                std::unique_ptr<outputWriter::FileWriter> &writer, Simulation &sim);
+                                std::unique_ptr<outputWriter::FileWriter> &writer, std::shared_ptr<Simulation> &sim);
 
         ~Cuboid_XMLFile();
 
-        void read(ParticleContainer &particles) override;
+        void read(std::unique_ptr<Container> &particles);
+
+        void setInput_path(std::vector<std::string> in_path);
+        void setT_end(double t_end);
+        void setDelta_t(double delta_t);
+        void setDom_size(double dom_size);
+        void setDom_cutOf(double dom_cutOf);
+        void setOut_Name(std::string out_name);
+        void setOut_frequency(int out_frequency);
     };
 }

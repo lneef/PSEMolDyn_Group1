@@ -1,19 +1,20 @@
 //
 // Created by dominik on 26.11.22.
 //
+#pragma once
 
 #include "../cuboid-pskel.h"
+#include "../Cuboid_XMLFile.h"
 
 class output_pimpl : public virtual output_pskel {
 protected:
-    std::string out_name;
-    std::string out_frequency;
+    inputReader::Cuboid_XMLFile file;
 public:
-    virtual void pre();
+    virtual void pre(inputReader::Cuboid_XMLFile file);
 
     virtual void name(const ::std::string &);
 
-    virtual void frequency(double);
+    virtual void frequency(int);
 
-    virtual std::vector<std::string> post_output();
+    virtual void post_output();
 };

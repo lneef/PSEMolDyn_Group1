@@ -367,7 +367,7 @@ class simulation_pskel: public ::xml_schema::complex_content
   virtual void
   domain_cutOf (double);
 
-  virtual std::vector<double>
+  virtual void
   post_simulation ();
 
   // Parser construction API.
@@ -427,7 +427,7 @@ class output_pskel: public ::xml_schema::complex_content
   virtual void
   frequency (double);
 
-  virtual std::vector<std::string>
+  virtual void
   post_output ();
 
   // Parser construction API.
@@ -486,7 +486,7 @@ class input_pskel: public ::xml_schema::complex_content
   virtual void
   path (const ::std::string&);
 
-  virtual std::string
+  virtual void
   post_input ();
 
   // Parser construction API.
@@ -540,7 +540,7 @@ class reader_pskel: public ::xml_schema::complex_content
   virtual void
   input ();
 
-  virtual Simulation
+  virtual void
   post_reader ();
 
   // Parser construction API.

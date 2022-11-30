@@ -1,16 +1,20 @@
 //
 // Created by dominik on 26.11.22.
 //
+#pragma once
 
 #include "../cuboid-pskel.h"
+#include "../Cuboid_XMLFile.h"
+
 
 class input_pimpl : public virtual input_pskel {
 protected:
-    std::string input_path;
+    std::vector<std::string> input_path;
+    inputReader::Cuboid_XMLFile file;
 public:
-    virtual void pre();
+    virtual void pre(inputReader::Cuboid_XMLFile file);
 
     virtual void path(const ::std::string &);
 
-    virtual std::string post_input();
+    virtual void post_input();
 };

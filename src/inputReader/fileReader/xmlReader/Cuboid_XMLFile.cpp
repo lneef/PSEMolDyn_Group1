@@ -6,16 +6,16 @@
 
 namespace inputReader {
     Cuboid_XMLFile::Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> &force,
-                                   std::unique_ptr<outputWriter::FileWriter> &writer, Simulation &sim) : simulation(
-            sim) {
+                                   std::unique_ptr<outputWriter::FileWriter> &writer, std::shared_ptr<Simulation> &sim){
         this->filename = filename;
         this->force = std::move(force);
         this->writer = std::move(writer);
+        this-> simulation = sim;
     }
 
     Cuboid_XMLFile::~Cuboid_XMLFile() = default;
 
-    void Cuboid_XMLFile::read(ParticleContainer &particles) {
+    void Cuboid_XMLFile::read(std::unique_ptr<Container> &particles) {
         cuboid_parser.x_parser(double_parser);
         cuboid_parser.n_parser(int_parser);
         cuboid_parser.h_parser(double_parser);
@@ -36,13 +36,45 @@ namespace inputReader {
 
         boundaries_parser.pre();
         cuboid_parser.pre(particles);
-        input_parser.pre();
-        output_parser.pre();
-        simulation_parser.pre();
-        reader_parser.pre(filename, force, writer, particles);
+        input_parser.pre(this);
+        output_parser.pre(this);
+        simulation_parser.pre(this);
+        reader_parser.pre(this);
 
         doc.parse("cuboid.xml");
+        reader_parser.post_reader();
 
-        simulation = reader_parser.post_reader();
+        simulation->setEndTime(t_end);
+        simulation->setDeltaT(delta_t);
+        simulation->setWriter(writer);
+        simulation->setForce(force);
+        simulation->setOut_name(out_name);
+        simulation->setOut_frequency(out_frequency);
+
+
+    }
+
+    void Cuboid_XMLFile::setInput_path(std::vector<std::string> in_path){
+        for(auto &path : in_path){
+            input_path.push_back(path);
+        }
+    }
+    void Cuboid_XMLFile::setT_end(double t_end){
+        this->t_end = t_end;
+    }
+    void Cuboid_XMLFile::setDelta_t(double delta_t){
+        this->delta_t = delta_t;
+    }
+    void Cuboid_XMLFile::setDom_size(double dom_size){
+        this->dom_size = dom_size;
+    }
+    void Cuboid_XMLFile::setDom_cutOf(double dom_cutOf){
+        this->dom_cutOf = dom_cutOf;
+    }
+    void Cuboid_XMLFile::setOut_Name(std::string out_name){
+        this->out_name=out_name;
+    }
+    void Cuboid_XMLFile::setOut_frequency(int out_frequency){
+        this->out_frequency = out_frequency;
     }
 }

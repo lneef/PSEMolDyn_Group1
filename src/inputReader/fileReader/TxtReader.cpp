@@ -13,7 +13,7 @@ namespace inputReader {
 
     TxtReader::~TxtReader() = default;
 
-    void TxtReader::read(ParticleContainer &particles) {
+    void TxtReader::read(std::unique_ptr<ParticleContainer> &particles) {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
         double m;
@@ -53,7 +53,7 @@ namespace inputReader {
                     exit(-1);
                 }
                 datastream >> m;
-                particles.addParticle(Particle(x, v, m));
+                particles->addParticle(Particle(x, v, m));
                 getline(input_file, tmp_string);
                 MolSimLogger::logDebug("Read line: {}", tmp_string);
             }

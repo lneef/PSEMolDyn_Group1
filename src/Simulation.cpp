@@ -6,7 +6,7 @@
 #include "utils/ArrayUtils.h"
 
 void Simulation::calculateX() {
-    particles.apply([this](Particle &p) {
+    particles->apply([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempF{p.getF()};
         const std::array<double, 3> &tempX{p.getX()};
@@ -22,7 +22,7 @@ void Simulation::calculateX() {
 }
 
 void Simulation::calculateV() {
-    particles.apply([this](Particle &p) {
+    particles->apply([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempF{p.getF()};
@@ -83,20 +83,55 @@ void Simulation::run() {
     std::cout << difference.count() << "ms" << std::endl;
 }
 
-Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
+Simulation::Simulation(std::unique_ptr<Container> &particles, double delta_t, double end_time,
                        std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
     this->writer = std::move(writer);
     this->force = std::move(force);
-    this->particles.setParticles(particles.getParticles());
+    this->particles = std::move(particles);
 
 }
+
+void Simulation::setDeltaT(double delta_t_arg) {
+    delta_t = delta_t_arg;
+}
+
+void Simulation::setEndTime(double end_time_arg) {
+    end_time = end_time_arg;
+}
+
+void Simulation::setParticle(std::unique_ptr<Container> &particles_arg) {
+    particles = std::move(particles_arg);
+}
+
+void Simulation::setParticle(std::unique_ptr<ParticleContainer> &particles_arg) {
+    particles = std::move(particles_arg);
+}
+
+void Simulation::setParticle(std::unique_ptr<LinkedCellContainer> &particles_arg) {
+    particles = std::move(particles_arg);
+}
+
+Simulation::Simulation(double delta_t_arg, double end_time_arg) {
+    delta_t = delta_t_arg;
+    end_time = end_time_arg;
+}
+
+void Simulation::setForce(std::unique_ptr<Force> &force_arg) {
+    force = std::move(force_arg);
+}
+
 
 void Simulation::setOut_name(std::string &out_name) {
     this->out_name = out_name;
 }
 
 void Simulation::setOut_frequency(int &out_frequency) {
-    this->out_frequency=out_frequency;
+    this->out_frequency = out_frequency;
 }
+
+void Simulation::setWriter(std::unique_ptr<outputWriter::FileWriter> &writer) {
+    this->writer = std::move(writer);
+}
+

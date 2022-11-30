@@ -422,7 +422,7 @@ domain_cutOf (double)
 {
 }
 
-std::vector<double> simulation_pskel::
+void simulation_pskel::
 post_simulation ()
 {
 }
@@ -535,7 +535,7 @@ frequency (double)
 {
 }
 
-std::vector<std::string> output_pskel::
+void output_pskel::
 post_output ()
 {
 }
@@ -615,7 +615,7 @@ path (const ::std::string&)
 {
 }
 
-std::string input_pskel::
+void input_pskel::
 post_input ()
 {
 }
@@ -689,7 +689,7 @@ input ()
 {
 }
 
-Simulation reader_pskel::
+void reader_pskel::
 post_reader ()
 {
 }

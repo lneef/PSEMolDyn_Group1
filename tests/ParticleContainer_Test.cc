@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "Particle.h"
-#include "ParticleContainer.h"
+#include "container/ParticleContainer.h"
 #include <vector>
 
 
@@ -9,6 +9,7 @@
 */
 TEST(ParticleContainerTest, AppyTest){
     ParticleContainer par{};
+
 
     par.addParticle( Particle ({0.,0.,0.},{0.,0., 0.}, 1.));
     par.addParticle(Particle ({1., 1. , 1.}, {1.5, 0., 0.}, 0.5));

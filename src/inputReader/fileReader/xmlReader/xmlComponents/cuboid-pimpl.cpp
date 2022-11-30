@@ -4,8 +4,8 @@
 
 #include "cuboid-pimpl.h"
 
-void cuboid_pimpl::pre(ParticleContainer part) {
-    particles = part;
+void cuboid_pimpl::pre(std::unique_ptr<Container> &part) {
+    this->particles = std::move(part);
 }
 
 void cuboid_pimpl::x(double x) {
@@ -37,6 +37,6 @@ void cuboid_pimpl::post_cuboid() {
         quan[i] = quantity[i];
         vel[i] = velocity[i];
     }
-    CuboidGenerator generator;
+    CuboidGenerator<Container> generator;
     generator.generateCuboid(particles, pos, quan, distance, mass, vel);
 }
