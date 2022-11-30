@@ -5,12 +5,11 @@
 
 #include "../cuboid-pskel.h"
 #include "../../../../container/Container.h"
-#include "../../../CuboidGenerator.h"
 #include <vector>
 #include <array>
 #include <iostream>
 #include <algorithm>
-#include "../../../CuboidGenerator.h"
+#include "../Cuboid_XMLFile.h"
 
 class cuboid_pimpl : public virtual cuboid_pskel {
 protected:
@@ -19,10 +18,10 @@ protected:
     double distance;
     double mass;
     std::vector<double> velocity;
-    std::unique_ptr<Container> particles;
+    inputReader::Cuboid_XMLFile file;
 
 public:
-    virtual void pre(std::unique_ptr<Container> &part);
+    virtual void pre(inputReader::Cuboid_XMLFile file);
 
     virtual void x(double);
 

@@ -10,11 +10,11 @@ void output_pimpl::pre(inputReader::Cuboid_XMLFile file) {
 }
 
 void output_pimpl::name(const ::std::string &name) {
-    out_name = name;
+    file.setOut_name(name);
 }
 
 void output_pimpl::frequency(int frequency) {
-    out_frequency = frequency;
+    file.setOut_frequency(frequency);
 }
 
 void output_pimpl::post_output() {}

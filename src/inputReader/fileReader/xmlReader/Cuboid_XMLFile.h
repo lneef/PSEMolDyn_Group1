@@ -11,6 +11,7 @@
 #include "xmlComponents/reader-pimpl.h"
 #include "../../../Simulation.h"
 #include "../FileReader.h"
+#include "../../CuboidGenerator.h"
 
 namespace inputReader {
     class Cuboid_XMLFile{
@@ -29,6 +30,7 @@ namespace inputReader {
         std::shared_ptr<Simulation> simulation;
         std::string filename;
 
+
         //input
         std::vector<std::string> input_path;
 
@@ -41,6 +43,14 @@ namespace inputReader {
         double delta_t;
         double dom_size;
         double dom_cutOf;
+
+        //cuboid
+        std::vector<std::array<double,3>> positions;
+        std::vector<std::array<int,3>> quantities;
+        std::vector<double> distances;
+        std::vector<double> masses;
+        std::vector<std::array<double, 3>> velocities;
+
     public:
         explicit Cuboid_XMLFile(std::string filename, std::unique_ptr<Force> &force,
                                 std::unique_ptr<outputWriter::FileWriter> &writer, std::shared_ptr<Simulation> &sim);
@@ -56,5 +66,10 @@ namespace inputReader {
         void setDom_cutOf(double dom_cutOf);
         void setOut_Name(std::string out_name);
         void setOut_frequency(int out_frequency);
+        void setPostitions(std::array<double,3> positions);
+        void setQuantities(std::array<int,3> quantities);
+        void setDistances(double distances);
+        void setMasses(double masses);
+        void setVelocities(std::array<double, 3> velocities);
     };
 }
