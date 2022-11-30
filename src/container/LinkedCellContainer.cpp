@@ -4,6 +4,7 @@
 
 #include <numeric>
 #include <cmath>
+#include <iostream>
 #include "LinkedCellContainer.h"
 
 void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {

@@ -64,4 +64,9 @@ public:
     void addParticle(Particle& p) override;
     void apply(std::function<void(Particle &)> fun) override;
     ~ParticleContainer() override;
+
+    std::vector<Particle>::iterator begin();
+    std::vector<Particle>::iterator end();
+
+    std::vector<Particle>::iterator remove(std::vector<Particle>::iterator &iterator);
 };
