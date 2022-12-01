@@ -19,7 +19,7 @@ public:
     size_t index(Particle &p);
     LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg, std::vector<ParticleList>& list);
     LinkedCellContainer();
-
+    std::vector<ParticleList>& get();
     void setRCutOff(double rcutoff_arg);
     void setDomain(std::array<double, 3>& domain_arg);
     void setSize(double rcutoff_arg, std::array<double,3>& domain_arg);

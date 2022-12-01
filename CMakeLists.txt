@@ -125,6 +125,7 @@ target_link_libraries(MolSimTest
         GTest::gtest
         gmock
         lib_test
+        xerces-c
         spdlog::spdlog
         )
 

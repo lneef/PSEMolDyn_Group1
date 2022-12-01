@@ -85,8 +85,9 @@ void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
     auto & pos = p.getX();
-    if (pos[0] < domain[0] && pos[1] < domain[1] && pos[2] < domain[2])
+    if (pos[0] < domain[0] && pos[1] < domain[1] && pos[2] < domain[2]) {
         cells[ind].addParticle(p);
+    }
 }
 
 LinkedCellContainer::LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg,
@@ -111,7 +112,7 @@ void LinkedCellContainer::setDomain(std::array<double, 3> &domain_arg) {
 
 void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &domain_arg) {
     setRCutOff(rcutoff_arg);
-    setDomain(domain);
+    setDomain(domain_arg);
     for (size_t i = 0; i < 3; ++i) {
         mesh[i] = ceil(std::abs(domain_arg[i]) / rcutoff_arg);
     }
@@ -120,6 +121,10 @@ void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &dom
         len *= mesh[i] == 0 ? 1 : mesh[i];
     }
     cells.resize(len);
+}
+
+std::vector<ParticleList>& LinkedCellContainer::get() {
+    return cells;
 }
 
 LinkedCellContainer::LinkedCellContainer() = default;
