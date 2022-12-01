@@ -62,4 +62,10 @@ namespace inputReader {
             exit(-1);
         }
     }
+
+    void TxtReader::read(std::shared_ptr<Simulation> &sim) {
+        std::shared_ptr<ParticleContainer> particles = std::make_shared<ParticleContainer>();
+        read(particles);
+        sim->setParticle(particles);
+    }
 }

@@ -18,6 +18,7 @@ private:
     cuboid_input_pimpl cub_in_p;
 public:
     explicit XmlReader(std::string &s);
+    void read(std::shared_ptr<Simulation> &sim);
     void read(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCellContainer> &lc);
 
 };

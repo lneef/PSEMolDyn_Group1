@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <memory>
-#include <fstream>
 #include <map>
 
 #include "forceCalculation/Gravitation.h"
@@ -28,6 +27,7 @@ struct option long_option[]{
         {"help",   no_argument,       0, 'a'},
         {"cub",    optional_argument, 0, 'c'},
         {"planet", required_argument, 0, 'p'},
+        {"xml",    required_argument, 0, 'x'},
         {0, 0,                        0, 0}
 };
 
@@ -38,11 +38,11 @@ std::map<std::string, std::function<void()>> levels{{"off",   []() { spdlog::set
                                                     {"trace", []() { spdlog::set_level(spdlog::level::trace); }},
                                                     {"error", []() { spdlog::set_level(spdlog::level::err); }}};
 enum Option {
-    None, Planet, Cuboid
+    None, Planet, Cuboid, XMLCuboid
 };
 
 int main(int argc, char *argsv[]) {
-    std::shared_ptr<ParticleContainer> particles=std::make_unique<ParticleContainer>();
+    std::shared_ptr<ParticleContainer> particles = std::make_unique<ParticleContainer>();
     std::unique_ptr<inputReader::InputReader> input;
     std::unique_ptr<Force> force;
     MolSimLogger::init();
@@ -55,6 +55,10 @@ int main(int argc, char *argsv[]) {
                 print_help();
 
                 return 0;
+            case 'x':
+
+                opt = XMLCuboid;
+                break;
             case 't':
                 delta_t = std::stod(optarg);
                 arg_flag = true;

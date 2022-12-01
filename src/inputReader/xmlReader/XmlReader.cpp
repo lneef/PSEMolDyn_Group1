@@ -1,8 +1,6 @@
-//
-// Created by lukas on 01.12.22.
-//
 
 #include "XmlReader.h"
+#include "MolSimLogger.h"
 
 XmlReader::XmlReader(std::string &s) {
     filename = s;
@@ -20,12 +18,19 @@ void XmlReader::read(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCel
     parser.pre();
     parser.init(sim, lc);
     try {
+        MolSimLogger::logInfo("Parsing xml file:{}", filename);
         doc_p.parse(filename, xml_schema::flags::dont_validate);
     } catch (xml_schema::exception &e) {
-        e.what();
-        return;
+        MolSimLogger::logError("{}",e.what());
+        exit(-1);
     }
     parser.post_molecular();
+}
+
+void XmlReader::read(std::shared_ptr<Simulation> &sim) {
+    std::shared_ptr<LinkedCellContainer> cell = std::make_shared<LinkedCellContainer>();
+    read(sim, cell);
+    sim->setParticle(cell);
 }
 
 
