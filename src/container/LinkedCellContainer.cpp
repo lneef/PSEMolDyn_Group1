@@ -24,7 +24,7 @@ void LinkedCellContainer::update() {
     for (size_t i = 0; i < len; ++i) {
         for (auto it = cells[i].begin(); it != cells[i].end();) {
             auto &p = *it;
-            int ind = index(p);
+            size_t ind = index(p);
             if (ind == i) {
                 ++it;
                 continue;
@@ -70,24 +70,25 @@ size_t LinkedCellContainer::index(Particle &p) {
     auto &pos = p.getX();
 
     size_t ind = floor(std::abs(pos[0]) / rcutoff) + floor(std::abs(pos[1]) / rcutoff) * mesh[0] +
-              floor(std::abs(pos[2]) / rcutoff) * mesh[0] * mesh[1];
+                 floor(std::abs(pos[2]) / rcutoff) * mesh[0] * mesh[1];
     return ind;
 }
 
 void LinkedCellContainer::addParticle(Particle &p) {
     size_t ind = index(p);
-    if(ind < cells.size())
+    if (ind < cells.size())
         cells[ind].addParticle(p);
 }
 
 void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
-    if(ind < cells.size())
+    if (ind < cells.size())
         cells[ind].addParticle(p);
 }
 
-LinkedCellContainer::LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg, std::vector<ParticleList>& list) {
+LinkedCellContainer::LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg,
+                                         std::vector<ParticleList> &list) {
     cells = list;
     mesh = mesh_arg;
     rcutoff = rcutoff_arg;
@@ -102,16 +103,21 @@ void LinkedCellContainer::setRCutOff(double rcutoff_arg) {
     rcutoff = rcutoff_arg;
 }
 
-void LinkedCellContainer::setDomain(std::array<double, 3>& domain_arg) {
+void LinkedCellContainer::setDomain(std::array<double, 3> &domain_arg) {
     domain = domain_arg;
 }
 
-void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3>& domain_arg) {
+void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &domain_arg) {
     setRCutOff(rcutoff_arg);
     setDomain(domain);
-    for(size_t i = 0; i<3; ++i)
-        mesh[i] = ceil(std::abs(domain_arg[i])/rcutoff_arg);
-    cells.resize(mesh[0] * mesh[1] * mesh[2]);
+    for (size_t i = 0; i < 3; ++i) {
+        mesh[i] = ceil(std::abs(domain_arg[i]) / rcutoff_arg);
+    }
+    size_t len = 1;
+    for (size_t i = 0; i < 3; ++i) {
+        len *= mesh[i] == 0 ? 1 : mesh[i];
+    }
+    cells.resize(len);
 }
 
 LinkedCellContainer::LinkedCellContainer() = default;
