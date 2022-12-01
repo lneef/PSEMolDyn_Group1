@@ -6,7 +6,7 @@
 #include "utils/ArrayUtils.h"
 
 void Simulation::calculateX() {
-    particles->apply([this](Particle &p) {
+    particles->applyX([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempF{p.getF()};
         const std::array<double, 3> &tempX{p.getX()};
