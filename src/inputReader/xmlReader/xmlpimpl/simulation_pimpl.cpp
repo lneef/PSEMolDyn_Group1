@@ -13,15 +13,15 @@ void simulation_pimpl::delta_t(double delta_t) {
 }
 
 void simulation_pimpl::domain_x(double x) {
-    domain.push_back(x);
+    domain.push(x);
 }
 
 void simulation_pimpl::domain_y(double y) {
-    domain.push_back(y);
+    domain.push(y);
 }
 
 void simulation_pimpl::domain_z(double z) {
-    domain.push_back(z);
+    domain.push(z);
 }
 
 void simulation_pimpl::domain_cutOf(double cutOff) {
@@ -38,8 +38,10 @@ void simulation_pimpl::frequency(int f) {
 
 void simulation_pimpl::post_simulation() {
     std::array<double, 3> dom{};
-    for (size_t i = 0; i < domain.size() && i < 3; ++i) {
-        dom[i] = domain[i];
+    size_t i = 0;
+    while(!domain.empty()) {
+        dom[i++] = domain.front();
+        domain.pop();
     }
     cells->setSize(rCutOff,dom);
 }
