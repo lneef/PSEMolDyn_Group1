@@ -12,6 +12,8 @@ protected:
         std::vector<ParticleList> list{3 * 3};
         std::array<int, 3> mesh = {3, 3, 1,};
         test = std::make_shared<LinkedCellContainer>(mesh, 1., list);
+        std::array<double, 3> domain{1.5,1.5 , 0.5};
+        test -> setDomain(domain);
         cub.generateCuboid(test, {0, 0, 0}, {3, 3, 1}, .5, 0., {0., 0., 0.});
     }
     void TearDown() override{
