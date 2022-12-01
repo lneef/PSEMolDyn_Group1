@@ -76,14 +76,16 @@ size_t LinkedCellContainer::index(Particle &p) {
 
 void LinkedCellContainer::addParticle(Particle &p) {
     size_t ind = index(p);
-    if (ind < cells.size())
+    auto & pos = p.getX();
+    if (pos[0] < domain[0] && pos[1] < domain[1] && pos[2] < domain[2])
         cells[ind].addParticle(p);
 }
 
 void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
-    if (ind < cells.size())
+    auto & pos = p.getX();
+    if (pos[0] < domain[0] && pos[1] < domain[1] && pos[2] < domain[2])
         cells[ind].addParticle(p);
 }
 
