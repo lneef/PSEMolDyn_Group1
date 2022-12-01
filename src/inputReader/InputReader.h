@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "../ParticleContainer.h"
+#include <memory>
+#include "container/ParticleContainer.h"
 
 
 namespace inputReader {
@@ -18,7 +19,7 @@ namespace inputReader {
              *
              * @param particles ParticleContainer where the read particles are stored.
             */
-        virtual void read(ParticleContainer &particles) = 0;
+        virtual void read(std::shared_ptr<ParticleContainer> &particles) = 0;
 
         virtual ~InputReader();
 

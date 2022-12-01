@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "../ParticleContainer.h"
 #include "../Particle.h"
 #include "InputReader.h"
 namespace inputReader {

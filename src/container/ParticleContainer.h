@@ -6,6 +6,7 @@
 #include<iterator>
 
 #include "Particle.h"
+#include "Container.h"
 
 /**
  * @brief Class ParticleContainer provides a container for storing particles.
@@ -14,7 +15,7 @@
  * To enable simple iteration over the stored particles, ParticleContainer implements the iterator pattern.
 */
 
-class ParticleContainer {
+class ParticleContainer : public Container{
 private:
     /**
      * @brief The data structure where the particles are stored internally.
@@ -42,14 +43,14 @@ public:
      *
      * @param particle rvalue reference to a Particle
     */
-    void addParticle(Particle &&particle);
+    void addParticle(Particle &&particle) override;
 
     /**
      * @brief Returns size of field particles.
      *
      * @return Number of particles stored in the respective ParticleContainer.
     */
-    size_t size();
+    size_t size() override;
 
     /**
      * @brief overloaded access operator for ParticleContainer
@@ -58,21 +59,14 @@ public:
      */
     Particle &operator[](size_t i);
 
-    /**
-     * @brief preallocates memory for storing particles
-     * @param len number of particles for which memory should be allocated
-     */
-    void prealloc(size_t len);
+    void applyX(std::function<void(Particle &)> fun) override;
+    void applyF(std::function<void(Particle &, Particle &)> fun)  override;
+    void addParticle(Particle& p) override;
+    void apply(std::function<void(Particle &)> fun) override;
+    ~ParticleContainer() override;
 
-    /**
-     * @brief takes a function and applies is to the given particle
-     * @tparam T function Particle& -> void
-     * @param fun function applied to particle
-     */
-    template<class T>
-    void apply(T fun) {
-        for (auto &p: particles) {
-            fun(p);
-        }
-    }
+    std::vector<Particle>::iterator begin();
+    std::vector<Particle>::iterator end();
+
+    std::vector<Particle>::iterator remove(std::vector<Particle>::iterator &iterator);
 };

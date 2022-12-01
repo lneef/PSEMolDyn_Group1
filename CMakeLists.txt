@@ -96,17 +96,27 @@ file(GLOB_RECURSE INPUT
         "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/*.cpp"
         )
 
+file(GLOB_RECURSE CONTAINER
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/container/*.cpp"
+        )
+
+
 add_library(lib_test
         ${FORCE}
         ${INPUT}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/ParticleContainer.cpp
+        ${CONTAINER}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp)
 
 target_link_libraries(lib_test PRIVATE spdlog::spdlog)
+target_include_directories(lib_test
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/
+        PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd/)
 target_include_directories(MolSimTest
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/

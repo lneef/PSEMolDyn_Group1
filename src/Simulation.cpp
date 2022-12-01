@@ -6,7 +6,7 @@
 #include "utils/ArrayUtils.h"
 
 void Simulation::calculateX() {
-    particles.apply([this](Particle &p) {
+    particles->applyX([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempF{p.getF()};
         const std::array<double, 3> &tempX{p.getX()};
@@ -22,7 +22,7 @@ void Simulation::calculateX() {
 }
 
 void Simulation::calculateV() {
-    particles.apply([this](Particle &p) {
+    particles->apply([this](Particle &p) {
         const std::array<double, 3> &tempV{p.getV()};
         const std::array<double, 3> &tempOldF{p.getOldF()};
         const std::array<double, 3> &tempF{p.getF()};
@@ -42,7 +42,6 @@ void Simulation::run() {
 #ifdef BENCHMARK
     MolSimLogger::logger()->flush();
 #endif
-    std::string out_name("MD_vtk");
 
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -64,11 +63,11 @@ void Simulation::run() {
 
 
         calculateV();
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(),"Velocities of particles calculated for iteration {}", iteration);
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
 
         iteration++;
 #ifndef BENCHMARK
-        if (iteration % 10 == 0) {
+        if (iteration % out_frequency == 0) {
             writer->plotParticles(particles, out_name, iteration);
         }
 
@@ -80,15 +79,57 @@ void Simulation::run() {
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    std::cout<<difference.count()<<"ms"<<std::endl;
+    std::cout << difference.count() << "ms" << std::endl;
 }
 
-Simulation::Simulation(ParticleContainer &particles, double delta_t, double end_time,
+Simulation::Simulation(std::shared_ptr<Container> &particles, double delta_t, double end_time,
                        std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
     this->writer = std::move(writer);
     this->force = std::move(force);
-    this->particles.setParticles(particles.getParticles());
+    this->particles = std::move(particles);
 
 }
+
+void Simulation::setDeltaT(double delta_t_arg) {
+    delta_t = delta_t_arg;
+}
+
+void Simulation::setEndTime(double end_time_arg) {
+    end_time = end_time_arg;
+}
+
+void Simulation::setParticle(std::shared_ptr<Container> &particles_arg) {
+    particles = std::move(particles_arg);
+}
+
+void Simulation::setParticle(std::shared_ptr<ParticleContainer> &particles_arg) {
+    particles = std::move(particles_arg);
+}
+
+void Simulation::setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg) {
+    particles = std::move(particles_arg);
+}
+
+Simulation::Simulation(double delta_t_arg, double end_time_arg) {
+    delta_t = delta_t_arg;
+    end_time = end_time_arg;
+}
+
+void Simulation::setForce(std::unique_ptr<Force> &force_arg) {
+    force = std::move(force_arg);
+}
+
+void Simulation::setOut_frequency(int out_frequency_arg) {
+    out_frequency = out_frequency_arg;
+}
+
+void Simulation::setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg) {
+    writer = std::move(writer_arg);
+}
+
+void Simulation::setOut_name(const std::string &out_name_arg) {
+    out_name = out_name_arg;
+}
+

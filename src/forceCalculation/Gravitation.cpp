@@ -3,19 +3,13 @@
 #include "Gravitation.h"
 
 //calculation new force
-void Gravitation::calculateF(ParticleContainer &particles) {
+void Gravitation::calculateF(std::shared_ptr<Container> &particles) {
 
-    particles.apply([](Particle &p){
+    particles->apply([](Particle &p){
        p.updateF({});
     });
 
-    size_t len = particles.size();
-
-    for (size_t i = 0; i < len; ++i) {
-        for (size_t j = i + 1; j < len; ++j) {
-            Particle &p1 = particles[i];
-            Particle &p2 = particles[j];
-
+    particles->applyF([](Particle &p1, Particle &p2){
             std::array<double, 3> xij = p1.getX() - p2.getX();
             std::array<double, 3> xji = p2.getX() - p1.getX();
             double norm = ArrayUtils::L2Norm(xij);
@@ -26,7 +20,7 @@ void Gravitation::calculateF(ParticleContainer &particles) {
             p1.setF(p1.getF() + newF);
             p2.setF(-1 * newF + p2.getF());
         }
-    }
+    );
 }
 
 Gravitation::~Gravitation() = default;
