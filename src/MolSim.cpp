@@ -42,7 +42,7 @@ enum Option {
 };
 
 int main(int argc, char *argsv[]) {
-    std::unique_ptr<ParticleContainer> particles=std::make_unique<ParticleContainer>();
+    std::shared_ptr<ParticleContainer> particles=std::make_unique<ParticleContainer>();
     std::unique_ptr<inputReader::InputReader> input;
     std::unique_ptr<Force> force;
     MolSimLogger::init();
@@ -105,7 +105,7 @@ int main(int argc, char *argsv[]) {
     }
     input->read(particles);
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
-    std::unique_ptr<Container> con = std::move(particles);
+    std::shared_ptr<Container> con = particles;
     Simulation simulation(con, delta_t, end_time, writer, force);
     simulation.run();
 

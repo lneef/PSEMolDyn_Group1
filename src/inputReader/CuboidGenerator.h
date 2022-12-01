@@ -49,7 +49,7 @@ public:
      * @param v Array representaion of the velocities of the particles in all three dimensions
     */
     void
-    generateCuboid(std::unique_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
+    generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
                    std::array<double, 3> v) {
 
         std::array<double, 3> newX{};
@@ -68,7 +68,7 @@ public:
         }
     }
 
-    void generateSphere(std::unique_ptr<T> &particles, std::array<double, 3> center, int r, double m,
+    void generateSphere(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
                         std::array<double, 3> v, double h) {
         double radius = (r - 1) * h;
         std::array<double, 3> newX{};

@@ -19,7 +19,7 @@ namespace inputReader {
              *
              * @param particles ParticleContainer where the read particles are stored.
             */
-        virtual void read(std::unique_ptr<ParticleContainer> &particles) = 0;
+        virtual void read(std::shared_ptr<ParticleContainer> &particles) = 0;
 
         virtual ~InputReader();
 

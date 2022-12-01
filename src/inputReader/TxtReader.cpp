@@ -13,7 +13,7 @@ namespace inputReader {
 
     TxtReader::~TxtReader() = default;
 
-    void TxtReader::read(std::unique_ptr<ParticleContainer> &particles) {
+    void TxtReader::read(std::shared_ptr<ParticleContainer> &particles) {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
         double m;

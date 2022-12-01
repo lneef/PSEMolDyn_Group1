@@ -7,7 +7,7 @@ namespace inputReader {
 
     Cuboid_cl::~Cuboid_cl() = default;
 
-    void Cuboid_cl::read(std::unique_ptr<ParticleContainer> &particles) {
+    void Cuboid_cl::read(std::shared_ptr<ParticleContainer> &particles) {
         std::array<double, 3> x{};
         std::array<int, 3> n{};
         double h;

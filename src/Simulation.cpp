@@ -83,7 +83,7 @@ void Simulation::run() {
     std::cout << difference.count() << "ms" << std::endl;
 }
 
-Simulation::Simulation(std::unique_ptr<Container> &particles, double delta_t, double end_time,
+Simulation::Simulation(std::shared_ptr<Container> &particles, double delta_t, double end_time,
                        std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force) {
     this->delta_t = delta_t;
     this->end_time = end_time;
@@ -101,15 +101,15 @@ void Simulation::setEndTime(double end_time_arg) {
     end_time = end_time_arg;
 }
 
-void Simulation::setParticle(std::unique_ptr<Container> &particles_arg) {
+void Simulation::setParticle(std::shared_ptr<Container> &particles_arg) {
     particles = std::move(particles_arg);
 }
 
-void Simulation::setParticle(std::unique_ptr<ParticleContainer> &particles_arg) {
+void Simulation::setParticle(std::shared_ptr<ParticleContainer> &particles_arg) {
     particles = std::move(particles_arg);
 }
 
-void Simulation::setParticle(std::unique_ptr<LinkedCellContainer> &particles_arg) {
+void Simulation::setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg) {
     particles = std::move(particles_arg);
 }
 
@@ -120,5 +120,17 @@ Simulation::Simulation(double delta_t_arg, double end_time_arg) {
 
 void Simulation::setForce(std::unique_ptr<Force> &force_arg) {
     force = std::move(force_arg);
+}
+
+void Simulation::setOut_frequency(int out_frequency_arg) {
+    out_frequency = out_frequency_arg;
+}
+
+void Simulation::setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg) {
+    writer = std::move(writer_arg);
+}
+
+void Simulation::setOut_name(const std::string &out_name_arg) {
+    out_name = out_name_arg;
 }
 

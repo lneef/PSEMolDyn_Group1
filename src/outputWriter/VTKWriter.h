@@ -61,7 +61,7 @@ namespace outputWriter {
          * @param filename string specifing output file
          * @param iteration Number of th current iteration, used to generate the name of the output file
          */
-        void plotParticles(std::unique_ptr<Container> &particles, const std::string &filename, int iteration) override;
+        void plotParticles(std::shared_ptr<Container> &particles, const std::string &filename, int iteration) override;
 
     private:
         VTKFile_t *vtkFile;

@@ -6,12 +6,12 @@
 
 class LinkedCellTest : public testing::Test {
 protected:
-    std::unique_ptr<LinkedCellContainer> test;
+    std::shared_ptr<LinkedCellContainer> test;
     void SetUp() override{
         CuboidGenerator<LinkedCellContainer> cub{};
         std::vector<ParticleList> list{3 * 3};
         std::array<int, 3> mesh = {3, 3, 1,};
-        test = std::make_unique<LinkedCellContainer>(mesh, 1., list);
+        test = std::make_shared<LinkedCellContainer>(mesh, 1., list);
         cub.generateCuboid(test, {0, 0, 0}, {3, 3, 1}, .5, 0., {0., 0., 0.});
     }
     void TearDown() override{

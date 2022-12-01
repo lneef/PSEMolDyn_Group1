@@ -98,7 +98,7 @@ namespace outputWriter {
         pointsIterator->push_back(p.getX()[2]);
     }
 
-    void VTKWriter::plotParticles(std::unique_ptr<Container> &particles, const std::string &filename, int iteration) {
+    void VTKWriter::plotParticles(std::shared_ptr<Container> &particles, const std::string &filename, int iteration) {
         int numParticles = particles->size();
         initializeOutput(numParticles);
         particles->apply([this](Particle &p){

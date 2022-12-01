@@ -3,7 +3,7 @@
 #include "Gravitation.h"
 
 //calculation new force
-void Gravitation::calculateF(std::unique_ptr<Container> &particles) {
+void Gravitation::calculateF(std::shared_ptr<Container> &particles) {
 
     particles->apply([](Particle &p){
        p.updateF({});

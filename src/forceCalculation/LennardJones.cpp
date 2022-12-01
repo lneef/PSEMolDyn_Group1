@@ -6,7 +6,7 @@
 LennardJones::~LennardJones() = default;
 
 //calculation new force with Lennard-Jones potential
-void LennardJones::calculateF(std::unique_ptr<Container>  &particles) {
+void LennardJones::calculateF(std::shared_ptr<Container>  &particles) {
 
     particles->apply([](Particle &p){
         p.updateF({});

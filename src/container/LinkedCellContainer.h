@@ -16,16 +16,20 @@ public:
     size_t size() override;
     void addParticle(Particle& p) override;
     void addParticle(Particle&& p) override;
-    int index(Particle &p);
+    size_t index(Particle &p);
     LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg, std::vector<ParticleList>& list);
+    LinkedCellContainer();
+
+    void setRCutOff(double rcutoff_arg);
+    void setDomain(std::array<double, 3>& domain_arg);
+    void setSize(double rcutoff_arg, std::array<double,3>& domain_arg);
 
     std::vector<ParticleList> getCells() const;
 private:
     std::vector<ParticleList> cells;
-
     std::array<int, 3> mesh;
+    std::array<double, 3> domain;
     double rcutoff;
-
     void update();
 };
 

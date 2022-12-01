@@ -25,6 +25,6 @@ class TxtReader : public FileReader{
          *
          * @param particles ParticleContainer where the particles are stored
         */
-        void read(std::unique_ptr<ParticleContainer> &particles) override;
+        void read(std::shared_ptr<ParticleContainer> &particles) override;
     };
 }

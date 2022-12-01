@@ -6,7 +6,7 @@
  */
 TEST(CuboidTest, RightTest){
     inputReader::Cuboid_file file("../tests/testinput/test.txt");
-    std::unique_ptr<ParticleContainer> par = std::make_unique<ParticleContainer>();
+    std::shared_ptr<ParticleContainer> par = std::make_shared<ParticleContainer>();
     file.read(par);
     std::array<double, 3> pos{};
     EXPECT_THAT((*par)[0].getX(), testing::Pointwise(testing::DoubleEq(), pos));
