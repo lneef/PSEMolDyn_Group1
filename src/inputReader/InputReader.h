@@ -16,11 +16,10 @@ namespace inputReader {
     class InputReader {
     public:
         /**
-             * @brief reads particles from file and stores them in an instance of ParticleContainer
+             * @brief reads particles from file and initalizes simulation
              *
-             * @param particles ParticleContainer where the read particles are stored.
+             *
             */
-        virtual void read(std::shared_ptr<ParticleContainer> &particles) = 0;
         virtual void read(std::shared_ptr<Simulation> &sim) = 0;
 
         virtual ~InputReader();

@@ -5,12 +5,13 @@
 
 #include "inputReader/xmlReader/molsim-pskel.h"
 
-class cuboid_input_pimpl: public cuboid_input_pskel{
-public:
-    void path (const ::std::string&) override;
+namespace XMLReader {
+    class cuboid_input_pimpl : public cuboid_input_pskel {
+    public:
+        void path(const ::std::string &) override;
 
-    void post_cuboid_input () override;
-};
+        void post_cuboid_input() override;
+    };
 
-
+}
 

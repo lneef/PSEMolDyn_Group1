@@ -9,19 +9,23 @@
 #include "cuboid_input_pimpl.h"
 #include "cuboid_pimpl.h"
 
-class molecular_pimpl : public molecular_pskel{
-private:
+namespace XMLReader {
+    class molecular_pimpl : public molecular_pskel {
+    private:
 
-public:
+    public:
 
-    void pre() override;
-    void init(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCellContainer> &lc);
-    void cuboid () override;
+        void pre() override;
 
-    void simulation () override;
+        void init(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCellContainer> &lc);
 
-    void cuboid_input () override;
+        void cuboid() override;
 
-    void post_molecular () override;
-};
+        void simulation() override;
 
+        void cuboid_input() override;
+
+        void post_molecular() override;
+    };
+
+}

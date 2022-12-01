@@ -5,10 +5,12 @@
 #include <iostream>
 #include "cuboid_input_pimpl.h"
 
-void cuboid_input_pimpl::path(const std::string & file) {
-    std::cout<< file << std::endl;
-}
+namespace XMLReader {
+    void cuboid_input_pimpl::path(const std::string &file) {
+        std::cout << file << std::endl;
+    }
 
-void cuboid_input_pimpl::post_cuboid_input() {
+    void cuboid_input_pimpl::post_cuboid_input() {
 
+    }
 }

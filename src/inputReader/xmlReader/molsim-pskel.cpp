@@ -42,920 +42,805 @@
 
 // simulation_pskel
 //
+namespace XMLReader {
+    void simulation_pskel::
+    t_end_parser(xml_schema::double_pskel &p) {
+        this->t_end_parser_ = &p;
+    }
 
-void simulation_pskel::
-t_end_parser (::xml_schema::double_pskel& p)
-{
-  this->t_end_parser_ = &p;
-}
+    void simulation_pskel::
+    delta_t_parser(xml_schema::double_pskel &p) {
+        this->delta_t_parser_ = &p;
+    }
 
-void simulation_pskel::
-delta_t_parser (::xml_schema::double_pskel& p)
-{
-  this->delta_t_parser_ = &p;
-}
+    void simulation_pskel::
+    domain_x_parser(xml_schema::double_pskel &p) {
+        this->domain_x_parser_ = &p;
+    }
 
-void simulation_pskel::
-domain_x_parser (::xml_schema::double_pskel& p)
-{
-  this->domain_x_parser_ = &p;
-}
+    void simulation_pskel::
+    domain_y_parser(xml_schema::double_pskel &p) {
+        this->domain_y_parser_ = &p;
+    }
 
-void simulation_pskel::
-domain_y_parser (::xml_schema::double_pskel& p)
-{
-  this->domain_y_parser_ = &p;
-}
+    void simulation_pskel::
+    domain_z_parser(xml_schema::double_pskel &p) {
+        this->domain_z_parser_ = &p;
+    }
 
-void simulation_pskel::
-domain_z_parser (::xml_schema::double_pskel& p)
-{
-  this->domain_z_parser_ = &p;
-}
+    void simulation_pskel::
+    domain_cutOf_parser(xml_schema::double_pskel &p) {
+        this->domain_cutOf_parser_ = &p;
+    }
 
-void simulation_pskel::
-domain_cutOf_parser (::xml_schema::double_pskel& p)
-{
-  this->domain_cutOf_parser_ = &p;
-}
+    void simulation_pskel::
+    name_parser(xml_schema::string_pskel &p) {
+        this->name_parser_ = &p;
+    }
 
-void simulation_pskel::
-name_parser (::xml_schema::string_pskel& p)
-{
-  this->name_parser_ = &p;
-}
+    void simulation_pskel::
+    frequency_parser(xml_schema::int_pskel &p) {
+        this->frequency_parser_ = &p;
+    }
 
-void simulation_pskel::
-frequency_parser (::xml_schema::int_pskel& p)
-{
-  this->frequency_parser_ = &p;
-}
+    void simulation_pskel::
+    parsers(xml_schema::double_pskel &t_end,
+            xml_schema::double_pskel &delta_t,
+            xml_schema::double_pskel &domain_x,
+            xml_schema::double_pskel &domain_y,
+            xml_schema::double_pskel &domain_z,
+            xml_schema::double_pskel &domain_cutOf,
+            xml_schema::string_pskel &name,
+            xml_schema::int_pskel &frequency) {
+        this->t_end_parser_ = &t_end;
+        this->delta_t_parser_ = &delta_t;
+        this->domain_x_parser_ = &domain_x;
+        this->domain_y_parser_ = &domain_y;
+        this->domain_z_parser_ = &domain_z;
+        this->domain_cutOf_parser_ = &domain_cutOf;
+        this->name_parser_ = &name;
+        this->frequency_parser_ = &frequency;
+    }
 
-void simulation_pskel::
-parsers (::xml_schema::double_pskel& t_end,
-         ::xml_schema::double_pskel& delta_t,
-         ::xml_schema::double_pskel& domain_x,
-         ::xml_schema::double_pskel& domain_y,
-         ::xml_schema::double_pskel& domain_z,
-         ::xml_schema::double_pskel& domain_cutOf,
-         ::xml_schema::string_pskel& name,
-         ::xml_schema::int_pskel& frequency)
-{
-  this->t_end_parser_ = &t_end;
-  this->delta_t_parser_ = &delta_t;
-  this->domain_x_parser_ = &domain_x;
-  this->domain_y_parser_ = &domain_y;
-  this->domain_z_parser_ = &domain_z;
-  this->domain_cutOf_parser_ = &domain_cutOf;
-  this->name_parser_ = &name;
-  this->frequency_parser_ = &frequency;
-}
-
-simulation_pskel::
-simulation_pskel ()
-: t_end_parser_ (0),
-  delta_t_parser_ (0),
-  domain_x_parser_ (0),
-  domain_y_parser_ (0),
-  domain_z_parser_ (0),
-  domain_cutOf_parser_ (0),
-  name_parser_ (0),
-  frequency_parser_ (0)
-{
-}
+    simulation_pskel::
+    simulation_pskel()
+            : t_end_parser_(0),
+              delta_t_parser_(0),
+              domain_x_parser_(0),
+              domain_y_parser_(0),
+              domain_z_parser_(0),
+              domain_cutOf_parser_(0),
+              name_parser_(0),
+              frequency_parser_(0) {
+    }
 
 // cuboid_pskel
 //
 
-void cuboid_pskel::
-x_parser (::xml_schema::double_pskel& p)
-{
-  this->x_parser_ = &p;
-}
+    void cuboid_pskel::
+    x_parser(xml_schema::double_pskel &p) {
+        this->x_parser_ = &p;
+    }
 
-void cuboid_pskel::
-y_parser (::xml_schema::double_pskel& p)
-{
-  this->y_parser_ = &p;
-}
+    void cuboid_pskel::
+    y_parser(xml_schema::double_pskel &p) {
+        this->y_parser_ = &p;
+    }
 
-void cuboid_pskel::
-z_parser (::xml_schema::double_pskel& p)
-{
-  this->z_parser_ = &p;
-}
+    void cuboid_pskel::
+    z_parser(xml_schema::double_pskel &p) {
+        this->z_parser_ = &p;
+    }
 
-void cuboid_pskel::
-n_x_parser (::xml_schema::int_pskel& p)
-{
-  this->n_x_parser_ = &p;
-}
+    void cuboid_pskel::
+    n_x_parser(xml_schema::int_pskel &p) {
+        this->n_x_parser_ = &p;
+    }
 
-void cuboid_pskel::
-n_y_parser (::xml_schema::int_pskel& p)
-{
-  this->n_y_parser_ = &p;
-}
+    void cuboid_pskel::
+    n_y_parser(xml_schema::int_pskel &p) {
+        this->n_y_parser_ = &p;
+    }
 
-void cuboid_pskel::
-n_z_parser (::xml_schema::int_pskel& p)
-{
-  this->n_z_parser_ = &p;
-}
+    void cuboid_pskel::
+    n_z_parser(xml_schema::int_pskel &p) {
+        this->n_z_parser_ = &p;
+    }
 
-void cuboid_pskel::
-h_parser (::xml_schema::double_pskel& p)
-{
-  this->h_parser_ = &p;
-}
+    void cuboid_pskel::
+    h_parser(xml_schema::double_pskel &p) {
+        this->h_parser_ = &p;
+    }
 
-void cuboid_pskel::
-m_parser (::xml_schema::double_pskel& p)
-{
-  this->m_parser_ = &p;
-}
+    void cuboid_pskel::
+    m_parser(xml_schema::double_pskel &p) {
+        this->m_parser_ = &p;
+    }
 
-void cuboid_pskel::
-v_x_parser (::xml_schema::double_pskel& p)
-{
-  this->v_x_parser_ = &p;
-}
+    void cuboid_pskel::
+    v_x_parser(xml_schema::double_pskel &p) {
+        this->v_x_parser_ = &p;
+    }
 
-void cuboid_pskel::
-v_y_parser (::xml_schema::double_pskel& p)
-{
-  this->v_y_parser_ = &p;
-}
+    void cuboid_pskel::
+    v_y_parser(xml_schema::double_pskel &p) {
+        this->v_y_parser_ = &p;
+    }
 
-void cuboid_pskel::
-v_z_parser (::xml_schema::double_pskel& p)
-{
-  this->v_z_parser_ = &p;
-}
+    void cuboid_pskel::
+    v_z_parser(xml_schema::double_pskel &p) {
+        this->v_z_parser_ = &p;
+    }
 
-void cuboid_pskel::
-parsers (::xml_schema::double_pskel& x,
-         ::xml_schema::double_pskel& y,
-         ::xml_schema::double_pskel& z,
-         ::xml_schema::int_pskel& n_x,
-         ::xml_schema::int_pskel& n_y,
-         ::xml_schema::int_pskel& n_z,
-         ::xml_schema::double_pskel& h,
-         ::xml_schema::double_pskel& m,
-         ::xml_schema::double_pskel& v_x,
-         ::xml_schema::double_pskel& v_y,
-         ::xml_schema::double_pskel& v_z)
-{
-  this->x_parser_ = &x;
-  this->y_parser_ = &y;
-  this->z_parser_ = &z;
-  this->n_x_parser_ = &n_x;
-  this->n_y_parser_ = &n_y;
-  this->n_z_parser_ = &n_z;
-  this->h_parser_ = &h;
-  this->m_parser_ = &m;
-  this->v_x_parser_ = &v_x;
-  this->v_y_parser_ = &v_y;
-  this->v_z_parser_ = &v_z;
-}
+    void cuboid_pskel::
+    parsers(xml_schema::double_pskel &x,
+            xml_schema::double_pskel &y,
+            xml_schema::double_pskel &z,
+            xml_schema::int_pskel &n_x,
+            xml_schema::int_pskel &n_y,
+            xml_schema::int_pskel &n_z,
+            xml_schema::double_pskel &h,
+            xml_schema::double_pskel &m,
+            xml_schema::double_pskel &v_x,
+            xml_schema::double_pskel &v_y,
+            xml_schema::double_pskel &v_z) {
+        this->x_parser_ = &x;
+        this->y_parser_ = &y;
+        this->z_parser_ = &z;
+        this->n_x_parser_ = &n_x;
+        this->n_y_parser_ = &n_y;
+        this->n_z_parser_ = &n_z;
+        this->h_parser_ = &h;
+        this->m_parser_ = &m;
+        this->v_x_parser_ = &v_x;
+        this->v_y_parser_ = &v_y;
+        this->v_z_parser_ = &v_z;
+    }
 
-cuboid_pskel::
-cuboid_pskel ()
-: x_parser_ (0),
-  y_parser_ (0),
-  z_parser_ (0),
-  n_x_parser_ (0),
-  n_y_parser_ (0),
-  n_z_parser_ (0),
-  h_parser_ (0),
-  m_parser_ (0),
-  v_x_parser_ (0),
-  v_y_parser_ (0),
-  v_z_parser_ (0)
-{
-}
+    cuboid_pskel::
+    cuboid_pskel()
+            : x_parser_(0),
+              y_parser_(0),
+              z_parser_(0),
+              n_x_parser_(0),
+              n_y_parser_(0),
+              n_z_parser_(0),
+              h_parser_(0),
+              m_parser_(0),
+              v_x_parser_(0),
+              v_y_parser_(0),
+              v_z_parser_(0) {
+    }
 
 // cuboid_input_pskel
 //
 
-void cuboid_input_pskel::
-path_parser (::xml_schema::string_pskel& p)
-{
-  this->path_parser_ = &p;
-}
+    void cuboid_input_pskel::
+    path_parser(xml_schema::string_pskel &p) {
+        this->path_parser_ = &p;
+    }
 
-void cuboid_input_pskel::
-parsers (::xml_schema::string_pskel& path)
-{
-  this->path_parser_ = &path;
-}
+    void cuboid_input_pskel::
+    parsers(xml_schema::string_pskel &path) {
+        this->path_parser_ = &path;
+    }
 
-cuboid_input_pskel::
-cuboid_input_pskel ()
-: path_parser_ (0)
-{
-}
+    cuboid_input_pskel::
+    cuboid_input_pskel()
+            : path_parser_(0) {
+    }
 
 // molecular_pskel
 //
 
-void molecular_pskel::
-cuboid_parser (::cuboid_pskel& p)
-{
-  this->cuboid_parser_ = &p;
-}
+    void molecular_pskel::
+    cuboid_parser(cuboid_pskel &p) {
+        this->cuboid_parser_ = &p;
+    }
 
-void molecular_pskel::
-simulation_parser (::simulation_pskel& p)
-{
-  this->simulation_parser_ = &p;
-}
+    void molecular_pskel::
+    simulation_parser(simulation_pskel &p) {
+        this->simulation_parser_ = &p;
+    }
 
-void molecular_pskel::
-cuboid_input_parser (::cuboid_input_pskel& p)
-{
-  this->cuboid_input_parser_ = &p;
-}
+    void molecular_pskel::
+    cuboid_input_parser(cuboid_input_pskel &p) {
+        this->cuboid_input_parser_ = &p;
+    }
 
-void molecular_pskel::
-parsers (::cuboid_pskel& cuboid,
-         ::simulation_pskel& simulation,
-         ::cuboid_input_pskel& cuboid_input)
-{
-  this->cuboid_parser_ = &cuboid;
-  this->simulation_parser_ = &simulation;
-  this->cuboid_input_parser_ = &cuboid_input;
-}
+    void molecular_pskel::
+    parsers(cuboid_pskel &cuboid,
+            simulation_pskel &simulation,
+            cuboid_input_pskel &cuboid_input) {
+        this->cuboid_parser_ = &cuboid;
+        this->simulation_parser_ = &simulation;
+        this->cuboid_input_parser_ = &cuboid_input;
+    }
 
-molecular_pskel::
-molecular_pskel ()
-: cuboid_parser_ (0),
-  simulation_parser_ (0),
-  cuboid_input_parser_ (0)
-{
-}
+    molecular_pskel::
+    molecular_pskel()
+            : cuboid_parser_(0),
+              simulation_parser_(0),
+              cuboid_input_parser_(0) {
+    }
 
 // simulation_pskel
 //
 
-void simulation_pskel::
-t_end (double)
-{
-}
+    void simulation_pskel::
+    t_end(double) {
+    }
 
-void simulation_pskel::
-delta_t (double)
-{
-}
+    void simulation_pskel::
+    delta_t(double) {
+    }
 
-void simulation_pskel::
-domain_x (double)
-{
-}
+    void simulation_pskel::
+    domain_x(double) {
+    }
 
-void simulation_pskel::
-domain_y (double)
-{
-}
+    void simulation_pskel::
+    domain_y(double) {
+    }
 
-void simulation_pskel::
-domain_z (double)
-{
-}
+    void simulation_pskel::
+    domain_z(double) {
+    }
 
-void simulation_pskel::
-domain_cutOf (double)
-{
-}
+    void simulation_pskel::
+    domain_cutOf(double) {
+    }
 
-void simulation_pskel::
-name (const ::std::string&)
-{
-}
+    void simulation_pskel::
+    name(const ::std::string &) {
+    }
 
-void simulation_pskel::
-frequency (int)
-{
-}
+    void simulation_pskel::
+    frequency(int) {
+    }
 
-void simulation_pskel::
-post_simulation ()
-{
-}
+    void simulation_pskel::
+    post_simulation() {
+    }
 
-bool simulation_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
+    bool simulation_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
 
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
 
-  if (n == "t_end" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->t_end_parser_;
+        if (n == "t_end" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->t_end_parser_;
 
-    if (this->t_end_parser_)
-      this->t_end_parser_->pre ();
+            if (this->t_end_parser_)
+                this->t_end_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "delta_t" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->delta_t_parser_;
+        if (n == "delta_t" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->delta_t_parser_;
 
-    if (this->delta_t_parser_)
-      this->delta_t_parser_->pre ();
+            if (this->delta_t_parser_)
+                this->delta_t_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_x" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->domain_x_parser_;
+        if (n == "domain_x" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->domain_x_parser_;
 
-    if (this->domain_x_parser_)
-      this->domain_x_parser_->pre ();
+            if (this->domain_x_parser_)
+                this->domain_x_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_y" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->domain_y_parser_;
+        if (n == "domain_y" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->domain_y_parser_;
 
-    if (this->domain_y_parser_)
-      this->domain_y_parser_->pre ();
+            if (this->domain_y_parser_)
+                this->domain_y_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_z" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->domain_z_parser_;
+        if (n == "domain_z" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->domain_z_parser_;
 
-    if (this->domain_z_parser_)
-      this->domain_z_parser_->pre ();
+            if (this->domain_z_parser_)
+                this->domain_z_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_cutOf" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->domain_cutOf_parser_;
+        if (n == "domain_cutOf" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->domain_cutOf_parser_;
 
-    if (this->domain_cutOf_parser_)
-      this->domain_cutOf_parser_->pre ();
+            if (this->domain_cutOf_parser_)
+                this->domain_cutOf_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "name" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->name_parser_;
+        if (n == "name" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->name_parser_;
 
-    if (this->name_parser_)
-      this->name_parser_->pre ();
+            if (this->name_parser_)
+                this->name_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "frequency" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->frequency_parser_;
+        if (n == "frequency" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->frequency_parser_;
 
-    if (this->frequency_parser_)
-      this->frequency_parser_->pre ();
+            if (this->frequency_parser_)
+                this->frequency_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  return false;
-}
+        return false;
+    }
 
-bool simulation_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
+    bool simulation_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
 
-  if (n == "t_end" && ns.empty ())
-  {
-    if (this->t_end_parser_)
-      this->t_end (this->t_end_parser_->post_double ());
+        if (n == "t_end" && ns.empty()) {
+            if (this->t_end_parser_)
+                this->t_end(this->t_end_parser_->post_double());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "delta_t" && ns.empty ())
-  {
-    if (this->delta_t_parser_)
-      this->delta_t (this->delta_t_parser_->post_double ());
+        if (n == "delta_t" && ns.empty()) {
+            if (this->delta_t_parser_)
+                this->delta_t(this->delta_t_parser_->post_double());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_x" && ns.empty ())
-  {
-    if (this->domain_x_parser_)
-      this->domain_x (this->domain_x_parser_->post_double ());
+        if (n == "domain_x" && ns.empty()) {
+            if (this->domain_x_parser_)
+                this->domain_x(this->domain_x_parser_->post_double());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_y" && ns.empty ())
-  {
-    if (this->domain_y_parser_)
-      this->domain_y (this->domain_y_parser_->post_double ());
+        if (n == "domain_y" && ns.empty()) {
+            if (this->domain_y_parser_)
+                this->domain_y(this->domain_y_parser_->post_double());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_z" && ns.empty ())
-  {
-    if (this->domain_z_parser_)
-      this->domain_z (this->domain_z_parser_->post_double ());
+        if (n == "domain_z" && ns.empty()) {
+            if (this->domain_z_parser_)
+                this->domain_z(this->domain_z_parser_->post_double());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "domain_cutOf" && ns.empty ())
-  {
-    if (this->domain_cutOf_parser_)
-      this->domain_cutOf (this->domain_cutOf_parser_->post_double ());
+        if (n == "domain_cutOf" && ns.empty()) {
+            if (this->domain_cutOf_parser_)
+                this->domain_cutOf(this->domain_cutOf_parser_->post_double());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "name" && ns.empty ())
-  {
-    if (this->name_parser_)
-      this->name (this->name_parser_->post_string ());
+        if (n == "name" && ns.empty()) {
+            if (this->name_parser_)
+                this->name(this->name_parser_->post_string());
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "frequency" && ns.empty ())
-  {
-    if (this->frequency_parser_)
-      this->frequency (this->frequency_parser_->post_int ());
+        if (n == "frequency" && ns.empty()) {
+            if (this->frequency_parser_)
+                this->frequency(this->frequency_parser_->post_int());
 
-    return true;
-  }
+            return true;
+        }
 
-  return false;
-}
+        return false;
+    }
 
 // cuboid_pskel
 //
 
-void cuboid_pskel::
-x (double)
-{
-}
-
-void cuboid_pskel::
-y (double)
-{
-}
-
-void cuboid_pskel::
-z (double)
-{
-}
-
-void cuboid_pskel::
-n_x (int)
-{
-}
-
-void cuboid_pskel::
-n_y (int)
-{
-}
-
-void cuboid_pskel::
-n_z (int)
-{
-}
-
-void cuboid_pskel::
-h (double)
-{
-}
-
-void cuboid_pskel::
-m (double)
-{
-}
-
-void cuboid_pskel::
-v_x (double)
-{
-}
+    void cuboid_pskel::
+    x(double) {
+    }
 
-void cuboid_pskel::
-v_y (double)
-{
-}
-
-void cuboid_pskel::
-v_z (double)
-{
-}
+    void cuboid_pskel::
+    y(double) {
+    }
 
-void cuboid_pskel::
-post_cuboid ()
-{
-}
+    void cuboid_pskel::
+    z(double) {
+    }
 
-bool cuboid_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
+    void cuboid_pskel::
+    n_x(int) {
+    }
 
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
+    void cuboid_pskel::
+    n_y(int) {
+    }
 
-  if (n == "x" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->x_parser_;
+    void cuboid_pskel::
+    n_z(int) {
+    }
 
-    if (this->x_parser_)
-      this->x_parser_->pre ();
+    void cuboid_pskel::
+    h(double) {
+    }
 
-    return true;
-  }
+    void cuboid_pskel::
+    m(double) {
+    }
 
-  if (n == "y" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->y_parser_;
+    void cuboid_pskel::
+    v_x(double) {
+    }
 
-    if (this->y_parser_)
-      this->y_parser_->pre ();
+    void cuboid_pskel::
+    v_y(double) {
+    }
 
-    return true;
-  }
+    void cuboid_pskel::
+    v_z(double) {
+    }
 
-  if (n == "z" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->z_parser_;
+    void cuboid_pskel::
+    post_cuboid() {
+    }
 
-    if (this->z_parser_)
-      this->z_parser_->pre ();
+    bool cuboid_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
 
-    return true;
-  }
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
 
-  if (n == "n_x" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->n_x_parser_;
+        if (n == "x" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->x_parser_;
 
-    if (this->n_x_parser_)
-      this->n_x_parser_->pre ();
+            if (this->x_parser_)
+                this->x_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "n_y" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->n_y_parser_;
+        if (n == "y" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->y_parser_;
 
-    if (this->n_y_parser_)
-      this->n_y_parser_->pre ();
+            if (this->y_parser_)
+                this->y_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "n_z" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->n_z_parser_;
+        if (n == "z" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->z_parser_;
 
-    if (this->n_z_parser_)
-      this->n_z_parser_->pre ();
+            if (this->z_parser_)
+                this->z_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "h" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->h_parser_;
+        if (n == "n_x" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->n_x_parser_;
 
-    if (this->h_parser_)
-      this->h_parser_->pre ();
+            if (this->n_x_parser_)
+                this->n_x_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "m" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->m_parser_;
+        if (n == "n_y" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->n_y_parser_;
 
-    if (this->m_parser_)
-      this->m_parser_->pre ();
+            if (this->n_y_parser_)
+                this->n_y_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "v_x" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->v_x_parser_;
+        if (n == "n_z" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->n_z_parser_;
 
-    if (this->v_x_parser_)
-      this->v_x_parser_->pre ();
+            if (this->n_z_parser_)
+                this->n_z_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "v_y" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->v_y_parser_;
+        if (n == "h" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->h_parser_;
 
-    if (this->v_y_parser_)
-      this->v_y_parser_->pre ();
+            if (this->h_parser_)
+                this->h_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "v_z" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->v_z_parser_;
+        if (n == "m" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->m_parser_;
 
-    if (this->v_z_parser_)
-      this->v_z_parser_->pre ();
+            if (this->m_parser_)
+                this->m_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  return false;
-}
+        if (n == "v_x" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->v_x_parser_;
 
-bool cuboid_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
+            if (this->v_x_parser_)
+                this->v_x_parser_->pre();
 
-  if (n == "x" && ns.empty ())
-  {
-    if (this->x_parser_)
-      this->x (this->x_parser_->post_double ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "v_y" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->v_y_parser_;
 
-  if (n == "y" && ns.empty ())
-  {
-    if (this->y_parser_)
-      this->y (this->y_parser_->post_double ());
+            if (this->v_y_parser_)
+                this->v_y_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  if (n == "z" && ns.empty ())
-  {
-    if (this->z_parser_)
-      this->z (this->z_parser_->post_double ());
+        if (n == "v_z" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->v_z_parser_;
 
-    return true;
-  }
+            if (this->v_z_parser_)
+                this->v_z_parser_->pre();
 
-  if (n == "n_x" && ns.empty ())
-  {
-    if (this->n_x_parser_)
-      this->n_x (this->n_x_parser_->post_int ());
+            return true;
+        }
 
-    return true;
-  }
+        return false;
+    }
 
-  if (n == "n_y" && ns.empty ())
-  {
-    if (this->n_y_parser_)
-      this->n_y (this->n_y_parser_->post_int ());
+    bool cuboid_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
 
-    return true;
-  }
+        if (n == "x" && ns.empty()) {
+            if (this->x_parser_)
+                this->x(this->x_parser_->post_double());
 
-  if (n == "n_z" && ns.empty ())
-  {
-    if (this->n_z_parser_)
-      this->n_z (this->n_z_parser_->post_int ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "y" && ns.empty()) {
+            if (this->y_parser_)
+                this->y(this->y_parser_->post_double());
 
-  if (n == "h" && ns.empty ())
-  {
-    if (this->h_parser_)
-      this->h (this->h_parser_->post_double ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "z" && ns.empty()) {
+            if (this->z_parser_)
+                this->z(this->z_parser_->post_double());
 
-  if (n == "m" && ns.empty ())
-  {
-    if (this->m_parser_)
-      this->m (this->m_parser_->post_double ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "n_x" && ns.empty()) {
+            if (this->n_x_parser_)
+                this->n_x(this->n_x_parser_->post_int());
 
-  if (n == "v_x" && ns.empty ())
-  {
-    if (this->v_x_parser_)
-      this->v_x (this->v_x_parser_->post_double ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "n_y" && ns.empty()) {
+            if (this->n_y_parser_)
+                this->n_y(this->n_y_parser_->post_int());
 
-  if (n == "v_y" && ns.empty ())
-  {
-    if (this->v_y_parser_)
-      this->v_y (this->v_y_parser_->post_double ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "n_z" && ns.empty()) {
+            if (this->n_z_parser_)
+                this->n_z(this->n_z_parser_->post_int());
 
-  if (n == "v_z" && ns.empty ())
-  {
-    if (this->v_z_parser_)
-      this->v_z (this->v_z_parser_->post_double ());
+            return true;
+        }
 
-    return true;
-  }
+        if (n == "h" && ns.empty()) {
+            if (this->h_parser_)
+                this->h(this->h_parser_->post_double());
 
-  return false;
-}
+            return true;
+        }
+
+        if (n == "m" && ns.empty()) {
+            if (this->m_parser_)
+                this->m(this->m_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "v_x" && ns.empty()) {
+            if (this->v_x_parser_)
+                this->v_x(this->v_x_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "v_y" && ns.empty()) {
+            if (this->v_y_parser_)
+                this->v_y(this->v_y_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "v_z" && ns.empty()) {
+            if (this->v_z_parser_)
+                this->v_z(this->v_z_parser_->post_double());
+
+            return true;
+        }
+
+        return false;
+    }
 
 // cuboid_input_pskel
 //
 
-void cuboid_input_pskel::
-path (const ::std::string&)
-{
-}
+    void cuboid_input_pskel::
+    path(const ::std::string &) {
+    }
 
-void cuboid_input_pskel::
-post_cuboid_input ()
-{
-}
+    void cuboid_input_pskel::
+    post_cuboid_input() {
+    }
 
-bool cuboid_input_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
+    bool cuboid_input_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
 
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
 
-  if (n == "path" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->path_parser_;
+        if (n == "path" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->path_parser_;
 
-    if (this->path_parser_)
-      this->path_parser_->pre ();
+            if (this->path_parser_)
+                this->path_parser_->pre();
 
-    return true;
-  }
+            return true;
+        }
 
-  return false;
-}
+        return false;
+    }
 
-bool cuboid_input_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
+    bool cuboid_input_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
 
-  if (n == "path" && ns.empty ())
-  {
-    if (this->path_parser_)
-      this->path (this->path_parser_->post_string ());
+        if (n == "path" && ns.empty()) {
+            if (this->path_parser_)
+                this->path(this->path_parser_->post_string());
 
-    return true;
-  }
+            return true;
+        }
 
-  return false;
-}
+        return false;
+    }
 
 // molecular_pskel
 //
 
-void molecular_pskel::
-cuboid ()
-{
-}
-
-void molecular_pskel::
-simulation ()
-{
-}
-
-void molecular_pskel::
-cuboid_input ()
-{
-}
-
-void molecular_pskel::
-post_molecular ()
-{
-}
-
-bool molecular_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
-
-  if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-    return true;
-
-  if (n == "cuboid" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->cuboid_parser_;
-
-    if (this->cuboid_parser_)
-      this->cuboid_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "simulation" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->simulation_parser_;
-
-    if (this->simulation_parser_)
-      this->simulation_parser_->pre ();
-
-    return true;
-  }
-
-  if (n == "cuboid_input" && ns.empty ())
-  {
-    this->::xml_schema::complex_content::context_.top ().parser_ = this->cuboid_input_parser_;
-
-    if (this->cuboid_input_parser_)
-      this->cuboid_input_parser_->pre ();
-
-    return true;
-  }
-
-  return false;
-}
-
-bool molecular_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  if (this->::xml_schema::complex_content::_end_element_impl (ns, n))
-    return true;
-
-  if (n == "cuboid" && ns.empty ())
-  {
-    if (this->cuboid_parser_)
-    {
-      this->cuboid_parser_->post_cuboid ();
-      this->cuboid ();
+    void molecular_pskel::
+    cuboid() {
     }
 
-    return true;
-  }
-
-  if (n == "simulation" && ns.empty ())
-  {
-    if (this->simulation_parser_)
-    {
-      this->simulation_parser_->post_simulation ();
-      this->simulation ();
+    void molecular_pskel::
+    simulation() {
     }
 
-    return true;
-  }
-
-  if (n == "cuboid_input" && ns.empty ())
-  {
-    if (this->cuboid_input_parser_)
-    {
-      this->cuboid_input_parser_->post_cuboid_input ();
-      this->cuboid_input ();
+    void molecular_pskel::
+    cuboid_input() {
     }
 
-    return true;
-  }
+    void molecular_pskel::
+    post_molecular() {
+    }
 
-  return false;
-}
+    bool molecular_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "cuboid" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->cuboid_parser_;
+
+            if (this->cuboid_parser_)
+                this->cuboid_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "simulation" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->simulation_parser_;
+
+            if (this->simulation_parser_)
+                this->simulation_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "cuboid_input" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->cuboid_input_parser_;
+
+            if (this->cuboid_input_parser_)
+                this->cuboid_input_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool molecular_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "cuboid" && ns.empty()) {
+            if (this->cuboid_parser_) {
+                this->cuboid_parser_->post_cuboid();
+                this->cuboid();
+            }
+
+            return true;
+        }
+
+        if (n == "simulation" && ns.empty()) {
+            if (this->simulation_parser_) {
+                this->simulation_parser_->post_simulation();
+                this->simulation();
+            }
+
+            return true;
+        }
+
+        if (n == "cuboid_input" && ns.empty()) {
+            if (this->cuboid_input_parser_) {
+                this->cuboid_input_parser_->post_cuboid_input();
+                this->cuboid_input();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 
 #include <xsd/cxx/post.hxx>
 
@@ -964,3 +849,4 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
 //
 // End epilogue.
 
+}
