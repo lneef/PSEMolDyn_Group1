@@ -7,28 +7,29 @@
 class LinkedCellTest : public testing::Test {
 protected:
     std::shared_ptr<LinkedCellContainer> test;
-    void SetUp() override{
+
+    void SetUp() override {
         CuboidGenerator<LinkedCellContainer> cub{};
-        std::vector<ParticleContainer> list{3 * 3};
-        std::array<int, 3> mesh = {3, 3, 1,};
-        test = std::make_shared<LinkedCellContainer>(mesh, 1., list);
-        std::array<double, 3> domain{1.5,1.5 , 0.5};
-        test -> setDomain(domain);
+        test = std::make_shared<LinkedCellContainer>();
+        std::array<double, 3> domain{1.5, 1.5, 0.5};
+        test->setDomain(domain);
+        test->setSize(1., domain);
         cub.generateCuboid(test, {0, 0, 0}, {3, 3, 1}, .5, 0., {0., 0., 0.});
     }
-    void TearDown() override{
+
+    void TearDown() override {
 
     }
 };
 
 TEST_F(LinkedCellTest, AddTest) {
 
-    std::vector<ParticleContainer> celllist = test->getCells();
+    std::vector<ParticleList> celllist = test->getCells();
 
     EXPECT_EQ(celllist[0].size(), 4);
     EXPECT_EQ(celllist[1].size(), 2);
-    EXPECT_EQ(celllist[3].size(), 2);
-    EXPECT_EQ(celllist[4].size(), 1);
+    EXPECT_EQ(celllist[2].size(), 2);
+    EXPECT_EQ(celllist[3].size(), 1);
 }
 
 TEST_F(LinkedCellTest, AppTest) {
@@ -37,9 +38,9 @@ TEST_F(LinkedCellTest, AppTest) {
         p1.setF(p1.getF() + add);
         p2.setF(p2.getF() + add);
     });
-    std::vector<ParticleContainer> celllist = test->getCells();
+    std::vector<ParticleList> celllist = test->getCells();
     auto it1 = celllist[0].begin();
-    auto it4 = celllist[4].begin();
+    auto it4 = celllist[3].begin();
 
 
     EXPECT_DOUBLE_EQ(it1->getF()[0], 8);
