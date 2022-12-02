@@ -42,6 +42,6 @@ TEST_F(LinkedCellTest, AppTest) {
     auto it4 = celllist[4].begin();
 
 
-    EXPECT_DOUBLE_EQ(it1->getF()[0], 8);
-    EXPECT_DOUBLE_EQ(it4->getF()[0], 8);
+    EXPECT_DOUBLE_EQ(it1->getF()[0], 7);
+    EXPECT_DOUBLE_EQ(it4->getF()[0], 4);
 }
