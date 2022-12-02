@@ -59,16 +59,12 @@ namespace XMLReader {
             x[i] = pos.front();
             v[i] = vel.front();
             n[i] = num.front();
-            std::cout<<"no"<<n[0]<<pos.size()<<std::endl;
             pos.pop();
             vel.pop();
             num.pop();
         }
-     ;
-
         CuboidGenerator<LinkedCellContainer> cub{};
         cub.generateCuboid(cells, x, n, width, mass, v);
-        std::cout<<cells->size();
     }
 
     void cuboid_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc) {
