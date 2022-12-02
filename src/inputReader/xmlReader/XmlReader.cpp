@@ -31,6 +31,7 @@ namespace XMLReader {
     void XmlReader::read(std::shared_ptr<Simulation> &sim) {
         std::shared_ptr<LinkedCellContainer> cell = std::make_shared<LinkedCellContainer>();
         read(sim, cell);
+        std::cout<<cell->size()<<std::endl;
         sim->setParticle(cell);
     }
 

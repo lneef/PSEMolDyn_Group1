@@ -11,9 +11,9 @@ namespace XMLReader {
     class cuboid_pimpl : public cuboid_pskel {
     private:
         std::shared_ptr<LinkedCellContainer> cells;
-        std::vector<double> pos;
-        std::vector<int> num;
-        std::vector<double> vel;
+        std::queue<double> pos;
+        std::queue<int> num;
+        std::queue<double> vel;
         double mass;
         double width;
     public:

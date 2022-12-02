@@ -1,7 +1,7 @@
 #include <getopt.h>
 #include "inputReader/TxtReader.h"
 #include "inputReader/InputReader.h"
-
+#include "outputWriter/VTKWriter.h"
 #include <iostream>
 #include <memory>
 #include <map>
@@ -61,6 +61,7 @@ int main(int argc, char *argsv[]) {
                 filename = optarg;
                 input = std::make_unique<XMLReader::XmlReader>(filename);
                 force = std::make_unique<LennardJones>();
+                arg_flag = true;
                 opt = XMLCuboid;
                 break;
             case 't':

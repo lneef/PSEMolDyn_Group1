@@ -3,7 +3,7 @@
 
 TEST(ParserTestSite, Basic){
     std::string tes= "../tests/testinput/test.xml";
-    XmlReader xml{tes};
+    XMLReader::XmlReader xml{tes};
     std::shared_ptr<Simulation> sth= std::make_shared<Simulation>();
     std::shared_ptr<LinkedCellContainer> lc=std::make_shared<LinkedCellContainer>();
     xml.read(sth, lc);
