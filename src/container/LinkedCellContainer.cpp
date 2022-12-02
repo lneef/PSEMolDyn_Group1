@@ -70,7 +70,7 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
                 neighbour.apply(partial);
             }
 
-            if (i + mesh[0] - 1 < len) {
+            if (i + mesh[0] - 1 < len && i % mesh[0] > 0) {
                 auto &neighbour = cells[i + mesh[0] - 1];
                 neighbour.apply(partial);
             }
