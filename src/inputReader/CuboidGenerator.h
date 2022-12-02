@@ -2,6 +2,7 @@
 #pragma once
 
 #include <memory>
+#include <iostream>
 #include "../utils/MaxwellBoltzmannDistribution.h"
 #include "container/ParticleContainer.h"
 #include "utils/ArrayUtils.h"
@@ -9,7 +10,7 @@
 /**
  * @brief CuboidGenerator generates cuboids of particles form input values
  *
- * CuboidGenerator generates cuboids of particles form input values, which are collected by instances of Cuboid_TxtFile or Cuboid_cl.
+ * CuboidGenerator generates cuboids of particles form input values, which are collected by instances of Cuboid_file or Cuboid_cl.
 */
 template<typename T>
 class CuboidGenerator {
@@ -49,7 +50,7 @@ public:
      * @param v Array representaion of the velocities of the particles in all three dimensions
     */
     void
-    generateCuboid(std::unique_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
+    generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
                    std::array<double, 3> v) {
 
         std::array<double, 3> newX{};
@@ -68,7 +69,7 @@ public:
         }
     }
 
-    void generateSphere(std::unique_ptr<T> &particles, std::array<double, 3> center, int r, double m,
+    void generateSphere(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
                         std::array<double, 3> v, double h) {
         double radius = (r - 1) * h;
         std::array<double, 3> newX{};
@@ -76,9 +77,9 @@ public:
             newX[0] = center[0] + (x * h);
             for (int y = -r + 1; y < r; ++y) {
                 newX[1] = center[1] + (y * h);
-                for(int z=r +1 ; z< r; ++z){
-                    newX[2] = center[2] + (z*h);
-                    if(ArrayUtils::L2Norm(newX - center) > radius)
+                for (int z = r + 1; z < r; ++z) {
+                    newX[2] = center[2] + (z * h);
+                    if (ArrayUtils::L2Norm(newX - center) > radius)
                         continue;
                     std::array<double, 3> newV = calculateV(v);
                     particles->addParticle(Particle(newX, newV, m));

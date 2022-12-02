@@ -10,7 +10,7 @@
  */
 TEST(CuboidGeneratorTest, GenerationTest){
     CuboidGenerator<ParticleContainer> cg;
-    std::unique_ptr<ParticleContainer> par = std::make_unique<ParticleContainer>();
+    std::shared_ptr<ParticleContainer> par = std::make_shared<ParticleContainer>();
     std::array<double, 3> x ={0.,0.,0.};
     std::array<int, 3> n = {2,2,1};
     double h = 1.;

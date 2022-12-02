@@ -33,7 +33,7 @@ namespace outputWriter {
          * @param iteration Number of the current iteration, used to generate the name of the output fule
          *
         */
-        void plotParticles(std::unique_ptr<Container> &particles, const std::string &filename, int iteration) override;
+        void plotParticles(std::shared_ptr<Container> &particles, const std::string &filename, int iteration) override;
     };
 
 } // namespace outputWriter

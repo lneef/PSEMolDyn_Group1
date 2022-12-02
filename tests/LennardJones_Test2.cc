@@ -11,7 +11,7 @@
  */
 TEST(LennardJonesTest, CalcTest2){
     LennardJones lj;
-    std::unique_ptr<Container> par = std::make_unique<ParticleContainer>();
+    std::shared_ptr<Container> par = std::make_shared<ParticleContainer>();
     par->addParticle( Particle({0., 0., 0.}, {0., 0., 0.}, 0.));
     par->addParticle(Particle({1., 1., 0.}, {0., 0., 0.}, 0.));
     par->addParticle(Particle({1., 0., 0.}, {0., 0., 0}, 0.));

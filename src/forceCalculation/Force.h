@@ -2,6 +2,7 @@
 // Created by dominik on 27.10.22.
 //
 #pragma once
+
 #include "../utils/ArrayUtils.h"
 #include "../Particle.h"
 #include "container/ParticleContainer.h"
@@ -24,7 +25,7 @@ public:
      *
      * @see Particle
     */
-    virtual void calculateF(std::unique_ptr<Container> &particles) = 0;
+    virtual void calculateF(std::shared_ptr<Container> &particles) = 0;
 
     /**
      * @brief virtual destructor to prevent memory leaks

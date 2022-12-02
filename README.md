@@ -36,7 +36,7 @@ The following command line options are supported:
     -e      Expects an argument of type double. Using this option the end time of the simulation can be set.
             The default end time is 1000
 
-    -f      Expects an argument of type double. Using this option the time step (delta\_t) of the simulation can be set.
+    -t      Expects an argument of type double. Using this option the time step (delta\_t) of the simulation can be set.
             The default time step is 0.014
 
     -l     Expects as argument either off, info, debug, trace or error. Using this option the global log_level can be set

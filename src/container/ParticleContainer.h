@@ -15,7 +15,7 @@
  * To enable simple iteration over the stored particles, ParticleContainer implements the iterator pattern.
 */
 
-class ParticleContainer : public Container{
+class ParticleContainer : public Container {
 private:
     /**
      * @brief The data structure where the particles are stored internally.
@@ -60,12 +60,17 @@ public:
     Particle &operator[](size_t i);
 
     void applyX(std::function<void(Particle &)> fun) override;
-    void applyF(std::function<void(Particle &, Particle &)> fun)  override;
-    void addParticle(Particle& p) override;
+
+    void applyF(std::function<void(Particle &, Particle &)> fun) override;
+
+    void addParticle(Particle &p) override;
+
     void apply(std::function<void(Particle &)> fun) override;
+
     ~ParticleContainer() override;
 
     std::vector<Particle>::iterator begin();
+
     std::vector<Particle>::iterator end();
 
     std::vector<Particle>::iterator remove(std::vector<Particle>::iterator &iterator);

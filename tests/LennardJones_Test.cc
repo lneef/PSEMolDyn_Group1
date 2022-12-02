@@ -7,7 +7,7 @@
  * @brief test whether calculateF of Lennard Jones works a expected and old_f is updated as expected
  */
 TEST(LennardJonesTest, CalcTest){
-    std::unique_ptr<Container> par = std::make_unique<ParticleContainer>();
+    std::shared_ptr<Container> par = std::make_shared<ParticleContainer>();
     par->addParticle(Particle ({0.,0.,0.},{0.,0., 0.}, 1.));
     par->addParticle(Particle ({1., 0. , 0.}, {1.5, 0., 0.}, 1.));
 

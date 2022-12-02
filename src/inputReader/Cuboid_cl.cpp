@@ -7,7 +7,7 @@ namespace inputReader {
 
     Cuboid_cl::~Cuboid_cl() = default;
 
-    void Cuboid_cl::read(std::unique_ptr<ParticleContainer> &particles) {
+    void Cuboid_cl::read(std::shared_ptr<ParticleContainer> &particles) {
         std::array<double, 3> x{};
         std::array<int, 3> n{};
         double h;
@@ -177,5 +177,11 @@ namespace inputReader {
             cuboidGenerator.generateCuboid(particles, x, n, h, m, v);
             MolSimLogger::logInfo("Cuboid generated!");
         }
+    }
+
+    void Cuboid_cl::read(std::shared_ptr<Simulation> &sim) {
+        std::shared_ptr<ParticleContainer> particles = std::make_shared<ParticleContainer>();
+        read(particles);
+        sim->setParticle(particles);
     }
 }

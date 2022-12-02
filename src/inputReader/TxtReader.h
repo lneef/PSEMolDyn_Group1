@@ -1,9 +1,9 @@
 
 #pragma once
 
-#include "../InputReader.h"
-#include "../../Particle.h"
-#include "../fileReader/FileReader.h"
+#include "InputReader.h"
+#include "Particle.h"
+#include "FileReader.h"
 
 namespace inputReader {
 /**
@@ -11,7 +11,7 @@ namespace inputReader {
  * 
  * TxtReader implements the abstract method provided by the class FileReader for reading particles from .txt files into an instance of ParticleContainer.
 */
-class TxtReader : public FileReader{
+    class TxtReader : public FileReader {
 
     public:
         explicit TxtReader(std::string filename);
@@ -23,6 +23,8 @@ class TxtReader : public FileReader{
          *
          * @param particles ParticleContainer where the particles are stored
         */
-        void read(std::unique_ptr<ParticleContainer> &particles) override;
+        void read(std::shared_ptr<ParticleContainer> &particles);
+
+        void read(std::shared_ptr<Simulation> &sim) override;
     };
 }

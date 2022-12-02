@@ -5,15 +5,16 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "../../MolSimLogger.h"
+#include "MolSimLogger.h"
+
 namespace inputReader {
     TxtReader::TxtReader(std::string filename) {
-        this-> filename = filename;
+        this->filename = filename;
     }
 
     TxtReader::~TxtReader() = default;
 
-    void TxtReader::read(std::unique_ptr<ParticleContainer> &particles) {
+    void TxtReader::read(std::shared_ptr<ParticleContainer> &particles) {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
         double m;
@@ -61,5 +62,11 @@ namespace inputReader {
             MolSimLogger::logError("Error: could not open file {}", filename);
             exit(-1);
         }
+    }
+
+    void TxtReader::read(std::shared_ptr<Simulation> &sim) {
+        std::shared_ptr<ParticleContainer> particles = std::make_shared<ParticleContainer>();
+        read(particles);
+        sim->setParticle(particles);
     }
 }
