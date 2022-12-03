@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <molecular>
     <simulation>
-        <t_end>5</t_end>
-        <delta_t>0.0002</delta_t>
+        <t_end>20</t_end>
+        <delta_t>0.0005</delta_t>
         <domain_x>180</domain_x>
         <domain_y>90</domain_y>
         <domain_cutOf>3.0</domain_cutOf>
@@ -22,11 +22,11 @@
         <v_z>0</v_z>
     </cuboid>
     <cuboid>
-        <x>15</x>
-        <y>15</y>
+        <x>70</x>
+        <y>60</y>
         <z>0.</z>
-        <n_x>8</n_x>
-        <n_y>8</n_y>
+        <n_x>20</n_x>
+        <n_y>20</n_y>
         <n_z>1</n_z>
         <h>1.1225</h>
         <m>1.0</m>
