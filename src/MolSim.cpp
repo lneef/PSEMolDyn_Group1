@@ -1,11 +1,9 @@
 #include <getopt.h>
 #include "inputReader/TxtReader.h"
-#include "outputWriter/VTKWriter.h"
 #include "inputReader/InputReader.h"
-
+#include "outputWriter/VTKWriter.h"
 #include <iostream>
 #include <memory>
-#include <fstream>
 #include <map>
 
 #include "forceCalculation/Gravitation.h"
@@ -15,6 +13,7 @@
 #include "inputReader/Cuboid_file.h"
 #include "MolSimLogger.h"
 #include "Simulation.h"
+#include "inputReader/xmlReader/XmlReader.h"
 
 
 void print_help();
@@ -28,6 +27,7 @@ struct option long_option[]{
         {"help",   no_argument,       0, 'a'},
         {"cub",    optional_argument, 0, 'c'},
         {"planet", required_argument, 0, 'p'},
+        {"xml",    required_argument, 0, 'x'},
         {0, 0,                        0, 0}
 };
 
@@ -38,14 +38,16 @@ std::map<std::string, std::function<void()>> levels{{"off",   []() { spdlog::set
                                                     {"trace", []() { spdlog::set_level(spdlog::level::trace); }},
                                                     {"error", []() { spdlog::set_level(spdlog::level::err); }}};
 enum Option {
-    None, Planet, Cuboid
+    None, Planet, Cuboid, XMLCuboid
 };
 
 int main(int argc, char *argsv[]) {
-    std::shared_ptr<ParticleContainer> particles=std::make_unique<ParticleContainer>();
+    std::shared_ptr<ParticleContainer> particles = std::make_unique<ParticleContainer>();
     std::unique_ptr<inputReader::InputReader> input;
+    std::shared_ptr<Simulation> simulation = std::make_shared<Simulation>();
     std::unique_ptr<Force> force;
     MolSimLogger::init();
+    std::string filename;
     int arg = 0;
     bool arg_flag = false;
     Option opt = None;
@@ -55,6 +57,13 @@ int main(int argc, char *argsv[]) {
                 print_help();
 
                 return 0;
+            case 'x':
+                filename = optarg;
+                input = std::make_unique<XMLReader::XmlReader>(filename);
+                force = std::make_unique<LennardJones>();
+                arg_flag = true;
+                opt = XMLCuboid;
+                break;
             case 't':
                 delta_t = std::stod(optarg);
                 arg_flag = true;
@@ -103,11 +112,16 @@ int main(int argc, char *argsv[]) {
         std::cout << "You did not specify which simulation should be run" << std::endl;
         exit(-1);
     }
-    input->read(particles);
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
-    std::shared_ptr<Container> con = particles;
-    Simulation simulation(con, delta_t, end_time, writer, force);
-    simulation.run();
+    simulation->setForce(force);
+    simulation->setWriter(writer);
+    if (opt == Cuboid || opt == Planet) {
+        simulation->setDeltaT(delta_t);
+        simulation->setEndTime(end_time);
+    }
+    input->read(simulation);
+
+    simulation->run();
 
     MolSimLogger::logInfo("Output written. Terminating...");
     return 0;

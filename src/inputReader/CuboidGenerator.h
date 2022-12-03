@@ -2,6 +2,7 @@
 #pragma once
 
 #include <memory>
+#include <iostream>
 #include "../utils/MaxwellBoltzmannDistribution.h"
 #include "container/ParticleContainer.h"
 #include "utils/ArrayUtils.h"
