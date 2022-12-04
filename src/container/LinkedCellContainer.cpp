@@ -21,29 +21,31 @@ void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
 
 void LinkedCellContainer::update() {
     size_t len = cells.size();
-    std::vector<ParticleContainer> temp{};
+    std::vector<ParticleList> temp{};
     temp.resize(len);
     for (size_t i = 0; i < len; ++i) {
-        for (int j = 0; j < cells[i].size(); ++j) {
-            auto &p = cells[i][j];
+        for (auto it = cells[i].begin(); it != cells[i].end();) {
+            auto &p = *it;
             size_t ind = index(p);
             auto &pos = p.getX();
-
-            if (0 <= pos[0] && pos[0] <= domain[0] && 0 <= pos[1] && pos[1] <= domain[1] && 0 <= pos[2] &&
-                pos[2] <= domain[2]) {
-                temp[ind].addParticle(p);
-
+            if (pos[0] < 0 || pos[0] >= domain[0] || pos[1] < 0 || pos[1] > domain[1]) {
+                halo.addParticle(p);
+                it = cells[i].remove(it);
+                continue;
             }
-
-
+            if (ind == i) {
+                ++it;
+                continue;
+            }
+            addParticle(p);
+            it = cells[i].remove(it);
         }
     }
-    setContainer(temp);
 }
 
 size_t LinkedCellContainer::size() {
     size_t len = std::accumulate(cells.begin(), cells.end(), 0,
-                                 [](int len, ParticleContainer &p) { return len + p.size(); });
+                                 [](int len, ParticleList &p) { return len + p.size(); });
     return len;
 
 }
@@ -75,7 +77,6 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
                 auto &neighbour = cells[i + mesh[0] - 1];
                 neighbour.apply(partial);
             }
-
         }
     }
 
@@ -105,16 +106,23 @@ void LinkedCellContainer::addParticle(Particle &&p) {
     }
 }
 
-LinkedCellContainer::LinkedCellContainer(std::array<int, 3> mesh_arg, double rcutoff_arg,
-                                         std::vector<ParticleContainer> &list) {
-    cells = list;
-    mesh = mesh_arg;
-    rcutoff = rcutoff_arg;
-
+std::vector<ParticleList> LinkedCellContainer::getCells() {
+    return cells;
 }
 
-std::vector<ParticleContainer> LinkedCellContainer::getCells() const {
-    return cells;
+void LinkedCellContainer::setUpBoundary() {
+    size_t i = 0;
+    for (; i < mesh[0]; ++i) {
+        boundary.emplace_back(BoundaryCell(cells[i]));
+    }
+    for (; i < cells.size() - mesh[0]; i++) {
+        if (i % mesh[0] == 0 || (i + 1) % mesh[0] == 0)
+            boundary.emplace_back(BoundaryCell(cells[i]));
+    }
+
+    for (; i < cells.size(); ++i) {
+        boundary.emplace_back(BoundaryCell(cells[i]));
+    }
 }
 
 void LinkedCellContainer::setRCutOff(double rcutoff_arg) {
@@ -136,15 +144,22 @@ void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &dom
         len *= mesh[i] == 0 ? 1 : mesh[i];
     }
     cells.resize(len);
+    setUpBoundary();
 }
 
-std::vector<ParticleContainer> &LinkedCellContainer::get() {
+std::vector<ParticleList> &LinkedCellContainer::get() {
     return cells;
 }
 
-void LinkedCellContainer::setContainer(std::vector<ParticleContainer> &pc) {
-    cells = pc;
+
+const ParticleContainer &LinkedCellContainer::getHalo() const {
+    return halo;
 }
+
+const std::vector<BoundaryCell> &LinkedCellContainer::getBoundary() const {
+    return boundary;
+}
+
 
 LinkedCellContainer::LinkedCellContainer() = default;
 

@@ -24,7 +24,7 @@ protected:
 
 TEST_F(LinkedCellTest, AddTest) {
 
-    std::vector<ParticleContainer> celllist = test->getCells();
+    std::vector<ParticleList> celllist = test->getCells();
 
     EXPECT_EQ(test->size(), 9);
     EXPECT_EQ(celllist[0].size(), 1);
@@ -40,10 +40,12 @@ TEST_F(LinkedCellTest, AppTest) {
         p1.setF(p1.getF() + add);
         p2.setF(p2.getF() + add);
     });
-    std::vector<ParticleContainer> celllist = test->getCells();
+    std::vector<ParticleList> celllist = test->getCells();
     auto it1 = celllist[0].begin();
     auto it4 = celllist[4].begin();
     
     EXPECT_DOUBLE_EQ(it1->getF()[0], 3);
     EXPECT_DOUBLE_EQ(it4->getF()[0], 8);
+
+
 }

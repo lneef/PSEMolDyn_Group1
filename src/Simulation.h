@@ -86,8 +86,6 @@ public:
 
     void setForce(std::unique_ptr<Force> &force_arg);
 
-    void setParticle(std::shared_ptr<Container> &particles_arg);
-
     void setParticle(std::shared_ptr<ParticleContainer> &particles_arg);
 
     void setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg);
