@@ -2,6 +2,7 @@
 // Created by dominik on 27.10.22.
 //
 #pragma once
+
 #include "../utils/ArrayUtils.h"
 #include "../Particle.h"
 #include "container/ParticleContainer.h"

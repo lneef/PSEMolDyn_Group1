@@ -131,5 +131,6 @@ void Simulation::setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg
 
 void Simulation::setOut_name(const std::string &out_name_arg) {
     out_name = out_name_arg;
+
 }
 

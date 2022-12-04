@@ -6,11 +6,15 @@
 #include "cuboid_input_pimpl.h"
 
 namespace XMLReader {
+    void cuboid_input_pimpl::init(std::shared_ptr<LinkedCellContainer> &cell_arg){
+        cells = cell_arg;
+    }
     void cuboid_input_pimpl::path(const std::string &file) {
-        std::cout << file << std::endl;
+        path_cuboids=file;
     }
 
     void cuboid_input_pimpl::post_cuboid_input() {
-
+        inputReader::Cuboid_file cuboids_reader(path_cuboids);
+        cuboids_reader.readCuboid(cells);
     }
 }

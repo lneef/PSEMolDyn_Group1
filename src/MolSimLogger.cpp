@@ -4,7 +4,7 @@
 
 std::shared_ptr<spdlog::logger> MolSimLogger::loggerMolSim = nullptr;
 
-std::shared_ptr<spdlog::logger>& MolSimLogger::logger() {
+std::shared_ptr<spdlog::logger> &MolSimLogger::logger() {
     return loggerMolSim;
 }
 
@@ -16,7 +16,7 @@ void MolSimLogger::init() {
     loggerMolSim = spdlog::get("MolSimLogger");
 }
 
-void MolSimLogger::init_test(){
+void MolSimLogger::init_test() {
     //sink to write messages to log file
     auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs_test.txt", false);
     auto logger = std::make_shared<spdlog::logger>("MolSimLogger_Test", sink);

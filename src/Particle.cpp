@@ -10,6 +10,7 @@
 #include <iostream>
 #include "utils/ArrayUtils.h"
 #include "MolSimLogger.h"
+
 Particle::Particle(int type_arg) {
     type = type_arg;
     MolSimLogger::logTrace("Particle generated!");
@@ -39,7 +40,7 @@ Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
     MolSimLogger::logTrace("Particle generated!");
 }
 
-Particle::~Particle() { MolSimLogger::logTrace("Particle destructed!");}
+Particle::~Particle() { MolSimLogger::logTrace("Particle destructed!"); }
 
 const std::array<double, 3> &Particle::getX() const { return x; }
 
@@ -51,7 +52,7 @@ const std::array<double, 3> &Particle::getOldF() const { return old_f; }
 
 void Particle::updateF(const std::array<double, 3> &f) {
     this->old_f = this->f;
-    this-> f = f;
+    this->f = f;
 }
 
 double Particle::getM() const { return m; }

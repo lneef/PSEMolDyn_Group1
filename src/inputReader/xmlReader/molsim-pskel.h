@@ -53,6 +53,12 @@
 
 // Forward declarations
 //
+class simulation_pskel;
+class cuboid_pskel;
+class cuboid_input_pskel;
+class spheres_input_pskel;
+class boundaries_pskel;
+class molecular_pskel;
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -72,14 +78,6 @@
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
 namespace XMLReader {
-    class simulation_pskel;
-
-    class cuboid_pskel;
-
-    class cuboid_input_pskel;
-
-    class molecular_pskel;
-
     namespace xml_schema {
         // Built-in XML Schema types mapping.
         //
@@ -271,7 +269,6 @@ namespace XMLReader {
         //
         typedef ::xsd::cxx::parser::xerces::document<char> document;
     }
-
 
     class simulation_pskel : public xml_schema::complex_content {
     public:
@@ -532,6 +529,112 @@ namespace XMLReader {
         xml_schema::string_pskel *path_parser_;
     };
 
+    class spheres_input_pskel : public xml_schema::complex_content {
+    public:
+        // Parser callbacks. Override them in your implementation.
+        //
+        // virtual void
+        // pre ();
+
+        virtual void
+        path(const ::std::string &);
+
+        virtual void
+        post_spheres_input();
+
+        // Parser construction API.
+        //
+        void
+        path_parser(xml_schema::string_pskel &);
+
+        void
+        parsers(xml_schema::string_pskel & /* path */);
+
+        // Constructor.
+        //
+        spheres_input_pskel();
+
+        // Implementation.
+        //
+    protected:
+        virtual bool
+        _start_element_impl(const xml_schema::ro_string &,
+                            const xml_schema::ro_string &,
+                            const xml_schema::ro_string *);
+
+        virtual bool
+        _end_element_impl(const xml_schema::ro_string &,
+                          const xml_schema::ro_string &);
+
+    protected:
+        xml_schema::string_pskel *path_parser_;
+    };
+
+    class boundaries_pskel : public xml_schema::complex_content {
+    public:
+        // Parser callbacks. Override them in your implementation.
+        //
+        // virtual void
+        // pre ();
+
+        virtual void
+        top(const ::std::string &);
+
+        virtual void
+        bottom(const ::std::string &);
+
+        virtual void
+        left(const ::std::string &);
+
+        virtual void
+        right(const ::std::string &);
+
+        virtual void
+        post_boundaries();
+
+        // Parser construction API.
+        //
+        void
+        top_parser(xml_schema::string_pskel &);
+
+        void
+        bottom_parser(xml_schema::string_pskel &);
+
+        void
+        left_parser(xml_schema::string_pskel &);
+
+        void
+        right_parser(xml_schema::string_pskel &);
+
+        void
+        parsers(xml_schema::string_pskel & /* top */,
+                xml_schema::string_pskel & /* bottom */,
+                xml_schema::string_pskel & /* left */,
+                xml_schema::string_pskel & /* right */);
+
+        // Constructor.
+        //
+        boundaries_pskel();
+
+        // Implementation.
+        //
+    protected:
+        virtual bool
+        _start_element_impl(const xml_schema::ro_string &,
+                            const xml_schema::ro_string &,
+                            const xml_schema::ro_string *);
+
+        virtual bool
+        _end_element_impl(const xml_schema::ro_string &,
+                          const xml_schema::ro_string &);
+
+    protected:
+        xml_schema::string_pskel *top_parser_;
+        xml_schema::string_pskel *bottom_parser_;
+        xml_schema::string_pskel *left_parser_;
+        xml_schema::string_pskel *right_parser_;
+    };
+
     class molecular_pskel : public xml_schema::complex_content {
     public:
         // Parser callbacks. Override them in your implementation.
@@ -549,6 +652,12 @@ namespace XMLReader {
         cuboid_input();
 
         virtual void
+        spheres_input();
+
+        virtual void
+        boundaries();
+
+        virtual void
         post_molecular();
 
         // Parser construction API.
@@ -563,9 +672,17 @@ namespace XMLReader {
         cuboid_input_parser(cuboid_input_pskel &);
 
         void
+        spheres_input_parser(spheres_input_pskel &);
+
+        void
+        boundaries_parser(boundaries_pskel &);
+
+        void
         parsers(cuboid_pskel & /* cuboid */,
                 simulation_pskel & /* simulation */,
-                cuboid_input_pskel & /* cuboid_input */);
+                cuboid_input_pskel & /* cuboid_input */,
+                spheres_input_pskel & /* spheres_input */,
+                boundaries_pskel & /* boundaries */);
 
         // Constructor.
         //
@@ -587,6 +704,8 @@ namespace XMLReader {
         cuboid_pskel *cuboid_parser_;
         simulation_pskel *simulation_parser_;
         cuboid_input_pskel *cuboid_input_parser_;
+        spheres_input_pskel *spheres_input_parser_;
+        boundaries_pskel *boundaries_parser_;
     };
 }
 #include <xsd/cxx/post.hxx>

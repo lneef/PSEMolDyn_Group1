@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "../MolSimLogger.h"
+#include "MolSimLogger.h"
 
 namespace inputReader {
     Cuboid_file::Cuboid_file(std::string filename) {
@@ -18,7 +18,7 @@ namespace inputReader {
     Cuboid_file::~Cuboid_file() = default;
 
     //reads values from file
-    void Cuboid_file::read(std::shared_ptr<ParticleContainer> &particles){
+    void Cuboid_file::read(std::shared_ptr<ParticleContainer> &particles) {
         readCuboid(particles);
     }
 

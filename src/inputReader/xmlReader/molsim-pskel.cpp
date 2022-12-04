@@ -230,6 +230,66 @@ namespace XMLReader {
             : path_parser_(0) {
     }
 
+// spheres_input_pskel
+//
+
+    void spheres_input_pskel::
+    path_parser(xml_schema::string_pskel &p) {
+        this->path_parser_ = &p;
+    }
+
+    void spheres_input_pskel::
+    parsers(xml_schema::string_pskel &path) {
+        this->path_parser_ = &path;
+    }
+
+    spheres_input_pskel::
+    spheres_input_pskel()
+            : path_parser_(0) {
+    }
+
+// boundaries_pskel
+//
+
+    void boundaries_pskel::
+    top_parser(xml_schema::string_pskel &p) {
+        this->top_parser_ = &p;
+    }
+
+    void boundaries_pskel::
+    bottom_parser(xml_schema::string_pskel &p) {
+        this->bottom_parser_ = &p;
+    }
+
+    void boundaries_pskel::
+    left_parser(xml_schema::string_pskel &p) {
+        this->left_parser_ = &p;
+    }
+
+    void boundaries_pskel::
+    right_parser(xml_schema::string_pskel &p) {
+        this->right_parser_ = &p;
+    }
+
+    void boundaries_pskel::
+    parsers(xml_schema::string_pskel &top,
+            xml_schema::string_pskel &bottom,
+            xml_schema::string_pskel &left,
+            xml_schema::string_pskel &right) {
+        this->top_parser_ = &top;
+        this->bottom_parser_ = &bottom;
+        this->left_parser_ = &left;
+        this->right_parser_ = &right;
+    }
+
+    boundaries_pskel::
+    boundaries_pskel()
+            : top_parser_(0),
+              bottom_parser_(0),
+              left_parser_(0),
+              right_parser_(0) {
+    }
+
 // molecular_pskel
 //
 
@@ -249,19 +309,35 @@ namespace XMLReader {
     }
 
     void molecular_pskel::
+    spheres_input_parser(spheres_input_pskel &p) {
+        this->spheres_input_parser_ = &p;
+    }
+
+    void molecular_pskel::
+    boundaries_parser(boundaries_pskel &p) {
+        this->boundaries_parser_ = &p;
+    }
+
+    void molecular_pskel::
     parsers(cuboid_pskel &cuboid,
             simulation_pskel &simulation,
-            cuboid_input_pskel &cuboid_input) {
+            cuboid_input_pskel &cuboid_input,
+            spheres_input_pskel &spheres_input,
+            boundaries_pskel &boundaries) {
         this->cuboid_parser_ = &cuboid;
         this->simulation_parser_ = &simulation;
         this->cuboid_input_parser_ = &cuboid_input;
+        this->spheres_input_parser_ = &spheres_input;
+        this->boundaries_parser_ = &boundaries;
     }
 
     molecular_pskel::
     molecular_pskel()
             : cuboid_parser_(0),
               simulation_parser_(0),
-              cuboid_input_parser_(0) {
+              cuboid_input_parser_(0),
+              spheres_input_parser_(0),
+              boundaries_parser_(0) {
     }
 
 // simulation_pskel
@@ -748,6 +824,162 @@ namespace XMLReader {
         return false;
     }
 
+// spheres_input_pskel
+//
+
+    void spheres_input_pskel::
+    path(const ::std::string &) {
+    }
+
+    void spheres_input_pskel::
+    post_spheres_input() {
+    }
+
+    bool spheres_input_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "path" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->path_parser_;
+
+            if (this->path_parser_)
+                this->path_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool spheres_input_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "path" && ns.empty()) {
+            if (this->path_parser_)
+                this->path(this->path_parser_->post_string());
+
+            return true;
+        }
+
+        return false;
+    }
+
+// boundaries_pskel
+//
+
+    void boundaries_pskel::
+    top(const ::std::string &) {
+    }
+
+    void boundaries_pskel::
+    bottom(const ::std::string &) {
+    }
+
+    void boundaries_pskel::
+    left(const ::std::string &) {
+    }
+
+    void boundaries_pskel::
+    right(const ::std::string &) {
+    }
+
+    void boundaries_pskel::
+    post_boundaries() {
+    }
+
+    bool boundaries_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "top" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->top_parser_;
+
+            if (this->top_parser_)
+                this->top_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "bottom" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->bottom_parser_;
+
+            if (this->bottom_parser_)
+                this->bottom_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "left" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->left_parser_;
+
+            if (this->left_parser_)
+                this->left_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "right" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->right_parser_;
+
+            if (this->right_parser_)
+                this->right_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool boundaries_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "top" && ns.empty()) {
+            if (this->top_parser_)
+                this->top(this->top_parser_->post_string());
+
+            return true;
+        }
+
+        if (n == "bottom" && ns.empty()) {
+            if (this->bottom_parser_)
+                this->bottom(this->bottom_parser_->post_string());
+
+            return true;
+        }
+
+        if (n == "left" && ns.empty()) {
+            if (this->left_parser_)
+                this->left(this->left_parser_->post_string());
+
+            return true;
+        }
+
+        if (n == "right" && ns.empty()) {
+            if (this->right_parser_)
+                this->right(this->right_parser_->post_string());
+
+            return true;
+        }
+
+        return false;
+    }
+
 // molecular_pskel
 //
 
@@ -761,6 +993,14 @@ namespace XMLReader {
 
     void molecular_pskel::
     cuboid_input() {
+    }
+
+    void molecular_pskel::
+    spheres_input() {
+    }
+
+    void molecular_pskel::
+    boundaries() {
     }
 
     void molecular_pskel::
@@ -803,6 +1043,24 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "spheres_input" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->spheres_input_parser_;
+
+            if (this->spheres_input_parser_)
+                this->spheres_input_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "boundaries" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->boundaries_parser_;
+
+            if (this->boundaries_parser_)
+                this->boundaries_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -834,6 +1092,24 @@ namespace XMLReader {
             if (this->cuboid_input_parser_) {
                 this->cuboid_input_parser_->post_cuboid_input();
                 this->cuboid_input();
+            }
+
+            return true;
+        }
+
+        if (n == "spheres_input" && ns.empty()) {
+            if (this->spheres_input_parser_) {
+                this->spheres_input_parser_->post_spheres_input();
+                this->spheres_input();
+            }
+
+            return true;
+        }
+
+        if (n == "boundaries" && ns.empty()) {
+            if (this->boundaries_parser_) {
+                this->boundaries_parser_->post_boundaries();
+                this->boundaries();
             }
 
             return true;

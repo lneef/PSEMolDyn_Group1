@@ -5,6 +5,7 @@
 #include <iostream>
 #include "cuboid_pimpl.h"
 #include "inputReader/CuboidGenerator.h"
+
 namespace XMLReader {
 
     void cuboid_pimpl::x(double x_arg) {
@@ -59,12 +60,14 @@ namespace XMLReader {
             x[i] = pos.front();
             v[i] = vel.front();
             n[i] = num.front();
+
             pos.pop();
             vel.pop();
             num.pop();
         }
         CuboidGenerator<LinkedCellContainer> cub{};
         cub.generateCuboid(cells, x, n, width, mass, v);
+
     }
 
     void cuboid_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc) {

@@ -29,9 +29,11 @@ void LinkedCellContainer::update() {
             auto &p = cells[i][j];
             size_t ind = index(p);
             auto &pos = p.getX();
+
             if (0 <= pos[0] && pos[0] <= domain[0] && 0 <= pos[1] && pos[1] <= domain[1] && 0 <= pos[2] &&
                 pos[2] <= domain[2]) {
                 temp[ind].addParticle(p);
+
             }
 
 

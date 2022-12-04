@@ -5,10 +5,11 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "../MolSimLogger.h"
+#include "MolSimLogger.h"
+
 namespace inputReader {
     TxtReader::TxtReader(std::string filename) {
-        this-> filename = filename;
+        this->filename = filename;
     }
 
     TxtReader::~TxtReader() = default;

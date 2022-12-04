@@ -1,14 +1,14 @@
 #include "gtest/gtest.h"
 #include "inputReader/xmlReader/XmlReader.h"
 
-TEST(ParserTestSite, Basic){
-    std::string tes= "../tests/testinput/test.xml";
+TEST(ParserTestSite, Basic) {
+    std::string tes = "../tests/testinput/test.xml";
     XMLReader::XmlReader xml{tes};
-    std::shared_ptr<Simulation> sth= std::make_shared<Simulation>();
-    std::shared_ptr<LinkedCellContainer> lc=std::make_shared<LinkedCellContainer>();
+    std::shared_ptr<Simulation> sth = std::make_shared<Simulation>();
+    std::shared_ptr<LinkedCellContainer> lc = std::make_shared<LinkedCellContainer>();
     xml.read(sth, lc);
 
-    auto& particles = lc -> get();
+    auto &particles = lc->get();
 
     EXPECT_EQ(lc->size(), 9);
     EXPECT_EQ(particles[0].size(), 4);

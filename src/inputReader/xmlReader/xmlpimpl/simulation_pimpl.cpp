@@ -3,7 +3,8 @@
 //
 
 #include "simulation_pimpl.h"
-namespace XMLReader{
+
+namespace XMLReader {
     void simulation_pimpl::t_end(double end_t) {
         sim->setEndTime(end_t);
     }

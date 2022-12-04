@@ -6,6 +6,7 @@
 LennardJones::~LennardJones() = default;
 
 //calculation new force with Lennard-Jones potential
+
 void LennardJones::calculateF(std::shared_ptr<Container> &particles) {
 
     particles->apply([](Particle &p) {
@@ -13,6 +14,7 @@ void LennardJones::calculateF(std::shared_ptr<Container> &particles) {
     });
 
     particles->applyF([this](Particle &p1, Particle &p2) {
+
                           std::array<double, 3> xij = p1.getX() - p2.getX();
                           double norm = ArrayUtils::L2Norm(xij);
                           double pow_6 = pow((zeroCrossing / norm), 6);
@@ -22,6 +24,7 @@ void LennardJones::calculateF(std::shared_ptr<Container> &particles) {
                           p2.setF(-1 * newF + p2.getF());
                       }
     );
+
 }
 
 LennardJones::LennardJones(double zeroCrossing_arg, double depthOfPotentialWell_arg) {

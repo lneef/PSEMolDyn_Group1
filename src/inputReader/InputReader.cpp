@@ -3,6 +3,7 @@
 //
 
 #include "InputReader.h"
+
 namespace inputReader {
     InputReader::~InputReader() {};
 }

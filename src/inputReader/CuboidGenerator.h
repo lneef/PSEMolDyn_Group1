@@ -77,9 +77,9 @@ public:
             newX[0] = center[0] + (x * h);
             for (int y = -r + 1; y < r; ++y) {
                 newX[1] = center[1] + (y * h);
-                for(int z=r +1 ; z< r; ++z){
-                    newX[2] = center[2] + (z*h);
-                    if(ArrayUtils::L2Norm(newX - center) > radius)
+                for (int z = r + 1; z < r; ++z) {
+                    newX[2] = center[2] + (z * h);
+                    if (ArrayUtils::L2Norm(newX - center) > radius)
                         continue;
                     std::array<double, 3> newV = calculateV(v);
                     particles->addParticle(Particle(newX, newV, m));

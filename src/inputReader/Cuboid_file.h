@@ -5,7 +5,7 @@
 #pragma once
 
 #include <fstream>
-#include "FileReader.h"
+#include "inputReader/FileReader.h"
 #include "CuboidGenerator.h"
 #include "MolSimLogger.h"
 

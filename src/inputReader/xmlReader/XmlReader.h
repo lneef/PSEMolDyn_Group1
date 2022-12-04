@@ -18,6 +18,9 @@ namespace XMLReader {
         simulation_pimpl sim_p;
         cuboid_pimpl cub_p;
         cuboid_input_pimpl cub_in_p;
+        spheres_input_pimpl sph_in_p;
+        boundaries_pimpl bou_in_p;
+
     public:
         explicit XmlReader(std::string &s);
 

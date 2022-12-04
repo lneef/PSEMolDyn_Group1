@@ -23,7 +23,4 @@
         <v_y>0.0</v_y>
         <v_z>0.0</v_z>
     </cuboid>
-    <cuboid_input>
-        <path>"nothing"</path>
-    </cuboid_input>
 </molecular>

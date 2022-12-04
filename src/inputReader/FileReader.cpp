@@ -1,8 +1,8 @@
 
 #include "FileReader.h"
 
-namespace inputReader{
+namespace inputReader {
 
-    FileReader::~FileReader(){};
+    FileReader::~FileReader() {};
 
 }
