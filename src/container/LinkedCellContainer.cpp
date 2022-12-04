@@ -4,7 +4,6 @@
 
 #include <numeric>
 #include <cmath>
-#include <iostream>
 #include "LinkedCellContainer.h"
 #include "ParticleContainer.h"
 
