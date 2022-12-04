@@ -16,7 +16,9 @@ namespace XMLReader {
                       double_p);
         sim_p.init(lc, sim);
         cub_p.init(lc);
-        parser.parsers(cub_p, sim_p, cub_in_p);
+        cub_in_p.init(lc);
+        sph_in_p.init(lc);
+        parser.parsers(cub_p, sim_p, cub_in_p, sph_in_p, bou_in_p);
         parser.pre();
         parser.init(sim, lc);
         try {

@@ -1,6 +1,7 @@
 //
-// Created by lukas on 01.12.22.
+// Created by dominik on 03.12.22.
 //
+
 #pragma once
 
 #include "inputReader/xmlReader/molsim-pskel.h"
@@ -8,17 +9,15 @@
 #include "../../Cuboid_file.h"
 
 namespace XMLReader {
-    class cuboid_input_pimpl : public cuboid_input_pskel {
+    class spheres_input_pimpl : public spheres_input_pskel {
     private:
         std::shared_ptr<LinkedCellContainer> cells;
-        std::string path_cuboids;
+        std::string path_spheres;
     public:
         void init(std::shared_ptr<LinkedCellContainer> &cell_arg);
 
         void path(const ::std::string &) override;
 
-        void post_cuboid_input() override;
+        void post_spheres_input() override;
     };
-
 }
-

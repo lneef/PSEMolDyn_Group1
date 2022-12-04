@@ -30,18 +30,34 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="cuboid_input">
         <xs:sequence>
             <xs:element name="path" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="spheres_input">
+        <xs:sequence>
+            <xs:element name="path" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="boundaries">
+        <xs:sequence>
+            <xs:element name="top" type="xs:string"/>
+            <xs:element name="bottom" type="xs:string"/>
+            <xs:element name="left" type="xs:string"/>
+            <xs:element name="right" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
     <xs:complexType name="molecular">
         <xs:sequence>
             <xs:element name="cuboid" type="cuboid"/>
             <xs:element name="simulation" type="simulation"/>
             <xs:element name="cuboid_input" type="cuboid_input"/>
+            <xs:element name="spheres_input" type="xs:string"/>
+            <xs:element name="boundaries" type="boundaries"/>
         </xs:sequence>
     </xs:complexType>
 
