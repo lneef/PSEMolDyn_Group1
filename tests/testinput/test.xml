@@ -26,4 +26,13 @@
     <cuboid_input>
         <path>"nothing"</path>
     </cuboid_input>
+    <spheres_input>
+        <path>"nothing"</path>
+    </spheres_input>
+    <boundaries>
+        <top>"nothing"</top>
+        <bottom>"nothing"</bottom>
+        <left>"nothing"</left>
+        <right>"nothing"</right>
+    </boundaries>
 </molecular>
