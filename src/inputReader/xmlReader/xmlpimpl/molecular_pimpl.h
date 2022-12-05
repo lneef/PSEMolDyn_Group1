@@ -13,12 +13,12 @@
 
 namespace XMLReader {
     class molecular_pimpl : public molecular_pskel {
-    private:
-
     public:
 
         void pre() override;
-
+        /**
+         * @brief Function that initializes the container and the simulation
+         */
         void init(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCellContainer> &lc);
 
         void cuboid() override;
