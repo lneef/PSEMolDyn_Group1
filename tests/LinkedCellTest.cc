@@ -47,5 +47,21 @@ TEST_F(LinkedCellTest, AppTest) {
     EXPECT_DOUBLE_EQ(it1->getF()[0], 3);
     EXPECT_DOUBLE_EQ(it4->getF()[0], 8);
 
+}
 
+TEST_F(LinkedCellTest, ReflectingBoundary){
+    Reflecting::init_bound(2);
+    std::array<double ,3 > arr{1., 0, 0};
+    test->addReflecting(Reflecting(arr, 0));
+    test->applyF([](Particle &p1, Particle &p2) {
+        std::array<double, 3> add = {1., 0., 0.};
+        p1.setF(p1.getF() + add);
+        p2.setF(p2.getF() + add);
+    });
+    std::vector<ParticleList> celllist = test->getCells();
+    auto it1 = celllist[0].begin();
+    auto it4 = celllist[3].begin();
+
+    EXPECT_DOUBLE_EQ(it1->getF()[0], 4);
+    EXPECT_DOUBLE_EQ(it4->getF()[0], 6);
 }

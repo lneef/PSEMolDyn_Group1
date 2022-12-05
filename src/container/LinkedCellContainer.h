@@ -6,27 +6,23 @@
 #include "Container.h"
 #include "ParticleList.h"
 #include "ParticleContainer.h"
+#include "BoundaryCell.h"
+#include "Reflecting.h"
 #include <vector>
 
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
  */
-
-struct BoundaryCell{
-    ParticleList& ref;
-
-    explicit BoundaryCell(ParticleList &ref) : ref(ref) {
-    }
-};
 class LinkedCellContainer : public Container {
 public:
-
 
     void apply(std::function<void(Particle &)> fun) override;
 
     void applyX(std::function<void(Particle &)> fun) override;
 
     ~LinkedCellContainer() override;
+
+    void addReflecting(Reflecting && ref);
 
     void applyF(std::function<void(Particle &, Particle &)> fun) override;
 
@@ -66,6 +62,8 @@ public:
      * @return std::vector representing the linked cells
      */
     std::vector<ParticleList> getCells();
+
+    std::array<double, 3>& getDomain();
 
     [[nodiscard]] const ParticleContainer& getHalo() const;
 
@@ -113,6 +111,12 @@ private:
      * @brief updates the boundary field after initialization
      */
     void setUpBoundary();
+
+    std::vector<Reflecting> conditions;
+
+    void applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)>& fun);
+
+    void clearHalo();
 };
 
 

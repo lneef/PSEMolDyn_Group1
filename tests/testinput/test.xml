@@ -23,4 +23,7 @@
         <v_y>0.0</v_y>
         <v_z>0.0</v_z>
     </cuboid>
+    <boundaries>
+
+    </boundaries>
 </molecular>

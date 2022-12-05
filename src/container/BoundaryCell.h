@@ -11,10 +11,7 @@ class BoundaryCell {
 private:
     ParticleList& ref;
 public:
-
     ParticleList& get();
-
-
     explicit BoundaryCell(ParticleList &ref);
 };
 

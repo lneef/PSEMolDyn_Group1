@@ -49,18 +49,11 @@ void ParticleContainer::addParticle(Particle &p) {
     particles.push_back(p);
 }
 
+void ParticleContainer::clear() {
+    particles.clear();
+}
+
 ParticleContainer::~ParticleContainer() = default;
 
-std::vector<Particle>::iterator ParticleContainer::remove(std::vector<Particle>::iterator &iterator) {
-    return particles.erase(iterator);
-}
-
-std::vector<Particle>::iterator ParticleContainer::begin() {
-    return particles.begin();
-}
-
-std::vector<Particle>::iterator ParticleContainer::end() {
-    return particles.end();
-}
 
 

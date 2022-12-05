@@ -69,9 +69,6 @@ public:
 
     ~ParticleContainer() override;
 
-    std::vector<Particle>::iterator begin();
+    void clear();
 
-    std::vector<Particle>::iterator end();
-
-    std::vector<Particle>::iterator remove(std::vector<Particle>::iterator &iterator);
 };

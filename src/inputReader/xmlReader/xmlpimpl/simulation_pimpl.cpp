@@ -45,6 +45,7 @@ namespace XMLReader {
             domain.pop();
         }
         cells->setSize(rCutOff, dom);
+        Reflecting::init_bound(1);
     }
 
 

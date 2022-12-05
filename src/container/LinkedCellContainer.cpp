@@ -4,8 +4,10 @@
 
 #include <numeric>
 #include <cmath>
+#include <iostream>
 #include "LinkedCellContainer.h"
 #include "ParticleContainer.h"
+#include "Reflecting.h"
 
 void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
     for (auto &list: cells) {
@@ -19,10 +21,12 @@ void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
 
 }
 
+void LinkedCellContainer::clearHalo(){
+    halo.clear();
+}
+
 void LinkedCellContainer::update() {
     size_t len = cells.size();
-    std::vector<ParticleList> temp{};
-    temp.resize(len);
     for (size_t i = 0; i < len; ++i) {
         for (auto it = cells[i].begin(); it != cells[i].end();) {
             auto &p = *it;
@@ -41,6 +45,8 @@ void LinkedCellContainer::update() {
             it = cells[i].remove(it);
         }
     }
+
+    clearHalo();
 }
 
 size_t LinkedCellContainer::size() {
@@ -50,9 +56,21 @@ size_t LinkedCellContainer::size() {
 
 }
 
+void LinkedCellContainer::applyFBoundary( Reflecting cond,
+                                         std::function<void(Particle &, Particle &)> &fun) {
+    for (auto &list: boundary) {
+        for (auto &p: list.get()) {
+            if (cond.check(p))
+                cond.apply(p, fun);
+        }
+    }
+}
+
+
 void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun) {
     size_t len = cells.size();
-    for (size_t i = 0; i < len; ++i) {
+    size_t i = 0;
+    for (; i < len; ++i) {
         auto &cell = cells[i];
         cell.applyF(fun);
         for (auto &p: cell) {
@@ -80,19 +98,22 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
         }
     }
 
+    for (auto &cond: conditions)
+        applyFBoundary(cond, fun);
+
 }
 
 size_t LinkedCellContainer::index(Particle &p) {
     auto &pos = p.getX();
-    size_t x_ind = floor(std::abs(pos[0]) / rcutoff);
-    size_t y_ind = floor(std::abs(pos[1]) / rcutoff) * mesh[0];
+    size_t x_ind = floor(pos[0] / rcutoff);
+    size_t y_ind = floor(pos[1] / rcutoff) * mesh[0];
     return x_ind + y_ind;
 }
 
 void LinkedCellContainer::addParticle(Particle &p) {
     size_t ind = index(p);
     auto &pos = p.getX();
-    if (0 <= pos[0] && pos[0] <= domain[0] && 0 <= pos[1] && pos[1] <= domain[1] && 0 <= pos[2] && pos[2] <= domain[2])
+    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1])
         cells[ind].addParticle(p);
 }
 
@@ -100,8 +121,7 @@ void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
     auto &pos = p.getX();
-    if (0 <= pos[0] && pos[0] <= domain[0] && 0 <= pos[1] && pos[1] <= domain[1] && 0 <= pos[2] &&
-        pos[2] <= domain[2]) {
+    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1]) {
         cells[ind].addParticle(p);
     }
 }
@@ -113,10 +133,10 @@ std::vector<ParticleList> LinkedCellContainer::getCells() {
 void LinkedCellContainer::setUpBoundary() {
     size_t i = 0;
     for (; i < mesh[0]; ++i) {
-        boundary.emplace_back(BoundaryCell(cells[i]));
+        boundary.emplace_back(cells[i]);
     }
     for (; i < cells.size() - mesh[0]; i++) {
-        if (i % mesh[0] == 0 || (i + 1) % mesh[0] == 0)
+        if (i % mesh[0] == 0 || i % mesh[0] == mesh[0] - 1)
             boundary.emplace_back(BoundaryCell(cells[i]));
     }
 
@@ -158,6 +178,14 @@ const ParticleContainer &LinkedCellContainer::getHalo() const {
 
 const std::vector<BoundaryCell> &LinkedCellContainer::getBoundary() const {
     return boundary;
+}
+
+void LinkedCellContainer::addReflecting(Reflecting( &&reflecting)) {
+    conditions.emplace_back(reflecting);
+}
+
+std::array<double, 3> &LinkedCellContainer::getDomain() {
+    return domain;
 }
 
 
