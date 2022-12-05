@@ -6,7 +6,6 @@
 #include "Container.h"
 #include "ParticleList.h"
 #include "ParticleContainer.h"
-#include "BoundaryCell.h"
 #include "Reflecting.h"
 #include <vector>
 
@@ -67,7 +66,7 @@ public:
 
     [[nodiscard]] const ParticleContainer& getHalo() const;
 
-    [[nodiscard]] const std::vector<BoundaryCell>& getBoundary() const;
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleList>>& getBoundary() const;
 
 
 private:
@@ -105,7 +104,7 @@ private:
     /**
      * @brief vector containing references to boundary cells
      */
-    std::vector<BoundaryCell> boundary;
+    std::vector<std::reference_wrapper<ParticleList>> boundary;
 
     /**
      * @brief updates the boundary field after initialization

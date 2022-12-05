@@ -13,6 +13,8 @@ bool Reflecting::check(const Particle &p) {
 double Reflecting::difference(const Particle &p) {
     double diff = 0.;
     auto & pos = p.getX();
+
+    //get entry for the dimension of the boundary
     for(size_t i = 0; i< 3; ++i) {
         diff += indicator[i] * pos[i];
     }
@@ -20,7 +22,7 @@ double Reflecting::difference(const Particle &p) {
 }
 
 void Reflecting::init_bound(double sigma){
-    critical = 1.1225 * sigma;
+    critical = 1.1224 * sigma;
 }
 
 Reflecting::Reflecting(std::array<double, 3> &indicator_arg, double border) {
@@ -28,5 +30,4 @@ Reflecting::Reflecting(std::array<double, 3> &indicator_arg, double border) {
     this->border= border;
 }
 
-Reflecting::~Reflecting() = default;
 

@@ -133,15 +133,15 @@ std::vector<ParticleList> LinkedCellContainer::getCells() {
 void LinkedCellContainer::setUpBoundary() {
     size_t i = 0;
     for (; i < mesh[0]; ++i) {
-        boundary.emplace_back(cells[i]);
+        boundary.emplace_back(std::ref(cells[i]));
     }
     for (; i < cells.size() - mesh[0]; i++) {
         if (i % mesh[0] == 0 || i % mesh[0] == mesh[0] - 1)
-            boundary.emplace_back(BoundaryCell(cells[i]));
+            boundary.emplace_back(std::ref(cells[i]));
     }
 
     for (; i < cells.size(); ++i) {
-        boundary.emplace_back(BoundaryCell(cells[i]));
+        boundary.emplace_back(std::ref(cells[i]));
     }
 }
 
@@ -176,7 +176,7 @@ const ParticleContainer &LinkedCellContainer::getHalo() const {
     return halo;
 }
 
-const std::vector<BoundaryCell> &LinkedCellContainer::getBoundary() const {
+const std::vector<std::reference_wrapper<ParticleList>> &LinkedCellContainer::getBoundary() const {
     return boundary;
 }
 

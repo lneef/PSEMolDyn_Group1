@@ -1,6 +1,9 @@
 #include "gtest/gtest.h"
 #include "inputReader/xmlReader/XmlReader.h"
 
+/**
+ * @brief tests if XML-Parser works correctly
+ */
 TEST(ParserTestSite, Basic) {
     std::string tes = "../tests/testinput/test.xml";
     XMLReader::XmlReader xml{tes};

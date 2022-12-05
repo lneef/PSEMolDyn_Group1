@@ -19,14 +19,13 @@ namespace XMLReader {
     }
 
     void boundaries_pimpl::left(const ::std::string &left) {
-        std::cout<< "called";
         if (left == "reflecting")
-            cells->addReflecting(Reflecting(hor, 0));
+            cells->addReflecting(Reflecting(vert, 0));
     }
 
     void boundaries_pimpl::right(const ::std::string &right) {
         if (right == "reflecting")
-            cells->addReflecting(Reflecting(hor, cells->getDomain()[0]));
+            cells->addReflecting(Reflecting(vert, cells->getDomain()[0]));
     }
 
     void boundaries_pimpl::post_boundaries() {

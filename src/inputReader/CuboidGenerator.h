@@ -10,8 +10,9 @@
 /**
  * @brief CuboidGenerator generates cuboids of particles form input values
  *
- * CuboidGenerator generates cuboids of particles form input values, which are collected by instances of Cuboid_file or Cuboid_cl.
-*/
+ * @param T template argument for container type that is used
+ *
+ */
 template<typename T>
 class CuboidGenerator {
 private:
