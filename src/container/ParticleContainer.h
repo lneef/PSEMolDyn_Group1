@@ -87,6 +87,9 @@ public:
      */
     void apply(std::function<void(Particle &)> fun) override;
 
+    /**
+     * @brief override destructor to prevent memory leaks
+     */
     ~ParticleContainer() override;
 
     /**
@@ -94,11 +97,23 @@ public:
      */
     void clear();
 
-
+    /**
+     * @brief returns a iterator pointing to the first element of the corresponding ParticleContainer
+     * @return iterator to the first element
+     */
     ParticleIterator begin();
 
+    /**
+     * @brief returns a iterator pointing behind the last element of the corresponding ParticleContainer
+     * @return iterator pointing behin the last element
+     */
     ParticleIterator end();
 
+    /**
+     * @brief removes the element pointed to by iterator
+     * @param iterator iterator to element to be removed
+     * @return iterator to element after the removed one
+     */
     ParticleIterator remove(ParticleIterator &iterator);
 
 };

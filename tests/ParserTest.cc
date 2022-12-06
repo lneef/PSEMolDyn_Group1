@@ -11,7 +11,7 @@ TEST(ParserTestSite, Basic) {
     std::shared_ptr<LinkedCellContainer> lc = std::make_shared<LinkedCellContainer>();
     xml.read(sth, lc);
 
-    auto &particles = lc->get();
+    auto &particles = lc->getCells();
 
     EXPECT_EQ(lc->size(), 9);
     EXPECT_EQ(particles[0].size(), 4);

@@ -8,6 +8,7 @@
 #include "LinkedCellContainer.h"
 #include "ParticleContainer.h"
 #include "Reflecting.h"
+#include "MolSimLogger.h"
 
 void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
     for (auto &list: cells) {
@@ -21,7 +22,7 @@ void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
 
 }
 
-void LinkedCellContainer::clearHalo(){
+void LinkedCellContainer::clearHalo() {
     halo.clear();
 }
 
@@ -33,7 +34,9 @@ void LinkedCellContainer::update() {
             size_t ind = index(p);
             auto &pos = p.getX();
             if (pos[0] < 0 || pos[0] >= domain[0] || pos[1] < 0 || pos[1] > domain[1]) {
-                halo.addParticle(p);
+                addHalo(p);
+                SPDLOG_LOGGER_DEBUG(MolSimLogger::logger(), "Particle at position ({}, {}, {}) removed", p.getX()[0],
+                                    p.getX()[1], p.getX()[2]);
                 it = cells[i].remove(it);
                 continue;
             }
@@ -56,8 +59,7 @@ size_t LinkedCellContainer::size() {
 
 }
 
-void LinkedCellContainer::applyFBoundary( Reflecting cond,
-                                         std::function<void(Particle &, Particle &)> &fun) {
+void LinkedCellContainer::applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)> &fun) {
     for (auto &list: boundary) {
         for (auto &p: list.get()) {
             if (cond.check(p))
@@ -86,7 +88,7 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
                 neighbour.apply(partial);
             }
 
-            if (i + mesh[0] + 1 < len) {
+            if (i + mesh[0] + 1 < len && (i + 1) % mesh[0] > 0) {
                 auto &neighbour = cells[i + mesh[0] + 1];
                 neighbour.apply(partial);
             }
@@ -126,7 +128,7 @@ void LinkedCellContainer::addParticle(Particle &&p) {
     }
 }
 
-std::vector<ParticleContainer> LinkedCellContainer::getCells() {
+std::vector<ParticleContainer> &LinkedCellContainer::getCells() {
     return cells;
 }
 
@@ -167,10 +169,6 @@ void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &dom
     setUpBoundary();
 }
 
-std::vector<ParticleContainer> &LinkedCellContainer::get() {
-    return cells;
-}
-
 
 const ParticleContainer &LinkedCellContainer::getHalo() const {
     return halo;
@@ -186,6 +184,12 @@ void LinkedCellContainer::addReflecting(Reflecting( &&reflecting)) {
 
 std::array<double, 3> &LinkedCellContainer::getDomain() {
     return domain;
+}
+
+void LinkedCellContainer::addHalo(Particle &p) {
+    auto &pos = p.getX();
+    if (pos[0] >= -rcutoff && pos[1] >= -rcutoff && pos[0] < domain[0] + rcutoff && pos[1] < domain[1] + rcutoff)
+        halo.addParticle(p);
 }
 
 

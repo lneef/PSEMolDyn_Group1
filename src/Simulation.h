@@ -91,20 +91,52 @@ public:
      */
     explicit Simulation(double delta_t_arg = 2, double end_time_arg = 0.0002);
 
+    /**
+     * @brief setter for delta_t
+     * @param delta_t_arg duration of a timestep of the simulation
+     */
     void setDeltaT(double delta_t_arg);
 
+    /**
+     * @brief setter for end_time
+     * @param end_time_arg end time of the simulation
+     */
     void setEndTime(double end_time_arg);
 
+    /**
+     * @brief setter for force
+     * @param force_arg method for calculating the force effective on particles
+     */
     void setForce(std::unique_ptr<Force> &force_arg);
 
+    /**
+     * @brief setter for particles
+     * @param particles_arg ParticleContainer containing the particles
+     */
     void setParticle(std::shared_ptr<ParticleContainer> &particles_arg);
 
+    /**
+     * @brief setter for particles
+     * @param particles_arg LinkedCellContainer containing the particles
+     */
     void setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg);
 
+    /**
+     * @brief setter for out_name
+     * @param out_name_arg base name for output file
+     */
     void setOut_name(const std::string &out_name_arg);
 
+    /**
+     * @brief setter for output frequency
+     * @param out_frequency_arg output frequency of the simulation
+     */
     void setOut_frequency(int out_frequency_arg);
 
+    /**
+     * @brief setter for output writer
+     * @param writer_arg file writer for writing output to a file
+     */
     void setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg);
 };
 
