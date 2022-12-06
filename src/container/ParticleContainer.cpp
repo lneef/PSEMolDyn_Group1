@@ -4,7 +4,7 @@ void ParticleContainer::setParticles(const std::vector<Particle> &particles) {
     this->particles = particles;
 }
 
-const std::vector<Particle> &ParticleContainer::getParticles() const {
+std::vector<Particle> &ParticleContainer::getParticles(){
     return this->particles;
 }
 
@@ -51,6 +51,19 @@ void ParticleContainer::addParticle(Particle &p) {
 
 void ParticleContainer::clear() {
     particles.clear();
+}
+
+ParticleIterator ParticleContainer::begin() {
+    return ParticleIterator(particles.begin());
+}
+
+ParticleIterator ParticleContainer::end() {
+    return ParticleIterator(particles.end());
+}
+
+ParticleIterator ParticleContainer::remove(ParticleIterator & iterator) {
+    auto new_it = particles.erase(iterator.get());
+    return ParticleIterator(new_it);
 }
 
 ParticleContainer::~ParticleContainer() = default;
