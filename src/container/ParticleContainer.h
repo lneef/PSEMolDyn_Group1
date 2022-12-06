@@ -4,9 +4,9 @@
 
 #include<vector>
 #include<iterator>
-
 #include "Particle.h"
 #include "Container.h"
+#include "ParticleIterator.h"
 
 /**
  * @brief Class ParticleContainer provides a container for storing particles.
@@ -29,7 +29,7 @@ public:
      *
      * @return vector of particles
     */
-    const std::vector<Particle> &getParticles() const;
+    std::vector<Particle> &getParticles();
 
     /**
      * @brief Setter for field particles
@@ -59,19 +59,46 @@ public:
      */
     Particle &operator[](size_t i);
 
+    /**
+     * @brief applies the given function to all particles and thus calculates the next positions
+     *
+     * @param fun function taking particles
+     */
     void applyX(std::function<void(Particle &)> fun) override;
 
+    /**
+     * @brief applies the given function to all unordered pairs of particles
+     *
+     * @param fun function taking to particles as argument
+     */
     void applyF(std::function<void(Particle &, Particle &)> fun) override;
 
+    /**
+     * @brief adds a particle to the container
+     *
+     * @param p lvalue reference to particle
+     */
     void addParticle(Particle &p) override;
 
+    /**
+     * @bief applies the given function to all particles in the container
+     *
+     * @param fun function taking a particle that is applied to all particles
+     */
     void apply(std::function<void(Particle &)> fun) override;
 
     ~ParticleContainer() override;
 
-    std::vector<Particle>::iterator begin();
+    /**
+     * @brief deletes all particles in the container
+     */
+    void clear();
 
-    std::vector<Particle>::iterator end();
 
-    std::vector<Particle>::iterator remove(std::vector<Particle>::iterator &iterator);
+    ParticleIterator begin();
+
+    ParticleIterator end();
+
+    ParticleIterator remove(ParticleIterator &iterator);
+
 };

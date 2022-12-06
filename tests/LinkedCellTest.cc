@@ -22,6 +22,9 @@ protected:
     }
 };
 
+/**
+ * @brief tests if particles are added to the right cells
+ */
 TEST_F(LinkedCellTest, AddTest) {
 
     std::vector<ParticleContainer> celllist = test->getCells();
@@ -34,6 +37,9 @@ TEST_F(LinkedCellTest, AddTest) {
 
 }
 
+/**
+ * @brief tests if force calculation function is applied to all particles correctly
+ */
 TEST_F(LinkedCellTest, AppTest) {
     test->applyF([](Particle &p1, Particle &p2) {
         std::array<double, 3> add = {1., 0., 0.};
@@ -44,6 +50,27 @@ TEST_F(LinkedCellTest, AppTest) {
     auto it1 = celllist[0].begin();
     auto it4 = celllist[4].begin();
     
-    EXPECT_DOUBLE_EQ(it1->getF()[0], 3);
-    EXPECT_DOUBLE_EQ(it4->getF()[0], 8);
+    EXPECT_DOUBLE_EQ((*it1).getF()[0], 3);
+    EXPECT_DOUBLE_EQ((*it4).getF()[0], 8);
+
+}
+
+/**
+ * @brief tests if reflecting boundary condition is applied to all particles
+ */
+TEST_F(LinkedCellTest, ReflectingBoundary){
+    Reflecting::init_bound(2);
+    std::array<double ,3 > arr{1., 0, 0};
+    test->addReflecting(Reflecting(arr, 0));
+    test->applyF([](Particle &p1, Particle &p2) {
+        std::array<double, 3> add = {1., 0., 0.};
+        p1.setF(p1.getF() + add);
+        p2.setF(p2.getF() + add);
+    });
+    std::vector<ParticleContainer> celllist = test->getCells();
+    auto it1 = celllist[0].begin();
+    auto it4 = celllist[3].begin();
+
+    EXPECT_DOUBLE_EQ((*it1).getF()[0], 4);
+    EXPECT_DOUBLE_EQ((*it4).getF()[0], 6);
 }

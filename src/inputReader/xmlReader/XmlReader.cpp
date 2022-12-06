@@ -14,10 +14,14 @@ namespace XMLReader {
         cub_in_p.parsers(string_p);
         cub_p.parsers(double_p, double_p, double_p, int_p, int_p, int_p, double_p, double_p, double_p, double_p,
                       double_p);
+        sph_in_p.parsers(string_p);
+        bou_in_p.parsers(string_p, string_p, string_p, string_p);
+
         sim_p.init(lc, sim);
         cub_p.init(lc);
         cub_in_p.init(lc);
         sph_in_p.init(lc);
+        bou_in_p.init(lc);
         parser.parsers(cub_p, sim_p, cub_in_p, sph_in_p, bou_in_p);
         parser.pre();
         parser.init(sim, lc);

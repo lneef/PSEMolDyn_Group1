@@ -18,7 +18,7 @@
  */
 class Simulation {
     /**
-     * @brief ParticleContainer containing the particles for the simulation
+     * @brief Container containing the particles for the simulation
      */
     std::shared_ptr<Container> particles;
     /**
@@ -46,8 +46,14 @@ class Simulation {
      */
     std::unique_ptr<Force> force;
 
-
+    /**
+     * @brief filename of the output files (default: MD_vtk)
+     */
     std::string out_name = "MD_vtk";
+
+    /**
+     * @brief output frequency (default: every 10 iterations)
+     */
     int out_frequency = 10;
 
 public:
@@ -68,16 +74,21 @@ public:
 
     /**
      * @brief Constructor to initialize the simulation based on the use case.
-     * @param particles ParticleContainer to store the involved particles
-     * @param delta_t timestep for which the position, velocity and force is recalculated
+     * @param particles Container to store the involved particles
+     * @param delta_t time step for which the position, velocity and force is recalculated
      * @param end_time time at which the simulation ends
-     * @param writer object to specify the output behaviour of the simualtion
+     * @param writer object to specify the output behaviour of the simulation
      * @param force object to specify the type of force calculation used during the simulation
      */
 
     Simulation(std::shared_ptr<Container> &particles, double delta_t, double end_time,
                std::unique_ptr<outputWriter::FileWriter> &writer, std::unique_ptr<Force> &force);
 
+    /**
+     * @brief constructor of Simulation which only initializes delta_t and end_time
+     * @param delta_t_arg duration of a time step
+     * @param end_time_arg end time of the simulation
+     */
     explicit Simulation(double delta_t_arg = 2, double end_time_arg = 0.0002);
 
     void setDeltaT(double delta_t_arg);
@@ -85,8 +96,6 @@ public:
     void setEndTime(double end_time_arg);
 
     void setForce(std::unique_ptr<Force> &force_arg);
-
-    void setParticle(std::shared_ptr<Container> &particles_arg);
 
     void setParticle(std::shared_ptr<ParticleContainer> &particles_arg);
 

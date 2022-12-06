@@ -107,6 +107,7 @@ add_library(lib_test
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
         ${CONTAINER}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Reflecting.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp)

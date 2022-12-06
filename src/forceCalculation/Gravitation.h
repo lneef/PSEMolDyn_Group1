@@ -13,7 +13,7 @@ public:
     /**
      * @brief Overriden calculateF of Force to be used to calculate the gravitation between particles.
      * 
-     * @param particles ParticleContainer containing particles for which the effective force acting on the is calculated.
+     * @param particles Container containing particles for which the effective force acting on the is calculated.
     */
     void calculateF(std::shared_ptr<Container> &particles) override;
 
