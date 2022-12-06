@@ -4,10 +4,29 @@
 #include <vector>
 
 class ParticleIterator {
+    /**
+     * @brief category of the iterator is forward_iterator
+     */
     using iterator_category = std::forward_iterator_tag;
+
+    /**
+     * @brief difference_type for iterator
+     */
     using difference_type = std::ptrdiff_t;
+
+    /**
+     * @brief iterator stores values of type Particle
+     */
     using value_type = Particle;
+
+    /**
+     * @brief pointer type for the iterator
+     */
     using pointer = Particle *;
+
+    /**
+     * @brief reference type of the iterator
+     */
     using reference = Particle &;
 public:
     /**
