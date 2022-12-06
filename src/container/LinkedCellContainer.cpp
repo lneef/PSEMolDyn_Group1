@@ -51,7 +51,7 @@ void LinkedCellContainer::update() {
 
 size_t LinkedCellContainer::size() {
     size_t len = std::accumulate(cells.begin(), cells.end(), 0,
-                                 [](int len, ParticleList &p) { return len + p.size(); });
+                                 [](int len, ParticleContainer &p) { return len + p.size(); });
     return len;
 
 }
@@ -126,7 +126,7 @@ void LinkedCellContainer::addParticle(Particle &&p) {
     }
 }
 
-std::vector<ParticleList> LinkedCellContainer::getCells() {
+std::vector<ParticleContainer> LinkedCellContainer::getCells() {
     return cells;
 }
 
@@ -167,7 +167,7 @@ void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &dom
     setUpBoundary();
 }
 
-std::vector<ParticleList> &LinkedCellContainer::get() {
+std::vector<ParticleContainer> &LinkedCellContainer::get() {
     return cells;
 }
 
@@ -176,7 +176,7 @@ const ParticleContainer &LinkedCellContainer::getHalo() const {
     return halo;
 }
 
-const std::vector<std::reference_wrapper<ParticleList>> &LinkedCellContainer::getBoundary() const {
+const std::vector<std::reference_wrapper<ParticleContainer>> &LinkedCellContainer::getBoundary() const {
     return boundary;
 }
 

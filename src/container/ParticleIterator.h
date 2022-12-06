@@ -1,5 +1,5 @@
+#pragma once
 #include "Particle.h"
-#include "ParticleContainer.h"
 #include <vector>
 
 class ParticleIterator{
@@ -15,6 +15,8 @@ public:
 
     reference operator*();
     ParticleIterator& operator++();
+
+    pointer operator->();
 
     std::vector<Particle>::iterator & get();
 private:

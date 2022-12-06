@@ -12,7 +12,7 @@ ParticleIterator &ParticleIterator::operator++() {
     return *this;
 }
 
-Particle &ParticleIterator::operator*() {
+ParticleIterator::reference ParticleIterator::operator*() {
     return *it;
 }
 
@@ -26,4 +26,8 @@ std::vector<Particle>::iterator &ParticleIterator::get() {
 
 bool ParticleIterator::operator!=(ParticleIterator &&it2) {
     return it != it2.it;
+}
+
+ParticleIterator::pointer ParticleIterator::operator->() {
+    return it .operator->();
 }

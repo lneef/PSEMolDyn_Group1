@@ -4,7 +4,6 @@
 
 #include<vector>
 #include<iterator>
-
 #include "Particle.h"
 #include "Container.h"
 #include "ParticleIterator.h"

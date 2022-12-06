@@ -4,7 +4,6 @@
 #pragma once
 
 #include "Container.h"
-#include "ParticleList.h"
 #include "ParticleContainer.h"
 #include "Reflecting.h"
 #include <vector>
@@ -34,7 +33,7 @@ public:
     size_t index(Particle &p);
 
     LinkedCellContainer();
-    std::vector<ParticleList>& get();
+    std::vector<ParticleContainer>& get();
 
     /**
      * @brief setter for cutoff radius
@@ -60,13 +59,13 @@ public:
      * @brief function to get the cells for tests
      * @return std::vector representing the linked cells
      */
-    std::vector<ParticleList> getCells();
+    std::vector<ParticleContainer> getCells();
 
     std::array<double, 3>& getDomain();
 
     [[nodiscard]] const ParticleContainer& getHalo() const;
 
-    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleList>>& getBoundary() const;
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>>& getBoundary() const;
 
 
 private:
@@ -74,7 +73,7 @@ private:
     /**
      * @brief std::vector to store the inner cells of the linked cell algorithm
      */
-    std::vector<ParticleList> cells;
+    std::vector<ParticleContainer> cells;
 
     /**
      * @brief array to hold the number of cells in all three dimensions
@@ -104,7 +103,7 @@ private:
     /**
      * @brief vector containing references to boundary cells
      */
-    std::vector<std::reference_wrapper<ParticleList>> boundary;
+    std::vector<std::reference_wrapper<ParticleContainer>> boundary;
 
     /**
      * @brief updates the boundary field after initialization
