@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "container/LinkedCellContainer.h"
 #include "inputReader/CuboidGenerator.h"
+#include "Simulation.h"
 
 
 class LinkedCellTest : public testing::Test {
@@ -14,7 +15,7 @@ protected:
         std::array<double, 3> domain{3., 3., 0.5};
         test->setDomain(domain);
         test->setSize(1., domain);
-        cub.generateCuboid(test, {.75, .75, 0}, {3, 3, 1}, .75, 0., {0., 0., 0.});
+        cub.generateCuboid(test, {.75, .75, 0}, {3, 3, 1}, .75, 1.0, {0., 1, 0.});
     }
 
     void TearDown() override {
@@ -76,4 +77,17 @@ TEST_F(LinkedCellTest, ReflectingBoundary){
     EXPECT_DOUBLE_EQ((*it1).getF()[0], 4);
     EXPECT_DOUBLE_EQ((*it4).getF()[0], 6);
     EXPECT_DOUBLE_EQ((*it2).getF()[0], 4);
+}
+
+/**
+ * @brief test if particles leaving the domain are deleted
+ */
+TEST_F(LinkedCellTest, Outflow){
+    Simulation sim(1, 1);
+    sim.setParticle(test);
+    sim.calculateX();
+
+    EXPECT_EQ(test->size(), 6);
+
+
 }

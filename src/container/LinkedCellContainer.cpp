@@ -44,7 +44,7 @@ void LinkedCellContainer::update() {
                 ++it;
                 continue;
             }
-            addParticle(p);
+            update(p);
             it = cells[i].remove(it);
         }
     }
@@ -112,18 +112,16 @@ size_t LinkedCellContainer::index(Particle &p) {
     return x_ind + y_ind;
 }
 
-void LinkedCellContainer::addParticle(Particle &p) {
+void LinkedCellContainer::update(Particle &p) {
     size_t ind = index(p);
-    auto &pos = p.getX();
-    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1])
-        cells[ind].addParticle(p);
+    cells[ind].addParticle(p);
 }
 
 void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
     auto &pos = p.getX();
-    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1]) {
+    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1] && inside3D(p1)) {
         cells[ind].addParticle(p);
     }
 }
@@ -196,3 +194,8 @@ void LinkedCellContainer::addHalo(Particle &p) {
 LinkedCellContainer::LinkedCellContainer() = default;
 
 LinkedCellContainer::~LinkedCellContainer() = default;
+
+bool LinkedCellContainer::inside3D(Particle &p) {
+    auto &pos = p.getX();
+    return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
+}

@@ -139,10 +139,12 @@ namespace inputReader {
 
                 for (auto &xi: center) {
                     data >> xi;
+
                 }
 
                 for (auto &vi: v) {
                     data >> vi;
+
                 }
 
                 data >> n;
@@ -150,6 +152,7 @@ namespace inputReader {
                 data >> h;
 
                 data >> m;
+
 
                 generator.generateSphere(particles, center, n, m, v, h);
                 MolSimLogger::logInfo("Sphere generated!");

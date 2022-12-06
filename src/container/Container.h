@@ -45,13 +45,6 @@ public:
     virtual size_t size() = 0;
 
     /**
-     * @brief adds a particle to the conainer given as lvalue reference
-     *
-     * @param p lvalue reference to particle to be added to the container
-     */
-    virtual void addParticle(Particle& p) = 0;
-
-    /**
      * @brief adds a particle to the conainer given as rvalue reference
      *
      * @param p rvalue reference to particle to be added to the container

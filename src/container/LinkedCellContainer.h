@@ -46,11 +46,6 @@ public:
     void applyF(std::function<void(Particle &, Particle &)> fun) override;
 
     size_t size() override;
-    /**
-     * @brief adds a particle to linked cells
-     * @param p lvalue reference to particle
-     */
-    void addParticle(Particle &p) override;
 
     /**
      * @brief adds a particle to linked cells
@@ -180,6 +175,19 @@ private:
      * @param p lvalue reference to particle
      */
     void addHalo(Particle &p);
+
+     /**
+     * @brief adds a particle to linked cells
+     * @param p lvalue reference to particle
+     */
+    void update(Particle &p);
+
+    /**
+     * @brief check if particle is inside the domain for 2D and 3D simualtions
+     * @param p lvalue reference to particle
+     * @return true if particle is inside the domain for the fourth dimension
+     */
+    bool inside3D(Particle& p);
 };
 
 

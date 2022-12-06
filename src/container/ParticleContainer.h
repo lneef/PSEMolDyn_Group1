@@ -78,7 +78,7 @@ public:
      *
      * @param p lvalue reference to particle
      */
-    void addParticle(Particle &p) override;
+    void addParticle(Particle &p);
 
     /**
      * @bief applies the given function to all particles in the container
