@@ -13,6 +13,9 @@
  * 
  * It encapsulates the data structure used to store the particles.
  * To enable simple iteration over the stored particles, ParticleContainer implements the iterator pattern.
+ *
+ * \image html particlecontainer.png "Benchmark ParticleContainer" width=450cm
+ * \image latex particlecontainer.png "Benchmark ParticleContainer" width=10cm
 */
 
 class ParticleContainer : public Container {
