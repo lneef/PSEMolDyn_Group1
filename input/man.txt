@@ -17,6 +17,9 @@ The following command line options are supported:
             from a file or from the command line. In the former case --cub=path-to-file has to be used and in the latter
             --cub.
 
+    --xml   Usage: --xml path-to-xml-file. Using this option all data for the simualtion can be read from an xml file.
+                -e and -t are ignored by this option.
+
     --help  This page is printed.
 
     You must use the options --planet or --cub if you want to run a simulation.

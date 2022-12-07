@@ -11,9 +11,9 @@
 
 namespace inputReader {
 /**
- * @brief Cuboid_file implements the interface provided by FileReader for reading .txt files
+ * @brief Cuboid_file implements the interface provided by FileReader for cuboid and sphere from a reading .txt files
  *
- * TxtReader implements the abstract method provided by the class FileReader for reading the values of cuboids from .txt files to pass them to an instance of CuboidGenerator.
+ *
 */
     class Cuboid_file : public FileReader {
     public:
@@ -22,14 +22,16 @@ namespace inputReader {
         ~Cuboid_file() override;
 
         /**
-         * @brief Reads values of cuboids from input file and passes them to an instance of CuboidGenerator
-         *
-         * @param particles ParticleContainer where the particles are stored
-        */
-        void read(std::shared_ptr<ParticleContainer> &particles);
-
+         * @brief reads file and initializes the Container of the given simulation
+         * @param sim simulation to be initzialized
+         */
         void read(std::shared_ptr<Simulation> &sim) override;
 
+        /**
+         * @brief reads cuboids from a file
+         * @tparam T subclass of the super class Container
+         * @param particles lvalue reference to shared_ptr pointing to a container
+         */
         template<class T>
         void readCuboid(std::shared_ptr<T> &particles) {
             std::array<double, 3> x{};
@@ -93,6 +95,11 @@ namespace inputReader {
             }
         }
 
+        /**
+         * @brief reads sphere from a file
+         * @tparam T subclass of the superclass Container
+         * @param particles lvalue reference to shared_ptr pointing to a container
+         */
         template<class T>
         void readSphere(std::shared_ptr<T> &particles) {
             std::array<double, 3> center{};
@@ -132,10 +139,12 @@ namespace inputReader {
 
                 for (auto &xi: center) {
                     data >> xi;
+
                 }
 
                 for (auto &vi: v) {
                     data >> vi;
+
                 }
 
                 data >> n;
@@ -143,6 +152,7 @@ namespace inputReader {
                 data >> h;
 
                 data >> m;
+
 
                 generator.generateSphere(particles, center, n, m, v, h);
                 MolSimLogger::logInfo("Sphere generated!");

@@ -101,11 +101,11 @@ void Simulation::setEndTime(double end_time_arg) {
 }
 
 void Simulation::setParticle(std::shared_ptr<ParticleContainer> &particles_arg) {
-    particles = std::move(particles_arg);
+    particles = particles_arg;
 }
 
 void Simulation::setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg) {
-    particles = std::move(particles_arg);
+    particles = particles_arg;
 }
 
 Simulation::Simulation(double delta_t_arg, double end_time_arg) {

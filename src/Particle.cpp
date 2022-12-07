@@ -95,3 +95,7 @@ void Particle::setM(const double m) {
 void Particle::setOldF(const std::array<double, 3> &oldf) {
     this->old_f = oldf;
 }
+
+bool Particle::comp(double d1, double d2) {
+    return std::abs(d1-d2) < std::numeric_limits<double>::epsilon();
+}

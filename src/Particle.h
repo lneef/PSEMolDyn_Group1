@@ -114,6 +114,8 @@ public:
      * @param oldf Array representing three dimensional vector of forces that were effective on the particle
      */
     void setOldF(const std::array<double, 3> &oldf);
+
+    static bool comp(double d1, double d2);
 };
 
 std::ostream &operator<<(std::ostream &stream, Particle &p);

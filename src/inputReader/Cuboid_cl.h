@@ -23,6 +23,10 @@ namespace inputReader {
         */
         void read(std::shared_ptr<ParticleContainer> &particles);
 
+        /**
+         * @brief overridden input function of InputReader
+         * @param sim simulation that is initialized with the read input
+         */
         void read(std::shared_ptr<Simulation> &sim) override;
     };
 }

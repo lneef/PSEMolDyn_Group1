@@ -46,7 +46,6 @@ int main(int argc, char *argsv[]) {
     std::unique_ptr<inputReader::InputReader> input;
     std::shared_ptr<Simulation> simulation = std::make_shared<Simulation>();
     std::unique_ptr<Force> force;
-    MolSimLogger::init();
     std::string filename;
     int arg = 0;
     bool arg_flag = false;
@@ -112,6 +111,8 @@ int main(int argc, char *argsv[]) {
         std::cout << "You did not specify which simulation should be run" << std::endl;
         exit(-1);
     }
+
+    MolSimLogger::init();
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
     simulation->setForce(force);
     simulation->setWriter(writer);
