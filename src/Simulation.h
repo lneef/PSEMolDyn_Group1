@@ -58,7 +58,7 @@ class Simulation {
 
 public:
     /**
-     * @brief Calculats next position for each particle in particles
+     * @brief Calculates next position for each particle in particles
      */
     void calculateX();
 

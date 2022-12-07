@@ -8,15 +8,31 @@
 #include "../../Cuboid_file.h"
 
 namespace XMLReader {
+    /**
+     * @brief cuboid_input_pimpl implements the parser which reads a path to an cuboid txt-file
+     */
     class cuboid_input_pimpl : public cuboid_input_pskel {
     private:
+        /**
+         * @brief Container containing all linked cells for the simulation
+         */
         std::shared_ptr<LinkedCellContainer> cells;
+        /**
+         * @brief Path to the cuboid txt-file
+         */
         std::string path_cuboids;
     public:
+        /**
+         * @brief Function that initializes the container
+         */
         void init(std::shared_ptr<LinkedCellContainer> &cell_arg);
-
+        /**
+         * @brief Function that reads the path of the file
+         */
         void path(const ::std::string &) override;
-
+        /**
+         * @brief Function that reads the parameters of the cuboids in the file and passes it to a file reader
+         */
         void post_cuboid_input() override;
     };
 

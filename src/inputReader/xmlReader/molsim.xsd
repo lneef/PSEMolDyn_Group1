@@ -56,7 +56,7 @@
             <xs:element name="cuboid" type="cuboid"/>
             <xs:element name="simulation" type="simulation"/>
             <xs:element name="cuboid_input" type="cuboid_input"/>
-            <xs:element name="spheres_input" type="xs:string"/>
+            <xs:element name="spheres_input" type="spheres_input"/>
             <xs:element name="boundaries" type="boundaries"/>
         </xs:sequence>
     </xs:complexType>
