@@ -32,7 +32,7 @@ void LinkedCellContainer::clearHalo() {
 
 void LinkedCellContainer::update() {
     size_t len = cells.size() - mesh[0] - 1;
-    for (size_t i = 0; i < len; ++i) {
+    for (size_t i = mesh[0] + 1; i < len; ++i) {
         for (auto it = cells[i].begin(); it != cells[i].end();) {
             auto &p = *it;
             size_t ind = index(p);
