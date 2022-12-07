@@ -29,13 +29,18 @@ protected:
 TEST_F(LinkedCellTest, AddTest) {
 
     std::vector<ParticleContainer> celllist = test->getCells();
-
     EXPECT_EQ(test->size(), 9);
     EXPECT_EQ(celllist[6].size(), 1);
     EXPECT_EQ(celllist[7].size(), 1);
     EXPECT_EQ(celllist[11].size(), 1);
     EXPECT_EQ(celllist[12].size(), 1);
 
+
+}
+
+TEST_F(LinkedCellTest, BoundaryHalo_Test){
+    EXPECT_EQ(test->getBoundary().size(), 8);
+    EXPECT_EQ(test->getHalo().size(), 16);
 }
 
 /**
@@ -51,10 +56,12 @@ TEST_F(LinkedCellTest, AppTest) {
     auto it1 = celllist[6].begin();
     auto it2 = celllist[11].begin();
     auto it4 = celllist[12].begin();
+    auto it3 = celllist[17].begin();
     
     EXPECT_DOUBLE_EQ((*it1).getF()[0], 3);
     EXPECT_DOUBLE_EQ(it2->getF()[0], 5);
     EXPECT_DOUBLE_EQ((*it4).getF()[0], 8);
+    EXPECT_DOUBLE_EQ(it3->getF()[0], 5);
 
 }
 
@@ -75,6 +82,7 @@ TEST_F(LinkedCellTest, ReflectingBoundary){
     auto it1 = celllist[6].begin();
     auto it2 = celllist[8].begin();
     auto it4 = celllist[11].begin();
+
 
     EXPECT_DOUBLE_EQ((*it1).getF()[0], 4);
     EXPECT_DOUBLE_EQ((*it4).getF()[0], 6);
@@ -97,7 +105,10 @@ TEST_F(LinkedCellTest, Outflow){
 
 }
 
-TEST_F(LinkedCellTest, AppTest1){
+/**
+ * @brief test applyF with several particles per cell
+ */
+TEST(LinkedCellTest_Outflow_Test, AppTest1){
     CuboidGenerator<LinkedCellContainer> cub{};
     std::shared_ptr<LinkedCellContainer> test1 = std::make_shared<LinkedCellContainer>();
     std::array<double, 3> domain{3., 3., 0.5};

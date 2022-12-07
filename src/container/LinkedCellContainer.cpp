@@ -32,7 +32,7 @@ void LinkedCellContainer::clearHalo() {
 
 void LinkedCellContainer::update() {
     size_t len = cells.size() - mesh[0] - 1;
-    for (size_t i = 0; i < len; ++i) {
+    for (size_t i = mesh[0] + 1; i < len; ++i) {
         for (auto it = cells[i].begin(); it != cells[i].end();) {
             auto &p = *it;
             size_t ind = index(p);
@@ -84,21 +84,25 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
         for (auto &p: cell) {
             auto partial = [&p, &fun](Particle &p2) { fun(p, p2); };
 
+            //check if right neighbour exists
             if ((i + 2) % mesh[0] > 0) {
                 auto &neighbour = cells[i + 1];
                 neighbour.apply(partial);
             }
 
+            //check if upper neighbour exists
             if (i + mesh[0] < len) {
                 auto &neighbour = cells[i + mesh[0]];
                 neighbour.apply(partial);
             }
 
+            //check if upper right neighbour exists
             if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
                 auto &neighbour = cells[i + mesh[0] + 1];
                 neighbour.apply(partial);
             }
 
+            //check is upper left neighbour exists
             if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
                 auto &neighbour = cells[i + mesh[0] - 1];
                 neighbour.apply(partial);
