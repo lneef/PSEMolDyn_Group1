@@ -32,3 +32,4 @@ LennardJones::LennardJones(double zeroCrossing_arg, double depthOfPotentialWell_
     depthOfPotentialWell = depthOfPotentialWell_arg;
 }
 
+

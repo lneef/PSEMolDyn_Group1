@@ -6,6 +6,9 @@
 #include <list>
 #include "Container.h"
 
+/**
+ * @brief Implements the interface of Container for a list as underlying data structure
+ */
 class ParticleList : Container {
 public:
     void apply(std::function<void(Particle &)> fun) override;

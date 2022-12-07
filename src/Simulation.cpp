@@ -100,10 +100,6 @@ void Simulation::setEndTime(double end_time_arg) {
     end_time = end_time_arg;
 }
 
-void Simulation::setParticle(std::shared_ptr<Container> &particles_arg) {
-    particles = std::move(particles_arg);
-}
-
 void Simulation::setParticle(std::shared_ptr<ParticleContainer> &particles_arg) {
     particles = std::move(particles_arg);
 }
