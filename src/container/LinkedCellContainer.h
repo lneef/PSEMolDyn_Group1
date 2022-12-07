@@ -17,7 +17,7 @@ class LinkedCellContainer : public Container {
 public:
 
     /**
-     * applies the given function to the particles in the container
+     * @brief the given function to the particles in the container
      * @param fun function taking lvalue reference to particle
      */
     void apply(std::function<void(Particle &)> fun) override;
@@ -85,6 +85,7 @@ public:
      * @brief funtion to initailize the linked cell algorithm for given domain and cutoff radius
      * @param rcutoff_arg cutoff radius for the linked cell algorithm
      * @param domain_arg domain the linked cells are covering
+     * @param dim dimension of the simulation; currently only value 2 acceptable
      */
     void setSize(double rcutoff_arg, std::array<double, 3> &domain_arg, size_t dim);
 
