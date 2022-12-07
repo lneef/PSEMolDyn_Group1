@@ -45,6 +45,10 @@ public:
      */
     void applyF(std::function<void(Particle &, Particle &)> fun) override;
 
+    /**
+     * @brief returns size of the container
+     * @return number of particles stored in the container
+     */
     size_t size() override;
 
     /**
@@ -101,7 +105,7 @@ public:
      * @brief returns particles in halo
      * @return lvalue reference to ParticleContainer containing particles in the halo
      */
-    [[nodiscard]] const ParticleContainer &getHalo() const;
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getHalo() const;
 
     /**
      * @brief returns reference to boundary cells
@@ -169,12 +173,6 @@ private:
      */
     void clearHalo();
 
-
-    /**
-     * @brief adds particle to the halo
-     * @param p lvalue reference to particle
-     */
-    void addHalo(Particle &p);
 
      /**
      * @brief adds a particle to linked cells

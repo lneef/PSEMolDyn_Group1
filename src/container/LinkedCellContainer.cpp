@@ -11,8 +11,11 @@
 #include "MolSimLogger.h"
 
 void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
-    for (auto &list: cells) {
-        list.apply(fun);
+    for(size_t i = mesh[0] + 1; i < cells.size() - mesh[0] - 1; ++i){
+        cells[i].apply(fun);
+
+        if(i%mesh[0] == mesh[0] - 2)
+            i+=2;
     }
 }
 
@@ -23,18 +26,18 @@ void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
 }
 
 void LinkedCellContainer::clearHalo() {
-    halo.clear();
+    for(auto& cell: halo)
+        cell.get().clear();
 }
 
 void LinkedCellContainer::update() {
-    size_t len = cells.size();
+    size_t len = cells.size() - mesh[0] - 1;
     for (size_t i = 0; i < len; ++i) {
         for (auto it = cells[i].begin(); it != cells[i].end();) {
             auto &p = *it;
             size_t ind = index(p);
             auto &pos = p.getX();
-            if (pos[0] < 0 || pos[0] >= domain[0] || pos[1] < 0 || pos[1] > domain[1]) {
-                addHalo(p);
+            if (pos[0] < -rcutoff || pos[0] >= domain[0] + rcutoff  || pos[1] < -rcutoff || pos[1] > domain[1] + rcutoff) {
                 SPDLOG_LOGGER_DEBUG(MolSimLogger::logger(), "Particle at position ({}, {}, {}) removed", p.getX()[0],
                                     p.getX()[1], p.getX()[2]);
                 it = cells[i].remove(it);
@@ -47,6 +50,9 @@ void LinkedCellContainer::update() {
             update(p);
             it = cells[i].remove(it);
         }
+
+        if(i % mesh[0] == mesh[0] - 2)
+            i+=2;
     }
 
     clearHalo();
@@ -70,15 +76,15 @@ void LinkedCellContainer::applyFBoundary(Reflecting cond, std::function<void(Par
 
 
 void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun) {
-    size_t len = cells.size();
-    size_t i = 0;
+    size_t len = cells.size() - mesh[0] - 1;
+    size_t i = mesh[0] + 1;
     for (; i < len; ++i) {
         auto &cell = cells[i];
         cell.applyF(fun);
         for (auto &p: cell) {
             auto partial = [&p, &fun](Particle &p2) { fun(p, p2); };
 
-            if ((i + 1) % mesh[0] > 0) {
+            if ((i + 2) % mesh[0] > 0) {
                 auto &neighbour = cells[i + 1];
                 neighbour.apply(partial);
             }
@@ -88,16 +94,19 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
                 neighbour.apply(partial);
             }
 
-            if (i + mesh[0] + 1 < len && (i + 1) % mesh[0] > 0) {
+            if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
                 auto &neighbour = cells[i + mesh[0] + 1];
                 neighbour.apply(partial);
             }
 
-            if (i + mesh[0] - 1 < len && i % mesh[0] > 0) {
+            if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
                 auto &neighbour = cells[i + mesh[0] - 1];
                 neighbour.apply(partial);
             }
         }
+
+        if(i % mesh[0] == mesh[0] - 2)
+            i+=2;
     }
 
     for (auto &cond: conditions)
@@ -132,17 +141,44 @@ std::vector<ParticleContainer> &LinkedCellContainer::getCells() {
 
 void LinkedCellContainer::setUp() {
     size_t i = 0;
-    for (; i < mesh[0]; ++i) {
-        boundary.emplace_back(std::ref(cells[i]));
-    }
-    for (; i < cells.size() - mesh[0]; i++) {
-        if (i % mesh[0] == 0 || i % mesh[0] == mesh[0] - 1)
+    size_t len = cells.size();
+    for(; i< mesh[0]; ++i)
+        halo.emplace_back(std::ref(cells[i]));
+
+    halo.emplace_back((std::ref(cells[i])));
+    ++i;
+
+    size_t j = i;
+    for(; j < i + mesh[0] - 2; ++j)
+        boundary.emplace_back(std::ref(cells[j]));
+    i = j;
+
+    halo.emplace_back(std::ref(cells[i]));
+    ++i;
+
+    for(; i< len - 2 * mesh[0]; ++i){
+        if(i%mesh[0] == 0 || i%mesh[0] == mesh[0] - 1){
+            halo.emplace_back(std::ref((cells[i])));
+            continue;
+        }
+
+        if(i%mesh[0] == 1 || i %mesh[0] == mesh[0] - 2)
             boundary.emplace_back(std::ref(cells[i]));
     }
 
-    for (; i < cells.size(); ++i) {
-        boundary.emplace_back(std::ref(cells[i]));
-    }
+    halo.emplace_back(std::ref(cells[i]));
+    ++i;
+
+    j = i;
+    for(; j< len - mesh[0] - 1; ++j)
+        boundary.emplace_back(std::ref(cells[j]));
+    i=j;
+
+    halo.emplace_back(std::ref(cells[i]));
+    ++i;
+
+    for(; i<len; ++i)
+        halo.emplace_back(std::ref(cells[i]));
 }
 
 void LinkedCellContainer::setRCutOff(double rcutoff_arg) {
@@ -168,7 +204,7 @@ void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &dom
 }
 
 
-const ParticleContainer &LinkedCellContainer::getHalo() const {
+const std::vector<std::reference_wrapper<ParticleContainer>> &LinkedCellContainer::getHalo() const {
     return halo;
 }
 
@@ -183,13 +219,6 @@ void LinkedCellContainer::addReflecting(Reflecting( &&reflecting)) {
 std::array<double, 3> &LinkedCellContainer::getDomain() {
     return domain;
 }
-
-void LinkedCellContainer::addHalo(Particle &p) {
-    auto &pos = p.getX();
-    if (pos[0] >= -rcutoff && pos[1] >= -rcutoff && pos[0] < domain[0] + rcutoff && pos[1] < domain[1] + rcutoff)
-        halo.addParticle(p);
-}
-
 
 LinkedCellContainer::LinkedCellContainer() = default;
 
