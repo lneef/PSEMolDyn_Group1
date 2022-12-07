@@ -107,8 +107,8 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
 
 size_t LinkedCellContainer::index(Particle &p) {
     auto &pos = p.getX();
-    size_t x_ind = floor(pos[0] / rcutoff);
-    size_t y_ind = floor(pos[1] / rcutoff) * mesh[0];
+    size_t x_ind = floor(pos[0] / rcutoff) + 1;
+    size_t y_ind = floor(pos[1] / rcutoff) * mesh[0] + mesh[0];
     return x_ind + y_ind;
 }
 
@@ -130,7 +130,7 @@ std::vector<ParticleContainer> &LinkedCellContainer::getCells() {
     return cells;
 }
 
-void LinkedCellContainer::setUpBoundary() {
+void LinkedCellContainer::setUp() {
     size_t i = 0;
     for (; i < mesh[0]; ++i) {
         boundary.emplace_back(std::ref(cells[i]));
@@ -153,18 +153,18 @@ void LinkedCellContainer::setDomain(std::array<double, 3> &domain_arg) {
     domain = domain_arg;
 }
 
-void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &domain_arg) {
+void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &domain_arg, size_t dim) {
     setRCutOff(rcutoff_arg);
     setDomain(domain_arg);
-    for (size_t i = 0; i < 3; ++i) {
-        mesh[i] = ceil(std::abs(domain_arg[i]) / rcutoff_arg);
+    for (size_t i = 0; i < dim; ++i) {
+        mesh[i] = ceil(std::abs(domain_arg[i]) / rcutoff_arg) + 2;
     }
     size_t len = 1;
-    for (size_t i = 0; i < 3; ++i) {
+    for (size_t i = 0; i < dim; ++i) {
         len *= mesh[i] == 0 ? 1 : mesh[i];
     }
     cells.resize(len);
-    setUpBoundary();
+    setUp();
 }
 
 

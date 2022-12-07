@@ -82,7 +82,7 @@ public:
      * @param rcutoff_arg cutoff radius for the linked cell algorithm
      * @param domain_arg domain the linked cells are covering
      */
-    void setSize(double rcutoff_arg, std::array<double, 3> &domain_arg);
+    void setSize(double rcutoff_arg, std::array<double, 3> &domain_arg, size_t dim);
 
 
     /**
@@ -140,7 +140,7 @@ private:
     /**
      * @brief ParticleContainer storing the particles in the halo
      */
-    ParticleContainer halo;
+    std::vector<std::reference_wrapper<ParticleContainer>> halo;
 
     /**
      * @brief vector containing references to boundary cells
@@ -150,7 +150,7 @@ private:
     /**
      * @brief updates the boundary field after initialization
      */
-    void setUpBoundary();
+    void setUp();
 
     /**
      * @brief vector containing reelecting boundaries
