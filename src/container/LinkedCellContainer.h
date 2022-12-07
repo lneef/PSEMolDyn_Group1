@@ -10,30 +10,64 @@
 
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
+ *
+ * @warning The default boundary condition is outflow. If for a given boundary reflecting should be used, the condition must be added via addReflecting
  */
 class LinkedCellContainer : public Container {
 public:
 
+    /**
+     * applies the given function to the particles in the container
+     * @param fun function taking lvalue reference to particle
+     */
     void apply(std::function<void(Particle &)> fun) override;
 
+    /**
+     * @brief applies the given function to calculate the position of a particle
+     * @param fun function taking lvalue reference to particle
+     */
     void applyX(std::function<void(Particle &)> fun) override;
 
+    /**
+     * @brief overridden destructor to prevent memory leaks
+     */
     ~LinkedCellContainer() override;
 
-    void addReflecting(Reflecting && ref);
+    /**
+     * @brief adds a reflecting boundary condition to the container
+     * @param ref rvalue reference to object of type Reflecting
+     */
+    void addReflecting(Reflecting &&ref);
 
+    /**
+     * @brief calculates the force effective on particles using the given function
+     * @param fun std::function taking two lvalue reference to particles
+     */
     void applyF(std::function<void(Particle &, Particle &)> fun) override;
 
+    /**
+     * @brief returns size of the container
+     * @return number of particles stored in the container
+     */
     size_t size() override;
 
-    void addParticle(Particle &p) override;
-
+    /**
+     * @brief adds a particle to linked cells
+     * @param p rvalue reference to particle
+     */
     void addParticle(Particle &&p) override;
 
+    /**
+     * @brief calculates the index of cells the given particle belongs to
+     * @param p lvalue reference to particle
+     * @return index of the particle in the linked cells data structure
+     */
     size_t index(Particle &p);
 
+    /**
+     * @brief default constructor for LinkedCellContainer
+     */
     LinkedCellContainer();
-    std::vector<ParticleContainer>& get();
 
     /**
      * @brief setter for cutoff radius
@@ -45,27 +79,39 @@ public:
      * setter for the domain
      * @param domain_arg three dimensional vector representing the domain
      */
-    void setDomain(std::array<double, 3>& domain_arg);
+    void setDomain(std::array<double, 3> &domain_arg);
 
     /**
      * @brief funtion to initailize the linked cell algorithm for given domain and cutoff radius
      * @param rcutoff_arg cutoff radius for the linked cell algorithm
      * @param domain_arg domain the linked cells are covering
      */
-    void setSize(double rcutoff_arg, std::array<double,3>& domain_arg);
+    void setSize(double rcutoff_arg, std::array<double, 3> &domain_arg, size_t dim);
 
 
     /**
      * @brief function to get the cells for tests
      * @return std::vector representing the linked cells
      */
-    std::vector<ParticleContainer> getCells();
+    std::vector<ParticleContainer>& getCells();
 
-    std::array<double, 3>& getDomain();
+    /**
+     * @brief returns the domain size
+     * @return size of the domain
+     */
+    std::array<double, 3> &getDomain();
 
-    [[nodiscard]] const ParticleContainer& getHalo() const;
+    /**
+     * @brief returns particles in halo
+     * @return lvalue reference to ParticleContainer containing particles in the halo
+     */
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getHalo() const;
 
-    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>>& getBoundary() const;
+    /**
+     * @brief returns reference to boundary cells
+     * @return std::vector containing reference wrappers to boundary cells
+     */
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getBoundary() const;
 
 
 private:
@@ -98,7 +144,7 @@ private:
     /**
      * @brief ParticleContainer storing the particles in the halo
      */
-    ParticleContainer halo;
+    std::vector<std::reference_wrapper<ParticleContainer>> halo;
 
     /**
      * @brief vector containing references to boundary cells
@@ -108,13 +154,38 @@ private:
     /**
      * @brief updates the boundary field after initialization
      */
-    void setUpBoundary();
+    void setUp();
 
+    /**
+     * @brief vector containing reelecting boundaries
+     */
     std::vector<Reflecting> conditions;
 
-    void applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)>& fun);
+    /**
+     * @brief applies reflecting boundary to particles in boundary cells
+     * @param cond object representing reflecting boundary condition
+     * @param fun function to calculate force
+     */
+    void applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)> &fun);
 
+    /**
+     * @brief removes all particles from the halo
+     */
     void clearHalo();
+
+
+     /**
+     * @brief adds a particle to linked cells
+     * @param p lvalue reference to particle
+     */
+    void update(Particle &p);
+
+    /**
+     * @brief check if particle is inside the domain for 2D and 3D simualtions
+     * @param p lvalue reference to particle
+     * @return true if particle is inside the domain for the fourth dimension
+     */
+    bool inside3D(Particle& p);
 };
 
 

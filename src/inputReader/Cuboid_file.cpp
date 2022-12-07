@@ -17,10 +17,6 @@ namespace inputReader {
 
     Cuboid_file::~Cuboid_file() = default;
 
-    //reads values from file
-    void Cuboid_file::read(std::shared_ptr<ParticleContainer> &particles) {
-        readCuboid(particles);
-    }
 
     void Cuboid_file::read(std::shared_ptr<Simulation> &sim) {
         std::shared_ptr<ParticleContainer> particles = std::make_shared<ParticleContainer>();
