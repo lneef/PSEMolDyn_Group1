@@ -12,6 +12,8 @@
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
  *
  * @warning The default boundary condition is outflow. If for a given boundary reflecting should be used, the condition must be added via addReflecting
+ * \image html linkedcell.png "Benchmark LinkedCellContainer" width=450cm
+ * \image latex linkedcell.png "Benchmark LinkedCellContainer" width=10cm
  */
 class LinkedCellContainer : public Container {
 public:
