@@ -40,8 +40,8 @@ TEST_F(LinkedCellTest, AddTest) {
 }
 
 TEST_F(LinkedCellTest, BoundaryHalo_Test){
-     EXPECT_EQ(test->getBoundary().size(), 9);
-    EXPECT_EQ(test->getHalo().size(), 9);
+    EXPECT_EQ(test->getBoundary().size(), 9);
+    EXPECT_EQ(test->getHalo().size(), 16);
 }
 
 /**
