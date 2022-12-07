@@ -29,7 +29,6 @@ protected:
 TEST_F(LinkedCellTest, AddTest) {
 
     std::vector<ParticleContainer> celllist = test->getCells();
-
     EXPECT_EQ(test->size(), 9);
     EXPECT_EQ(celllist[6].size(), 1);
     EXPECT_EQ(celllist[7].size(), 1);
@@ -40,7 +39,7 @@ TEST_F(LinkedCellTest, AddTest) {
 }
 
 TEST_F(LinkedCellTest, BoundaryHalo_Test){
-    EXPECT_EQ(test->getBoundary().size(), 9);
+    EXPECT_EQ(test->getBoundary().size(), 8);
     EXPECT_EQ(test->getHalo().size(), 16);
 }
 
