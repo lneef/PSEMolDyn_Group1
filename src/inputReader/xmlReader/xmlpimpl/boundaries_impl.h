@@ -31,14 +31,32 @@ namespace XMLReader {
          */
         void right(const ::std::string &) override;
 
+        /**
+         * @brief function called after reading the boundary element
+         */
         void post_boundaries() override;
 
+        /**
+         * @brief function to initialize the parser
+         *
+         * @param cells_arg shared_ptr to LinkedCellContainer to which the conditions apply
+         */
         void init(std::shared_ptr<LinkedCellContainer>& cells_arg);
 
     private:
+        /**
+         * @brief indicator array for horizontal boundaries
+         */
         std::array<double, 3> hor{0, 1, 0};
+
+        /**
+         * @brief indicator array for vertical boundaries
+         */
         std::array<double, 3> vert{1, 0, 0};
 
+        /**
+         * @brief cells to which the boundary condition applies
+         */
         std::shared_ptr<LinkedCellContainer> cells;
     };
 }

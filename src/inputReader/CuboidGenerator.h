@@ -69,6 +69,16 @@ public:
         }
     }
 
+    /**
+     * @brief function to generate sphere from the given paramteres
+     *
+     * @param particles Container where the particles are stored
+     * @param center center of the sphere
+     * @param r number of particles in each direction
+     * @oaram m mass of each particle
+     * @param v velocity of the sphere
+     * @param h distance between the particles
+     */
     void generateSphere(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
                         std::array<double, 3> v, double h) {
         double radius = r * h;
