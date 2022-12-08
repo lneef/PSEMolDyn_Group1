@@ -10,6 +10,7 @@ namespace XMLReader {
         cells = cell_arg;
     }
     void cuboid_input_pimpl::path(const std::string &file) {
+        MolSimLogger::logDebug("XMLReader: filename: {}", file);
         path_cuboids=file;
     }
 

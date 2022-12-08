@@ -3,6 +3,7 @@
 //
 
 #include "simulation_pimpl.h"
+#include "MolSimLogger.h"
 
 namespace XMLReader {
     void simulation_pimpl::t_end(double end_t) {
@@ -45,6 +46,7 @@ namespace XMLReader {
             domain.pop();
         }
         cells->setSize(rCutOff, dom, 2);
+        MolSimLogger::logDebug("XMLReader: domain=({}, {}, {}), rcutOff = {}", dom[0], dom[1], dom[2], rCutOff);
         Reflecting::init_bound(1);
     }
 

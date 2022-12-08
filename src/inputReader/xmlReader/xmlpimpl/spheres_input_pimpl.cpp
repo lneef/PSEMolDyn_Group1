@@ -10,6 +10,7 @@ namespace XMLReader{
         cells=cell_arg;
     }
     void spheres_input_pimpl::path(const ::std::string &file) {
+        MolSimLogger::logDebug("XMLReader: filename: {}", file);
         path_spheres=file;
     }
     void spheres_input_pimpl::post_spheres_input() {

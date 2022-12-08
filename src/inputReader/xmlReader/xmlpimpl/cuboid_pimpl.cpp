@@ -5,6 +5,7 @@
 #include <iostream>
 #include "cuboid_pimpl.h"
 #include "inputReader/CuboidGenerator.h"
+#include "MolSimLogger.h"
 
 namespace XMLReader {
 
@@ -67,6 +68,7 @@ namespace XMLReader {
         }
         CuboidGenerator<LinkedCellContainer> cub{};
         cub.generateCuboid(cells, x, n, width, mass, v);
+        MolSimLogger::logDebug("XMLReader: new size of container: {}", cells->size());
 
     }
 
