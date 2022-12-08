@@ -38,6 +38,9 @@ TEST_F(LinkedCellTest, AddTest) {
 
 }
 
+/**
+ * @brief test if the correct number of references are stored
+ */
 TEST_F(LinkedCellTest, BoundaryHalo_Test){
     EXPECT_EQ(test->getBoundary().size(), 8);
     EXPECT_EQ(test->getHalo().size(), 16);
