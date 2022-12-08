@@ -9,7 +9,7 @@ Members:
 # Code #
 * Link: https://github.com/lneef/PSEMolDyn_Group1
 * Branch: main
-* Revision: 
+* Revision: 5f22c69211a12c2a96a1917e63880f2dabdc14cd
 
 # Run Instructions #
 * Compiler: GNU 12.2.0, 11.3.0
