@@ -4,7 +4,9 @@
 #include "inputReader/CuboidGenerator.h"
 #include "Simulation.h"
 
-
+/**
+ * @brief Test class with uniform setUP and Teardown function
+ */
 class LinkedCellTest : public testing::Test {
 protected:
     std::shared_ptr<LinkedCellContainer> test;
