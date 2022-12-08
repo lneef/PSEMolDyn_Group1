@@ -75,7 +75,7 @@ public:
      * @param particles Container where the particles are stored
      * @param center center of the sphere
      * @param r number of particles in each direction
-     * @oaram m mass of each particle
+     * @param m mass of each particle
      * @param v velocity of the sphere
      * @param h distance between the particles
      */
