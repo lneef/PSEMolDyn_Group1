@@ -62,3 +62,5 @@ The following command line options are supported:
 # Input #
 * for cuboids see input/eingabe-cuboid.txt
 * for planets see input/eingabe-sonne.txt
+* for cuboids via xml see input/input-cuboid.xml
+* for spheres via xml see input/sphere.xml and the specification in sphere.txt
