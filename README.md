@@ -72,3 +72,4 @@ The following command line options are supported:
 # XML #
 * see molsim.xsd for the schema definition
 * simulation has to be the first element since it is needed for initialization
+* an element named path expects a valid path to an input file (.txt, see sphere.txt and eingabe-cuboid.txt for schema)
