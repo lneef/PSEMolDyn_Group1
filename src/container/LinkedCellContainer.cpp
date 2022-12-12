@@ -353,7 +353,7 @@ size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
         ind = index(p);
     }
 
-    if (ind >= cells.size() - mesh[0]) {
+    if (ind > cells.size() - mesh[0]) {
         std::array<double, 3> to_add{};
         to_add[1] = -domain[1];
         p.setX(p.getX() + to_add);
