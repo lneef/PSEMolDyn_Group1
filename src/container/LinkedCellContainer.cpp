@@ -116,8 +116,19 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
 
 size_t LinkedCellContainer::index(Particle &p) {
     auto &pos = p.getX();
-    size_t x_ind = floor(pos[0] / rcutoff) + 1;
-    size_t y_ind = floor(pos[1] / rcutoff) * mesh[0] + mesh[0];
+    size_t x_ind, y_ind;
+
+    if (pos[0] >= domain[0]) {
+        x_ind = mesh[0] - 1;
+    } else {
+        x_ind = static_cast<size_t>(floor(pos[0] / rcutoff)) + 1;
+    }
+
+    if (pos[1] >= domain[1]) {
+        y_ind = (mesh[1] - 1) * mesh[0];
+    } else {
+        y_ind = static_cast<size_t>(floor(pos[1] / rcutoff)) * mesh[0] + mesh[0];
+    };
     return x_ind + y_ind;
 }
 
@@ -239,25 +250,26 @@ bool LinkedCellContainer::inside3D(Particle &p) {
     return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
 }
 
-void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p, std::function<void(
-        Particle&, Particle&)>& fun) {
+void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p,
+                                         std::function<void(Particle &, Particle &)> &fun) {
 
     Periodic cond{};
     if ((i + 2) % mesh[0] > 0) {
         auto &neighbour = cells[i + 1];
         neighbour.apply(partial);
-    }else if (periodic.contains(2) || periodic.contains(4)) {
+    } else if (periodic.contains(2) || periodic.contains(4)) {
         cond.hor(-domain[0]);
         cond.apply(cells[i - mesh[0] + 3], p, fun);
     }
 }
 
-void LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
-                                         Particle &p, std::function<void(Particle&, Particle&)>& fun) {
+void
+LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p,
+                                    std::function<void(Particle &, Particle &)> &fun) {
     if (i + mesh[0] < len) {
         auto &neighbour = cells[i + mesh[0]];
         neighbour.apply(partial);
-    }else if (periodic.contains(1) || periodic.contains(3)) {
+    } else if (periodic.contains(1) || periodic.contains(3)) {
         Periodic cond{};
         cond.vert(-domain[1]);
         size_t index = i % mesh[0] + mesh[0];
@@ -266,13 +278,13 @@ void LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Part
 }
 
 void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
-                                             Particle &p, std::function<void(Particle&, Particle&)>& fun) {
+                                             Particle &p, std::function<void(Particle &, Particle &)> &fun) {
     Periodic cond{};
     size_t critical = cells.size() - 2 * mesh[0];
     if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
         auto &neighbour = cells[i + mesh[0] - 1];
         neighbour.apply(partial);
-    }else if (periodic.contains(4) && i < critical) {
+    } else if (periodic.contains(4) && i < critical) {
         cond.hor(domain[0]);
         size_t ind = i + mesh[0] + mesh[0] - 3;
         cond.apply(cells[ind], p, fun);
@@ -280,7 +292,7 @@ void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(
         cond.vert(-domain[1]);
         size_t ind = i % mesh[0] - 1 + mesh[0];
         cond.apply(cells[ind], p, fun);
-    } else if ((periodic.contains(3) || periodic.contains(4)) && i == critical + 1){
+    } else if ((periodic.contains(3) || periodic.contains(4)) && i == critical + 1) {
         cond.hor(domain[0]);
         cond.vert(-domain[1]);
         cond.apply(cells[2 * mesh[0] - 2], p, fun);
@@ -288,15 +300,15 @@ void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(
 }
 
 void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
-                                              Particle &p, std::function<void(Particle&, Particle&)>& fun) {
+                                              Particle &p, std::function<void(Particle &, Particle &)> &fun) {
     Periodic cond{};
     size_t critical = cells.size() - 2 * mesh[0];
     if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
         auto &neighbour = cells[i + mesh[0] + 1];
         neighbour.apply(partial);
-    }else if (periodic.contains(2) && i < critical) {
+    } else if (periodic.contains(2) && i < critical) {
         cond.hor(-domain[0]);
-        cond.apply(cells[i+3], p, fun);
+        cond.apply(cells[i + 3], p, fun);
     } else if (periodic.contains(3) && i < critical + mesh[0] - 2) {
         cond.hor(-domain[0]);
         size_t ind = i % mesh[0] + 1 + mesh[0];
@@ -319,26 +331,30 @@ bool LinkedCellContainer::side(size_t ind) {
 }
 
 size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
-    std::array<double, 3> to_add{};
+
     if (ind % mesh[0] == 0) {
+        std::array<double, 3> to_add{};
         to_add[0] = domain[0];
         p.setX(p.getX() + to_add);
         ind = index(p);
     }
 
     if (ind % mesh[0] == mesh[0] - 1) {
+        std::array<double, 3> to_add{};
         to_add[0] = -domain[0];
         p.setX(p.getX() + to_add);
         ind = index(p);
     }
 
     if (ind < mesh[0]) {
+        std::array<double, 3> to_add{};
         to_add[1] = domain[1];
         p.setX(p.getX() + to_add);
         ind = index(p);
     }
 
     if (ind >= cells.size() - mesh[0]) {
+        std::array<double, 3> to_add{};
         to_add[1] = -domain[1];
         p.setX(p.getX() + to_add);
         ind = index(p);
