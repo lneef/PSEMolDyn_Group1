@@ -117,6 +117,8 @@ public:
      */
     [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getBoundary() const;
 
+    void addPeriodic(int bound);
+
 
 private:
 
@@ -199,7 +201,7 @@ private:
     void upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
             Particle&, Particle&)>& fun);
 
-    void addPeriodic(int bound);
+
 
     bool side(size_t ind);
 

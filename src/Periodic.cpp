@@ -22,4 +22,5 @@ void Periodic::apply(ParticleContainer& par, Particle& p, std::function<void(Par
         fun(par_mirror, p1);
     };
     par.apply(partial);
+    p.setF(p.getF() + par_mirror.getF());
 }

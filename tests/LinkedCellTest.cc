@@ -110,6 +110,24 @@ TEST_F(LinkedCellTest, Outflow){
 
 }
 
+TEST_F(LinkedCellTest, PeriodicTest){
+    test->addPeriodic(1);
+    test->addPeriodic(3);
+    test->applyF([](Particle &p1, Particle &p2) {
+        std::array<double, 3> add = {1., 0., 0.};
+        p1.setF(p1.getF() + add);
+        p2.setF(p2.getF() + add);
+    });
+
+    auto celllist = test->getCells();
+    auto it1 = celllist[16].begin();
+    auto it2 = celllist[17].begin();
+
+    EXPECT_DOUBLE_EQ(it1->getF()[0], 6);
+    EXPECT_DOUBLE_EQ(it2->getF()[0], 8);
+
+}
+
 /**
  * @brief test applyF with several particles per cell
  */

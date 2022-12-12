@@ -247,7 +247,7 @@ void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Part
         auto &neighbour = cells[i + 1];
         neighbour.apply(partial);
     }else if (periodic.contains(2) || periodic.contains(4)) {
-        cond.hor(domain[0]);
+        cond.hor(-domain[0]);
         cond.apply(cells[i - mesh[0] + 3], p, fun);
     }
 }
@@ -259,7 +259,7 @@ void LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Part
         neighbour.apply(partial);
     }else if (periodic.contains(1) || periodic.contains(3)) {
         Periodic cond{};
-        cond.vert(domain[1]);
+        cond.vert(-domain[1]);
         size_t index = i % mesh[0] + mesh[0];
         cond.apply(cells[index], p, fun);
     }
@@ -273,16 +273,16 @@ void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(
         auto &neighbour = cells[i + mesh[0] - 1];
         neighbour.apply(partial);
     }else if (periodic.contains(4) && i < critical) {
-        cond.hor(-domain[0]);
+        cond.hor(domain[0]);
         size_t ind = i + mesh[0] + mesh[0] - 3;
         cond.apply(cells[ind], p, fun);
-    } else if (periodic.contains(3) && i > critical + 2) {
-        cond.vert(domain[1]);
+    } else if (periodic.contains(3) && i > critical + 1) {
+        cond.vert(-domain[1]);
         size_t ind = i % mesh[0] - 1 + mesh[0];
         cond.apply(cells[ind], p, fun);
-    } else if ((periodic.contains(3) || periodic.contains(4)) && i % mesh[0] == 1){
-        cond.hor(-domain[0]);
-        cond.vert(domain[1]);
+    } else if ((periodic.contains(3) || periodic.contains(4)) && i == critical + 1){
+        cond.hor(domain[0]);
+        cond.vert(-domain[1]);
         cond.apply(cells[2 * mesh[0] - 2], p, fun);
     }
 }
@@ -295,15 +295,15 @@ void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void
         auto &neighbour = cells[i + mesh[0] + 1];
         neighbour.apply(partial);
     }else if (periodic.contains(2) && i < critical) {
-        cond.hor(domain[0]);
+        cond.hor(-domain[0]);
         cond.apply(cells[i+3], p, fun);
     } else if (periodic.contains(3) && i < critical + mesh[0] - 2) {
-        cond.hor(domain[0]);
+        cond.hor(-domain[0]);
         size_t ind = i % mesh[0] + 1 + mesh[0];
         cond.apply(cells[ind], p, fun);
-    } else if ((periodic.contains(2) || periodic.contains(3)) && i % mesh[0] == mesh[0] - 2) {
-        cond.hor(domain[0]);
-        cond.vert(domain[1]);
+    } else if ((periodic.contains(2) || periodic.contains(3)) && i == critical + mesh[0] - 2) {
+        cond.hor(-domain[0]);
+        cond.vert(-domain[1]);
         cond.apply(cells[mesh[0] + 1], p, fun);
     }
 
@@ -325,14 +325,15 @@ size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
         p.setX(p.getX() + to_add);
         ind = index(p);
     }
-    if (ind < mesh[0]) {
-        to_add[1] = domain[1];
+
+    if (ind % mesh[0] == mesh[0] - 1) {
+        to_add[0] = -domain[0];
         p.setX(p.getX() + to_add);
         ind = index(p);
     }
 
-    if (ind % mesh[0] == mesh[0] - 1) {
-        to_add[0] = -domain[0];
+    if (ind < mesh[0]) {
+        to_add[1] = domain[1];
         p.setX(p.getX() + to_add);
         ind = index(p);
     }
