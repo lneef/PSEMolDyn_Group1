@@ -40,6 +40,7 @@
 
 #include "molsim-pskel.h"
 
+
 // simulation_pskel
 //
 namespace XMLReader {
@@ -290,6 +291,48 @@ namespace XMLReader {
               right_parser_(0) {
     }
 
+// temperature_pskel
+//
+
+    void temperature_pskel::
+    temp_int_parser(xml_schema::double_pskel &p) {
+        this->temp_int_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    n_thermostat_parser(xml_schema::int_pskel &p) {
+        this->n_thermostat_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    temp_target_parser(xml_schema::double_pskel &p) {
+        this->temp_target_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    temp_delta_parser(xml_schema::double_pskel &p) {
+        this->temp_delta_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    parsers(xml_schema::double_pskel &temp_int,
+            xml_schema::int_pskel &n_thermostat,
+            xml_schema::double_pskel &temp_target,
+            xml_schema::double_pskel &temp_delta) {
+        this->temp_int_parser_ = &temp_int;
+        this->n_thermostat_parser_ = &n_thermostat;
+        this->temp_target_parser_ = &temp_target;
+        this->temp_delta_parser_ = &temp_delta;
+    }
+
+    temperature_pskel::
+    temperature_pskel()
+            : temp_int_parser_(0),
+              n_thermostat_parser_(0),
+              temp_target_parser_(0),
+              temp_delta_parser_(0) {
+    }
+
 // molecular_pskel
 //
 
@@ -319,16 +362,23 @@ namespace XMLReader {
     }
 
     void molecular_pskel::
+    temperature_parser(temperature_pskel &p) {
+        this->temperature_parser_ = &p;
+    }
+
+    void molecular_pskel::
     parsers(cuboid_pskel &cuboid,
             simulation_pskel &simulation,
             cuboid_input_pskel &cuboid_input,
             spheres_input_pskel &spheres_input,
-            boundaries_pskel &boundaries) {
+            boundaries_pskel &boundaries,
+            temperature_pskel &temperature) {
         this->cuboid_parser_ = &cuboid;
         this->simulation_parser_ = &simulation;
         this->cuboid_input_parser_ = &cuboid_input;
         this->spheres_input_parser_ = &spheres_input;
         this->boundaries_parser_ = &boundaries;
+        this->temperature_parser_ = &temperature;
     }
 
     molecular_pskel::
@@ -337,7 +387,8 @@ namespace XMLReader {
               simulation_parser_(0),
               cuboid_input_parser_(0),
               spheres_input_parser_(0),
-              boundaries_parser_(0) {
+              boundaries_parser_(0),
+              temperature_parser_(0) {
     }
 
 // simulation_pskel
@@ -980,6 +1031,114 @@ namespace XMLReader {
         return false;
     }
 
+// temperature_pskel
+//
+
+    void temperature_pskel::
+    temp_int(double) {
+    }
+
+    void temperature_pskel::
+    n_thermostat(int) {
+    }
+
+    void temperature_pskel::
+    temp_target(double) {
+    }
+
+    void temperature_pskel::
+    temp_delta(double) {
+    }
+
+    void temperature_pskel::
+    post_temperature() {
+    }
+
+    bool temperature_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "temp_int" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_int_parser_;
+
+            if (this->temp_int_parser_)
+                this->temp_int_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "n_thermostat" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->n_thermostat_parser_;
+
+            if (this->n_thermostat_parser_)
+                this->n_thermostat_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temp_target" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_target_parser_;
+
+            if (this->temp_target_parser_)
+                this->temp_target_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temp_delta" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_delta_parser_;
+
+            if (this->temp_delta_parser_)
+                this->temp_delta_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool temperature_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "temp_int" && ns.empty()) {
+            if (this->temp_int_parser_)
+                this->temp_int(this->temp_int_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "n_thermostat" && ns.empty()) {
+            if (this->n_thermostat_parser_)
+                this->n_thermostat(this->n_thermostat_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "temp_target" && ns.empty()) {
+            if (this->temp_target_parser_)
+                this->temp_target(this->temp_target_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "temp_delta" && ns.empty()) {
+            if (this->temp_delta_parser_)
+                this->temp_delta(this->temp_delta_parser_->post_double());
+
+            return true;
+        }
+
+        return false;
+    }
+
 // molecular_pskel
 //
 
@@ -1001,6 +1160,10 @@ namespace XMLReader {
 
     void molecular_pskel::
     boundaries() {
+    }
+
+    void molecular_pskel::
+    temperature() {
     }
 
     void molecular_pskel::
@@ -1061,6 +1224,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "temperature" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temperature_parser_;
+
+            if (this->temperature_parser_)
+                this->temperature_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -1110,6 +1282,15 @@ namespace XMLReader {
             if (this->boundaries_parser_) {
                 this->boundaries_parser_->post_boundaries();
                 this->boundaries();
+            }
+
+            return true;
+        }
+
+        if (n == "temperature" && ns.empty()) {
+            if (this->temperature_parser_) {
+                this->temperature_parser_->post_temperature();
+                this->temperature();
             }
 
             return true;

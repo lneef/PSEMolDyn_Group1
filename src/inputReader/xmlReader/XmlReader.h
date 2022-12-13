@@ -57,6 +57,8 @@ namespace XMLReader {
          */
         boundaries_pimpl bou_in_p;
 
+        temperature_pimpl temp_p;
+
     public:
         /**
          * @brief constructor of XmlReader

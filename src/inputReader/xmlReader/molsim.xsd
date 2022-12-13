@@ -50,6 +50,15 @@
             <xs:element name="right" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="temperature">
+        <xs:sequence>
+            <xs:element name="temp_int" type="xs:double"/>
+            <xs:element name="n_thermostat" type="xs:int"/>
+            <xs:element name="temp_target" type="xs:double"/>
+            <xs:element name="temp_delta" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
     
     <xs:complexType name="molecular">
         <xs:sequence>
@@ -58,6 +67,7 @@
             <xs:element name="cuboid_input" type="cuboid_input"/>
             <xs:element name="spheres_input" type="spheres_input"/>
             <xs:element name="boundaries" type="boundaries"/>
+            <xs:element name="temperature" type="temperature"/>
         </xs:sequence>
     </xs:complexType>
 

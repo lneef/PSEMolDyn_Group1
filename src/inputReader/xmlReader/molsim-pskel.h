@@ -54,10 +54,17 @@
 // Forward declarations
 //
 class simulation_pskel;
+
 class cuboid_pskel;
+
 class cuboid_input_pskel;
+
 class spheres_input_pskel;
+
 class boundaries_pskel;
+
+class temperature_pskel;
+
 class molecular_pskel;
 
 #ifndef XSD_USE_CHAR
@@ -77,9 +84,7 @@ class molecular_pskel;
 #include <xsd/cxx/parser/non-validating/xml-schema-pskel.hxx>
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
-/**
- * @brief outgenerated file by the xsd compiler
- */
+
 namespace XMLReader {
     namespace xml_schema {
         // Built-in XML Schema types mapping.
@@ -638,6 +643,71 @@ namespace XMLReader {
         xml_schema::string_pskel *right_parser_;
     };
 
+    class temperature_pskel : public xml_schema::complex_content {
+    public:
+        // Parser callbacks. Override them in your implementation.
+        //
+        // virtual void
+        // pre ();
+
+        virtual void
+        temp_int(double);
+
+        virtual void
+        n_thermostat(int);
+
+        virtual void
+        temp_target(double);
+
+        virtual void
+        temp_delta(double);
+
+        virtual void
+        post_temperature();
+
+        // Parser construction API.
+        //
+        void
+        temp_int_parser(xml_schema::double_pskel &);
+
+        void
+        n_thermostat_parser(xml_schema::int_pskel &);
+
+        void
+        temp_target_parser(xml_schema::double_pskel &);
+
+        void
+        temp_delta_parser(xml_schema::double_pskel &);
+
+        void
+        parsers(xml_schema::double_pskel & /* temp_int */,
+                xml_schema::int_pskel & /* n_thermostat */,
+                xml_schema::double_pskel & /* temp_target */,
+                xml_schema::double_pskel & /* temp_delta */);
+
+        // Constructor.
+        //
+        temperature_pskel();
+
+        // Implementation.
+        //
+    protected:
+        virtual bool
+        _start_element_impl(const xml_schema::ro_string &,
+                            const xml_schema::ro_string &,
+                            const xml_schema::ro_string *);
+
+        virtual bool
+        _end_element_impl(const xml_schema::ro_string &,
+                          const xml_schema::ro_string &);
+
+    protected:
+        xml_schema::double_pskel *temp_int_parser_;
+        xml_schema::int_pskel *n_thermostat_parser_;
+        xml_schema::double_pskel *temp_target_parser_;
+        xml_schema::double_pskel *temp_delta_parser_;
+    };
+
     class molecular_pskel : public xml_schema::complex_content {
     public:
         // Parser callbacks. Override them in your implementation.
@@ -661,6 +731,9 @@ namespace XMLReader {
         boundaries();
 
         virtual void
+        temperature();
+
+        virtual void
         post_molecular();
 
         // Parser construction API.
@@ -681,11 +754,15 @@ namespace XMLReader {
         boundaries_parser(boundaries_pskel &);
 
         void
+        temperature_parser(temperature_pskel &);
+
+        void
         parsers(cuboid_pskel & /* cuboid */,
                 simulation_pskel & /* simulation */,
                 cuboid_input_pskel & /* cuboid_input */,
                 spheres_input_pskel & /* spheres_input */,
-                boundaries_pskel & /* boundaries */);
+                boundaries_pskel & /* boundaries */,
+                temperature_pskel & /* temperature */);
 
         // Constructor.
         //
@@ -709,8 +786,10 @@ namespace XMLReader {
         cuboid_input_pskel *cuboid_input_parser_;
         spheres_input_pskel *spheres_input_parser_;
         boundaries_pskel *boundaries_parser_;
+        temperature_pskel *temperature_parser_;
     };
 }
+
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.

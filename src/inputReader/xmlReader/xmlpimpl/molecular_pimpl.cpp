@@ -29,6 +29,10 @@ namespace XMLReader {
 
     }
 
+    void molecular_pimpl::temperature() {
+
+    }
+
     void molecular_pimpl::post_molecular() {
 
 
