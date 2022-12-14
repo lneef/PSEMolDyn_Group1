@@ -9,7 +9,7 @@
 #include "tempCalculation/Thermostat.h"
 
 namespace XMLReader {
-    class temperature_pimpl : public simulation_pskel {
+    class temperature_pimpl : public XMLReader::temperature_pskel {
     private:
         std::shared_ptr<Simulation> sim;
         std::shared_ptr<Thermostat> thermostat;

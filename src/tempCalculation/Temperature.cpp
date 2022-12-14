@@ -27,7 +27,7 @@ void Temperature::calculateV(std::shared_ptr<Container> &particles, std::shared_
     }
 }
 
-double calculateProduct(std::array<double, 3> v) {
+double Temperature::calculateProduct(std::array<double, 3> v) {
     double product = 0;
     for (int i = 0; i < 3; i++) {
         product += pow(v[i], 2);
