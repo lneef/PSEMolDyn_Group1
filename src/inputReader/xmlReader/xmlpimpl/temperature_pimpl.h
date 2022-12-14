@@ -12,7 +12,10 @@ namespace XMLReader {
     class temperature_pimpl : public XMLReader::temperature_pskel {
     private:
         std::shared_ptr<Simulation> sim;
-        std::shared_ptr<Thermostat> thermostat;
+        double temp;
+        double n_thermo;
+        double temp_tar;
+        double temp_del;
     public:
         void init(std::shared_ptr<Simulation> &sim);
 

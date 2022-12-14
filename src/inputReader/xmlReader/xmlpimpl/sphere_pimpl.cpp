@@ -6,9 +6,9 @@
 #include "inputReader/CuboidGenerator.h"
 
 namespace XMLReader {
-    void sphere_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &sim) {
+    void sphere_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
         cells = lc;
-        sim = sim;
+        sim = simulation;
     }
 
     void sphere_pimpl::x(double x_arg) {

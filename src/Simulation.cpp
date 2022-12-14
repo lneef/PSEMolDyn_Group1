@@ -135,16 +135,16 @@ void Simulation::setOut_name(const std::string &out_name_arg) {
     out_name = out_name_arg;
 }
 
-void Simulation::setN_thermostat(int n_thermostat) {
-    n_thermostat = n_thermostat;
+void Simulation::setN_thermostat(int n_thermostat_arg) {
+    n_thermostat = n_thermostat_arg;
 }
 
-void Simulation::setTemperature(std::unique_ptr<Temperature> &temperature) {
-    temperature = std::move(temperature);
+void Simulation::setTemperature(std::unique_ptr<Temperature> &temperature_arg) {
+    temperature = std::move(temperature_arg);
 }
 
-void Simulation::setThermostat(std::shared_ptr<Thermostat> &thermostat) {
-    thermostat = std::move(thermostat);
+void Simulation::setThermostat(std::shared_ptr<Thermostat> &thermostat_arg) {
+    thermostat = thermostat_arg;
 }
 
 const std::shared_ptr<Thermostat> &Simulation::getThermostat() const { return thermostat; }

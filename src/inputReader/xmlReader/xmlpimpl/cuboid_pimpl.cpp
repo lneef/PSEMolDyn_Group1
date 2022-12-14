@@ -94,9 +94,9 @@ namespace XMLReader {
         }
     }
 
-    void cuboid_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &sim) {
+    void cuboid_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
         cells = lc;
-        sim = sim;
+        sim = simulation;
     }
 
 }

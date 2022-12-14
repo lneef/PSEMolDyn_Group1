@@ -3,6 +3,7 @@
 //
 
 #include "Temperature.h"
+#include <iostream>
 
 Temperature::~Temperature() = default;
 
@@ -11,10 +12,11 @@ void Temperature::calculateV(std::shared_ptr<Container> &particles, std::shared_
     particles->apply([this, &kin_energy](Particle &p) {
         kin_energy = kin_energy + ((p.getM() * Temperature::calculateProduct(p.getV())) / 2);
     });
+    //std::cout << kin_energy;
     int dimension = 2;
     double temperature_new = ((kin_energy * 2) / (dimension * particles->size()));
-    double temp_diff = abs(thermostat->getTemp() - temperature_new);
-    if (temp_diff >= thermostat->getTemp_delta()) {
+    double temp_diff = std::abs(thermostat->getTemp() - temperature_new);
+    if (temp_diff <= thermostat->getTemp_delta()) {
         double temperature;
         temperature = sqrt(temperature_new / thermostat->getTemp());
         thermostat->setTemp(temperature_new);
