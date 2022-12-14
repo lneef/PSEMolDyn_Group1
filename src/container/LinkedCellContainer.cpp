@@ -249,7 +249,7 @@ bool LinkedCellContainer::inside3D(Particle &p) {
     auto &pos = p.getX();
     return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
 }
-<<<<<<< HEAD
+
 
 void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p,
                                          std::function<void(Particle &, Particle &)> &fun) {
@@ -371,5 +371,4 @@ void LinkedCellContainer::update(Particle &p, size_t ind) {
     cells[ind].addParticle(p);
 
 }
-=======
->>>>>>> 6d938d88077a7d384f064599e41c1d3ae9e62930
+
