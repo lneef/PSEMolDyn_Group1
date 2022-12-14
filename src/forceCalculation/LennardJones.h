@@ -17,6 +17,8 @@ public:
      */
     void calculateF(std::shared_ptr<Container>  &particles) override;
 
+    static void calculateF(Particle& p1, Particle& p2);
+
     ~LennardJones() override;
 
     /**

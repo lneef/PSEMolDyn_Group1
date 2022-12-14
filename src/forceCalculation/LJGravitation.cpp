@@ -13,7 +13,9 @@ void LJGravitation::calculateF(std::shared_ptr<Container> &particles) {
         p.updateF(force);
     });
 
-    ljForce.calculateF(particles);
+    particles->applyF([](Particle& p1, Particle& p2){
+        LennardJones::calculateF(p1, p2);
+    });
 }
 
 LJGravitation::~LJGravitation() = default;

@@ -14,28 +14,30 @@ void LennardJones::calculateF(std::shared_ptr<Container> &particles) {
     });
 
     particles->applyF([](Particle &p1, Particle &p2) {
-        double sigma, epsilon;
-        if (p1.getType() == p2.getType()) {
-            sigma = p1.getSigma();
-            epsilon = p1.getEpsilon();
-        } else {
-            sigma = (p1.getSigma() + p2.getSigma()) / 2.;
-            epsilon = std::sqrt(p1.getEpsilon() * p2.getEpsilon());
-        }
-
-        std::array<double, 3> xij = p1.getX() - p2.getX();
-        double norm = ArrayUtils::L2Norm(xij);
-        double pow_6 = pow((sigma / norm), 6);
-        double scalar = ((-24 * epsilon) / pow(norm, 2)) * (pow_6 - 2 * pow(pow_6, 2));
-        std::array<double, 3> newF = scalar * xij;
-        p1.setF(p1.getF() + newF);
-        p2.setF(-1 * newF + p2.getF());
+        calculateF(p1, p2);
     });
 
 }
 
-LennardJones::LennardJones() {
+LennardJones::LennardJones() = default;
 
+void LennardJones::calculateF(Particle &p1, Particle &p2) {
+    double sigma, epsilon;
+    if (p1.getType() == p2.getType()) {
+        sigma = p1.getSigma();
+        epsilon = p1.getEpsilon();
+    } else {
+        sigma = (p1.getSigma() + p2.getSigma()) / 2.;
+        epsilon = std::sqrt(p1.getEpsilon() * p2.getEpsilon());
+    }
+
+    std::array<double, 3> xij = p1.getX() - p2.getX();
+    double norm = ArrayUtils::L2Norm(xij);
+    double pow_6 = pow((sigma / norm), 6);
+    double scalar = ((-24 * epsilon) / pow(norm, 2)) * (pow_6 - 2 * pow(pow_6, 2));
+    std::array<double, 3> newF = scalar * xij;
+    p1.setF(p1.getF() + newF);
+    p2.setF(-1 * newF + p2.getF());
 }
 
 
