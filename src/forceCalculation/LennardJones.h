@@ -17,6 +17,11 @@ public:
      */
     void calculateF(std::shared_ptr<Container>  &particles) override;
 
+    /**
+     * @brief calculates the force between two particles based on the Lennard Jones potential
+     * @param p1 first particle of the interaction
+     * @param p2 second particle of the interaction
+     */
     static void calculateF(Particle& p1, Particle& p2);
 
     ~LennardJones() override;

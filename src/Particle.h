@@ -44,15 +44,34 @@ private:
      */
     int type;
 
+    /**
+     * @brief sigma value for the Lennard Jones potential
+     */
     double sigma;
 
+    /**
+     * @brief epsilon value for the Lennard Jones potential
+     */
     double epsilon;
 
 public:
     explicit Particle(int type = 0);
 
+    /**
+     * @brief copy constructor of the class particle
+     * @param other Particle to be copied
+     */
     Particle(const Particle &other);
 
+    /**
+     * @brief constructor of the class particle
+     * @param x_arg position of the particles
+     * @param v_arg velocity of the particles
+     * @param m_arg mass of the particle
+     * @param sigma_arg sigma value for the Lennard Jones potential (default: 1)
+     * @param epsilon_arg epsilon value for the Lennard Jones potential (default: 5)
+     * @param type type of the particle (default: 1)
+     */
     Particle(
             // for visualization, we need always 3 coordinates
             // -> in case of 2d, we use only the first and the second
@@ -77,7 +96,16 @@ public:
 
     [[nodiscard]] std::string toString() const;
 
+    /**
+     * @brief getter for field sigma
+     * @return sigma value for Lennard Jones potential of the Particle
+     */
     [[nodiscard]] double getSigma() const;
+
+    /**
+   * @brief getter for field epsilon
+   * @return epsilon value for Lennard Jones potential of the Particle
+   */
     [[nodiscard]] double getEpsilon() const;
 
     /**
@@ -122,6 +150,12 @@ public:
      */
     void setOldF(const std::array<double, 3> &oldf);
 
+    /**
+     * @brief compares two values of type double for equality
+     * @param d1 first value of type double
+     * @param d2 second value of type double
+     * @return true if both values are approximately equal, false otherwise
+     */
     static bool comp(double d1, double d2);
 };
 

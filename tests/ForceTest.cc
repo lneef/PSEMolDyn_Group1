@@ -26,6 +26,9 @@ protected:
     }
 };
 
+/**
+ * @brief test Lennard Jones force calculation routine with a more complex example
+ */
 TEST_F(ForceTest, CalcTest){
     LennardJones lj;
     lj.calculateF(par);
@@ -40,6 +43,9 @@ TEST_F(ForceTest, CalcTest){
     EXPECT_THAT(p[2].getF(), testing::Pointwise(testing::DoubleEq(), f3));
 }
 
+/**
+ * @brief test LJGravitation force calculation routine
+ */
 TEST_F(ForceTest, GravTest){
     LJGravitation ljg{-10};
     ljg.calculateF(par);
