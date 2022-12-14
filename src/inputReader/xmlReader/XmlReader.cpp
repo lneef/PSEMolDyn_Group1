@@ -11,15 +11,15 @@ namespace XMLReader {
         XMLReader::molecular_pimpl parser{};
         xml_schema::document doc_p(parser, "molecular");
         sim_p.parsers(double_p, double_p, double_p, double_p, double_p, double_p, string_p, int_p);
+        temp_p.parsers(double_p, int_p, double_p, double_p);
         cub_in_p.parsers(string_p);
         cub_p.parsers(double_p, double_p, double_p, int_p, int_p, int_p, double_p, double_p, double_p, double_p,
                       double_p);
         sph_in_p.parsers(string_p);
         bou_in_p.parsers(string_p, string_p, string_p, string_p);
-        temp_p.parsers(double_p, int_p, double_p, double_p);
 
         sim_p.init(lc, sim);
-        cub_p.init(lc);
+        cub_p.init(lc, sim);
         cub_in_p.init(lc);
         sph_in_p.init(lc);
         bou_in_p.init(lc);

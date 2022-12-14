@@ -16,6 +16,7 @@ template<typename T>
 class CuboidGenerator {
 private:
     double meanV = 0.1;
+    MaxwellBoltzmannDistribution mb;
 
     /**
      * @brief Calculates velocity of particles with given velocity and the MaxwellBoltzmannDistribution
@@ -24,7 +25,6 @@ private:
      * @return velocity with thermal friction
     */
     std::array<double, 3> calculateV(std::array<double, 3> v) {
-        MaxwellBoltzmannDistribution mb;
         //calculate velocity with thermal friction
         std::array<double, 3> mbV = mb.maxwellBoltzmannDistributedVelocity(meanV, 2);
         std::array<double, 3> newV{};
@@ -32,6 +32,12 @@ private:
             newV[i] = v[i] + mbV[i];
         }
         return newV;
+    }
+
+    std::array<double, 3> calculateVTemp(double meanVTemp) {
+        //calculate velocity with thermal friction
+        std::array<double, 3> mbV = mb.maxwellBoltzmannDistributedVelocity(meanVTemp, 2);
+        return mbV;
     }
 
 public:
@@ -52,7 +58,6 @@ public:
     void
     generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
                    std::array<double, 3> v) {
-
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
         for (int x_cord = 0; x_cord < n[0]; x_cord++) {
@@ -62,6 +67,26 @@ public:
                 for (int z_cord = 0; z_cord < n[2]; z_cord++) {
                     newX[2] = x[2] + (z_cord * h);
                     std::array<double, 3> newV = calculateV(v);
+                    //stores particle in ParticleContainer
+                    particles->addParticle(Particle(newX, newV, m));
+                }
+            }
+        }
+    }
+
+    void
+    generateCuboidTemp(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
+                   double temp_int) {
+        double meanVTemp = sqrt(temp_int/m);
+        std::array<double, 3> newX{};
+        //iterate over cuboid in each dimension
+        for (int x_cord = 0; x_cord < n[0]; x_cord++) {
+            newX[0] = x[0] + (x_cord * h);
+            for (int y_cord = 0; y_cord < n[1]; y_cord++) {
+                newX[1] = x[1] + (y_cord * h);
+                for (int z_cord = 0; z_cord < n[2]; z_cord++) {
+                    newX[2] = x[2] + (z_cord * h);
+                    std::array<double, 3> newV = calculateVTemp(meanVTemp);
                     //stores particle in ParticleContainer
                     particles->addParticle(Particle(newX, newV, m));
                 }

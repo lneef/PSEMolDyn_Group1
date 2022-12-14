@@ -39,11 +39,10 @@
 #include <xsd/cxx/pre.hxx>
 
 #include "molsim-pskel.h"
-
-
+namespace XMLReader {
 // simulation_pskel
 //
-namespace XMLReader {
+
     void simulation_pskel::
     t_end_parser(xml_schema::double_pskel &p) {
         this->t_end_parser_ = &p;
@@ -113,6 +112,48 @@ namespace XMLReader {
               domain_cutOf_parser_(0),
               name_parser_(0),
               frequency_parser_(0) {
+    }
+
+// temperature_pskel
+//
+
+    void temperature_pskel::
+    temp_int_parser(xml_schema::double_pskel &p) {
+        this->temp_int_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    n_thermostat_parser(xml_schema::int_pskel &p) {
+        this->n_thermostat_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    temp_target_parser(xml_schema::double_pskel &p) {
+        this->temp_target_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    temp_delta_parser(xml_schema::double_pskel &p) {
+        this->temp_delta_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    parsers(xml_schema::double_pskel &temp_int,
+            xml_schema::int_pskel &n_thermostat,
+            xml_schema::double_pskel &temp_target,
+            xml_schema::double_pskel &temp_delta) {
+        this->temp_int_parser_ = &temp_int;
+        this->n_thermostat_parser_ = &n_thermostat;
+        this->temp_target_parser_ = &temp_target;
+        this->temp_delta_parser_ = &temp_delta;
+    }
+
+    temperature_pskel::
+    temperature_pskel()
+            : temp_int_parser_(0),
+              n_thermostat_parser_(0),
+              temp_target_parser_(0),
+              temp_delta_parser_(0) {
     }
 
 // cuboid_pskel
@@ -289,48 +330,6 @@ namespace XMLReader {
               bottom_parser_(0),
               left_parser_(0),
               right_parser_(0) {
-    }
-
-// temperature_pskel
-//
-
-    void temperature_pskel::
-    temp_int_parser(xml_schema::double_pskel &p) {
-        this->temp_int_parser_ = &p;
-    }
-
-    void temperature_pskel::
-    n_thermostat_parser(xml_schema::int_pskel &p) {
-        this->n_thermostat_parser_ = &p;
-    }
-
-    void temperature_pskel::
-    temp_target_parser(xml_schema::double_pskel &p) {
-        this->temp_target_parser_ = &p;
-    }
-
-    void temperature_pskel::
-    temp_delta_parser(xml_schema::double_pskel &p) {
-        this->temp_delta_parser_ = &p;
-    }
-
-    void temperature_pskel::
-    parsers(xml_schema::double_pskel &temp_int,
-            xml_schema::int_pskel &n_thermostat,
-            xml_schema::double_pskel &temp_target,
-            xml_schema::double_pskel &temp_delta) {
-        this->temp_int_parser_ = &temp_int;
-        this->n_thermostat_parser_ = &n_thermostat;
-        this->temp_target_parser_ = &temp_target;
-        this->temp_delta_parser_ = &temp_delta;
-    }
-
-    temperature_pskel::
-    temperature_pskel()
-            : temp_int_parser_(0),
-              n_thermostat_parser_(0),
-              temp_target_parser_(0),
-              temp_delta_parser_(0) {
     }
 
 // molecular_pskel
@@ -572,6 +571,114 @@ namespace XMLReader {
         if (n == "frequency" && ns.empty()) {
             if (this->frequency_parser_)
                 this->frequency(this->frequency_parser_->post_int());
+
+            return true;
+        }
+
+        return false;
+    }
+
+// temperature_pskel
+//
+
+    void temperature_pskel::
+    temp_int(double) {
+    }
+
+    void temperature_pskel::
+    n_thermostat(int) {
+    }
+
+    void temperature_pskel::
+    temp_target(double) {
+    }
+
+    void temperature_pskel::
+    temp_delta(double) {
+    }
+
+    void temperature_pskel::
+    post_temperature() {
+    }
+
+    bool temperature_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "temp_int" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_int_parser_;
+
+            if (this->temp_int_parser_)
+                this->temp_int_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "n_thermostat" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->n_thermostat_parser_;
+
+            if (this->n_thermostat_parser_)
+                this->n_thermostat_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temp_target" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_target_parser_;
+
+            if (this->temp_target_parser_)
+                this->temp_target_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temp_delta" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_delta_parser_;
+
+            if (this->temp_delta_parser_)
+                this->temp_delta_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool temperature_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "temp_int" && ns.empty()) {
+            if (this->temp_int_parser_)
+                this->temp_int(this->temp_int_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "n_thermostat" && ns.empty()) {
+            if (this->n_thermostat_parser_)
+                this->n_thermostat(this->n_thermostat_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "temp_target" && ns.empty()) {
+            if (this->temp_target_parser_)
+                this->temp_target(this->temp_target_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "temp_delta" && ns.empty()) {
+            if (this->temp_delta_parser_)
+                this->temp_delta(this->temp_delta_parser_->post_double());
 
             return true;
         }
@@ -1024,114 +1131,6 @@ namespace XMLReader {
         if (n == "right" && ns.empty()) {
             if (this->right_parser_)
                 this->right(this->right_parser_->post_string());
-
-            return true;
-        }
-
-        return false;
-    }
-
-// temperature_pskel
-//
-
-    void temperature_pskel::
-    temp_int(double) {
-    }
-
-    void temperature_pskel::
-    n_thermostat(int) {
-    }
-
-    void temperature_pskel::
-    temp_target(double) {
-    }
-
-    void temperature_pskel::
-    temp_delta(double) {
-    }
-
-    void temperature_pskel::
-    post_temperature() {
-    }
-
-    bool temperature_pskel::
-    _start_element_impl(const xml_schema::ro_string &ns,
-                        const xml_schema::ro_string &n,
-                        const xml_schema::ro_string *t) {
-        XSD_UNUSED (t);
-
-        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
-            return true;
-
-        if (n == "temp_int" && ns.empty()) {
-            this->xml_schema::complex_content::context_.top().parser_ = this->temp_int_parser_;
-
-            if (this->temp_int_parser_)
-                this->temp_int_parser_->pre();
-
-            return true;
-        }
-
-        if (n == "n_thermostat" && ns.empty()) {
-            this->xml_schema::complex_content::context_.top().parser_ = this->n_thermostat_parser_;
-
-            if (this->n_thermostat_parser_)
-                this->n_thermostat_parser_->pre();
-
-            return true;
-        }
-
-        if (n == "temp_target" && ns.empty()) {
-            this->xml_schema::complex_content::context_.top().parser_ = this->temp_target_parser_;
-
-            if (this->temp_target_parser_)
-                this->temp_target_parser_->pre();
-
-            return true;
-        }
-
-        if (n == "temp_delta" && ns.empty()) {
-            this->xml_schema::complex_content::context_.top().parser_ = this->temp_delta_parser_;
-
-            if (this->temp_delta_parser_)
-                this->temp_delta_parser_->pre();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    bool temperature_pskel::
-    _end_element_impl(const xml_schema::ro_string &ns,
-                      const xml_schema::ro_string &n) {
-        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
-            return true;
-
-        if (n == "temp_int" && ns.empty()) {
-            if (this->temp_int_parser_)
-                this->temp_int(this->temp_int_parser_->post_double());
-
-            return true;
-        }
-
-        if (n == "n_thermostat" && ns.empty()) {
-            if (this->n_thermostat_parser_)
-                this->n_thermostat(this->n_thermostat_parser_->post_int());
-
-            return true;
-        }
-
-        if (n == "temp_target" && ns.empty()) {
-            if (this->temp_target_parser_)
-                this->temp_target(this->temp_target_parser_->post_double());
-
-            return true;
-        }
-
-        if (n == "temp_delta" && ns.empty()) {
-            if (this->temp_delta_parser_)
-                this->temp_delta(this->temp_delta_parser_->post_double());
 
             return true;
         }

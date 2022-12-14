@@ -108,7 +108,7 @@ public:
 
     /**
      * @brief returns a iterator pointing behind the last element of the corresponding ParticleContainer
-     * @return iterator pointing behin the last element
+     * @return iterator pointing behind the last element
      */
     ParticleIterator end();
 
