@@ -110,7 +110,9 @@ add_library(lib_test
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Reflecting.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp src/tempCalculation/Thermostat.cpp src/tempCalculation/Thermostat.h src/tempCalculation/Temperature.cpp src/tempCalculation/Temperature.h src/inputReader/xmlReader/xmlpimpl/temperature_pimpl.cpp src/inputReader/xmlReader/xmlpimpl/temperature_pimpl.h src/inputReader/xmlReader/xmlpimpl/sphere_pimpl.cpp src/inputReader/xmlReader/xmlpimpl/sphere_pimpl.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tempCalculation/Temperature.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tempCalculation/Thermostat.cpp)
 
 target_link_libraries(lib_test PRIVATE spdlog::spdlog)
 target_include_directories(lib_test
