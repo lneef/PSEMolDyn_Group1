@@ -126,5 +126,29 @@ public:
         }
 
     }
+
+    void generateSphereTemp(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
+                            double temp_int, double h) {
+        double meanVTemp = sqrt(temp_int/m);
+        double radius = r * h;
+        std::array<double, 3> newX{};
+        for (int x = -r + 1; x < r; ++x) {
+            newX[0] = (x * h);
+            for (int y = -r + 1; y < r; ++y) {
+                newX[1] =  (y * h);
+                for (int z = -r + 1; z < r; ++z) {
+                    newX[2] =  (z * h);
+                    double rad_test = ArrayUtils::L2Norm(newX);
+                    if (rad_test < radius) {
+                        std::array<double, 3> newV = calculateVTemp(meanVTemp);
+                        std::array<double, 3> pos = newX + center;
+                        particles->addParticle(Particle(pos, newV, m));
+                    }
+
+                }
+            }
+        }
+
+    }
 };
 

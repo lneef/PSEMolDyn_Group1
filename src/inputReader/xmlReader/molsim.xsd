@@ -45,6 +45,20 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="sphere">
+        <xs:sequence>
+            <xs:element name="x" type="xs:double"/>
+            <xs:element name="y" type="xs:double"/>
+            <xs:element name="z" type="xs:double"/>
+            <xs:element name="r" type="xs:int"/>
+            <xs:element name="h" type="xs:double"/>
+            <xs:element name="m" type="xs:double"/>
+            <xs:element name="v_x" type="xs:double"/>
+            <xs:element name="v_y" type="xs:double"/>
+            <xs:element name="v_z" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="spheres_input">
         <xs:sequence>
             <xs:element name="path" type="xs:string"/>
@@ -65,6 +79,7 @@
             <xs:element name="cuboid" type="cuboid"/>
             <xs:element name="simulation" type="simulation"/>
             <xs:element name="cuboid_input" type="cuboid_input"/>
+            <xs:element name="sphere" type="sphere"/>
             <xs:element name="spheres_input" type="spheres_input"/>
             <xs:element name="boundaries" type="boundaries"/>
             <xs:element name="temperature" type="temperature"/>
