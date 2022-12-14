@@ -39,10 +39,10 @@
 #include <xsd/cxx/pre.hxx>
 
 #include "molsim-pskel.h"
-
+namespace XMLReader {
 // simulation_pskel
 //
-namespace XMLReader {
+
     void simulation_pskel::
     t_end_parser(xml_schema::double_pskel &p) {
         this->t_end_parser_ = &p;
@@ -114,6 +114,48 @@ namespace XMLReader {
               frequency_parser_(0) {
     }
 
+// temperature_pskel
+//
+
+    void temperature_pskel::
+    temp_int_parser(xml_schema::double_pskel &p) {
+        this->temp_int_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    n_thermostat_parser(xml_schema::int_pskel &p) {
+        this->n_thermostat_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    temp_target_parser(xml_schema::double_pskel &p) {
+        this->temp_target_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    temp_delta_parser(xml_schema::double_pskel &p) {
+        this->temp_delta_parser_ = &p;
+    }
+
+    void temperature_pskel::
+    parsers(xml_schema::double_pskel &temp_int,
+            xml_schema::int_pskel &n_thermostat,
+            xml_schema::double_pskel &temp_target,
+            xml_schema::double_pskel &temp_delta) {
+        this->temp_int_parser_ = &temp_int;
+        this->n_thermostat_parser_ = &n_thermostat;
+        this->temp_target_parser_ = &temp_target;
+        this->temp_delta_parser_ = &temp_delta;
+    }
+
+    temperature_pskel::
+    temperature_pskel()
+            : temp_int_parser_(0),
+              n_thermostat_parser_(0),
+              temp_target_parser_(0),
+              temp_delta_parser_(0) {
+    }
+
 // cuboid_pskel
 //
 
@@ -173,6 +215,11 @@ namespace XMLReader {
     }
 
     void cuboid_pskel::
+    brownianMotion_parser(xml_schema::boolean_pskel &p) {
+        this->brownianMotion_parser_ = &p;
+    }
+
+    void cuboid_pskel::
     parsers(xml_schema::double_pskel &x,
             xml_schema::double_pskel &y,
             xml_schema::double_pskel &z,
@@ -183,7 +230,8 @@ namespace XMLReader {
             xml_schema::double_pskel &m,
             xml_schema::double_pskel &v_x,
             xml_schema::double_pskel &v_y,
-            xml_schema::double_pskel &v_z) {
+            xml_schema::double_pskel &v_z,
+            xml_schema::boolean_pskel &brownianMotion) {
         this->x_parser_ = &x;
         this->y_parser_ = &y;
         this->z_parser_ = &z;
@@ -195,6 +243,7 @@ namespace XMLReader {
         this->v_x_parser_ = &v_x;
         this->v_y_parser_ = &v_y;
         this->v_z_parser_ = &v_z;
+        this->brownianMotion_parser_ = &brownianMotion;
     }
 
     cuboid_pskel::
@@ -209,7 +258,8 @@ namespace XMLReader {
               m_parser_(0),
               v_x_parser_(0),
               v_y_parser_(0),
-              v_z_parser_(0) {
+              v_z_parser_(0),
+              brownianMotion_parser_(0) {
     }
 
 // cuboid_input_pskel
@@ -228,6 +278,96 @@ namespace XMLReader {
     cuboid_input_pskel::
     cuboid_input_pskel()
             : path_parser_(0) {
+    }
+
+// sphere_pskel
+//
+
+    void sphere_pskel::
+    x_parser(xml_schema::double_pskel &p) {
+        this->x_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    y_parser(xml_schema::double_pskel &p) {
+        this->y_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    z_parser(xml_schema::double_pskel &p) {
+        this->z_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    r_parser(xml_schema::int_pskel &p) {
+        this->r_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    h_parser(xml_schema::double_pskel &p) {
+        this->h_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    m_parser(xml_schema::double_pskel &p) {
+        this->m_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    v_x_parser(xml_schema::double_pskel &p) {
+        this->v_x_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    v_y_parser(xml_schema::double_pskel &p) {
+        this->v_y_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    v_z_parser(xml_schema::double_pskel &p) {
+        this->v_z_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    brownianMotion_parser(xml_schema::boolean_pskel &p) {
+        this->brownianMotion_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    parsers(xml_schema::double_pskel &x,
+            xml_schema::double_pskel &y,
+            xml_schema::double_pskel &z,
+            xml_schema::int_pskel &r,
+            xml_schema::double_pskel &h,
+            xml_schema::double_pskel &m,
+            xml_schema::double_pskel &v_x,
+            xml_schema::double_pskel &v_y,
+            xml_schema::double_pskel &v_z,
+            xml_schema::boolean_pskel &brownianMotion) {
+        this->x_parser_ = &x;
+        this->y_parser_ = &y;
+        this->z_parser_ = &z;
+        this->r_parser_ = &r;
+        this->h_parser_ = &h;
+        this->m_parser_ = &m;
+        this->v_x_parser_ = &v_x;
+        this->v_y_parser_ = &v_y;
+        this->v_z_parser_ = &v_z;
+        this->brownianMotion_parser_ = &brownianMotion;
+    }
+
+    sphere_pskel::
+    sphere_pskel()
+            : x_parser_(0),
+              y_parser_(0),
+              z_parser_(0),
+              r_parser_(0),
+              h_parser_(0),
+              m_parser_(0),
+              v_x_parser_(0),
+              v_y_parser_(0),
+              v_z_parser_(0),
+              brownianMotion_parser_(0) {
     }
 
 // spheres_input_pskel
@@ -309,6 +449,11 @@ namespace XMLReader {
     }
 
     void molecular_pskel::
+    sphere_parser(sphere_pskel &p) {
+        this->sphere_parser_ = &p;
+    }
+
+    void molecular_pskel::
     spheres_input_parser(spheres_input_pskel &p) {
         this->spheres_input_parser_ = &p;
     }
@@ -319,16 +464,25 @@ namespace XMLReader {
     }
 
     void molecular_pskel::
+    temperature_parser(temperature_pskel &p) {
+        this->temperature_parser_ = &p;
+    }
+
+    void molecular_pskel::
     parsers(cuboid_pskel &cuboid,
             simulation_pskel &simulation,
             cuboid_input_pskel &cuboid_input,
+            sphere_pskel &sphere,
             spheres_input_pskel &spheres_input,
-            boundaries_pskel &boundaries) {
+            boundaries_pskel &boundaries,
+            temperature_pskel &temperature) {
         this->cuboid_parser_ = &cuboid;
         this->simulation_parser_ = &simulation;
         this->cuboid_input_parser_ = &cuboid_input;
+        this->sphere_parser_ = &sphere;
         this->spheres_input_parser_ = &spheres_input;
         this->boundaries_parser_ = &boundaries;
+        this->temperature_parser_ = &temperature;
     }
 
     molecular_pskel::
@@ -336,8 +490,10 @@ namespace XMLReader {
             : cuboid_parser_(0),
               simulation_parser_(0),
               cuboid_input_parser_(0),
+              sphere_parser_(0),
               spheres_input_parser_(0),
-              boundaries_parser_(0) {
+              boundaries_parser_(0),
+              temperature_parser_(0) {
     }
 
 // simulation_pskel
@@ -528,6 +684,114 @@ namespace XMLReader {
         return false;
     }
 
+// temperature_pskel
+//
+
+    void temperature_pskel::
+    temp_int(double) {
+    }
+
+    void temperature_pskel::
+    n_thermostat(int) {
+    }
+
+    void temperature_pskel::
+    temp_target(double) {
+    }
+
+    void temperature_pskel::
+    temp_delta(double) {
+    }
+
+    void temperature_pskel::
+    post_temperature() {
+    }
+
+    bool temperature_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "temp_int" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_int_parser_;
+
+            if (this->temp_int_parser_)
+                this->temp_int_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "n_thermostat" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->n_thermostat_parser_;
+
+            if (this->n_thermostat_parser_)
+                this->n_thermostat_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temp_target" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_target_parser_;
+
+            if (this->temp_target_parser_)
+                this->temp_target_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temp_delta" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temp_delta_parser_;
+
+            if (this->temp_delta_parser_)
+                this->temp_delta_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool temperature_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "temp_int" && ns.empty()) {
+            if (this->temp_int_parser_)
+                this->temp_int(this->temp_int_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "n_thermostat" && ns.empty()) {
+            if (this->n_thermostat_parser_)
+                this->n_thermostat(this->n_thermostat_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "temp_target" && ns.empty()) {
+            if (this->temp_target_parser_)
+                this->temp_target(this->temp_target_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "temp_delta" && ns.empty()) {
+            if (this->temp_delta_parser_)
+                this->temp_delta(this->temp_delta_parser_->post_double());
+
+            return true;
+        }
+
+        return false;
+    }
+
 // cuboid_pskel
 //
 
@@ -573,6 +837,10 @@ namespace XMLReader {
 
     void cuboid_pskel::
     v_z(double) {
+    }
+
+    void cuboid_pskel::
+    brownianMotion(bool) {
     }
 
     void cuboid_pskel::
@@ -687,6 +955,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "brownianMotion" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->brownianMotion_parser_;
+
+            if (this->brownianMotion_parser_)
+                this->brownianMotion_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -773,6 +1050,13 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "brownianMotion" && ns.empty()) {
+            if (this->brownianMotion_parser_)
+                this->brownianMotion(this->brownianMotion_parser_->post_boolean());
+
+            return true;
+        }
+
         return false;
     }
 
@@ -817,6 +1101,234 @@ namespace XMLReader {
         if (n == "path" && ns.empty()) {
             if (this->path_parser_)
                 this->path(this->path_parser_->post_string());
+
+            return true;
+        }
+
+        return false;
+    }
+
+// sphere_pskel
+//
+
+    void sphere_pskel::
+    x(double) {
+    }
+
+    void sphere_pskel::
+    y(double) {
+    }
+
+    void sphere_pskel::
+    z(double) {
+    }
+
+    void sphere_pskel::
+    r(int) {
+    }
+
+    void sphere_pskel::
+    h(double) {
+    }
+
+    void sphere_pskel::
+    m(double) {
+    }
+
+    void sphere_pskel::
+    v_x(double) {
+    }
+
+    void sphere_pskel::
+    v_y(double) {
+    }
+
+    void sphere_pskel::
+    v_z(double) {
+    }
+
+    void sphere_pskel::
+    brownianMotion(bool) {
+    }
+
+    void sphere_pskel::
+    post_sphere() {
+    }
+
+    bool sphere_pskel::
+    _start_element_impl(const xml_schema::ro_string &ns,
+                        const xml_schema::ro_string &n,
+                        const xml_schema::ro_string *t) {
+        XSD_UNUSED (t);
+
+        if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
+            return true;
+
+        if (n == "x" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->x_parser_;
+
+            if (this->x_parser_)
+                this->x_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "y" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->y_parser_;
+
+            if (this->y_parser_)
+                this->y_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "z" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->z_parser_;
+
+            if (this->z_parser_)
+                this->z_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "r" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->r_parser_;
+
+            if (this->r_parser_)
+                this->r_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "h" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->h_parser_;
+
+            if (this->h_parser_)
+                this->h_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "m" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->m_parser_;
+
+            if (this->m_parser_)
+                this->m_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "v_x" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->v_x_parser_;
+
+            if (this->v_x_parser_)
+                this->v_x_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "v_y" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->v_y_parser_;
+
+            if (this->v_y_parser_)
+                this->v_y_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "v_z" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->v_z_parser_;
+
+            if (this->v_z_parser_)
+                this->v_z_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "brownianMotion" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->brownianMotion_parser_;
+
+            if (this->brownianMotion_parser_)
+                this->brownianMotion_parser_->pre();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool sphere_pskel::
+    _end_element_impl(const xml_schema::ro_string &ns,
+                      const xml_schema::ro_string &n) {
+        if (this->xml_schema::complex_content::_end_element_impl(ns, n))
+            return true;
+
+        if (n == "x" && ns.empty()) {
+            if (this->x_parser_)
+                this->x(this->x_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "y" && ns.empty()) {
+            if (this->y_parser_)
+                this->y(this->y_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "z" && ns.empty()) {
+            if (this->z_parser_)
+                this->z(this->z_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "r" && ns.empty()) {
+            if (this->r_parser_)
+                this->r(this->r_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "h" && ns.empty()) {
+            if (this->h_parser_)
+                this->h(this->h_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "m" && ns.empty()) {
+            if (this->m_parser_)
+                this->m(this->m_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "v_x" && ns.empty()) {
+            if (this->v_x_parser_)
+                this->v_x(this->v_x_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "v_y" && ns.empty()) {
+            if (this->v_y_parser_)
+                this->v_y(this->v_y_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "v_z" && ns.empty()) {
+            if (this->v_z_parser_)
+                this->v_z(this->v_z_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "brownianMotion" && ns.empty()) {
+            if (this->brownianMotion_parser_)
+                this->brownianMotion(this->brownianMotion_parser_->post_boolean());
 
             return true;
         }
@@ -996,11 +1508,19 @@ namespace XMLReader {
     }
 
     void molecular_pskel::
+    sphere() {
+    }
+
+    void molecular_pskel::
     spheres_input() {
     }
 
     void molecular_pskel::
     boundaries() {
+    }
+
+    void molecular_pskel::
+    temperature() {
     }
 
     void molecular_pskel::
@@ -1043,6 +1563,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "sphere" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->sphere_parser_;
+
+            if (this->sphere_parser_)
+                this->sphere_parser_->pre();
+
+            return true;
+        }
+
         if (n == "spheres_input" && ns.empty()) {
             this->xml_schema::complex_content::context_.top().parser_ = this->spheres_input_parser_;
 
@@ -1057,6 +1586,15 @@ namespace XMLReader {
 
             if (this->boundaries_parser_)
                 this->boundaries_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "temperature" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->temperature_parser_;
+
+            if (this->temperature_parser_)
+                this->temperature_parser_->pre();
 
             return true;
         }
@@ -1097,6 +1635,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "sphere" && ns.empty()) {
+            if (this->sphere_parser_) {
+                this->sphere_parser_->post_sphere();
+                this->sphere();
+            }
+
+            return true;
+        }
+
         if (n == "spheres_input" && ns.empty()) {
             if (this->spheres_input_parser_) {
                 this->spheres_input_parser_->post_spheres_input();
@@ -1110,6 +1657,15 @@ namespace XMLReader {
             if (this->boundaries_parser_) {
                 this->boundaries_parser_->post_boundaries();
                 this->boundaries();
+            }
+
+            return true;
+        }
+
+        if (n == "temperature" && ns.empty()) {
+            if (this->temperature_parser_) {
+                this->temperature_parser_->post_temperature();
+                this->temperature();
             }
 
             return true;

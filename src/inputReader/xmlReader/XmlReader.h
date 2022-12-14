@@ -32,6 +32,8 @@ namespace XMLReader {
          */
         xml_schema::double_pimpl double_p;
 
+        xml_schema::boolean_pimpl bool_p;
+
         /**
          * @brief xml-reader for simualtion
          */
@@ -56,6 +58,10 @@ namespace XMLReader {
          * @brief xml-reader for reading boundaries
          */
         boundaries_pimpl bou_in_p;
+
+        temperature_pimpl temp_p;
+
+        sphere_pimpl sph_p;
 
     public:
         /**

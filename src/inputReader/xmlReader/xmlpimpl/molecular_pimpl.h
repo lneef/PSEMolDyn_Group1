@@ -10,6 +10,8 @@
 #include "cuboid_pimpl.h"
 #include "spheres_input_pimpl.h"
 #include "boundaries_impl.h"
+#include "temperature_pimpl.h"
+#include "sphere_pimpl.h"
 
 namespace XMLReader {
     class molecular_pimpl : public molecular_pskel {
@@ -29,7 +31,11 @@ namespace XMLReader {
 
         void spheres_input() override;
 
+        void sphere() override;
+
         void boundaries() override;
+
+        void temperature() override;
 
         void post_molecular() override;
     };

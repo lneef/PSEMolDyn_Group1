@@ -10,6 +10,8 @@
 #include "outputWriter/FileWriter.h"
 #include "forceCalculation/Force.h"
 #include "container/LinkedCellContainer.h"
+#include "tempCalculation/Thermostat.h"
+#include "tempCalculation/Temperature.h"
 #include <chrono>
 
 /**
@@ -55,6 +57,10 @@ class Simulation {
      * @brief output frequency (default: every 10 iterations)
      */
     int out_frequency = 10;
+
+    std::unique_ptr<Temperature> temperature;
+    std::shared_ptr<Thermostat> thermostat;
+    int n_thermostat;
 
 public:
     /**
@@ -138,6 +144,11 @@ public:
      * @param writer_arg file writer for writing output to a file
      */
     void setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg);
+
+    void setN_thermostat(int n_thermostat);
+    void setThermostat(std::shared_ptr<Thermostat> &thermostat);
+    void setTemperature(std::unique_ptr<Temperature> &temperature);
+    const std::shared_ptr<Thermostat> &getThermostat() const;
 };
 
 

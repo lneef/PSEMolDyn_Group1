@@ -54,10 +54,19 @@
 // Forward declarations
 //
 class simulation_pskel;
+
+class temperature_pskel;
+
 class cuboid_pskel;
+
 class cuboid_input_pskel;
+
+class sphere_pskel;
+
 class spheres_input_pskel;
+
 class boundaries_pskel;
+
 class molecular_pskel;
 
 #ifndef XSD_USE_CHAR
@@ -77,9 +86,7 @@ class molecular_pskel;
 #include <xsd/cxx/parser/non-validating/xml-schema-pskel.hxx>
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
-/**
- * @brief outgenerated file by the xsd compiler
- */
+
 namespace XMLReader {
     namespace xml_schema {
         // Built-in XML Schema types mapping.
@@ -370,6 +377,71 @@ namespace XMLReader {
         xml_schema::int_pskel *frequency_parser_;
     };
 
+    class temperature_pskel : public xml_schema::complex_content {
+    public:
+        // Parser callbacks. Override them in your implementation.
+        //
+        // virtual void
+        // pre ();
+
+        virtual void
+        temp_int(double);
+
+        virtual void
+        n_thermostat(int);
+
+        virtual void
+        temp_target(double);
+
+        virtual void
+        temp_delta(double);
+
+        virtual void
+        post_temperature();
+
+        // Parser construction API.
+        //
+        void
+        temp_int_parser(xml_schema::double_pskel &);
+
+        void
+        n_thermostat_parser(xml_schema::int_pskel &);
+
+        void
+        temp_target_parser(xml_schema::double_pskel &);
+
+        void
+        temp_delta_parser(xml_schema::double_pskel &);
+
+        void
+        parsers(xml_schema::double_pskel & /* temp_int */,
+                xml_schema::int_pskel & /* n_thermostat */,
+                xml_schema::double_pskel & /* temp_target */,
+                xml_schema::double_pskel & /* temp_delta */);
+
+        // Constructor.
+        //
+        temperature_pskel();
+
+        // Implementation.
+        //
+    protected:
+        virtual bool
+        _start_element_impl(const xml_schema::ro_string &,
+                            const xml_schema::ro_string &,
+                            const xml_schema::ro_string *);
+
+        virtual bool
+        _end_element_impl(const xml_schema::ro_string &,
+                          const xml_schema::ro_string &);
+
+    protected:
+        xml_schema::double_pskel *temp_int_parser_;
+        xml_schema::int_pskel *n_thermostat_parser_;
+        xml_schema::double_pskel *temp_target_parser_;
+        xml_schema::double_pskel *temp_delta_parser_;
+    };
+
     class cuboid_pskel : public xml_schema::complex_content {
     public:
         // Parser callbacks. Override them in your implementation.
@@ -411,6 +483,9 @@ namespace XMLReader {
         v_z(double);
 
         virtual void
+        brownianMotion(bool);
+
+        virtual void
         post_cuboid();
 
         // Parser construction API.
@@ -449,6 +524,9 @@ namespace XMLReader {
         v_z_parser(xml_schema::double_pskel &);
 
         void
+        brownianMotion_parser(xml_schema::boolean_pskel &);
+
+        void
         parsers(xml_schema::double_pskel & /* x */,
                 xml_schema::double_pskel & /* y */,
                 xml_schema::double_pskel & /* z */,
@@ -459,7 +537,8 @@ namespace XMLReader {
                 xml_schema::double_pskel & /* m */,
                 xml_schema::double_pskel & /* v_x */,
                 xml_schema::double_pskel & /* v_y */,
-                xml_schema::double_pskel & /* v_z */);
+                xml_schema::double_pskel & /* v_z */,
+                xml_schema::boolean_pskel & /* brownianMotion */);
 
         // Constructor.
         //
@@ -489,6 +568,7 @@ namespace XMLReader {
         xml_schema::double_pskel *v_x_parser_;
         xml_schema::double_pskel *v_y_parser_;
         xml_schema::double_pskel *v_z_parser_;
+        xml_schema::boolean_pskel *brownianMotion_parser_;
     };
 
     class cuboid_input_pskel : public xml_schema::complex_content {
@@ -530,6 +610,119 @@ namespace XMLReader {
 
     protected:
         xml_schema::string_pskel *path_parser_;
+    };
+
+    class sphere_pskel : public xml_schema::complex_content {
+    public:
+        // Parser callbacks. Override them in your implementation.
+        //
+        // virtual void
+        // pre ();
+
+        virtual void
+        x(double);
+
+        virtual void
+        y(double);
+
+        virtual void
+        z(double);
+
+        virtual void
+        r(int);
+
+        virtual void
+        h(double);
+
+        virtual void
+        m(double);
+
+        virtual void
+        v_x(double);
+
+        virtual void
+        v_y(double);
+
+        virtual void
+        v_z(double);
+
+        virtual void
+        brownianMotion(bool);
+
+        virtual void
+        post_sphere();
+
+        // Parser construction API.
+        //
+        void
+        x_parser(xml_schema::double_pskel &);
+
+        void
+        y_parser(xml_schema::double_pskel &);
+
+        void
+        z_parser(xml_schema::double_pskel &);
+
+        void
+        r_parser(xml_schema::int_pskel &);
+
+        void
+        h_parser(xml_schema::double_pskel &);
+
+        void
+        m_parser(xml_schema::double_pskel &);
+
+        void
+        v_x_parser(xml_schema::double_pskel &);
+
+        void
+        v_y_parser(xml_schema::double_pskel &);
+
+        void
+        v_z_parser(xml_schema::double_pskel &);
+
+        void
+        brownianMotion_parser(xml_schema::boolean_pskel &);
+
+        void
+        parsers(xml_schema::double_pskel & /* x */,
+                xml_schema::double_pskel & /* y */,
+                xml_schema::double_pskel & /* z */,
+                xml_schema::int_pskel & /* r */,
+                xml_schema::double_pskel & /* h */,
+                xml_schema::double_pskel & /* m */,
+                xml_schema::double_pskel & /* v_x */,
+                xml_schema::double_pskel & /* v_y */,
+                xml_schema::double_pskel & /* v_z */,
+                xml_schema::boolean_pskel & /* brownianMotion */);
+
+        // Constructor.
+        //
+        sphere_pskel();
+
+        // Implementation.
+        //
+    protected:
+        virtual bool
+        _start_element_impl(const xml_schema::ro_string &,
+                            const xml_schema::ro_string &,
+                            const xml_schema::ro_string *);
+
+        virtual bool
+        _end_element_impl(const xml_schema::ro_string &,
+                          const xml_schema::ro_string &);
+
+    protected:
+        xml_schema::double_pskel *x_parser_;
+        xml_schema::double_pskel *y_parser_;
+        xml_schema::double_pskel *z_parser_;
+        xml_schema::int_pskel *r_parser_;
+        xml_schema::double_pskel *h_parser_;
+        xml_schema::double_pskel *m_parser_;
+        xml_schema::double_pskel *v_x_parser_;
+        xml_schema::double_pskel *v_y_parser_;
+        xml_schema::double_pskel *v_z_parser_;
+        xml_schema::boolean_pskel *brownianMotion_parser_;
     };
 
     class spheres_input_pskel : public xml_schema::complex_content {
@@ -655,10 +848,16 @@ namespace XMLReader {
         cuboid_input();
 
         virtual void
+        sphere();
+
+        virtual void
         spheres_input();
 
         virtual void
         boundaries();
+
+        virtual void
+        temperature();
 
         virtual void
         post_molecular();
@@ -675,17 +874,25 @@ namespace XMLReader {
         cuboid_input_parser(cuboid_input_pskel &);
 
         void
+        sphere_parser(sphere_pskel &);
+
+        void
         spheres_input_parser(spheres_input_pskel &);
 
         void
         boundaries_parser(boundaries_pskel &);
 
         void
+        temperature_parser(temperature_pskel &);
+
+        void
         parsers(cuboid_pskel & /* cuboid */,
                 simulation_pskel & /* simulation */,
                 cuboid_input_pskel & /* cuboid_input */,
+                sphere_pskel & /* sphere */,
                 spheres_input_pskel & /* spheres_input */,
-                boundaries_pskel & /* boundaries */);
+                boundaries_pskel & /* boundaries */,
+                temperature_pskel & /* temperature */);
 
         // Constructor.
         //
@@ -707,10 +914,13 @@ namespace XMLReader {
         cuboid_pskel *cuboid_parser_;
         simulation_pskel *simulation_parser_;
         cuboid_input_pskel *cuboid_input_parser_;
+        sphere_pskel *sphere_parser_;
         spheres_input_pskel *spheres_input_parser_;
         boundaries_pskel *boundaries_parser_;
+        temperature_pskel *temperature_parser_;
     };
 }
+
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.
