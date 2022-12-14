@@ -121,14 +121,14 @@ size_t LinkedCellContainer::index(Particle &p) {
     if (pos[0] >= domain[0]) {
         x_ind = mesh[0] - 1;
     } else {
-        x_ind = static_cast<size_t>(floor(pos[0] / rcutoff)) + 1;
+        x_ind = static_cast<int>(floor(pos[0] / rcutoff)) + 1;
     }
 
     if (pos[1] >= domain[1]) {
         y_ind = (mesh[1] - 1) * mesh[0];
     } else {
-        y_ind = static_cast<size_t>(floor(pos[1] / rcutoff)) * mesh[0] + mesh[0];
-    };
+        y_ind = static_cast<int>(floor(pos[1] / rcutoff)) * mesh[0] + mesh[0];
+    }
     return x_ind + y_ind;
 }
 
@@ -249,6 +249,7 @@ bool LinkedCellContainer::inside3D(Particle &p) {
     auto &pos = p.getX();
     return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
 }
+<<<<<<< HEAD
 
 void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p,
                                          std::function<void(Particle &, Particle &)> &fun) {
@@ -370,3 +371,5 @@ void LinkedCellContainer::update(Particle &p, size_t ind) {
     cells[ind].addParticle(p);
 
 }
+=======
+>>>>>>> 6d938d88077a7d384f064599e41c1d3ae9e62930
