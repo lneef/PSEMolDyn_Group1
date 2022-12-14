@@ -30,10 +30,6 @@ private:
      */
     double difference(const Particle& p);
 
-    /**
-     * @brief critical distance to boundary, when below the repulsing force using the counter particle is calculated
-     */
-    static double critical;
 public:
 
     /**
@@ -49,12 +45,6 @@ public:
      * @return true is distance is below critical
      */
     bool check(const Particle& p);
-
-    /**
-     * @brief initializes the field critical
-     * @param sigma zero crossing value for the liquid
-     */
-    static void init_bound(double sigma);
 
     /**
      * @brief applies the reflecting boundary condition by calculating the force between the particle and its counter
