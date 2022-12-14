@@ -14,11 +14,11 @@
 Particle::Particle(int type_arg) {
     type = type_arg;
     MolSimLogger::logTrace("Particle generated!");
-    f = {0., 0., 0.};
-    old_f = {0., 0., 0.};
+    f = { 0., 0., 0. };
+    old_f = { 0., 0., 0. };
 }
 
-Particle::Particle(const Particle &other) {
+Particle::Particle(const Particle& other) {
     x = other.x;
     v = other.v;
     f = other.f;
@@ -41,20 +41,21 @@ Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
     old_f = {0., 0., 0.};
     sigma = sigma_arg;
     epsilon = epsilon_arg;
+
     MolSimLogger::logTrace("Particle generated!");
 }
 
 Particle::~Particle() { MolSimLogger::logTrace("Particle destructed!"); }
 
-const std::array<double, 3> &Particle::getX() const { return x; }
+const std::array<double, 3>& Particle::getX() const { return x; }
 
-const std::array<double, 3> &Particle::getV() const { return v; }
+const std::array<double, 3>& Particle::getV() const { return v; }
 
-const std::array<double, 3> &Particle::getF() const { return f; }
+const std::array<double, 3>& Particle::getF() const { return f; }
 
-const std::array<double, 3> &Particle::getOldF() const { return old_f; }
+const std::array<double, 3>& Particle::getOldF() const { return old_f; }
 
-void Particle::updateF(const std::array<double, 3> &f) {
+void Particle::updateF(const std::array<double, 3>& f) {
     this->old_f = this->f;
     this->f = f;
 }
@@ -66,28 +67,28 @@ int Particle::getType() const { return type; }
 std::string Particle::toString() const {
     std::stringstream stream;
     stream << "Particle: X:" << x << " v: " << v << " f: " << f
-           << " old_f: " << old_f << " type: " << type;
+        << " old_f: " << old_f << " type: " << type;
     return stream.str();
 }
 
-void Particle::setF(const std::array<double, 3> &f) {
+void Particle::setF(const std::array<double, 3>& f) {
     this->f = f;
 }
 
-void Particle::setV(const std::array<double, 3> &v) {
+void Particle::setV(const std::array<double, 3>& v) {
     this->v = v;
 }
 
-void Particle::setX(const std::array<double, 3> &x) {
+void Particle::setX(const std::array<double, 3>& x) {
     this->x = x;
 }
 
-bool Particle::operator==(Particle &other) {
+bool Particle::operator==(Particle& other) {
     return (x == other.x) and (v == other.v) and (f == other.f) and
-           (type == other.type) and (m == other.m) and (old_f == other.old_f);
+        (type == other.type) and (m == other.m) and (old_f == other.old_f);
 }
 
-std::ostream &operator<<(std::ostream &stream, Particle &p) {
+std::ostream& operator<<(std::ostream& stream, Particle& p) {
     stream << p.toString();
     return stream;
 }
@@ -96,12 +97,12 @@ void Particle::setM(const double m) {
     this->m = m;
 }
 
-void Particle::setOldF(const std::array<double, 3> &oldf) {
+void Particle::setOldF(const std::array<double, 3>& oldf) {
     this->old_f = oldf;
 }
 
 bool Particle::comp(double d1, double d2) {
-    return std::abs(d1-d2) < std::numeric_limits<double>::epsilon();
+    return std::abs(d1 - d2) < std::numeric_limits<double>::epsilon();
 }
 
 double Particle::getSigma() const {
