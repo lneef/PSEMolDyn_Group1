@@ -14,6 +14,7 @@
 #include "MolSimLogger.h"
 #include "Simulation.h"
 #include "inputReader/xmlReader/XmlReader.h"
+#include "tempCalculation/Temperature.h"
 
 
 void print_help();
@@ -47,6 +48,8 @@ int main(int argc, char *argsv[]) {
     std::shared_ptr<Simulation> simulation = std::make_shared<Simulation>();
     std::unique_ptr<Force> force;
     std::string filename;
+
+
     int arg = 0;
     bool arg_flag = false;
     Option opt = None;
@@ -59,7 +62,6 @@ int main(int argc, char *argsv[]) {
             case 'x':
                 filename = optarg;
                 input = std::make_unique<XMLReader::XmlReader>(filename);
-                force = std::make_unique<LennardJones>();
                 arg_flag = true;
                 opt = XMLCuboid;
                 break;
@@ -114,9 +116,10 @@ int main(int argc, char *argsv[]) {
 
     MolSimLogger::init();
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
-    simulation->setForce(force);
+
     simulation->setWriter(writer);
     if (opt == Cuboid || opt == Planet) {
+        simulation->setForce(force);
         simulation->setDeltaT(delta_t);
         simulation->setEndTime(end_time);
     }

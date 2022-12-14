@@ -9,8 +9,13 @@
         <domain_cutOf>1.0</domain_cutOf>
         <name>"lol"</name>
         <frequency>10</frequency>
-        <g_gravitation>-9.81</g_gravitation>
     </simulation>
+    <temperature>
+        <temp_int>8.0</temp_int>
+        <n_thermostat>1</n_thermostat>
+        <temp_target>10.0</temp_target>
+        <temp_delta>5.0</temp_delta>
+    </temperature>
     <cuboid>
         <x>0.0</x>
         <y>0.0</y>
@@ -19,10 +24,11 @@
         <n_y>3</n_y>
         <n_z>1</n_z>
         <h>0.5</h>
-        <m>1.0</m>
-        <v_x>1.0</v_x>
+        <m>2.0</m>
+        <v_x>0.0</v_x>
         <v_y>0.0</v_y>
         <v_z>0.0</v_z>
+        <brownianMotion>true</brownianMotion>
     </cuboid>
     <boundaries>
 

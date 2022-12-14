@@ -17,7 +17,7 @@ protected:
         std::array<double, 3> domain{3., 3., 0.5};
         test->setDomain(domain);
         test->setSize(1., domain, 2);
-        cub.generateCuboid(test, {.75, .75, 0}, {3, 3, 1}, .75, 1.0, {0., 1, 0.});
+        cub.generateCuboid(test, {.75, .75, 0}, {3, 3, 1}, .75, 1.0, {0., 1, 0.}, 2);
     }
 
     void TearDown() override {
@@ -74,7 +74,6 @@ TEST_F(LinkedCellTest, AppTest) {
  * @brief tests if reflecting boundary condition is applied to all particles
  */
 TEST_F(LinkedCellTest, ReflectingBoundary){
-    Reflecting::init_bound(2);
     std::array<double ,3 > arr{1., 0, 0};
     test->addReflecting(Reflecting(arr, 0));
     test->addReflecting(Reflecting(arr, 3.));

@@ -47,13 +47,16 @@ namespace XMLReader {
         }
         cells->setSize(rCutOff, dom, 2);
         MolSimLogger::logDebug("XMLReader: domain=({}, {}, {}), rcutOff = {}", dom[0], dom[1], dom[2], rCutOff);
-        Reflecting::init_bound(1);
     }
 
 
     void simulation_pimpl::init(std::shared_ptr<LinkedCellContainer> &cells_arg, std::shared_ptr<Simulation> &simu) {
         cells = cells_arg;
         sim = simu;
+    }
+
+    void simulation_pimpl::g_gravitation(double g) {
+        sim->setForce(std::make_unique<LJGravitation>(g));
     }
 
 
