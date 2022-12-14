@@ -53,15 +53,19 @@ namespace XMLReader {
         vel.push(v_arg);
     }
 
-    bool cuboid_pimpl::checkZeroVelocity(std::array<double, 3> v){
+    void cuboid_pimpl::brownianMotion(bool bm) {
+        browMot = bm;
+    }
+
+    /*bool cuboid_pimpl::checkZeroVelocity(std::array<double, 3> v) {
         bool check = true;
-        for(auto &i : v){
-            if(i != 0){
+        for (auto &i: v) {
+            if (i != 0) {
                 check = false;
             }
         }
         return check;
-    }
+    }*/
 
     void cuboid_pimpl::post_cuboid() {
         std::array<double, 3> x{};
@@ -77,11 +81,16 @@ namespace XMLReader {
             num.pop();
         }
         CuboidGenerator<LinkedCellContainer> cub{};
-        if(checkZeroVelocity(v)){
-            cub.generateCuboidTemp(cells,x,n,width,mass,sim->getThermostat()->getTemp());
-        }else {
-            cub.generateCuboid(cells, x, n, width, mass, v);
-            MolSimLogger::logDebug("XMLReader: new size of container: {}", cells->size());
+        if (!browMot) {
+            cub.generateCuboidNoBrownian(cells, x, n, v, width, mass);
+        } else {
+            double meanVelocity;
+            if (sim->getThermostat() != NULL) {
+                meanVelocity = sqrt(sim->getThermostat()->getTemp()/mass);
+            } else {
+                meanVelocity = 0.1;
+            }
+            cub.generateCuboidBrownian(cells, x, n, v, width, mass, meanVelocity);
         }
     }
 

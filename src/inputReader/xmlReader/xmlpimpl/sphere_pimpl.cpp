@@ -47,7 +47,11 @@ namespace XMLReader {
         vel.push(v_arg);
     }
 
-    bool sphere_pimpl::checkZeroVelocity(std::array<double, 3> v){
+    void sphere_pimpl::brownianMotion(bool bm) {
+        browMot = bm;
+    }
+
+    /*bool sphere_pimpl::checkZeroVelocity(std::array<double, 3> v){
         bool check = true;
         for(auto &i : v){
             if(i != 0){
@@ -55,7 +59,7 @@ namespace XMLReader {
             }
         }
         return check;
-    }
+    }*/
 
     void sphere_pimpl::post_sphere(){
         std::array<double, 3> c{};
@@ -68,10 +72,16 @@ namespace XMLReader {
             vel.pop();
         }
         CuboidGenerator<LinkedCellContainer> cub{};
-        if(checkZeroVelocity(v)){
-            cub.generateSphereTemp(cells,c,radius,mass,sim->getThermostat()->getTemp(),width);
-        } else{
-            cub.generateSphere(cells,c,radius,mass,v,width);
+        if (!browMot) {
+            cub.generateSphereNoBrownian(cells,c,v,radius,mass,width);
+        } else {
+            double meanVelocity;
+            if (sim->getThermostat() != NULL) {
+                meanVelocity = sqrt(sim->getThermostat()->getTemp()/mass);
+            } else {
+                meanVelocity = 0.1;
+            }
+            cub.generateSphereBrownian(cells,c,v,radius,mass,width,meanVelocity);
         }
     }
 }

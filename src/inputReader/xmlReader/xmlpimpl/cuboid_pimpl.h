@@ -37,6 +37,8 @@ namespace XMLReader {
         double width;
 
         std::shared_ptr<Simulation> sim;
+
+        bool browMot;
     public:
         /**
          * @brief Function that initializes the container
@@ -86,12 +88,14 @@ namespace XMLReader {
          * @brief Function that reads the velocity in x-dimension
          */
         void v_z(double) override;
+
+        void brownianMotion(bool) override;
         /**
          * @brief Function that generates the cuboids
          */
         void post_cuboid() override;
 
-        bool checkZeroVelocity(std::array<double, 3> v);
+        //bool checkZeroVelocity(std::array<double, 3> v);
     };
 
 }

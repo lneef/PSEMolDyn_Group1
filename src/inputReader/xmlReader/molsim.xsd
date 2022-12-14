@@ -36,6 +36,7 @@
             <xs:element name="v_x" type="xs:double"/>
             <xs:element name="v_y" type="xs:double"/>
             <xs:element name="v_z" type="xs:double"/>
+            <xs:element name="brownianMotion" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -56,6 +57,7 @@
             <xs:element name="v_x" type="xs:double"/>
             <xs:element name="v_y" type="xs:double"/>
             <xs:element name="v_z" type="xs:double"/>
+            <xs:element name="brownianMotion" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
 

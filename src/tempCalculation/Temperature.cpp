@@ -7,20 +7,21 @@
 Temperature::~Temperature() = default;
 
 void Temperature::calculateV(std::shared_ptr<Container> &particles, std::shared_ptr<Thermostat> &thermostat) {
-    double *kin_energy = 0;
+    double kin_energy = 0;
     particles->apply([this, &kin_energy](Particle &p) {
-        *kin_energy = *kin_energy + ((p.getM() * Temperature::calculateProduct(p.getV())) / 2);
+        kin_energy = kin_energy + ((p.getM() * Temperature::calculateProduct(p.getV())) / 2);
     });
     int dimension = 2;
-    double temperature_new = ((*kin_energy * 2) / (dimension * particles->size()));
-    if (temperature_new >= thermostat->getTemp_delta()) {
-        double *temperature;
-        *temperature = sqrt(temperature_new / thermostat->getTemp());
+    double temperature_new = ((kin_energy * 2) / (dimension * particles->size()));
+    double temp_diff = abs(thermostat->getTemp() - temperature_new);
+    if (temp_diff >= thermostat->getTemp_delta()) {
+        double temperature;
+        temperature = sqrt(temperature_new / thermostat->getTemp());
         thermostat->setTemp(temperature_new);
         particles->apply([&temperature](Particle &p) {
             std::array<double, 3> v_new;
             for (int i = 0; i < 3; i++) {
-                v_new[i] = *temperature * p.getV()[i];
+                v_new[i] = temperature * p.getV()[i];
             }
             p.setV(v_new);
         });
