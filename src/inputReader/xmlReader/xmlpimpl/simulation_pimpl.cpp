@@ -55,5 +55,9 @@ namespace XMLReader {
         sim = simu;
     }
 
+    void simulation_pimpl::g_gravitation(double g) {
+        sim->setForce(std::make_unique<LJGravitation>(g));
+    }
+
 
 }

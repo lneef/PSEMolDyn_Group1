@@ -1,5 +1,6 @@
 
 
+#include <iostream>
 #include "LennardJones.h"
 #include "container/ParticleContainer.h"
 
@@ -12,7 +13,6 @@ void LennardJones::calculateF(std::shared_ptr<Container> &particles) {
     particles->apply([](Particle &p) {
         p.updateF({});
     });
-
     particles->applyF([](Particle &p1, Particle &p2) {
         calculateF(p1, p2);
     });

@@ -12,6 +12,7 @@
 #include "container/LinkedCellContainer.h"
 #include "tempCalculation/Thermostat.h"
 #include "tempCalculation/Temperature.h"
+#include "forceCalculation/LJGravitation.h"
 #include <chrono>
 
 /**
@@ -115,6 +116,8 @@ public:
      */
     void setForce(std::unique_ptr<Force> &force_arg);
 
+    void setForce(std::unique_ptr<LJGravitation> &&force_arg);
+
     /**
      * @brief setter for particles
      * @param particles_arg ParticleContainer containing the particles
@@ -145,10 +148,12 @@ public:
      */
     void setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg);
 
+    [[nodiscard]] const std::unique_ptr<Force>& getForce() const;
+
     void setN_thermostat(int n_thermostat);
     void setThermostat(std::shared_ptr<Thermostat> &thermostat);
     void setTemperature(std::unique_ptr<Temperature> &temperature);
-    const std::shared_ptr<Thermostat> &getThermostat() const;
+    [[nodiscard]] const std::shared_ptr<Thermostat> &getThermostat() const;
 };
 
 

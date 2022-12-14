@@ -38,13 +38,13 @@ namespace XMLReader {
 
         std::shared_ptr<Simulation> sim;
 
-        bool browMot;
+        bool browMot = true;
 
-        int type = 1;
+        int type_p = 1;
 
-        double sigma = 1;
+        double sigma_p = 1;
 
-        double epsilon = 5;
+        double epsilon_p = 5;
     public:
         /**
          * @brief Function that initializes the container
@@ -99,6 +99,12 @@ namespace XMLReader {
         /**
          * @brief Function that generates the cuboids
          */
+
+        void type(int) override;
+
+        void sigma(double ) override;
+
+        void epsilon(double ) override;
         void post_cuboid() override;
 
         //bool checkZeroVelocity(std::array<double, 3> v);
