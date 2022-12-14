@@ -21,12 +21,7 @@ public:
 
     /**
      * @brief constructor of LennardJones
-     * @param zeroCrossing_arg zeroCrossing value for the Lennard Jones potential(default: 1)
-     * @param depthOfPotentialWell_arg depthofPotentialWell value for the Lennard Jones potential(default: 5)
      */
-    explicit LennardJones(double zeroCrossing_arg = 1, double depthOfPotentialWell_arg = 5);
+    explicit LennardJones();
 
-private:
-    double depthOfPotentialWell;
-    double zeroCrossing;
 };

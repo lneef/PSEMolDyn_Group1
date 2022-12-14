@@ -44,6 +44,10 @@ private:
      */
     int type;
 
+    double sigma;
+
+    double epsilon;
+
 public:
     explicit Particle(int type = 0);
 
@@ -52,26 +56,29 @@ public:
     Particle(
             // for visualization, we need always 3 coordinates
             // -> in case of 2d, we use only the first and the second
-            std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
+            std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, double sigma_arg = 1, double epsilon_arg = 5,
             int type = 0);
 
     virtual ~Particle();
 
-    const std::array<double, 3> &getX() const;
+    [[nodiscard]] const std::array<double, 3> &getX() const;
 
-    const std::array<double, 3> &getV() const;
+    [[nodiscard]] const std::array<double, 3> &getV() const;
 
-    const std::array<double, 3> &getF() const;
+    [[nodiscard]] const std::array<double, 3> &getF() const;
 
-    const std::array<double, 3> &getOldF() const;
+    [[nodiscard]] const std::array<double, 3> &getOldF() const;
 
-    double getM() const;
+    [[nodiscard]] double getM() const;
 
-    int getType() const;
+    [[nodiscard]] int getType() const;
 
     bool operator==(Particle &other);
 
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
+
+    [[nodiscard]] double getSigma() const;
+    [[nodiscard]] double getEpsilon() const;
 
     /**
      * @brief Setter for the effective force acting on the particle. Before f is set to the new value, old_f is set to the old value of f.

@@ -4,9 +4,10 @@
 
 #include "Reflecting.h"
 
-double Reflecting::critical = 0;
+
 
 bool Reflecting::check(const Particle &p) {
+    double critical = p.getSigma();
     return 2 * std::abs(difference((p))) < critical;
 }
 
@@ -21,9 +22,6 @@ double Reflecting::difference(const Particle &p) {
     return border - diff;
 }
 
-void Reflecting::init_bound(double sigma){
-    critical = 1.1224 * sigma;
-}
 
 Reflecting::Reflecting(std::array<double, 3> &indicator_arg, double border) {
     indicator=indicator_arg;

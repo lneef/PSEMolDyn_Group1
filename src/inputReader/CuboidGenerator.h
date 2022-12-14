@@ -51,7 +51,7 @@ public:
     */
     void
     generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
-                   std::array<double, 3> v) {
+                   std::array<double, 3> v, double sigma = 1, double epsilon = 5, int type = 1) {
 
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
@@ -63,7 +63,7 @@ public:
                     newX[2] = x[2] + (z_cord * h);
                     std::array<double, 3> newV = calculateV(v);
                     //stores particle in ParticleContainer
-                    particles->addParticle(Particle(newX, newV, m));
+                    particles->addParticle(Particle(newX, newV, m, sigma, epsilon, type));
                 }
             }
         }
@@ -80,7 +80,7 @@ public:
      * @param h distance between the particles
      */
     void generateSphere(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
-                        std::array<double, 3> v, double h) {
+                        std::array<double, 3> v, double h, double sigma = 1, double epsilon = 5, int type = 1) {
         double radius = r * h;
         std::array<double, 3> newX{};
         for (int x = -r + 1; x < r; ++x) {
@@ -93,7 +93,7 @@ public:
                     if (rad_test < radius) {
                         std::array<double, 3> newV = calculateV(v);
                         std::array<double, 3> pos = newX + center;
-                        particles->addParticle(Particle(pos, newV, m));
+                        particles->addParticle(Particle(pos, newV, m, sigma, epsilon, type));
                     }
 
                 }
