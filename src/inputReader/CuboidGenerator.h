@@ -57,7 +57,8 @@ public:
     */
     void
     generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
-                   std::array<double, 3> v) {
+
+                   std::array<double, 3> v, double sigma = 1, double epsilon = 5, int type=1) {
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
         for (int x_cord = 0; x_cord < n[0]; x_cord++) {
@@ -68,7 +69,7 @@ public:
                     newX[2] = x[2] + (z_cord * h);
                     std::array<double, 3> newV = calculateV(v);
                     //stores particle in ParticleContainer
-                    particles->addParticle(Particle(newX, newV, m));
+                    particles->addParticle(Particle(newX, newV, m, sigma, epsilon, type));
                 }
             }
         }
@@ -77,7 +78,7 @@ public:
     void
     generateCuboidBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
                            std::array<double, 3> v, double h, double m,
-                           double meanVelocity) {
+                           double meanVelocity, double sigma = 1, double epsilon = 5, int type=1) {
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
         for (int x_cord = 0; x_cord < n[0]; x_cord++) {
@@ -92,7 +93,7 @@ public:
                         newV[i] = v[i] + mbV[i];
                     }
                     //stores particle in ParticleContainer
-                    particles->addParticle(Particle(newX, newV, m));
+                    particles->addParticle(Particle(newX, newV, m, sigma, epsilon, type));
                 }
             }
         }
@@ -100,7 +101,7 @@ public:
 
     void
     generateCuboidNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
-                             std::array<double, 3> v, double h, double m) {
+                             std::array<double, 3> v, double h, double m, double sigma = 1, double epsilon = 5, int type= 1) {
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
         for (int x_cord = 0; x_cord < n[0]; x_cord++) {
@@ -110,7 +111,7 @@ public:
                 for (int z_cord = 0; z_cord < n[2]; z_cord++) {
                     newX[2] = x[2] + (z_cord * h);
                     //stores particle in ParticleContainer
-                    particles->addParticle(Particle(newX, v, m));
+                    particles->addParticle(Particle(newX, v, m, sigma, epsilon, type));
                 }
             }
         }
@@ -127,7 +128,7 @@ public:
      * @param h distance between the particles
      */
     void generateSphere(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
-                        std::array<double, 3> v, double h) {
+                        std::array<double, 3> v, double h, double sigma = 1, double epsilon = 5, int type=1) {
         double radius = r * h;
         std::array<double, 3> newX{};
         for (int x = -r + 1; x < r; ++x) {
@@ -140,7 +141,7 @@ public:
                     if (rad_test < radius) {
                         std::array<double, 3> newV = calculateV(v);
                         std::array<double, 3> pos = newX + center;
-                        particles->addParticle(Particle(pos, newV, m));
+                        particles->addParticle(Particle(pos, newV, m, sigma, epsilon, type));
                     }
                 }
             }
@@ -150,7 +151,7 @@ public:
 
     void
     generateSphereBrownian(std::shared_ptr<T> &particles, std::array<double, 3> center, std::array<double, 3> v, int r,
-                           double m, double h, double meanVelocity) {
+                           double m, double h, double meanVelocity, double sigma = 1, double epsilon = 5, int type=1) {
         double radius = r * h;
         std::array<double, 3> newX{};
         for (int x = -r + 1; x < r; ++x) {
@@ -167,7 +168,7 @@ public:
                             newV[i] = v[i] + mbV[i];
                         }
                         std::array<double, 3> pos = newX + center;
-                        particles->addParticle(Particle(pos, newV, m));
+                        particles->addParticle(Particle(pos, newV, m, sigma, epsilon, type));
                     }
                 }
             }
@@ -176,7 +177,7 @@ public:
     }
 
     void generateSphereNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> center, std::array<double, 3> v, int r,
-                                  double m, double h) {
+                                  double m, double h, double sigma = 1, double epsilon = 5, int type=1) {
         double radius = r * h;
         std::array<double, 3> newX{};
         for (int x = -r + 1; x < r; ++x) {
@@ -188,7 +189,7 @@ public:
                     double rad_test = ArrayUtils::L2Norm(newX);
                     if (rad_test < radius) {
                         std::array<double, 3> pos = newX + center;
-                        particles->addParticle(Particle(pos, v, m));
+                        particles->addParticle(Particle(pos, v, m, sigma, epsilon, type));
                     }
                 }
             }

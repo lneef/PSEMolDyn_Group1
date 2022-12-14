@@ -13,7 +13,7 @@ namespace XMLReader {
     private:
         std::shared_ptr<Simulation> sim;
         double temp;
-        double n_thermo;
+        int n_thermo;
         double temp_tar;
         double temp_del;
     public:

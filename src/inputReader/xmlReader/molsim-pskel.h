@@ -287,68 +287,51 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        t_end(double);
+        virtual void t_end(double);
 
-        virtual void
-        delta_t(double);
+        virtual void delta_t(double);
 
-        virtual void
-        domain_x(double);
+        virtual void domain_x(double);
 
-        virtual void
-        domain_y(double);
+        virtual void domain_y(double);
 
-        virtual void
-        domain_z(double);
+        virtual void domain_z(double);
 
-        virtual void
-        domain_cutOf(double);
+        virtual void domain_cutOf(double);
 
-        virtual void
-        name(const ::std::string &);
+        virtual void name(const ::std::string &);
 
-        virtual void
-        frequency(int);
+        virtual void frequency(int);
 
-        virtual void
-        post_simulation();
+        virtual void g_gravitation(double);
+
+        virtual void post_simulation();
 
         // Parser construction API.
         //
-        void
-        t_end_parser(xml_schema::double_pskel &);
+        void t_end_parser(xml_schema::double_pskel &);
 
-        void
-        delta_t_parser(xml_schema::double_pskel &);
+        void delta_t_parser(xml_schema::double_pskel &);
 
-        void
-        domain_x_parser(xml_schema::double_pskel &);
+        void domain_x_parser(xml_schema::double_pskel &);
 
-        void
-        domain_y_parser(xml_schema::double_pskel &);
+        void domain_y_parser(xml_schema::double_pskel &);
 
-        void
-        domain_z_parser(xml_schema::double_pskel &);
+        void domain_z_parser(xml_schema::double_pskel &);
 
-        void
-        domain_cutOf_parser(xml_schema::double_pskel &);
+        void domain_cutOf_parser(xml_schema::double_pskel &);
 
-        void
-        name_parser(xml_schema::string_pskel &);
+        void name_parser(xml_schema::string_pskel &);
 
-        void
-        frequency_parser(xml_schema::int_pskel &);
+        void frequency_parser(xml_schema::int_pskel &);
 
-        void
-        parsers(xml_schema::double_pskel & /* t_end */,
-                xml_schema::double_pskel & /* delta_t */,
-                xml_schema::double_pskel & /* domain_x */,
-                xml_schema::double_pskel & /* domain_y */,
-                xml_schema::double_pskel & /* domain_z */,
-                xml_schema::double_pskel & /* domain_cutOf */,
-                xml_schema::string_pskel & /* name */,
-                xml_schema::int_pskel & /* frequency */);
+        void g_gravitation_parser(xml_schema::double_pskel &);
+
+        void parsers(xml_schema::double_pskel & /* t_end */, xml_schema::double_pskel & /* delta_t */,
+                     xml_schema::double_pskel & /* domain_x */, xml_schema::double_pskel & /* domain_y */,
+                     xml_schema::double_pskel & /* domain_z */, xml_schema::double_pskel & /* domain_cutOf */,
+                     xml_schema::string_pskel & /* name */, xml_schema::int_pskel & /* frequency */,
+                     xml_schema::double_pskel & /* g_gravitation */);
 
         // Constructor.
         //
@@ -357,14 +340,10 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
         xml_schema::double_pskel *t_end_parser_;
@@ -375,6 +354,7 @@ namespace XMLReader {
         xml_schema::double_pskel *domain_cutOf_parser_;
         xml_schema::string_pskel *name_parser_;
         xml_schema::int_pskel *frequency_parser_;
+        xml_schema::double_pskel *g_gravitation_parser_;
     };
 
     class temperature_pskel : public xml_schema::complex_content {
@@ -384,40 +364,28 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        temp_int(double);
+        virtual void temp_int(double);
 
-        virtual void
-        n_thermostat(int);
+        virtual void n_thermostat(int);
 
-        virtual void
-        temp_target(double);
+        virtual void temp_target(double);
 
-        virtual void
-        temp_delta(double);
+        virtual void temp_delta(double);
 
-        virtual void
-        post_temperature();
+        virtual void post_temperature();
 
         // Parser construction API.
         //
-        void
-        temp_int_parser(xml_schema::double_pskel &);
+        void temp_int_parser(xml_schema::double_pskel &);
 
-        void
-        n_thermostat_parser(xml_schema::int_pskel &);
+        void n_thermostat_parser(xml_schema::int_pskel &);
 
-        void
-        temp_target_parser(xml_schema::double_pskel &);
+        void temp_target_parser(xml_schema::double_pskel &);
 
-        void
-        temp_delta_parser(xml_schema::double_pskel &);
+        void temp_delta_parser(xml_schema::double_pskel &);
 
-        void
-        parsers(xml_schema::double_pskel & /* temp_int */,
-                xml_schema::int_pskel & /* n_thermostat */,
-                xml_schema::double_pskel & /* temp_target */,
-                xml_schema::double_pskel & /* temp_delta */);
+        void parsers(xml_schema::double_pskel & /* temp_int */, xml_schema::int_pskel & /* n_thermostat */,
+                     xml_schema::double_pskel & /* temp_target */, xml_schema::double_pskel & /* temp_delta */);
 
         // Constructor.
         //
@@ -426,14 +394,10 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
         xml_schema::double_pskel *temp_int_parser_;
@@ -449,96 +413,78 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        x(double);
+        virtual void type(int);
 
-        virtual void
-        y(double);
+        virtual void sigma(double);
 
-        virtual void
-        z(double);
+        virtual void epsilon(double);
 
-        virtual void
-        n_x(int);
+        virtual void x(double);
 
-        virtual void
-        n_y(int);
+        virtual void y(double);
 
-        virtual void
-        n_z(int);
+        virtual void z(double);
 
-        virtual void
-        h(double);
+        virtual void n_x(int);
 
-        virtual void
-        m(double);
+        virtual void n_y(int);
 
-        virtual void
-        v_x(double);
+        virtual void n_z(int);
 
-        virtual void
-        v_y(double);
+        virtual void h(double);
 
-        virtual void
-        v_z(double);
+        virtual void m(double);
 
-        virtual void
-        brownianMotion(bool);
+        virtual void v_x(double);
 
-        virtual void
-        post_cuboid();
+        virtual void v_y(double);
+
+        virtual void v_z(double);
+
+        virtual void brownianMotion(bool);
+
+        virtual void post_cuboid();
 
         // Parser construction API.
         //
-        void
-        x_parser(xml_schema::double_pskel &);
+        void type_parser(xml_schema::int_pskel &);
 
-        void
-        y_parser(xml_schema::double_pskel &);
+        void sigma_parser(xml_schema::double_pskel &);
 
-        void
-        z_parser(xml_schema::double_pskel &);
+        void epsilon_parser(xml_schema::double_pskel &);
 
-        void
-        n_x_parser(xml_schema::int_pskel &);
+        void x_parser(xml_schema::double_pskel &);
 
-        void
-        n_y_parser(xml_schema::int_pskel &);
+        void y_parser(xml_schema::double_pskel &);
 
-        void
-        n_z_parser(xml_schema::int_pskel &);
+        void z_parser(xml_schema::double_pskel &);
 
-        void
-        h_parser(xml_schema::double_pskel &);
+        void n_x_parser(xml_schema::int_pskel &);
 
-        void
-        m_parser(xml_schema::double_pskel &);
+        void n_y_parser(xml_schema::int_pskel &);
 
-        void
-        v_x_parser(xml_schema::double_pskel &);
+        void n_z_parser(xml_schema::int_pskel &);
 
-        void
-        v_y_parser(xml_schema::double_pskel &);
+        void h_parser(xml_schema::double_pskel &);
 
-        void
-        v_z_parser(xml_schema::double_pskel &);
+        void m_parser(xml_schema::double_pskel &);
 
-        void
-        brownianMotion_parser(xml_schema::boolean_pskel &);
+        void v_x_parser(xml_schema::double_pskel &);
 
-        void
-        parsers(xml_schema::double_pskel & /* x */,
-                xml_schema::double_pskel & /* y */,
-                xml_schema::double_pskel & /* z */,
-                xml_schema::int_pskel & /* n_x */,
-                xml_schema::int_pskel & /* n_y */,
-                xml_schema::int_pskel & /* n_z */,
-                xml_schema::double_pskel & /* h */,
-                xml_schema::double_pskel & /* m */,
-                xml_schema::double_pskel & /* v_x */,
-                xml_schema::double_pskel & /* v_y */,
-                xml_schema::double_pskel & /* v_z */,
-                xml_schema::boolean_pskel & /* brownianMotion */);
+        void v_y_parser(xml_schema::double_pskel &);
+
+        void v_z_parser(xml_schema::double_pskel &);
+
+        void brownianMotion_parser(xml_schema::boolean_pskel &);
+
+        void parsers(xml_schema::int_pskel & /* type */, xml_schema::double_pskel & /* sigma */,
+                     xml_schema::double_pskel & /* epsilon */, xml_schema::double_pskel & /* x */,
+                     xml_schema::double_pskel & /* y */, xml_schema::double_pskel & /* z */,
+                     xml_schema::int_pskel & /* n_x */, xml_schema::int_pskel & /* n_y */,
+                     xml_schema::int_pskel & /* n_z */, xml_schema::double_pskel & /* h */,
+                     xml_schema::double_pskel & /* m */, xml_schema::double_pskel & /* v_x */,
+                     xml_schema::double_pskel & /* v_y */, xml_schema::double_pskel & /* v_z */,
+                     xml_schema::boolean_pskel & /* brownianMotion */);
 
         // Constructor.
         //
@@ -547,16 +493,15 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
+        xml_schema::int_pskel *type_parser_;
+        xml_schema::double_pskel *sigma_parser_;
+        xml_schema::double_pskel *epsilon_parser_;
         xml_schema::double_pskel *x_parser_;
         xml_schema::double_pskel *y_parser_;
         xml_schema::double_pskel *z_parser_;
@@ -578,19 +523,15 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        path(const ::std::string &);
+        virtual void path(const ::std::string &);
 
-        virtual void
-        post_cuboid_input();
+        virtual void post_cuboid_input();
 
         // Parser construction API.
         //
-        void
-        path_parser(xml_schema::string_pskel &);
+        void path_parser(xml_schema::string_pskel &);
 
-        void
-        parsers(xml_schema::string_pskel & /* path */);
+        void parsers(xml_schema::string_pskel & /* path */);
 
         // Constructor.
         //
@@ -599,14 +540,10 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
         xml_schema::string_pskel *path_parser_;
@@ -619,82 +556,69 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        x(double);
+        virtual void type(int);
 
-        virtual void
-        y(double);
+        virtual void sigma(double);
 
-        virtual void
-        z(double);
+        virtual void epsilon(double);
 
-        virtual void
-        r(int);
+        virtual void x(double);
 
-        virtual void
-        h(double);
+        virtual void y(double);
 
-        virtual void
-        m(double);
+        virtual void z(double);
 
-        virtual void
-        v_x(double);
+        virtual void r(int);
 
-        virtual void
-        v_y(double);
+        virtual void h(double);
 
-        virtual void
-        v_z(double);
+        virtual void m(double);
 
-        virtual void
-        brownianMotion(bool);
+        virtual void v_x(double);
 
-        virtual void
-        post_sphere();
+        virtual void v_y(double);
+
+        virtual void v_z(double);
+
+        virtual void brownianMotion(bool);
+
+        virtual void post_sphere();
 
         // Parser construction API.
         //
-        void
-        x_parser(xml_schema::double_pskel &);
+        void type_parser(xml_schema::int_pskel &);
 
-        void
-        y_parser(xml_schema::double_pskel &);
+        void sigma_parser(xml_schema::double_pskel &);
 
-        void
-        z_parser(xml_schema::double_pskel &);
+        void epsilon_parser(xml_schema::double_pskel &);
 
-        void
-        r_parser(xml_schema::int_pskel &);
+        void x_parser(xml_schema::double_pskel &);
 
-        void
-        h_parser(xml_schema::double_pskel &);
+        void y_parser(xml_schema::double_pskel &);
 
-        void
-        m_parser(xml_schema::double_pskel &);
+        void z_parser(xml_schema::double_pskel &);
 
-        void
-        v_x_parser(xml_schema::double_pskel &);
+        void r_parser(xml_schema::int_pskel &);
 
-        void
-        v_y_parser(xml_schema::double_pskel &);
+        void h_parser(xml_schema::double_pskel &);
 
-        void
-        v_z_parser(xml_schema::double_pskel &);
+        void m_parser(xml_schema::double_pskel &);
 
-        void
-        brownianMotion_parser(xml_schema::boolean_pskel &);
+        void v_x_parser(xml_schema::double_pskel &);
 
-        void
-        parsers(xml_schema::double_pskel & /* x */,
-                xml_schema::double_pskel & /* y */,
-                xml_schema::double_pskel & /* z */,
-                xml_schema::int_pskel & /* r */,
-                xml_schema::double_pskel & /* h */,
-                xml_schema::double_pskel & /* m */,
-                xml_schema::double_pskel & /* v_x */,
-                xml_schema::double_pskel & /* v_y */,
-                xml_schema::double_pskel & /* v_z */,
-                xml_schema::boolean_pskel & /* brownianMotion */);
+        void v_y_parser(xml_schema::double_pskel &);
+
+        void v_z_parser(xml_schema::double_pskel &);
+
+        void brownianMotion_parser(xml_schema::boolean_pskel &);
+
+        void parsers(xml_schema::int_pskel & /* type */, xml_schema::double_pskel & /* sigma */,
+                     xml_schema::double_pskel & /* epsilon */, xml_schema::double_pskel & /* x */,
+                     xml_schema::double_pskel & /* y */, xml_schema::double_pskel & /* z */,
+                     xml_schema::int_pskel & /* r */, xml_schema::double_pskel & /* h */,
+                     xml_schema::double_pskel & /* m */, xml_schema::double_pskel & /* v_x */,
+                     xml_schema::double_pskel & /* v_y */, xml_schema::double_pskel & /* v_z */,
+                     xml_schema::boolean_pskel & /* brownianMotion */);
 
         // Constructor.
         //
@@ -703,16 +627,15 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
+        xml_schema::int_pskel *type_parser_;
+        xml_schema::double_pskel *sigma_parser_;
+        xml_schema::double_pskel *epsilon_parser_;
         xml_schema::double_pskel *x_parser_;
         xml_schema::double_pskel *y_parser_;
         xml_schema::double_pskel *z_parser_;
@@ -732,19 +655,15 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        path(const ::std::string &);
+        virtual void path(const ::std::string &);
 
-        virtual void
-        post_spheres_input();
+        virtual void post_spheres_input();
 
         // Parser construction API.
         //
-        void
-        path_parser(xml_schema::string_pskel &);
+        void path_parser(xml_schema::string_pskel &);
 
-        void
-        parsers(xml_schema::string_pskel & /* path */);
+        void parsers(xml_schema::string_pskel & /* path */);
 
         // Constructor.
         //
@@ -753,14 +672,10 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
         xml_schema::string_pskel *path_parser_;
@@ -773,40 +688,28 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        top(const ::std::string &);
+        virtual void top(const ::std::string &);
 
-        virtual void
-        bottom(const ::std::string &);
+        virtual void bottom(const ::std::string &);
 
-        virtual void
-        left(const ::std::string &);
+        virtual void left(const ::std::string &);
 
-        virtual void
-        right(const ::std::string &);
+        virtual void right(const ::std::string &);
 
-        virtual void
-        post_boundaries();
+        virtual void post_boundaries();
 
         // Parser construction API.
         //
-        void
-        top_parser(xml_schema::string_pskel &);
+        void top_parser(xml_schema::string_pskel &);
 
-        void
-        bottom_parser(xml_schema::string_pskel &);
+        void bottom_parser(xml_schema::string_pskel &);
 
-        void
-        left_parser(xml_schema::string_pskel &);
+        void left_parser(xml_schema::string_pskel &);
 
-        void
-        right_parser(xml_schema::string_pskel &);
+        void right_parser(xml_schema::string_pskel &);
 
-        void
-        parsers(xml_schema::string_pskel & /* top */,
-                xml_schema::string_pskel & /* bottom */,
-                xml_schema::string_pskel & /* left */,
-                xml_schema::string_pskel & /* right */);
+        void parsers(xml_schema::string_pskel & /* top */, xml_schema::string_pskel & /* bottom */,
+                     xml_schema::string_pskel & /* left */, xml_schema::string_pskel & /* right */);
 
         // Constructor.
         //
@@ -815,14 +718,10 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
         xml_schema::string_pskel *top_parser_;
@@ -838,61 +737,42 @@ namespace XMLReader {
         // virtual void
         // pre ();
 
-        virtual void
-        cuboid();
+        virtual void cuboid();
 
-        virtual void
-        simulation();
+        virtual void simulation();
 
-        virtual void
-        cuboid_input();
+        virtual void cuboid_input();
 
-        virtual void
-        sphere();
+        virtual void sphere();
 
-        virtual void
-        spheres_input();
+        virtual void spheres_input();
 
-        virtual void
-        boundaries();
+        virtual void boundaries();
 
-        virtual void
-        temperature();
+        virtual void temperature();
 
-        virtual void
-        post_molecular();
+        virtual void post_molecular();
 
         // Parser construction API.
         //
-        void
-        cuboid_parser(cuboid_pskel &);
+        void cuboid_parser(cuboid_pskel &);
 
-        void
-        simulation_parser(simulation_pskel &);
+        void simulation_parser(simulation_pskel &);
 
-        void
-        cuboid_input_parser(cuboid_input_pskel &);
+        void cuboid_input_parser(cuboid_input_pskel &);
 
-        void
-        sphere_parser(sphere_pskel &);
+        void sphere_parser(sphere_pskel &);
 
-        void
-        spheres_input_parser(spheres_input_pskel &);
+        void spheres_input_parser(spheres_input_pskel &);
 
-        void
-        boundaries_parser(boundaries_pskel &);
+        void boundaries_parser(boundaries_pskel &);
 
-        void
-        temperature_parser(temperature_pskel &);
+        void temperature_parser(temperature_pskel &);
 
-        void
-        parsers(cuboid_pskel & /* cuboid */,
-                simulation_pskel & /* simulation */,
-                cuboid_input_pskel & /* cuboid_input */,
-                sphere_pskel & /* sphere */,
-                spheres_input_pskel & /* spheres_input */,
-                boundaries_pskel & /* boundaries */,
-                temperature_pskel & /* temperature */);
+        void parsers(cuboid_pskel & /* cuboid */, simulation_pskel & /* simulation */,
+                     cuboid_input_pskel & /* cuboid_input */, sphere_pskel & /* sphere */,
+                     spheres_input_pskel & /* spheres_input */, boundaries_pskel & /* boundaries */,
+                     temperature_pskel & /* temperature */);
 
         // Constructor.
         //
@@ -901,14 +781,10 @@ namespace XMLReader {
         // Implementation.
         //
     protected:
-        virtual bool
-        _start_element_impl(const xml_schema::ro_string &,
-                            const xml_schema::ro_string &,
-                            const xml_schema::ro_string *);
+        virtual bool _start_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &,
+                                         const xml_schema::ro_string *);
 
-        virtual bool
-        _end_element_impl(const xml_schema::ro_string &,
-                          const xml_schema::ro_string &);
+        virtual bool _end_element_impl(const xml_schema::ro_string &, const xml_schema::ro_string &);
 
     protected:
         cuboid_pskel *cuboid_parser_;
@@ -918,7 +794,9 @@ namespace XMLReader {
         spheres_input_pskel *spheres_input_parser_;
         boundaries_pskel *boundaries_parser_;
         temperature_pskel *temperature_parser_;
+
     };
+
 }
 
 #include <xsd/cxx/post.hxx>

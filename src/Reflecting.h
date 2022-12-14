@@ -29,11 +29,6 @@ private:
      * @return distance to boundary
      */
     double difference(const Particle& p);
-
-    /**
-     * @brief critical distance to boundary, when below the repulsing force using the counter particle is calculated
-     */
-    static double critical;
 public:
 
     /**
@@ -51,14 +46,8 @@ public:
     bool check(const Particle& p);
 
     /**
-     * @brief initializes the field critical
-     * @param sigma zero crossing value for the liquid
-     */
-    static void init_bound(double sigma);
-
-    /**
      * @brief applies the reflecting boundary condition by calculating the force between the particle and its counter
-     * @tparam T function taking two lvalue refernces to particles
+     * @tparam T function taking two lvalue references to particles
      * @param p Particle inside a boundary cell
      * @param fun function to calculate the force
      */
@@ -67,7 +56,7 @@ public:
 
         to_add = difference(p) * indicator;
 
-        Particle p_counter(p.getX() + 2 * to_add, p.getV(),p.getM());
+        Particle p_counter(p.getX() + 2 * to_add, p.getV(),p.getM(), p.getSigma(), p.getEpsilon(), p.getType());
 
         fun(p, p_counter);
 

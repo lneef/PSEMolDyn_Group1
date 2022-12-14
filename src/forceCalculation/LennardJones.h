@@ -17,16 +17,18 @@ public:
      */
     void calculateF(std::shared_ptr<Container>  &particles) override;
 
+    /**
+     * @brief calculates the force between two particles based on the Lennard Jones potential
+     * @param p1 first particle of the interaction
+     * @param p2 second particle of the interaction
+     */
+    static void calculateF(Particle& p1, Particle& p2);
+
     ~LennardJones() override;
 
     /**
      * @brief constructor of LennardJones
-     * @param zeroCrossing_arg zeroCrossing value for the Lennard Jones potential(default: 1)
-     * @param depthOfPotentialWell_arg depthofPotentialWell value for the Lennard Jones potential(default: 5)
      */
-    explicit LennardJones(double zeroCrossing_arg = 1, double depthOfPotentialWell_arg = 5);
+    explicit LennardJones();
 
-private:
-    double depthOfPotentialWell;
-    double zeroCrossing;
 };

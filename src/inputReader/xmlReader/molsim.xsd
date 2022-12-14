@@ -11,6 +11,7 @@
             <xs:element name="domain_cutOf" type="xs:double"/>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="frequency" type="xs:int"/>
+            <xs:element name= "g_gravitation" type="xs:double" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -25,6 +26,9 @@
 
     <xs:complexType name="cuboid">
         <xs:sequence>
+            <xs:element name = "type" type="xs:int"/>
+            <xs:element name = "sigma" type="xs:double"/>
+            <xs:element name = "epsilon" type="xs:double"/>
             <xs:element name="x" type="xs:double"/>
             <xs:element name="y" type="xs:double"/>
             <xs:element name="z" type="xs:double"/>
@@ -48,6 +52,9 @@
 
     <xs:complexType name="sphere">
         <xs:sequence>
+            <xs:element name = "type" type="xs:int"/>
+            <xs:element name = "sigma" type="xs:double"/>
+            <xs:element name = "epsilon" type="xs:double"/>
             <xs:element name="x" type="xs:double"/>
             <xs:element name="y" type="xs:double"/>
             <xs:element name="z" type="xs:double"/>

@@ -82,21 +82,39 @@ namespace XMLReader {
         }
         CuboidGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
-            cub.generateCuboidNoBrownian(cells, x, n, v, width, mass);
+            cub.generateCuboidNoBrownian(cells, x, n, v, width, mass, sigma_p, epsilon_p, type_p);
         } else {
             double meanVelocity;
-            if (sim->getThermostat() != NULL) {
+            if (sim->getThermostat() != nullptr) {
                 meanVelocity = sqrt(sim->getThermostat()->getTemp()/mass);
             } else {
                 meanVelocity = 0.1;
             }
-            cub.generateCuboidBrownian(cells, x, n, v, width, mass, meanVelocity);
+            cub.generateCuboidBrownian(cells, x, n, v, width, mass, meanVelocity, sigma_p, epsilon_p, type_p);
         }
+
+
+        browMot = true;
+        type_p = 1;
+        sigma_p = 1;
+        epsilon_p = 5;
     }
 
     void cuboid_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
         cells = lc;
         sim = simulation;
+    }
+
+    void cuboid_pimpl::type(int type_arg) {
+        type_p = type_arg;
+    }
+
+    void cuboid_pimpl::sigma(double sigma_arg) {
+        sigma_p = sigma_arg;
+    }
+
+    void cuboid_pimpl::epsilon(double epsilon_arg) {
+        epsilon_p = epsilon_arg;
     }
 
 }

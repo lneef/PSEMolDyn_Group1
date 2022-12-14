@@ -39,10 +39,10 @@
 #include <xsd/cxx/pre.hxx>
 
 #include "molsim-pskel.h"
-namespace XMLReader {
+
 // simulation_pskel
 //
-
+namespace XMLReader {
     void simulation_pskel::
     t_end_parser(xml_schema::double_pskel &p) {
         this->t_end_parser_ = &p;
@@ -84,6 +84,11 @@ namespace XMLReader {
     }
 
     void simulation_pskel::
+    g_gravitation_parser(xml_schema::double_pskel &p) {
+        this->g_gravitation_parser_ = &p;
+    }
+
+    void simulation_pskel::
     parsers(xml_schema::double_pskel &t_end,
             xml_schema::double_pskel &delta_t,
             xml_schema::double_pskel &domain_x,
@@ -91,7 +96,8 @@ namespace XMLReader {
             xml_schema::double_pskel &domain_z,
             xml_schema::double_pskel &domain_cutOf,
             xml_schema::string_pskel &name,
-            xml_schema::int_pskel &frequency) {
+            xml_schema::int_pskel &frequency,
+            xml_schema::double_pskel &g_gravitation) {
         this->t_end_parser_ = &t_end;
         this->delta_t_parser_ = &delta_t;
         this->domain_x_parser_ = &domain_x;
@@ -100,6 +106,7 @@ namespace XMLReader {
         this->domain_cutOf_parser_ = &domain_cutOf;
         this->name_parser_ = &name;
         this->frequency_parser_ = &frequency;
+        this->g_gravitation_parser_ = &g_gravitation;
     }
 
     simulation_pskel::
@@ -111,7 +118,8 @@ namespace XMLReader {
               domain_z_parser_(0),
               domain_cutOf_parser_(0),
               name_parser_(0),
-              frequency_parser_(0) {
+              frequency_parser_(0),
+              g_gravitation_parser_(0) {
     }
 
 // temperature_pskel
@@ -158,6 +166,21 @@ namespace XMLReader {
 
 // cuboid_pskel
 //
+
+    void cuboid_pskel::
+    type_parser(xml_schema::int_pskel &p) {
+        this->type_parser_ = &p;
+    }
+
+    void cuboid_pskel::
+    sigma_parser(xml_schema::double_pskel &p) {
+        this->sigma_parser_ = &p;
+    }
+
+    void cuboid_pskel::
+    epsilon_parser(xml_schema::double_pskel &p) {
+        this->epsilon_parser_ = &p;
+    }
 
     void cuboid_pskel::
     x_parser(xml_schema::double_pskel &p) {
@@ -220,7 +243,10 @@ namespace XMLReader {
     }
 
     void cuboid_pskel::
-    parsers(xml_schema::double_pskel &x,
+    parsers(xml_schema::int_pskel &type,
+            xml_schema::double_pskel &sigma,
+            xml_schema::double_pskel &epsilon,
+            xml_schema::double_pskel &x,
             xml_schema::double_pskel &y,
             xml_schema::double_pskel &z,
             xml_schema::int_pskel &n_x,
@@ -232,6 +258,9 @@ namespace XMLReader {
             xml_schema::double_pskel &v_y,
             xml_schema::double_pskel &v_z,
             xml_schema::boolean_pskel &brownianMotion) {
+        this->type_parser_ = &type;
+        this->sigma_parser_ = &sigma;
+        this->epsilon_parser_ = &epsilon;
         this->x_parser_ = &x;
         this->y_parser_ = &y;
         this->z_parser_ = &z;
@@ -248,7 +277,10 @@ namespace XMLReader {
 
     cuboid_pskel::
     cuboid_pskel()
-            : x_parser_(0),
+            : type_parser_(0),
+              sigma_parser_(0),
+              epsilon_parser_(0),
+              x_parser_(0),
               y_parser_(0),
               z_parser_(0),
               n_x_parser_(0),
@@ -282,6 +314,21 @@ namespace XMLReader {
 
 // sphere_pskel
 //
+
+    void sphere_pskel::
+    type_parser(xml_schema::int_pskel &p) {
+        this->type_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    sigma_parser(xml_schema::double_pskel &p) {
+        this->sigma_parser_ = &p;
+    }
+
+    void sphere_pskel::
+    epsilon_parser(xml_schema::double_pskel &p) {
+        this->epsilon_parser_ = &p;
+    }
 
     void sphere_pskel::
     x_parser(xml_schema::double_pskel &p) {
@@ -334,7 +381,10 @@ namespace XMLReader {
     }
 
     void sphere_pskel::
-    parsers(xml_schema::double_pskel &x,
+    parsers(xml_schema::int_pskel &type,
+            xml_schema::double_pskel &sigma,
+            xml_schema::double_pskel &epsilon,
+            xml_schema::double_pskel &x,
             xml_schema::double_pskel &y,
             xml_schema::double_pskel &z,
             xml_schema::int_pskel &r,
@@ -344,6 +394,9 @@ namespace XMLReader {
             xml_schema::double_pskel &v_y,
             xml_schema::double_pskel &v_z,
             xml_schema::boolean_pskel &brownianMotion) {
+        this->type_parser_ = &type;
+        this->sigma_parser_ = &sigma;
+        this->epsilon_parser_ = &epsilon;
         this->x_parser_ = &x;
         this->y_parser_ = &y;
         this->z_parser_ = &z;
@@ -358,7 +411,10 @@ namespace XMLReader {
 
     sphere_pskel::
     sphere_pskel()
-            : x_parser_(0),
+            : type_parser_(0),
+              sigma_parser_(0),
+              epsilon_parser_(0),
+              x_parser_(0),
               y_parser_(0),
               z_parser_(0),
               r_parser_(0),
@@ -532,6 +588,10 @@ namespace XMLReader {
     }
 
     void simulation_pskel::
+    g_gravitation(double) {
+    }
+
+    void simulation_pskel::
     post_simulation() {
     }
 
@@ -616,6 +676,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "g_gravitation" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->g_gravitation_parser_;
+
+            if (this->g_gravitation_parser_)
+                this->g_gravitation_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -677,6 +746,13 @@ namespace XMLReader {
         if (n == "frequency" && ns.empty()) {
             if (this->frequency_parser_)
                 this->frequency(this->frequency_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "g_gravitation" && ns.empty()) {
+            if (this->g_gravitation_parser_)
+                this->g_gravitation(this->g_gravitation_parser_->post_double());
 
             return true;
         }
@@ -796,6 +872,18 @@ namespace XMLReader {
 //
 
     void cuboid_pskel::
+    type(int) {
+    }
+
+    void cuboid_pskel::
+    sigma(double) {
+    }
+
+    void cuboid_pskel::
+    epsilon(double) {
+    }
+
+    void cuboid_pskel::
     x(double) {
     }
 
@@ -855,6 +943,33 @@ namespace XMLReader {
 
         if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
             return true;
+
+        if (n == "type" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->type_parser_;
+
+            if (this->type_parser_)
+                this->type_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "sigma" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->sigma_parser_;
+
+            if (this->sigma_parser_)
+                this->sigma_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "epsilon" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->epsilon_parser_;
+
+            if (this->epsilon_parser_)
+                this->epsilon_parser_->pre();
+
+            return true;
+        }
 
         if (n == "x" && ns.empty()) {
             this->xml_schema::complex_content::context_.top().parser_ = this->x_parser_;
@@ -972,6 +1087,27 @@ namespace XMLReader {
                       const xml_schema::ro_string &n) {
         if (this->xml_schema::complex_content::_end_element_impl(ns, n))
             return true;
+
+        if (n == "type" && ns.empty()) {
+            if (this->type_parser_)
+                this->type(this->type_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "sigma" && ns.empty()) {
+            if (this->sigma_parser_)
+                this->sigma(this->sigma_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "epsilon" && ns.empty()) {
+            if (this->epsilon_parser_)
+                this->epsilon(this->epsilon_parser_->post_double());
+
+            return true;
+        }
 
         if (n == "x" && ns.empty()) {
             if (this->x_parser_)
@@ -1112,6 +1248,18 @@ namespace XMLReader {
 //
 
     void sphere_pskel::
+    type(int) {
+    }
+
+    void sphere_pskel::
+    sigma(double) {
+    }
+
+    void sphere_pskel::
+    epsilon(double) {
+    }
+
+    void sphere_pskel::
     x(double) {
     }
 
@@ -1163,6 +1311,33 @@ namespace XMLReader {
 
         if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
             return true;
+
+        if (n == "type" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->type_parser_;
+
+            if (this->type_parser_)
+                this->type_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "sigma" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->sigma_parser_;
+
+            if (this->sigma_parser_)
+                this->sigma_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "epsilon" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->epsilon_parser_;
+
+            if (this->epsilon_parser_)
+                this->epsilon_parser_->pre();
+
+            return true;
+        }
 
         if (n == "x" && ns.empty()) {
             this->xml_schema::complex_content::context_.top().parser_ = this->x_parser_;
@@ -1262,6 +1437,27 @@ namespace XMLReader {
                       const xml_schema::ro_string &n) {
         if (this->xml_schema::complex_content::_end_element_impl(ns, n))
             return true;
+
+        if (n == "type" && ns.empty()) {
+            if (this->type_parser_)
+                this->type(this->type_parser_->post_int());
+
+            return true;
+        }
+
+        if (n == "sigma" && ns.empty()) {
+            if (this->sigma_parser_)
+                this->sigma(this->sigma_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "epsilon" && ns.empty()) {
+            if (this->epsilon_parser_)
+                this->epsilon(this->epsilon_parser_->post_double());
+
+            return true;
+        }
 
         if (n == "x" && ns.empty()) {
             if (this->x_parser_)
@@ -1673,7 +1869,7 @@ namespace XMLReader {
 
         return false;
     }
-
+}
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.
@@ -1681,4 +1877,3 @@ namespace XMLReader {
 //
 // End epilogue.
 
-}
