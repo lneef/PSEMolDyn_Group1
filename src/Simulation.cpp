@@ -66,6 +66,12 @@ void Simulation::run() {
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
 
         iteration++;
+        if (temperature != NULL) {
+            if (iteration % n_thermostat == 0) {
+                temperature->calculateV(particles, thermostat);
+            }
+        }
+
 #ifndef BENCHMARK
         if (iteration % out_frequency == 0) {
             writer->plotParticles(particles, out_name, iteration);
@@ -127,6 +133,18 @@ void Simulation::setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg
 
 void Simulation::setOut_name(const std::string &out_name_arg) {
     out_name = out_name_arg;
-
 }
 
+void Simulation::setN_thermostat(int n_thermostat) {
+    n_thermostat = n_thermostat;
+}
+
+void Simulation::setTemperature(std::unique_ptr<Temperature> &temperature) {
+    temperature = std::move(temperature);
+}
+
+void Simulation::setThermostat(std::shared_ptr<Thermostat> &thermostat) {
+    thermostat = std::move(thermostat);
+}
+
+const std::shared_ptr<Thermostat> &Simulation::getThermostat() const { return thermostat; }

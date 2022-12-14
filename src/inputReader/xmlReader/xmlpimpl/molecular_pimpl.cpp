@@ -21,11 +21,19 @@ namespace XMLReader {
 
     }
 
+    void molecular_pimpl::sphere() {
+
+    }
+
     void molecular_pimpl::spheres_input() {
 
     }
 
     void molecular_pimpl::boundaries() {
+
+    }
+
+    void molecular_pimpl::temperature() {
 
     }
 

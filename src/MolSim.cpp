@@ -14,6 +14,7 @@
 #include "MolSimLogger.h"
 #include "Simulation.h"
 #include "inputReader/xmlReader/XmlReader.h"
+#include "tempCalculation/Temperature.h"
 
 
 void print_help();
@@ -46,6 +47,7 @@ int main(int argc, char *argsv[]) {
     std::unique_ptr<inputReader::InputReader> input;
     std::shared_ptr<Simulation> simulation = std::make_shared<Simulation>();
     std::unique_ptr<Force> force;
+    std::unique_ptr<Temperature> temperature;
     std::string filename;
     int arg = 0;
     bool arg_flag = false;
@@ -60,8 +62,10 @@ int main(int argc, char *argsv[]) {
                 filename = optarg;
                 input = std::make_unique<XMLReader::XmlReader>(filename);
                 force = std::make_unique<LennardJones>();
+                temperature = std::make_unique<Temperature>();
                 arg_flag = true;
                 opt = XMLCuboid;
+                simulation->setTemperature(temperature);
                 break;
             case 't':
                 delta_t = std::stod(optarg);
