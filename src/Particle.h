@@ -44,16 +44,6 @@ private:
      */
     int type;
 
-    /**
-     * @brief zero crossing value for the Lennard Jones potential
-     */
-    double sigma;
-
-    /**
-     * @brief depth of potential well for the Lennard Jones potential
-     */
-    double epsilon;
-
 public:
     explicit Particle(int type = 0);
 
@@ -63,29 +53,25 @@ public:
             // for visualization, we need always 3 coordinates
             // -> in case of 2d, we use only the first and the second
             std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
-            double sigma_arg = 1, double epsilon_arg = 5, int type = 0);
+            int type = 0);
 
     virtual ~Particle();
 
-    [[nodiscard]] const std::array<double, 3> &getX() const;
+    const std::array<double, 3> &getX() const;
 
-    [[nodiscard]] const std::array<double, 3> &getV() const;
+    const std::array<double, 3> &getV() const;
 
-    [[nodiscard]] const std::array<double, 3> &getF() const;
+    const std::array<double, 3> &getF() const;
 
-    [[nodiscard]] const std::array<double, 3> &getOldF() const;
+    const std::array<double, 3> &getOldF() const;
 
-    [[nodiscard]] double getM() const;
+    double getM() const;
 
-    [[nodiscard]] int getType() const;
-
-    [[nodiscard]] double getSigma() const;
-
-    [[nodiscard]] double getEpsilon() const;
+    int getType() const;
 
     bool operator==(Particle &other);
 
-    [[nodiscard]] std::string toString() const;
+    std::string toString() const;
 
     /**
      * @brief Setter for the effective force acting on the particle. Before f is set to the new value, old_f is set to the old value of f.
