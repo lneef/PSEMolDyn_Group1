@@ -18,7 +18,10 @@ namespace XMLReader {
         double width;
         double mass;
         std::queue<double> vel;
-        bool browMot;
+        bool browMot = true;
+        int type_s = 1;
+        double sigma_s = 1;
+        double epsilon_s = 5;
     public:
         void init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &sim);
 
@@ -41,6 +44,12 @@ namespace XMLReader {
         void v_z(double) override;
 
         void brownianMotion(bool) override;
+
+        void type(int) override;
+
+        void sigma(double) override;
+
+        void epsilon(double ) override;
 
         void post_sphere() override;
 

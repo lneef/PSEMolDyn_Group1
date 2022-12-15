@@ -9,6 +9,7 @@
         <domain_cutOf>1.0</domain_cutOf>
         <name>"lol"</name>
         <frequency>10</frequency>
+        <g_gravitation>-9.81</g_gravitation>
     </simulation>
     <cuboid>
         <x>0.0</x>

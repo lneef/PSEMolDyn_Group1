@@ -44,34 +44,69 @@ private:
      */
     int type;
 
+    /**
+     * @brief sigma value for the Lennard Jones potential
+     */
+    double sigma;
+
+    /**
+     * @brief epsilon value for the Lennard Jones potential
+     */
+    double epsilon;
+
 public:
     explicit Particle(int type = 0);
 
+    /**
+     * @brief copy constructor of the class particle
+     * @param other Particle to be copied
+     */
     Particle(const Particle &other);
 
+    /**
+     * @brief constructor of the class particle
+     * @param x_arg position of the particles
+     * @param v_arg velocity of the particles
+     * @param m_arg mass of the particle
+     * @param sigma_arg sigma value for the Lennard Jones potential (default: 1)
+     * @param epsilon_arg epsilon value for the Lennard Jones potential (default: 5)
+     * @param type type of the particle (default: 1)
+     */
     Particle(
             // for visualization, we need always 3 coordinates
             // -> in case of 2d, we use only the first and the second
-            std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
+            std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, double sigma_arg = 1, double epsilon_arg = 5,
             int type = 0);
 
     virtual ~Particle();
 
-    const std::array<double, 3> &getX() const;
+    [[nodiscard]] const std::array<double, 3> &getX() const;
 
-    const std::array<double, 3> &getV() const;
+    [[nodiscard]] const std::array<double, 3> &getV() const;
 
-    const std::array<double, 3> &getF() const;
+    [[nodiscard]] const std::array<double, 3> &getF() const;
 
-    const std::array<double, 3> &getOldF() const;
+    [[nodiscard]] const std::array<double, 3> &getOldF() const;
 
-    double getM() const;
+    [[nodiscard]] double getM() const;
 
-    int getType() const;
+    [[nodiscard]] int getType() const;
 
     bool operator==(Particle &other);
 
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
+
+    /**
+     * @brief getter for field sigma
+     * @return sigma value for Lennard Jones potential of the Particle
+     */
+    [[nodiscard]] double getSigma() const;
+
+    /**
+   * @brief getter for field epsilon
+   * @return epsilon value for Lennard Jones potential of the Particle
+   */
+    [[nodiscard]] double getEpsilon() const;
 
     /**
      * @brief Setter for the effective force acting on the particle. Before f is set to the new value, old_f is set to the old value of f.
@@ -115,6 +150,12 @@ public:
      */
     void setOldF(const std::array<double, 3> &oldf);
 
+    /**
+     * @brief compares two values of type double for equality
+     * @param d1 first value of type double
+     * @param d2 second value of type double
+     * @return true if both values are approximately equal, false otherwise
+     */
     static bool comp(double d1, double d2);
 };
 

@@ -1,4 +1,3 @@
-
 #include "XmlReader.h"
 #include "MolSimLogger.h"
 
@@ -10,14 +9,18 @@ namespace XMLReader {
     void XmlReader::read(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCellContainer> &lc) {
         XMLReader::molecular_pimpl parser{};
         xml_schema::document doc_p(parser, "molecular");
-        sim_p.parsers(double_p, double_p, double_p, double_p, double_p, double_p, string_p, int_p);
+        sim_p.parsers(double_p, double_p, double_p, double_p, double_p, double_p, string_p, int_p, double_p);
         temp_p.parsers(double_p, int_p, double_p, double_p);
         cub_in_p.parsers(string_p);
-        cub_p.parsers(double_p, double_p, double_p, int_p, int_p, int_p, double_p, double_p, double_p, double_p,
-                      double_p, bool_p);
+        cub_p.parsers(int_p, double_p, double_p, double_p, double_p, double_p, int_p, int_p, int_p, double_p, double_p,
+                      double_p, double_p, double_p, bool_p);
         sph_in_p.parsers(string_p);
-        sph_p.parsers(double_p, double_p, double_p, int_p, double_p, double_p, double_p, double_p, double_p, bool_p);
+        sph_p.parsers(int_p, double_p, double_p, double_p, double_p, double_p, int_p, double_p, double_p, double_p,
+                      double_p, double_p, bool_p);
         bou_in_p.parsers(string_p, string_p, string_p, string_p);
+
+        std::unique_ptr<Force> force = std::make_unique<LennardJones>();
+        sim->setForce(force);
 
         sim_p.init(lc, sim);
         cub_p.init(lc, sim);
@@ -26,7 +29,7 @@ namespace XMLReader {
         sph_in_p.init(lc);
         bou_in_p.init(lc);
         temp_p.init(sim);
-        parser.parsers(cub_p, sim_p, cub_in_p,sph_p, sph_in_p, bou_in_p, temp_p);
+        parser.parsers(cub_p, sim_p, cub_in_p, sph_p, sph_in_p, bou_in_p, temp_p);
         parser.pre();
         parser.init(sim, lc);
         try {

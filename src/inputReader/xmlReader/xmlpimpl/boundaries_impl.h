@@ -55,6 +55,11 @@ namespace XMLReader {
         std::array<double, 3> vert{1, 0, 0};
 
         /**
+         * @brief set for storing periodic boundaries
+         */
+         std::set<int> periodic;
+
+        /**
          * @brief cells to which the boundary condition applies
          */
         std::shared_ptr<LinkedCellContainer> cells;

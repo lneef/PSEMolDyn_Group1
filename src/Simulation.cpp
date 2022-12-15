@@ -66,11 +66,13 @@ void Simulation::run() {
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
 
         iteration++;
-        if (temperature != NULL) {
+
+        if (temperature != nullptr) {
             if (iteration % n_thermostat == 0) {
                 temperature->calculateV(particles, thermostat);
             }
         }
+
 
 #ifndef BENCHMARK
         if (iteration % out_frequency == 0) {
@@ -148,3 +150,11 @@ void Simulation::setThermostat(std::shared_ptr<Thermostat> &thermostat_arg) {
 }
 
 const std::shared_ptr<Thermostat> &Simulation::getThermostat() const { return thermostat; }
+
+void Simulation::setForce(std::unique_ptr<LJGravitation> &&force_arg) {
+    force = std::move(force_arg);
+}
+
+const std::unique_ptr<Force> &Simulation::getForce() const {
+    return force;
+}

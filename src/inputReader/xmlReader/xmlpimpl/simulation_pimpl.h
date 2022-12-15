@@ -65,6 +65,8 @@ namespace XMLReader {
          * @brief Function that reads the frequency of the output files and sets it
          */
         void frequency(int) override;
+
+        void g_gravitation(double ) override;
         /**
          * @brief Function that sets the domain of the cells
          */

@@ -8,6 +8,8 @@
 #include "Reflecting.h"
 #include <vector>
 
+
+enum class Boundary{VERTICAL, HORIZONTAL};
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
  *
@@ -117,6 +119,8 @@ public:
      */
     [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getBoundary() const;
 
+    void addPeriodic(Boundary bound);
+
 
 private:
 
@@ -165,6 +169,8 @@ private:
      */
     std::vector<Reflecting> conditions;
 
+    std::set<Boundary> periodic;
+
     /**
      * @brief applies reflecting boundary to particles in boundary cells
      * @param cond object representing reflecting boundary condition
@@ -176,13 +182,7 @@ private:
      * @brief removes all particles from the halo
      */
     void clearHalo();
-
-
-     /**
-     * @brief adds a particle to linked cells
-     * @param p lvalue reference to particle
-     */
-    void update(Particle &p);
+    
 
     /**
      * @brief check if particle is inside the domain for 2D and 3D simualtions
@@ -190,6 +190,26 @@ private:
      * @return true if particle is inside the domain for the fourth dimension
      */
     bool inside3D(Particle& p);
+
+    void rightNeighbour(size_t i,const std::function<void(Particle &)> &partial, Particle &p, std::function<void(
+            Particle&, Particle&)>& fun);
+
+    void upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
+            Particle&, Particle&)>& fun);
+
+    void upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
+            Particle&, Particle&)>& fun);
+
+    void upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
+            Particle&, Particle&)>& fun);
+
+
+
+    bool side(size_t ind);
+
+    size_t mirror(Particle &p, size_t ind);
+
+    void update(Particle &p, size_t ind);
 };
 
 
