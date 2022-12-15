@@ -59,8 +59,19 @@ class Simulation {
      */
     int out_frequency = 10;
 
+    /**
+     * @brief Temperature to calculate the new temperature and the new velocity
+     */
     std::unique_ptr<Temperature> temperature;
+
+    /**
+     * @brief Thermostat to store the temperature and related parameters
+     */
     std::shared_ptr<Thermostat> thermostat;
+
+    /**
+     * @brief time step after which temperature values are updated
+     */
     int n_thermostat;
 
 public:
