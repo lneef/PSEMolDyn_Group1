@@ -111,8 +111,7 @@ TEST_F(LinkedCellTest, Outflow){
 }
 
 TEST_F(LinkedCellTest, PeriodicTest){
-    test->addPeriodic(1);
-    test->addPeriodic(3);
+    test->addPeriodic(Boundary::HORIZONTAL);
     test->applyF([](Particle &p1, Particle &p2) {
         std::array<double, 3> add = {1., 0., 0.};
         p1.setF(p1.getF() + add);
@@ -129,8 +128,7 @@ TEST_F(LinkedCellTest, PeriodicTest){
 }
 
 TEST_F(LinkedCellTest, PeriodicTest1){
-    test->addPeriodic(1);
-    test->addPeriodic(3);
+    test->addPeriodic(Boundary::HORIZONTAL);
     LennardJones lj{};
     std::shared_ptr<Container> test1 = test;
     lj.calculateF(test1);
@@ -142,8 +140,7 @@ TEST_F(LinkedCellTest, PeriodicTest1){
 }
 
 TEST_F(LinkedCellTest, PeriodicTest2){
-    test->addPeriodic(2);
-    test->addPeriodic(4);
+    test->addPeriodic(Boundary::VERTICAL);
     LennardJones lj{};
     std::shared_ptr<Container> test1 = test;
     lj.calculateF(test1);

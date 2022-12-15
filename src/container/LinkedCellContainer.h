@@ -8,6 +8,8 @@
 #include "Reflecting.h"
 #include <vector>
 
+
+enum class Boundary{VERTICAL, HORIZONTAL};
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
  *
@@ -117,7 +119,7 @@ public:
      */
     [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getBoundary() const;
 
-    void addPeriodic(int bound);
+    void addPeriodic(Boundary bound);
 
 
 private:
@@ -167,7 +169,7 @@ private:
      */
     std::vector<Reflecting> conditions;
 
-    std::set<int> periodic;
+    std::set<Boundary> periodic;
 
     /**
      * @brief applies reflecting boundary to particles in boundary cells

@@ -15,7 +15,7 @@ namespace XMLReader {
         if (top == "reflecting"){
             cells->addReflecting(Reflecting(hor, cells->getDomain()[1]));
         }else if(top == "periodic"){
-            cells->addPeriodic(3);
+            periodic.emplace(3);
         }
     }
 
@@ -25,25 +25,36 @@ namespace XMLReader {
         if (bottom == "reflecting"){
             cells->addReflecting(Reflecting(hor, 0));
         }else if(bottom == "periodic"){
-            cells->addPeriodic(1);
+            periodic.emplace(1);
         }
     }
 
     void boundaries_pimpl::left(const ::std::string &left) {
         MolSimLogger::logDebug("XMLReader: boundary {}", left);
 
-        if (left == "reflecting")
+        if (left == "reflecting"){
             cells->addReflecting(Reflecting(vert, 0));
+        } if(left == "periodic"){
+            periodic.emplace(4);
+        }
     }
 
     void boundaries_pimpl::right(const ::std::string &right) {
         MolSimLogger::logDebug("XMLReader: boundary {}", right);
 
-        if (right == "reflecting")
+        if (right == "reflecting"){
             cells->addReflecting(Reflecting(vert, cells->getDomain()[0]));
+        } if(right == "periodic"){
+            periodic.emplace(2);
+        }
     }
 
     void boundaries_pimpl::post_boundaries() {
+        if(periodic.contains(2) && periodic.contains(4))
+            cells->addPeriodic(Boundary::VERTICAL);
+
+        if(periodic.contains(3) && periodic.contains(1))
+            cells->addPeriodic(Boundary::HORIZONTAL);
     }
 
     void boundaries_pimpl::init(std::shared_ptr<LinkedCellContainer> &cells_arg) {

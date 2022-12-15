@@ -233,7 +233,7 @@ const std::vector<std::reference_wrapper<ParticleContainer>> &LinkedCellContaine
     return boundary;
 }
 
-void LinkedCellContainer::addReflecting(Reflecting( &&reflecting)) {
+void LinkedCellContainer::addReflecting(Reflecting &&reflecting) {
     conditions.emplace_back(reflecting);
 }
 
@@ -260,7 +260,7 @@ void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Part
     if ((i + 2) % mesh[0] > 0) {
         auto &neighbour = cells[i + 1];
         neighbour.apply(partial);
-    } else if (periodic.contains(2) || periodic.contains(4)) {
+    } else if (periodic.contains(Boundary::VERTICAL)) {
         cond.hor(-domain[0]);
         cond.apply(cells[i - mesh[0] + 3], p, fun);
     }
@@ -275,7 +275,7 @@ LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle 
     if (i + mesh[0] < len) {
         auto &neighbour = cells[i + mesh[0]];
         neighbour.apply(partial);
-    } else if (periodic.contains(1) || periodic.contains(3)) {
+    } else if (periodic.contains(Boundary::HORIZONTAL)) {
         Periodic cond{};
         cond.vert(-domain[1]);
         size_t index = i % mesh[0] + mesh[0];
@@ -293,15 +293,15 @@ void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(
     if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
         auto &neighbour = cells[i + mesh[0] - 1];
         neighbour.apply(partial);
-    } else if (periodic.contains(4) && i < critical) {
+    } else if (periodic.contains(Boundary::VERTICAL) && i < critical) {
         cond.hor(domain[0]);
         size_t ind = i + mesh[0] + mesh[0] - 3;
         cond.apply(cells[ind], p, fun);
-    } else if (periodic.contains(3) && i > critical + 1) {
+    } else if (periodic.contains(Boundary::HORIZONTAL) && i > critical + 1) {
         cond.vert(-domain[1]);
         size_t ind = i % mesh[0] - 1 + mesh[0];
         cond.apply(cells[ind], p, fun);
-    } else if ((periodic.contains(3) || periodic.contains(4)) && i == critical + 1) {
+    } else if ((periodic.contains(Boundary::HORIZONTAL) || periodic.contains(Boundary::VERTICAL)) && i == critical + 1) {
         cond.hor(domain[0]);
         cond.vert(-domain[1]);
         cond.apply(cells[2 * mesh[0] - 2], p, fun);
@@ -317,14 +317,14 @@ void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void
     if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
         auto &neighbour = cells[i + mesh[0] + 1];
         neighbour.apply(partial);
-    } else if (periodic.contains(2) && i < critical) {
+    } else if (periodic.contains(Boundary::VERTICAL) && i < critical) {
         cond.hor(-domain[0]);
         cond.apply(cells[i + 3], p, fun);
-    } else if (periodic.contains(3) && i < critical + mesh[0] - 2 && i > critical) {
+    } else if (periodic.contains(Boundary::HORIZONTAL) && i < critical + mesh[0] - 2 && i > critical) {
         cond.vert(-domain[1]);
         size_t ind = i % mesh[0] + 1 + mesh[0];
         cond.apply(cells[ind], p, fun);
-    } else if ((periodic.contains(2) || periodic.contains(3)) && i == critical + mesh[0] - 2) {
+    } else if ((periodic.contains(Boundary::VERTICAL) || periodic.contains(Boundary::HORIZONTAL)) && i == critical + mesh[0] - 2) {
         cond.hor(-domain[0]);
         cond.vert(-domain[1]);
         cond.apply(cells[mesh[0] + 1], p, fun);
@@ -332,13 +332,13 @@ void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void
 
 }
 
-void LinkedCellContainer::addPeriodic(int bound) {
+void LinkedCellContainer::addPeriodic(Boundary bound) {
     periodic.emplace(bound);
 }
 
 bool LinkedCellContainer::side(size_t ind) {
-    return (ind % mesh[0] == 0 && periodic.contains(4)) || (ind % mesh[0] == mesh[0] - 1 && periodic.contains(2)) ||
-           (ind < mesh[0] && periodic.contains((1))) || (ind > cells.size() - mesh[0] && periodic.contains(3));
+    return (ind % mesh[0] == 0 && periodic.contains(Boundary::VERTICAL)) || (ind % mesh[0] == mesh[0] - 1 && periodic.contains(Boundary::VERTICAL)) ||
+           (ind < mesh[0] && periodic.contains((Boundary::HORIZONTAL))) || (ind > cells.size() - mesh[0] && periodic.contains(Boundary::HORIZONTAL));
 }
 
 size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
