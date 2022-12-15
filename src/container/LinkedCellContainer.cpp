@@ -253,6 +253,8 @@ bool LinkedCellContainer::inside3D(Particle &p) {
 
 void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p,
                                          std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[0] <= 1)
+        return;
 
     Periodic cond{};
     if ((i + 2) % mesh[0] > 0) {
@@ -267,6 +269,9 @@ void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Part
 void
 LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p,
                                     std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[1] <= 1)
+        return;
+
     if (i + mesh[0] < len) {
         auto &neighbour = cells[i + mesh[0]];
         neighbour.apply(partial);
@@ -280,6 +285,9 @@ LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle 
 
 void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
                                              Particle &p, std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[0] <= 1 || mesh[1] <=1)
+        return;
+
     Periodic cond{};
     size_t critical = cells.size() - 2 * mesh[0];
     if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
@@ -302,6 +310,8 @@ void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(
 
 void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
                                               Particle &p, std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[0] <= 1 || mesh[1] <=1)
+        return;
     Periodic cond{};
     size_t critical = cells.size() - 2 * mesh[0];
     if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
@@ -310,8 +320,8 @@ void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void
     } else if (periodic.contains(2) && i < critical) {
         cond.hor(-domain[0]);
         cond.apply(cells[i + 3], p, fun);
-    } else if (periodic.contains(3) && i < critical + mesh[0] - 2) {
-        cond.hor(-domain[0]);
+    } else if (periodic.contains(3) && i < critical + mesh[0] - 2 && i > critical) {
+        cond.vert(-domain[1]);
         size_t ind = i % mesh[0] + 1 + mesh[0];
         cond.apply(cells[ind], p, fun);
     } else if ((periodic.contains(2) || periodic.contains(3)) && i == critical + mesh[0] - 2) {

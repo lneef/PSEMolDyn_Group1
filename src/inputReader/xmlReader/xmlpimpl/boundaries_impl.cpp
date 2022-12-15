@@ -12,15 +12,21 @@ namespace XMLReader {
     void boundaries_pimpl::top(const ::std::string &top) {
         MolSimLogger::logDebug("XMLReader: boundary {}", top);
 
-        if (top == "reflecting")
+        if (top == "reflecting"){
             cells->addReflecting(Reflecting(hor, cells->getDomain()[1]));
+        }else if(top == "periodic"){
+            cells->addPeriodic(3);
+        }
     }
 
     void boundaries_pimpl::bottom(const ::std::string &bottom) {
         MolSimLogger::logDebug("XMLReader: boundary {}", bottom);
 
-        if (bottom == "reflecting")
+        if (bottom == "reflecting"){
             cells->addReflecting(Reflecting(hor, 0));
+        }else if(bottom == "periodic"){
+            cells->addPeriodic(1);
+        }
     }
 
     void boundaries_pimpl::left(const ::std::string &left) {

@@ -1,4 +1,5 @@
 
+#include <gmock/gmock-matchers.h>
 #include "gtest/gtest.h"
 #include "container/LinkedCellContainer.h"
 #include "inputReader/CuboidGenerator.h"
@@ -17,7 +18,7 @@ protected:
         std::array<double, 3> domain{3., 3., 0.5};
         test->setDomain(domain);
         test->setSize(1., domain, 2);
-        cub.generateCuboid(test, {.75, .75, 0}, {3, 3, 1}, .75, 1.0, {0., 1, 0.}, 2);
+        cub.generateCuboid(test, {.55, .55, 0}, {3, 3, 1}, 1, 1.0, {0., 1, 0.}, 1);
     }
 
     void TearDown() override {
@@ -125,6 +126,33 @@ TEST_F(LinkedCellTest, PeriodicTest){
     EXPECT_DOUBLE_EQ(it1->getF()[0], 6);
     EXPECT_DOUBLE_EQ(it2->getF()[0], 8);
 
+}
+
+TEST_F(LinkedCellTest, PeriodicTest1){
+    test->addPeriodic(1);
+    test->addPeriodic(3);
+    LennardJones lj{};
+    std::shared_ptr<Container> test1 = test;
+    lj.calculateF(test1);
+    auto celllist = test->getCells();
+    auto it1 = celllist[6].begin();
+    std::array<double, 3> f1{-114.375, -5.6250000000005, 0};
+    EXPECT_THAT(it1->getF(), testing::Pointwise(testing::DoubleEq(),f1));
+
+}
+
+TEST_F(LinkedCellTest, PeriodicTest2){
+    test->addPeriodic(2);
+    test->addPeriodic(4);
+    LennardJones lj{};
+    std::shared_ptr<Container> test1 = test;
+    lj.calculateF(test1);
+    auto celllist = test->getCells();
+    auto it1 = celllist[6].begin();
+    auto it2 = celllist[11].begin();
+
+    std::array<double, 3> f1{ -5.6250000000005027,-114.375, 0};
+    EXPECT_THAT(it1->getF(), testing::Pointwise(testing::DoubleEq(),f1));
 }
 
 /**
