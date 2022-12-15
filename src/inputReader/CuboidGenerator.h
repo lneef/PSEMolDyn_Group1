@@ -21,7 +21,7 @@ private:
     /**
      * @brief Calculates velocity of particles with given velocity and the MaxwellBoltzmannDistribution
      *
-     * @param v Array representaion of the velocities of the particles in all three dimensions
+     * @param v Array representation of the velocities of the particles in all three dimensions
      * @return velocity with thermal friction
     */
     std::array<double, 3> calculateV(std::array<double, 3> v) {
@@ -34,6 +34,12 @@ private:
         return newV;
     }
 
+    /**
+     * @brief Calculates velocity of particles with given mean of the velocity and the MaxwellBoltzmannDistribution
+     *
+     * @param meanVelocity Double value representation of mean of the velocity
+     * @return velocity with thermal friction
+    */
     std::array<double, 3> calculateVWithMean(double meanVelocity) {
         //calculate velocity with thermal friction
         std::array<double, 3> mbV = mb.maxwellBoltzmannDistributedVelocity(meanVelocity, 2);
@@ -49,11 +55,11 @@ public:
      * @brief Generates cuboids of particles with given values and stores them in instance of ParticleContainer
      *
      * @param particles ParticleContainer where the particles are stored
-     * @param x Array represention three dimensional position of the particle
+     * @param x Array representation three dimensional position of the particle
      * @param n Array representation of quantity of particles in each dimension
      * @param h Integer representation of distance between the particles
      * @param m Integer representation of mass of one particle
-     * @param v Array representaion of the velocities of the particles in all three dimensions
+     * @param v Array representation of the velocities of the particles in all three dimensions
     */
     void
     generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
@@ -74,6 +80,16 @@ public:
         }
     }
 
+    /**
+     * @brief Generates cuboids of particles with given values and the MaxwellBoltzmannDistribution and stores them in instance of ParticleContainer
+     * @param particles ParticleContainer where the particles are stored
+     * @param x Array representation three dimensional position of the particle
+     * @param n Array representation of quantity of particles in each dimension
+     * @param v Array representation of the velocities of the particles in all three dimensions
+     * @param h Integer representation of distance between the particles
+     * @param m Integer representation of mass of one particle
+     * @param meanVelocity Double representation of mean of the velocity
+     */
     void
     generateCuboidBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
                            std::array<double, 3> v, double h, double m,
@@ -98,6 +114,15 @@ public:
         }
     }
 
+    /**
+     * @brief Generates cuboids of particles with given values and stores them in instance of ParticleContainer
+     * @param particles ParticleContainer where the particles are stored
+     * @param x Array representation three dimensional position of the particle
+     * @param n Array representation of quantity of particles in each dimension
+     * @param v Array representation of the velocities of the particles in all three dimensions
+     * @param h Integer representation of distance between the particles
+     * @param m Integer representation of mass of one particle
+     */
     void
     generateCuboidNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
                              std::array<double, 3> v, double h, double m) {
@@ -117,7 +142,7 @@ public:
     }
 
     /**
-     * @brief function to generate sphere from the given paramteres
+     * @brief function to generate sphere from the given parameters
      *
      * @param particles Container where the particles are stored
      * @param center center of the sphere
@@ -148,6 +173,16 @@ public:
 
     }
 
+    /**
+     * @brief function to generate sphere from the given parameters and the MaxwellBoltzmannDistribution
+     * @param particles container where the particles are stored
+     * @param center center of the sphere
+     * @param v velocity of the sphere
+     * @param r number of particles in each direction
+     * @param m mass of each particle
+     * @param h distance between the particles
+     * @param meanVelocity double representation of mean of the velocity
+     */
     void
     generateSphereBrownian(std::shared_ptr<T> &particles, std::array<double, 3> center, std::array<double, 3> v, int r,
                            double m, double h, double meanVelocity) {
@@ -175,6 +210,15 @@ public:
 
     }
 
+    /**
+     * @brief function to generate sphere from the given parameters
+     * @param particles container where the particles are stored
+     * @param center center of the sphere
+     * @param v velocity of the sphere
+     * @param r number of particles in each direction
+     * @param m mass of each particle
+     * @param h distance between the particles
+     */
     void generateSphereNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> center, std::array<double, 3> v, int r,
                                   double m, double h) {
         double radius = r * h;
