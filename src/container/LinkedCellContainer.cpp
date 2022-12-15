@@ -9,13 +9,14 @@
 #include "ParticleContainer.h"
 #include "Reflecting.h"
 #include "MolSimLogger.h"
+#include "Periodic.h"
 
 void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
-    for(size_t i = mesh[0] + 1; i < cells.size() - mesh[0] - 1; ++i){
+    for (size_t i = mesh[0] + 1; i < cells.size() - mesh[0] - 1; ++i) {
         cells[i].apply(fun);
 
-        if(i%mesh[0] == mesh[0] - 2)
-            i+=2;
+        if (i % mesh[0] == mesh[0] - 2)
+            i += 2;
     }
 }
 
@@ -26,7 +27,7 @@ void LinkedCellContainer::applyX(std::function<void(Particle &)> fun) {
 }
 
 void LinkedCellContainer::clearHalo() {
-    for(auto& cell: halo)
+    for (auto &cell: halo)
         cell.get().clear();
 }
 
@@ -39,7 +40,8 @@ void LinkedCellContainer::update() {
             auto &pos = p.getX();
 
             //check that not completely outside
-            if (pos[0] < -rcutoff || pos[0] >= domain[0] + rcutoff  || pos[1] < -rcutoff || pos[1] > domain[1] + rcutoff) {
+            if (pos[0] < -rcutoff || pos[0] >= domain[0] + rcutoff || pos[1] < -rcutoff ||
+                pos[1] > domain[1] + rcutoff) {
                 SPDLOG_LOGGER_DEBUG(MolSimLogger::logger(), "Particle at position ({}, {}, {}) removed", p.getX()[0],
                                     p.getX()[1], p.getX()[2]);
                 it = cells[i].remove(it);
@@ -51,14 +53,14 @@ void LinkedCellContainer::update() {
                 continue;
             }
             //add to new cell
-            update(p);
+            update(p, ind);
 
             //remove from old cell
             it = cells[i].remove(it);
         }
 
-        if(i % mesh[0] == mesh[0] - 2)
-            i+=2;
+        if (i % mesh[0] == mesh[0] - 2)
+            i += 2;
     }
 
     clearHalo();
@@ -91,32 +93,20 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
             auto partial = [&p, &fun](Particle &p2) { fun(p, p2); };
 
             //check if right neighbour exists
-            if ((i + 2) % mesh[0] > 0) {
-                auto &neighbour = cells[i + 1];
-                neighbour.apply(partial);
-            }
+            rightNeighbour(i, partial, p, fun);
 
             //check if upper neighbour exists
-            if (i + mesh[0] < len) {
-                auto &neighbour = cells[i + mesh[0]];
-                neighbour.apply(partial);
-            }
+            upperNeighbour(i, partial, len, p, fun);
 
             //check if upper right neighbour exists
-            if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
-                auto &neighbour = cells[i + mesh[0] + 1];
-                neighbour.apply(partial);
-            }
+            upperRightNeighbour(i, partial, len, p, fun);
 
             //check is upper left neighbour exists
-            if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
-                auto &neighbour = cells[i + mesh[0] - 1];
-                neighbour.apply(partial);
-            }
+            upperLeftNeighbour(i, partial, len, p, fun);
         }
 
-        if(i % mesh[0] == mesh[0] - 2)
-            i+=2;
+        if (i % mesh[0] == mesh[0] - 2)
+            i += 2;
     }
 
     for (auto &cond: conditions)
@@ -142,11 +132,6 @@ size_t LinkedCellContainer::index(Particle &p) {
     return x_ind + y_ind;
 }
 
-void LinkedCellContainer::update(Particle &p) {
-    size_t ind = index(p);
-    cells[ind].addParticle(p);
-}
-
 void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
@@ -165,7 +150,7 @@ void LinkedCellContainer::setUp() {
     size_t len = cells.size();
 
     //add first row of halo cells
-    for(; i< mesh[0]; ++i)
+    for (; i < mesh[0]; ++i)
         halo.emplace_back(std::ref(cells[i]));
 
     //additional halo cell on the left sie
@@ -174,7 +159,7 @@ void LinkedCellContainer::setUp() {
 
     //add all boundary cell in the bottom boundary
     size_t j = i;
-    for(; j < i + mesh[0] - 2; ++j)
+    for (; j < i + mesh[0] - 2; ++j)
         boundary.emplace_back(std::ref(cells[j]));
     i = j;
 
@@ -184,16 +169,16 @@ void LinkedCellContainer::setUp() {
 
     //add right and left halo cell as well as right an left boundary cell
     //or nothing if mesh[1] = 1
-    for(; i< len - 2 * mesh[0]; ++i){
+    for (; i < len - 2 * mesh[0]; ++i) {
         //right or left halo cell
-        if(i%mesh[0] == 0 || i%mesh[0] == mesh[0] - 1){
+        if (i % mesh[0] == 0 || i % mesh[0] == mesh[0] - 1) {
             halo.emplace_back(std::ref((cells[i])));
             continue;
         }
 
         //right or left boundary cell
         //if mesh[0] only middle cell
-        if(i%mesh[0] == 1 || i %mesh[0] == mesh[0] - 2)
+        if (i % mesh[0] == 1 || i % mesh[0] == mesh[0] - 2)
             boundary.emplace_back(std::ref(cells[i]));
     }
 
@@ -204,16 +189,16 @@ void LinkedCellContainer::setUp() {
 
     //add upper boundary cells or nothing if mesh[1] = 1
     j = i;
-    for(; j< len - mesh[0] - 1; ++j)
+    for (; j < len - mesh[0] - 1; ++j)
         boundary.emplace_back(std::ref(cells[j]));
-    i=j;
+    i = j;
 
     //add halo cell at right border or halo cell in the middle if mesh[1] = 1
     halo.emplace_back(std::ref(cells[i]));
     ++i;
 
     //add halo cells at upper border
-    for(; i<len; ++i)
+    for (; i < len; ++i)
         halo.emplace_back(std::ref(cells[i]));
 }
 
@@ -248,7 +233,7 @@ const std::vector<std::reference_wrapper<ParticleContainer>> &LinkedCellContaine
     return boundary;
 }
 
-void LinkedCellContainer::addReflecting(Reflecting( &&reflecting)) {
+void LinkedCellContainer::addReflecting(Reflecting &&reflecting) {
     conditions.emplace_back(reflecting);
 }
 
@@ -264,3 +249,136 @@ bool LinkedCellContainer::inside3D(Particle &p) {
     auto &pos = p.getX();
     return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
 }
+
+
+void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p,
+                                         std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[0] <= 1)
+        return;
+
+    Periodic cond{};
+    if ((i + 2) % mesh[0] > 0) {
+        auto &neighbour = cells[i + 1];
+        neighbour.apply(partial);
+    } else if (periodic.contains(Boundary::VERTICAL)) {
+        cond.hor(-domain[0]);
+        cond.apply(cells[i - mesh[0] + 3], p, fun);
+    }
+}
+
+void
+LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p,
+                                    std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[1] <= 1)
+        return;
+
+    if (i + mesh[0] < len) {
+        auto &neighbour = cells[i + mesh[0]];
+        neighbour.apply(partial);
+    } else if (periodic.contains(Boundary::HORIZONTAL)) {
+        Periodic cond{};
+        cond.vert(-domain[1]);
+        size_t index = i % mesh[0] + mesh[0];
+        cond.apply(cells[index], p, fun);
+    }
+}
+
+void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
+                                             Particle &p, std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[0] <= 1 || mesh[1] <=1)
+        return;
+
+    Periodic cond{};
+    size_t critical = cells.size() - 2 * mesh[0];
+    if (i + mesh[0] - 1 < len && (i - 1) % mesh[0] > 0) {
+        auto &neighbour = cells[i + mesh[0] - 1];
+        neighbour.apply(partial);
+    } else if (periodic.contains(Boundary::VERTICAL) && i < critical) {
+        cond.hor(domain[0]);
+        size_t ind = i + mesh[0] + mesh[0] - 3;
+        cond.apply(cells[ind], p, fun);
+    } else if (periodic.contains(Boundary::HORIZONTAL) && i > critical + 1) {
+        cond.vert(-domain[1]);
+        size_t ind = i % mesh[0] - 1 + mesh[0];
+        cond.apply(cells[ind], p, fun);
+    } else if ((periodic.contains(Boundary::HORIZONTAL) || periodic.contains(Boundary::VERTICAL)) && i == critical + 1) {
+        cond.hor(domain[0]);
+        cond.vert(-domain[1]);
+        cond.apply(cells[2 * mesh[0] - 2], p, fun);
+    }
+}
+
+void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
+                                              Particle &p, std::function<void(Particle &, Particle &)> &fun) {
+    if(mesh[0] <= 1 || mesh[1] <=1)
+        return;
+    Periodic cond{};
+    size_t critical = cells.size() - 2 * mesh[0];
+    if (i + mesh[0] + 1 < len && (i + 2) % mesh[0] > 0) {
+        auto &neighbour = cells[i + mesh[0] + 1];
+        neighbour.apply(partial);
+    } else if (periodic.contains(Boundary::VERTICAL) && i < critical) {
+        cond.hor(-domain[0]);
+        cond.apply(cells[i + 3], p, fun);
+    } else if (periodic.contains(Boundary::HORIZONTAL) && i < critical + mesh[0] - 2 && i > critical) {
+        cond.vert(-domain[1]);
+        size_t ind = i % mesh[0] + 1 + mesh[0];
+        cond.apply(cells[ind], p, fun);
+    } else if ((periodic.contains(Boundary::VERTICAL) || periodic.contains(Boundary::HORIZONTAL)) && i == critical + mesh[0] - 2) {
+        cond.hor(-domain[0]);
+        cond.vert(-domain[1]);
+        cond.apply(cells[mesh[0] + 1], p, fun);
+    }
+
+}
+
+void LinkedCellContainer::addPeriodic(Boundary bound) {
+    periodic.emplace(bound);
+}
+
+bool LinkedCellContainer::side(size_t ind) {
+    return (ind % mesh[0] == 0 && periodic.contains(Boundary::VERTICAL)) || (ind % mesh[0] == mesh[0] - 1 && periodic.contains(Boundary::VERTICAL)) ||
+           (ind < mesh[0] && periodic.contains((Boundary::HORIZONTAL))) || (ind > cells.size() - mesh[0] && periodic.contains(Boundary::HORIZONTAL));
+}
+
+size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
+
+    if (ind % mesh[0] == 0) {
+        std::array<double, 3> to_add{};
+        to_add[0] = domain[0];
+        p.setX(p.getX() + to_add);
+        ind = index(p);
+    }
+
+    if (ind % mesh[0] == mesh[0] - 1) {
+        std::array<double, 3> to_add{};
+        to_add[0] = -domain[0];
+        p.setX(p.getX() + to_add);
+        ind = index(p);
+    }
+
+    if (ind < mesh[0]) {
+        std::array<double, 3> to_add{};
+        to_add[1] = domain[1];
+        p.setX(p.getX() + to_add);
+        ind = index(p);
+    }
+
+    if (ind > cells.size() - mesh[0]) {
+        std::array<double, 3> to_add{};
+        to_add[1] = -domain[1];
+        p.setX(p.getX() + to_add);
+        ind = index(p);
+    }
+
+    return ind;
+}
+
+void LinkedCellContainer::update(Particle &p, size_t ind) {
+    if (side(ind)) {
+        ind = mirror(p, ind);
+    }
+    cells[ind].addParticle(p);
+
+}
+

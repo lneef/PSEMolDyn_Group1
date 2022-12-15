@@ -2,12 +2,13 @@
 // Created by lukas on 04.12.22.
 //
 
+#include <iostream>
 #include "Reflecting.h"
 
 
 
 bool Reflecting::check(const Particle &p) {
-    double critical = p.getSigma();
+    double critical = p.getSigma() * 1.224;
     return 2 * std::abs(difference((p))) < critical;
 }
 
