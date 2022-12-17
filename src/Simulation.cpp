@@ -67,9 +67,9 @@ void Simulation::run() {
 
         iteration++;
 
-        if (temperature != nullptr) {
+        if (thermostat != nullptr) {
             if (iteration % n_thermostat == 0) {
-                temperature->calculateV(particles, thermostat);
+                thermostat->calculateV(particles);
             }
         }
 
@@ -139,10 +139,6 @@ void Simulation::setOut_name(const std::string &out_name_arg) {
 
 void Simulation::setN_thermostat(int n_thermostat_arg) {
     n_thermostat = n_thermostat_arg;
-}
-
-void Simulation::setTemperature(std::unique_ptr<Temperature> &temperature_arg) {
-    temperature = std::move(temperature_arg);
 }
 
 void Simulation::setThermostat(std::shared_ptr<Thermostat> &thermostat_arg) {

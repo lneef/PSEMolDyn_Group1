@@ -11,7 +11,6 @@
 #include "forceCalculation/Force.h"
 #include "container/LinkedCellContainer.h"
 #include "tempCalculation/Thermostat.h"
-#include "tempCalculation/Temperature.h"
 #include "forceCalculation/LJGravitation.h"
 #include <chrono>
 
@@ -58,11 +57,6 @@ class Simulation {
      * @brief output frequency (default: every 10 iterations)
      */
     int out_frequency = 10;
-
-    /**
-     * @brief Temperature to calculate the new temperature and the new velocity
-     */
-    std::unique_ptr<Temperature> temperature;
 
     /**
      * @brief Thermostat to store the temperature and related parameters
@@ -163,8 +157,7 @@ public:
 
     void setN_thermostat(int n_thermostat);
     void setThermostat(std::shared_ptr<Thermostat> &thermostat);
-    void setTemperature(std::unique_ptr<Temperature> &temperature);
-    [[nodiscard]] const std::shared_ptr<Thermostat> &getThermostat() const;
+    const std::shared_ptr<Thermostat> &getThermostat() const;
 };
 
 

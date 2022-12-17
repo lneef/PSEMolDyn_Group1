@@ -3,6 +3,10 @@
 //
 #pragma once
 
+#include "container/ParticleContainer.h"
+#include "Particle.h"
+#include <memory>
+#include <math.h>
 #include <limits>
 
 class Thermostat {
@@ -24,17 +28,20 @@ public:
 
     Thermostat(double temp);
 
-    /**
-     * @brief Getter for the target temperature
-     * @return target temperature, which is the temperature you aim to reach
-     */
-    const double getTemp_target() const;
+    ~Thermostat();
 
     /**
-     * @brief Getter for the delta temperature
-     * @return delta temperature, which is the maximal absolute temperature
+     * @brief calculates the velocity of the particles inside the given container and a new temperature
+     * @param particles Container holding the particles for which the velocity is calculated
      */
-    const double getTemp_delta() const;
+    void calculateV(std::shared_ptr<Container> &particles);
+
+    /**
+     * @brief calculates the product of a vector
+     * @param v vector for which the product is calculated
+     * @return the product of the vector
+     */
+    double calculateProduct(std::array<double, 3> v);
 
     /**
      * @brief Getter for the current temperature
@@ -54,9 +61,4 @@ public:
      */
     void setTemp_delta(const double temp_delta);
 
-    /**
-     * @brief Setter for the current temperature
-     * @param temp current temperature
-     */
-    void setTemp(const double temp);
 };
