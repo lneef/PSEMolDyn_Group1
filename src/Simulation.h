@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 
-
+#include "outputWriter/VTKWriter.h"
 #include "outputWriter/FileWriter.h"
 #include "forceCalculation/Force.h"
 #include "container/LinkedCellContainer.h"
@@ -89,6 +89,8 @@ public:
      * @brief Function to start and run the simulation
      */
     void run();
+
+    void checkpoint(const std::string &filename);
 
     /**
      * @brief Constructor to initialize the simulation based on the use case.
