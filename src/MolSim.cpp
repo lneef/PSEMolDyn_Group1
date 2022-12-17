@@ -123,7 +123,6 @@ int main(int argc, char *argsv[]) {
         simulation->setEndTime(end_time);
     }
     input->read(simulation);
-
     simulation->run();
 
     MolSimLogger::logInfo("Output written. Terminating...");

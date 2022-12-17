@@ -20,11 +20,10 @@ void Thermostat::calculateV(std::shared_ptr<Container> &particles) {
     particles->apply([this, &kin_energy](Particle &p) {
         kin_energy = kin_energy + ((p.getM() * Thermostat::calculateProduct(p.getV())) / 2);
     });
-    //std::cout << kin_energy;
     int dimension = 2;
     double temperature_new = ((kin_energy * 2) / (dimension * particles->size()));
     double temp_diff = std::abs(temp - temperature_new);
-    if(temp_diff <= temp_delta){
+    if (temp_diff <= temp_delta) {
         double temperature;
         temperature = sqrt(temperature_new / temp);
         temp = temperature_new;
@@ -49,6 +48,8 @@ double Thermostat::calculateProduct(std::array<double, 3> v) {
 const double Thermostat::getTemp() const {
     return temp;
 }
+
+const double Thermostat::getTemp_target() const { return temp_target; }
 
 
 void Thermostat::setTemp_target(const double temp_target) {

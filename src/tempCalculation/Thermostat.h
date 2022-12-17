@@ -8,6 +8,7 @@
 #include <memory>
 #include <math.h>
 #include <limits>
+#include "MolSimLogger.h"
 
 class Thermostat {
 private:
@@ -48,6 +49,8 @@ public:
      * @return current temperature
      */
     const double getTemp() const;
+
+    const double getTemp_target() const;
 
     /**
      * @brief Setter for the target temperature
