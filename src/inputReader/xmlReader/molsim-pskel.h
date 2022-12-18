@@ -80,6 +80,9 @@ class molecular_pskel;
 #include <xsd/cxx/parser/non-validating/xml-schema-pskel.hxx>
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
+/**
+ * @brief XMLReader container functionality to read input from xml-file
+ */
 namespace XMLReader {
     namespace xml_schema {
         // Built-in XML Schema types mapping.

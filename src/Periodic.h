@@ -12,5 +12,4 @@ public:
     void apply(ParticleContainer& par, Particle& p, std::function<void(Particle &, Particle &)> &fun);
     void vert(double domain);
     void hor(double domain);
-
 };

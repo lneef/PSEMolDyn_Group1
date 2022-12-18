@@ -13,6 +13,10 @@ public:
      * @param g_arg gravitation constant
      */
     explicit LJGravitation(double g_arg);
+
+    /**
+     * @brief overridden destructor
+     */
     ~LJGravitation() override;
 
     /**

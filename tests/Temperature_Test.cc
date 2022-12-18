@@ -38,6 +38,9 @@ protected:
 
 };
 
+/**
+ * @brief Test heating functionality of the thermostat
+ */
 TEST_F(TempTest, Heating_Test){
     thermostat_pointer->setDelta(5.0);
     thermostat_pointer->setTarget(31);
@@ -46,7 +49,10 @@ TEST_F(TempTest, Heating_Test){
     EXPECT_DOUBLE_EQ(thermostat_pointer->getTemp(), 31);
 }
 
-TEST_F(TempTest, Keeping_Test){
+/**
+ * @brief Test functionality to hold a certain temperature
+ */
+TEST_F(TempTest, Holding_Test){
     thermostat_pointer->setDelta(1.0);
     thermostat_pointer->setTarget(26);
     thermostat_pointer->applyThermostat(test);
@@ -54,6 +60,9 @@ TEST_F(TempTest, Keeping_Test){
     EXPECT_DOUBLE_EQ(thermostat_pointer->getTemp(), 26);
 }
 
+/**
+ * @brief Test cooling functionality of the thermostat
+ */
 TEST_F(TempTest, Cooling_Test){
     thermostat_pointer->setDelta(2.0);
     thermostat_pointer->setTarget(20);

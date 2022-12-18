@@ -43,13 +43,9 @@ void Thermostat::setDelta(double delta) {
     temp_delta = delta;
 }
 
-void Thermostat::setCurrent(double current) {
-    temp = current;
-}
-
 Thermostat::Thermostat(double current) : temp{current}{}
 
-double Thermostat::getTemp() {
+double Thermostat::getTemp() const{
     return temp;
 }
 

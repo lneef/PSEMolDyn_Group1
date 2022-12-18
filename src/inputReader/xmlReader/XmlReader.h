@@ -60,10 +60,19 @@ namespace XMLReader {
          */
         boundaries_pimpl bou_in_p;
 
+        /**
+         * @brief xml-readr for reading the specifications for the thermostat
+         */
         temperature_pimpl temp_p;
 
+        /**
+         * @brief xml-parser for reading the specifications for a sphere from xml
+         */
         sphere_pimpl sph_p;
 
+        /**
+         * @brief xml-parser to read particles from a checkpoint file
+         */
         from_checkpoint_pimpl fr_check;
 
     public:

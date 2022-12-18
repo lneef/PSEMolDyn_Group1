@@ -136,7 +136,7 @@ void LinkedCellContainer::addParticle(Particle &&p) {
     Particle p1 = p;
     size_t ind = index(p1);
     auto &pos = p.getX();
-    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1] && inside3D(p1)) {
+    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1]) {
         cells[ind].addParticle(p);
     }
 }
@@ -379,6 +379,13 @@ void LinkedCellContainer::update(Particle &p, size_t ind) {
         ind = mirror(p, ind);
     }
     cells[ind].addParticle(p);
+}
 
+void LinkedCellContainer::addParticle(Particle &p) {
+    size_t ind = index(p);
+    auto &pos = p.getX();
+    if (0 <= pos[0] && pos[0] < domain[0] && 0 <= pos[1] && pos[1] < domain[1]) {
+        cells[ind].addParticle(p);
+    }
 }
 

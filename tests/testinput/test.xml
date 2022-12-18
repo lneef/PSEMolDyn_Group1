@@ -3,26 +3,26 @@
     <simulation>
         <t_end>2.0</t_end>
         <delta_t>0.0002</delta_t>
-        <domain_x>3.0</domain_x>
-        <domain_y>3.0</domain_y>
-        <domain_z>1.0</domain_z>
-        <domain_cutOf>1.0</domain_cutOf>
-        <name>"lol"</name>
-        <frequency>10</frequency>
+        <domain_size_x>3.0</domain_size_x>
+        <domain_size_y>3.0</domain_size_y>
+        <domain_size_z>1.0</domain_size_z>
+        <cutOff_radius>1.0</cutOff_radius>
+        <output_name>"lol"</output_name>
+        <output_frequency>10</output_frequency>
         <g_gravitation>-9.81</g_gravitation>
     </simulation>
     <cuboid>
-        <x>0.0</x>
-        <y>0.0</y>
-        <z>0.0</z>
-        <n_x>3</n_x>
-        <n_y>3</n_y>
-        <n_z>1</n_z>
-        <h>0.5</h>
-        <m>1.0</m>
-        <v_x>1.0</v_x>
-        <v_y>0.0</v_y>
-        <v_z>0.0</v_z>
+        <lower_left_x>0.0</lower_left_x>
+        <lower_left_y>0.0</lower_left_y>
+        <lower_left_z>0.0</lower_left_z>
+        <number_x>3</number_x>
+        <number_y>3</number_y>
+        <number_z>1</number_z>
+        <mesh_width>0.5</mesh_width>
+        <mass>1.0</mass>
+        <velocity_x>1.0</velocity_x>
+        <velocity_y>0.0</velocity_y>
+        <velocity_z>0.0</velocity_z>
     </cuboid>
     <boundaries>
 

@@ -30,6 +30,8 @@ namespace XMLReader {
         sph_p.init(lc, sim);
         sph_in_p.init(lc);
         bou_in_p.init(lc);
+        temp_p.init(sim);
+        fr_check.init(lc);
         parser.parsers(cub_p, sim_p, cub_in_p, sph_p, sph_in_p, bou_in_p, temp_p, fr_check);
         parser.pre();
         parser.init(sim, lc);

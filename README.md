@@ -1,10 +1,11 @@
 MolSim
 ===
 
-# Group 1 #
+# Group A #
 Members:
 * Lukas Neef
 * Dominik Rammelsberger
+* Xiyu Wang
 
 # Code #
 * Link: https://github.com/lneef/PSEMolDyn_Group1
@@ -51,6 +52,8 @@ The following command line options are supported:
 
     --xml   Usage: --xml path-to-xml-file. Using this option all data for the simualtion can be read from an xml file.
             -e and -t are ignored by this option.
+
+    --check   Usage: --check output-file-name. Using this option to add a checkpointing-file(.txt) witm the name   output-file-name
 
     --help  This page is printed.
 

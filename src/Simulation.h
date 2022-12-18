@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 
-
+#include "outputWriter/VTKWriter.h"
 #include "outputWriter/FileWriter.h"
 #include "forceCalculation/Force.h"
 #include "container/LinkedCellContainer.h"
@@ -85,6 +85,12 @@ public:
      */
     void run();
 
+     /**
+     * @brief Function to generate the checkPointing file
+     * @param the name of the outputfile
+     */
+    void checkpoint(const std::string& filename);
+
     /**
      * @brief Constructor to initialize the simulation based on the use case.
      * @param particles Container to store the involved particles
@@ -154,10 +160,28 @@ public:
      */
     void setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg);
 
+    /**
+     * @brief getter for field force
+     * @return reference to unique pointer pointing to force
+     */
     [[nodiscard]] const std::unique_ptr<Force>& getForce() const;
 
+    /**
+     * @brief setter for application frequency pf the thermostat
+     * @param n_thermostat application frequency of the thermostat
+     */
     void setN_thermostat(int n_thermostat);
+
+    /**
+     * @brief setter for the field thermostat
+     * @param thermostat shared pointer to thermostat
+     */
     void setThermostat(std::shared_ptr<Thermostat> &thermostat);
+
+    /**
+     * @brief getter for the field thermostat
+     * @return reference to shared pointer to the field thermostat
+     */
     [[nodiscard]] const std::shared_ptr<Thermostat> &getThermostat() const;
 };
 
