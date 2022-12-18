@@ -6,7 +6,7 @@
 
 #include "../molsim-pskel.h"
 #include "Simulation.h"
-#include "tempCalculation/Thermostat.h"
+#include "utils//Thermostat.h"
 
 namespace XMLReader {
     class temperature_pimpl : public XMLReader::temperature_pskel {

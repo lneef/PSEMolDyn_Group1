@@ -27,11 +27,9 @@ namespace XMLReader {
 
     void temperature_pimpl::post_temperature() {
         std::shared_ptr<Thermostat> thermostat_p = std::make_shared<Thermostat>(temp);
-        std::unique_ptr<Temperature> temp = std::make_unique<Temperature>();
+        thermostat_p->setDelta(temp_del);
+        thermostat_p->setTarget(temp_tar);
         sim->setThermostat(thermostat_p);
-        sim->setTemperature(temp);
         sim->setN_thermostat(n_thermo);
-        thermostat_p->setTemp_target(temp_tar);
-        thermostat_p->setTemp_delta(temp_del);
     }
 }
