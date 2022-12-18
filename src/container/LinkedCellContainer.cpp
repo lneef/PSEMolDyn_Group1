@@ -379,6 +379,5 @@ void LinkedCellContainer::update(Particle &p, size_t ind) {
         ind = mirror(p, ind);
     }
     cells[ind].addParticle(p);
-
 }
 
