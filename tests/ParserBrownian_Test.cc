@@ -1,6 +1,10 @@
 #include "gtest/gtest.h"
 #include "inputReader/xmlReader/XmlReader.h"
 
+
+/**
+ * @brief test parser with temperature element and brownian motion
+ */
 TEST(ParserTestBrownian, ParserTest) {
     std::string tes = "../tests/testinput/test2.xml";
     XMLReader::XmlReader xml{tes};
@@ -16,4 +20,5 @@ TEST(ParserTestBrownian, ParserTest) {
     EXPECT_EQ(particles[7].size(), 2);
     EXPECT_EQ(particles[11].size(), 2);
     EXPECT_EQ(particles[12].size(), 1);
+    EXPECT_DOUBLE_EQ(sth->getThermostat()->getTemp(), 8.0);
 }

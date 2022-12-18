@@ -4,7 +4,6 @@
 #include "Simulation.h"
 #include "MolSimLogger.h"
 #include "utils/ArrayUtils.h"
-#include "outputWriter/VTKWriter.h"
 #include "outputWriter/XYZWriter.h"
 #include <iostream>
 #include <iomanip>
@@ -71,9 +70,9 @@ void Simulation::run() {
 
         iteration++;
 
-        if (temperature != nullptr) {
+        if (thermostat != nullptr) {
             if (iteration % n_thermostat == 0) {
-                temperature->calculateV(particles, thermostat);
+                thermostat->applyThermostat(particles);
             }
         }
 
@@ -146,9 +145,6 @@ void Simulation::setN_thermostat(int n_thermostat_arg) {
     n_thermostat = n_thermostat_arg;
 }
 
-void Simulation::setTemperature(std::unique_ptr<Temperature>& temperature_arg) {
-    temperature = std::move(temperature_arg);
-}
 
 void Simulation::setThermostat(std::shared_ptr<Thermostat>& thermostat_arg) {
     thermostat = thermostat_arg;

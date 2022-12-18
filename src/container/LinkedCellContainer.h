@@ -121,6 +121,8 @@ public:
 
     void addPeriodic(Boundary bound);
 
+    void addParticle(Particle& p);
+
 
 private:
 

@@ -6,7 +6,7 @@
 
 #include "../molsim-pskel.h"
 #include "Simulation.h"
-#include "tempCalculation/Thermostat.h"
+#include "utils//Thermostat.h"
 
 namespace XMLReader {
     class temperature_pimpl : public XMLReader::temperature_pskel {
@@ -17,6 +17,10 @@ namespace XMLReader {
         double temp_tar;
         double temp_del;
     public:
+        /**
+         * @brief initializes the parser with a instance of Simulation
+         * @param sim reference to shared pointer pointing to instance of Simulation
+         */
         void init(std::shared_ptr<Simulation> &sim);
 
         void temp_int(double) override;

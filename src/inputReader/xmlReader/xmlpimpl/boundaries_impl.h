@@ -17,19 +17,19 @@ namespace XMLReader {
         /**
          * @brief Function that reads the top condition
          */
-        void top(const ::std::string &) override;
+        void top_boundary(const ::std::string &) override;
         /**
          * @brief Function that reads the bottom condition
          */
-        void bottom(const ::std::string &) override;
+        void bottom_boundary(const ::std::string &) override;
         /**
          * @brief Function that reads the left condition
          */
-        void left(const ::std::string &) override;
+        void left_boundary(const ::std::string &) override;
         /**
          * @brief Function that reads the right condition
          */
-        void right(const ::std::string &) override;
+        void right_boundary(const ::std::string &) override;
 
         /**
          * @brief function called after reading the boundary element

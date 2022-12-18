@@ -15,7 +15,7 @@
 #include "MolSimLogger.h"
 #include "Simulation.h"
 #include "inputReader/xmlReader/XmlReader.h"
-#include "tempCalculation/Temperature.h"
+
 
 
 void print_help();

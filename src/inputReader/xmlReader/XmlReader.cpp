@@ -19,6 +19,8 @@ namespace XMLReader {
                       double_p, double_p, bool_p);
         bou_in_p.parsers(string_p, string_p, string_p, string_p);
 
+        fr_check.parsers(string_p);
+
         std::unique_ptr<Force> force = std::make_unique<LennardJones>();
         sim->setForce(force);
 
@@ -29,7 +31,8 @@ namespace XMLReader {
         sph_in_p.init(lc);
         bou_in_p.init(lc);
         temp_p.init(sim);
-        parser.parsers(cub_p, sim_p, cub_in_p, sph_p, sph_in_p, bou_in_p, temp_p);
+        fr_check.init(lc);
+        parser.parsers(cub_p, sim_p, cub_in_p, sph_p, sph_in_p, bou_in_p, temp_p, fr_check);
         parser.pre();
         parser.init(sim, lc);
         try {

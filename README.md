@@ -1,10 +1,11 @@
 MolSim
 ===
 
-# Group 1 #
+# Group A #
 Members:
 * Lukas Neef
 * Dominik Rammelsberger
+* Xiyu Wang
 
 # Code #
 * Link: https://github.com/lneef/PSEMolDyn_Group1

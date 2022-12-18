@@ -5,13 +5,13 @@
         <xs:sequence>
             <xs:element name="t_end" type="xs:double"/>
             <xs:element name="delta_t" type="xs:double"/>
-            <xs:element name="domain_x" type="xs:double" maxOccurs="1"/>
-            <xs:element name="domain_y" type="xs:double" maxOccurs="1"/>
-            <xs:element name="domain_z" type="xs:double" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="domain_cutOf" type="xs:double"/>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="frequency" type="xs:int"/>
-            <xs:element name= "g_gravitation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="domain_size_x" type="xs:double" maxOccurs="1"/>
+            <xs:element name="domain_size_y" type="xs:double" maxOccurs="1"/>
+            <xs:element name="domain_size_z" type="xs:double" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="cutOff_radius" type="xs:double"/>
+            <xs:element name="output_name" type="xs:string"/>
+            <xs:element name="output_frequency" type="xs:int"/>
+            <xs:element name="g_gravitation" type="xs:double" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -26,20 +26,20 @@
 
     <xs:complexType name="cuboid">
         <xs:sequence>
-            <xs:element name = "type" type="xs:int"/>
-            <xs:element name = "sigma" type="xs:double"/>
-            <xs:element name = "epsilon" type="xs:double"/>
-            <xs:element name="x" type="xs:double"/>
-            <xs:element name="y" type="xs:double"/>
-            <xs:element name="z" type="xs:double"/>
-            <xs:element name="n_x" type="xs:int"/>
-            <xs:element name="n_y" type="xs:int"/>
-            <xs:element name="n_z" type="xs:int"/>
-            <xs:element name="h" type="xs:double"/>
-            <xs:element name="m" type="xs:double"/>
-            <xs:element name="v_x" type="xs:double"/>
-            <xs:element name="v_y" type="xs:double"/>
-            <xs:element name="v_z" type="xs:double"/>
+            <xs:element name="type" type="xs:int"/>
+            <xs:element name="sigma" type="xs:double"/>
+            <xs:element name="epsilon" type="xs:double"/>
+            <xs:element name="lower_left_x" type="xs:double"/>
+            <xs:element name="lower_left_y" type="xs:double"/>
+            <xs:element name="lower_left_z" type="xs:double"/>
+            <xs:element name="number_x" type="xs:int"/>
+            <xs:element name="number_y" type="xs:int"/>
+            <xs:element name="number_z" type="xs:int"/>
+            <xs:element name="mesh_width" type="xs:double"/>
+            <xs:element name="mass" type="xs:double"/>
+            <xs:element name="velocity_x" type="xs:double"/>
+            <xs:element name="velocity_y" type="xs:double"/>
+            <xs:element name="velocity_z" type="xs:double"/>
             <xs:element name="brownianMotion" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
@@ -50,20 +50,26 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="from_checkpoint">
+        <xs:sequence>
+            <xs:element name="path" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="sphere">
         <xs:sequence>
-            <xs:element name = "type" type="xs:int"/>
-            <xs:element name = "sigma" type="xs:double"/>
-            <xs:element name = "epsilon" type="xs:double"/>
-            <xs:element name="x" type="xs:double"/>
-            <xs:element name="y" type="xs:double"/>
-            <xs:element name="z" type="xs:double"/>
-            <xs:element name="r" type="xs:int"/>
-            <xs:element name="h" type="xs:double"/>
-            <xs:element name="m" type="xs:double"/>
-            <xs:element name="v_x" type="xs:double"/>
-            <xs:element name="v_y" type="xs:double"/>
-            <xs:element name="v_z" type="xs:double"/>
+            <xs:element name="type" type="xs:int"/>
+            <xs:element name="sigma" type="xs:double"/>
+            <xs:element name="epsilon" type="xs:double"/>
+            <xs:element name="center_x" type="xs:double"/>
+            <xs:element name="center_y" type="xs:double"/>
+            <xs:element name="center_z" type="xs:double"/>
+            <xs:element name="radius" type="xs:int"/>
+            <xs:element name="mesh_width" type="xs:double"/>
+            <xs:element name="mass" type="xs:double"/>
+            <xs:element name="velocity_x" type="xs:double"/>
+            <xs:element name="velocity_y" type="xs:double"/>
+            <xs:element name="velocity_z" type="xs:double"/>
             <xs:element name="brownianMotion" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
@@ -76,13 +82,13 @@
 
     <xs:complexType name="boundaries">
         <xs:sequence>
-            <xs:element name="top" type="xs:string"/>
-            <xs:element name="bottom" type="xs:string"/>
-            <xs:element name="left" type="xs:string"/>
-            <xs:element name="right" type="xs:string"/>
+            <xs:element name="top_boundary" type="xs:string"/>
+            <xs:element name="bottom_boundary" type="xs:string"/>
+            <xs:element name="left_boundary" type="xs:string"/>
+            <xs:element name="right_boundary" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="molecular">
         <xs:sequence>
             <xs:element name="cuboid" type="cuboid"/>
@@ -92,6 +98,7 @@
             <xs:element name="spheres_input" type="spheres_input"/>
             <xs:element name="boundaries" type="boundaries"/>
             <xs:element name="temperature" type="temperature"/>
+            <xs:element name="from_checkpoint" type="from_checkpoint"/>
         </xs:sequence>
     </xs:complexType>
 

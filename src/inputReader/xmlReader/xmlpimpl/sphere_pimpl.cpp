@@ -11,39 +11,39 @@ namespace XMLReader {
         sim = simulation;
     }
 
-    void sphere_pimpl::x(double x_arg) {
+    void sphere_pimpl::center_x(double x_arg) {
         centre.push(x_arg);
     }
 
-    void sphere_pimpl::y(double y_arg) {
+    void sphere_pimpl::center_y(double y_arg) {
         centre.push(y_arg);
     }
 
-    void sphere_pimpl::z(double z_arg) {
+    void sphere_pimpl::center_z(double z_arg) {
         centre.push(z_arg);
     }
 
-    void sphere_pimpl::r(int r) {
-        radius = r;
+    void sphere_pimpl::radius(int r) {
+        radius_r = r;
     }
 
-    void sphere_pimpl::h(double h) {
+    void sphere_pimpl::mesh_width(double h) {
         width = h;
     }
 
-    void sphere_pimpl::m(double m) {
-        mass = m;
+    void sphere_pimpl::mass(double m) {
+        mass_r = m;
     }
 
-    void sphere_pimpl::v_x(double v_arg) {
+    void sphere_pimpl::velocity_x(double v_arg) {
         vel.push(v_arg);
     }
 
-    void sphere_pimpl::v_y(double v_arg) {
+    void sphere_pimpl::velocity_y(double v_arg) {
         vel.push(v_arg);
     }
 
-    void sphere_pimpl::v_z(double v_arg) {
+    void sphere_pimpl::velocity_z(double v_arg) {
         vel.push(v_arg);
     }
 
@@ -73,15 +73,15 @@ namespace XMLReader {
         }
         CuboidGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
-            cub.generateSphereNoBrownian(cells, c, v, radius, mass, width);
+            cub.generateSphereNoBrownian(cells, c, v, radius_r, mass_r, width);
         } else {
             double meanVelocity;
             if (sim->getThermostat() != NULL) {
-                meanVelocity = sqrt(sim->getThermostat()->getTemp() / mass);
+                meanVelocity = sqrt(sim->getThermostat()->getTemp() / mass_r);
             } else {
                 meanVelocity = 0.1;
             }
-            cub.generateSphereBrownian(cells, c, v, radius, mass, width, meanVelocity, sigma_s, epsilon_s, type_s);
+            cub.generateSphereBrownian(cells, c, v, radius_r, mass_r, width, meanVelocity, sigma_s, epsilon_s, type_s);
         }
 
         browMot = true;

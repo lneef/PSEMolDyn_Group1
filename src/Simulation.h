@@ -10,8 +10,7 @@
 #include "outputWriter/FileWriter.h"
 #include "forceCalculation/Force.h"
 #include "container/LinkedCellContainer.h"
-#include "tempCalculation/Thermostat.h"
-#include "tempCalculation/Temperature.h"
+#include "utils/Thermostat.h"
 #include "forceCalculation/LJGravitation.h"
 #include <chrono>
 
@@ -59,10 +58,6 @@ class Simulation {
      */
     int out_frequency = 10;
 
-    /**
-     * @brief Temperature to calculate the new temperature and the new velocity
-     */
-    std::unique_ptr<Temperature> temperature;
 
     /**
      * @brief Thermostat to store the temperature and related parameters
@@ -165,11 +160,28 @@ public:
      */
     void setWriter(std::unique_ptr<outputWriter::FileWriter> &writer_arg);
 
+    /**
+     * @brief getter for field force
+     * @return reference to unique pointer pointing to force
+     */
     [[nodiscard]] const std::unique_ptr<Force>& getForce() const;
 
+    /**
+     * @brief setter for application frequency pf the thermostat
+     * @param n_thermostat application frequency of the thermostat
+     */
     void setN_thermostat(int n_thermostat);
+
+    /**
+     * @brief setter for the field thermostat
+     * @param thermostat shared pointer to thermostat
+     */
     void setThermostat(std::shared_ptr<Thermostat> &thermostat);
-    void setTemperature(std::unique_ptr<Temperature> &temperature);
+
+    /**
+     * @brief getter for the field thermostat
+     * @return reference to shared pointer to the field thermostat
+     */
     [[nodiscard]] const std::shared_ptr<Thermostat> &getThermostat() const;
 };
 
