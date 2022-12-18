@@ -90,7 +90,11 @@ public:
      */
     void run();
 
-    void checkpoint(const std::string &filename);
+     /**
+     * @brief Function to generate the checkPointing file
+     * @param the name of the outputfile
+     */
+    void checkpoint(const std::string& filename);
 
     /**
      * @brief Constructor to initialize the simulation based on the use case.

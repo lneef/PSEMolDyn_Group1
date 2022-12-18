@@ -60,7 +60,7 @@ void Simulation::run() {
         calculateX();
 
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
-
+  
         force->calculateF(particles);
 
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
@@ -170,9 +170,9 @@ void Simulation::checkpoint(const std::string& filename) {
     strstr << filename << ".txt";
 
     file.open(strstr.str().c_str());
-    file << particles->size() << std::endl;
-    file << "  position                           vilocity                             force                            masse     type   sigma     epsilon "
+    file << " #position                           vilocity                             force                               old_force                         masse     type   sigma     epsilon "
         << std::endl;
+    file << particles->size() << std::endl;
     particles->apply([&file](Particle& p) {
 
         //print the position of each particle
@@ -193,6 +193,13 @@ void Simulation::checkpoint(const std::string& filename) {
     std::array<double, 3> f = p.getF();
     file.setf(std::ios_base::showpoint);
     for (auto& fi : f) {
+        file << std::setw(10) << fi << " ";
+    }file << "   ";
+
+    //print the old_force of each particle
+    std::array<double, 3> old_f = p.getOldF();
+    file.setf(std::ios_base::showpoint);
+    for (auto& fi : old_f) {
         file << std::setw(10) << fi << " ";
     }file << "   ";
 
