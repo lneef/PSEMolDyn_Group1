@@ -44,27 +44,27 @@ namespace XMLReader {
         /**
          * @brief Function that reads the domain size in x-dimension
          */
-        void domain_x(double) override;
+        void domain_size_x(double) override;
         /**
          * @brief Function that reads the domain size in y-dimension
          */
-        void domain_y(double) override;
+        void domain_size_y(double) override;
         /**
          * @brief Function that reads the domain size in z-dimension
          */
-        void domain_z(double) override;
+        void domain_size_z(double) override;
         /**
          * @brief Function that reads the cutoff radius
          */
-        void domain_cutOf(double) override;
+        void cutOff_radius(double) override;
         /**
          * @brief Function that reads the name of the output name and sets it
          */
-        void name(const ::std::string &) override;
+        void output_name(const ::std::string &) override;
         /**
          * @brief Function that reads the frequency of the output files and sets it
          */
-        void frequency(int) override;
+        void output_frequency(int) override;
 
         void g_gravitation(double ) override;
         /**

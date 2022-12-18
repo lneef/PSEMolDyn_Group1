@@ -14,27 +14,27 @@ namespace XMLReader {
         sim->setDeltaT(delta_t);
     }
 
-    void simulation_pimpl::domain_x(double x) {
+    void simulation_pimpl::domain_size_x(double x) {
         domain.push(x);
     }
 
-    void simulation_pimpl::domain_y(double y) {
+    void simulation_pimpl::domain_size_y(double y) {
         domain.push(y);
     }
 
-    void simulation_pimpl::domain_z(double z) {
+    void simulation_pimpl::domain_size_z(double z) {
         domain.push(z);
     }
 
-    void simulation_pimpl::domain_cutOf(double cutOff) {
+    void simulation_pimpl::cutOff_radius(double cutOff) {
         rCutOff = cutOff;
     }
 
-    void simulation_pimpl::name(const std::string &name) {
+    void simulation_pimpl::output_name(const std::string &name) {
         sim->setOut_name(name);
     }
 
-    void simulation_pimpl::frequency(int f) {
+    void simulation_pimpl::output_frequency(int f) {
         sim->setOut_frequency(f);
     }
 
@@ -46,7 +46,7 @@ namespace XMLReader {
             domain.pop();
         }
         cells->setSize(rCutOff, dom, 2);
-        MolSimLogger::logDebug("XMLReader: domain=({}, {}, {}), rcutOff = {}", dom[0], dom[1], dom[2], rCutOff);
+        MolSimLogger::logDebug("XMLReader: domain=({}, {}, {}), cutoff_radius = {}", dom[0], dom[1], dom[2], rCutOff);
     }
 
 

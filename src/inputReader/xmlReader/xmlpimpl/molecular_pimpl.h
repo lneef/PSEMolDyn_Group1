@@ -37,6 +37,8 @@ namespace XMLReader {
 
         void temperature() override;
 
+        void from_checkpoint() override;
+
         void post_molecular() override;
     };
 

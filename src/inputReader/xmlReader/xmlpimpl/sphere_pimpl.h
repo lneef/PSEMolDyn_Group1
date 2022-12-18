@@ -14,9 +14,9 @@ namespace XMLReader {
         std::shared_ptr<LinkedCellContainer> cells;
         std::shared_ptr<Simulation> sim;
         std::queue<double> centre;
-        int radius;
+        int radius_r;
         double width;
-        double mass;
+        double mass_r;
         std::queue<double> vel;
         bool browMot = true;
         int type_s = 1;
@@ -25,23 +25,23 @@ namespace XMLReader {
     public:
         void init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &sim);
 
-        void x(double) override;
+        void center_x(double) override;
 
-        void y(double) override;
+        void center_y(double) override;
 
-        void z(double) override;
+        void center_z(double) override;
 
-        void r(int) override;
+        void radius(int) override;
 
-        void h(double) override;
+        void mesh_width(double) override;
 
-        void m(double) override;
+        void mass(double) override;
 
-        void v_x(double) override;
+        void velocity_x(double) override;
 
-        void v_y(double) override;
+        void velocity_y(double) override;
 
-        void v_z(double) override;
+        void velocity_z(double) override;
 
         void brownianMotion(bool) override;
 

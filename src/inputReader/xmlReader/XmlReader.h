@@ -5,6 +5,7 @@
 
 #include "inputReader/xmlReader/xmlpimpl/molecular_pimpl.h"
 #include "inputReader/FileReader.h"
+#include "inputReader/xmlReader/xmlpimpl/from_checkpoint.h"
 
 /**
  * @brief XMLReader contains functionality for reading an xml-file
@@ -62,6 +63,8 @@ namespace XMLReader {
         temperature_pimpl temp_p;
 
         sphere_pimpl sph_p;
+
+        from_checkpoint_pimpl fr_check;
 
     public:
         /**

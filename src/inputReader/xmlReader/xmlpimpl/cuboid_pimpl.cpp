@@ -9,47 +9,47 @@
 
 namespace XMLReader {
 
-    void cuboid_pimpl::x(double x_arg) {
+    void cuboid_pimpl::lower_left_x(double x_arg) {
         pos.push(x_arg);
     }
 
-    void cuboid_pimpl::y(double y_arg) {
+    void cuboid_pimpl::lower_left_y(double y_arg) {
         pos.push(y_arg);
     }
 
-    void cuboid_pimpl::z(double z_arg) {
+    void cuboid_pimpl::lower_left_z(double z_arg) {
         pos.push(z_arg);
     }
 
-    void cuboid_pimpl::n_x(int n_xarg) {
+    void cuboid_pimpl::number_x(int n_xarg) {
         num.push(n_xarg);
     }
 
-    void cuboid_pimpl::n_y(int n_yarg) {
+    void cuboid_pimpl::number_y(int n_yarg) {
         num.push(n_yarg);
     }
 
-    void cuboid_pimpl::n_z(int n_zarg) {
+    void cuboid_pimpl::number_z(int n_zarg) {
         num.push(n_zarg);
     }
 
-    void cuboid_pimpl::h(double dist) {
+    void cuboid_pimpl::mesh_width(double dist) {
         width = dist;
     }
 
-    void cuboid_pimpl::m(double m_arg) {
-        mass = m_arg;
+    void cuboid_pimpl::mass(double m_arg) {
+        m = m_arg;
     }
 
-    void cuboid_pimpl::v_x(double v_arg) {
+    void cuboid_pimpl::velocity_x(double v_arg) {
         vel.push(v_arg);
     }
 
-    void cuboid_pimpl::v_y(double v_arg) {
+    void cuboid_pimpl::velocity_y(double v_arg) {
         vel.push(v_arg);
     }
 
-    void cuboid_pimpl::v_z(double v_arg) {
+    void cuboid_pimpl::velocity_z(double v_arg) {
         vel.push(v_arg);
     }
 
@@ -82,15 +82,15 @@ namespace XMLReader {
         }
         CuboidGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
-            cub.generateCuboidNoBrownian(cells, x, n, v, width, mass, sigma_p, epsilon_p, type_p);
+            cub.generateCuboidNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, type_p);
         } else {
             double meanVelocity;
             if (sim->getThermostat() != nullptr) {
-                meanVelocity = sqrt(sim->getThermostat()->getTemp()/mass);
+                meanVelocity = sqrt(sim->getThermostat()->getTemp()/m);
             } else {
                 meanVelocity = 0.1;
             }
-            cub.generateCuboidBrownian(cells, x, n, v, width, mass, meanVelocity, sigma_p, epsilon_p, type_p);
+            cub.generateCuboidBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, type_p);
         }
 
 

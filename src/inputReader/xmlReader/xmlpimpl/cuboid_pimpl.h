@@ -30,7 +30,7 @@ namespace XMLReader {
         /**
          * @brief Mass of the molecules in the cuboid
          */
-        double mass;
+        double m;
         /**
          * @brief Distance between the molecules in the cuboid
          */
@@ -53,47 +53,47 @@ namespace XMLReader {
         /**
          * @brief Function that reads the position in x-dimension
          */
-        void x(double) override;
+        void lower_left_x(double) override;
         /**
          * @brief Function that reads the position in y-dimension
          */
-        void y(double) override;
+        void lower_left_y(double) override;
         /**
          * @brief Function that reads the position in z-dimension
          */
-        void z(double) override;
+        void lower_left_z(double) override;
         /**
          * @brief Function that reads the quantity in x-dimension
          */
-        void n_x(int) override;
+        void number_x(int) override;
         /**
          * @brief Function that reads the quantity in x-dimension
          */
-        void n_y(int) override;
+        void number_y(int) override;
         /**
          * @brief Function that reads the quantity in x-dimension
          */
-        void n_z(int) override;
+        void number_z(int) override;
         /**
          * @brief Function that reads the distance between the molecules
          */
-        void h(double) override;
+        void mesh_width(double) override;
         /**
          * @brief Function that reads mass of the molecules
          */
-        void m(double) override;
+        void mass(double) override;
         /**
          * @brief Function that reads the velocity in x-dimension
          */
-        void v_x(double) override;
+        void velocity_x(double) override;
         /**
          * @brief Function that reads the velocity in x-dimension
          */
-        void v_y(double) override;
+        void velocity_y(double) override;
         /**
          * @brief Function that reads the velocity in x-dimension
          */
-        void v_z(double) override;
+        void velocity_z(double) override;
 
         void brownianMotion(bool) override;
         /**
