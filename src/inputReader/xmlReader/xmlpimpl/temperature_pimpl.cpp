@@ -11,6 +11,7 @@ namespace XMLReader {
 
     void temperature_pimpl::temp_int(double temp_int) {
         temp = temp_int;
+        temp_tar = temp;
     }
 
     void temperature_pimpl::n_thermostat(int n_thermostat) {

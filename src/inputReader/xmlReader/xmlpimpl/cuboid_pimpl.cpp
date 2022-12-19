@@ -70,8 +70,9 @@ namespace XMLReader {
     void cuboid_pimpl::post_cuboid() {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
-        std::array<int, 3> n{};
-        for (size_t i = 0; i < 3; ++i) {
+        std::array<int, 3> n{1, 1, 1};
+        size_t i = 0;
+        while (!pos.empty()){
             x[i] = pos.front();
             v[i] = vel.front();
             n[i] = num.front();
@@ -79,6 +80,8 @@ namespace XMLReader {
             pos.pop();
             vel.pop();
             num.pop();
+
+            ++i;
         }
         CuboidGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
