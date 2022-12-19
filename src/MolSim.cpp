@@ -18,7 +18,6 @@
 #include "inputReader/xmlReader/XmlReader.h"
 
 
-
 void print_help();
 
 constexpr double start_time = 0;

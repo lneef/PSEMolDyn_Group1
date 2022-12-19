@@ -58,7 +58,6 @@ class Simulation {
      */
     int out_frequency = 10;
 
-
     /**
      * @brief Thermostat to store the temperature and related parameters
      */

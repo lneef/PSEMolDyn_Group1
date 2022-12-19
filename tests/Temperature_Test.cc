@@ -79,5 +79,3 @@ TEST_F(TempTest, Cooling_Test){
     thermostat_pointer->measureTemp(test);
     EXPECT_DOUBLE_EQ(thermostat_pointer->getTemp(), 20);
 }
-
-

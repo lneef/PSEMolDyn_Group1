@@ -14,7 +14,7 @@
         <temp_int>8.0</temp_int>
         <n_thermostat>1</n_thermostat>
         <temp_target>10.0</temp_target>
-        <temp_delta>5.0</temp_delta>
+        <temp_delta>20.0</temp_delta>
     </temperature>
     <cuboid>
         <lower_left_x>0.0</lower_left_x>
