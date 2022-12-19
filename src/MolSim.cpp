@@ -1,6 +1,7 @@
 #include <getopt.h>
 #include "inputReader/TxtReader.h"
 #include "inputReader/InputReader.h"
+#include "inputReader/CheckPointReader.h"
 #include "outputWriter/VTKWriter.h"
 #include "outputWriter/XYZWriter.h"
 #include <iostream>
@@ -22,13 +23,15 @@ void print_help();
 constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
-
+bool ifCheckPoint = false;
+std::string checkPointName = "checkPoint";
 
 struct option long_option[]{
         {"help",   no_argument,       0, 'a'},
         {"cub",    optional_argument, 0, 'c'},
         {"planet", required_argument, 0, 'p'},
         {"xml",    required_argument, 0, 'x'},
+        {"check",  required_argument, 0, 'k'},
         {0, 0,                        0, 0}
 };
 
@@ -59,6 +62,13 @@ int main(int argc, char* argsv[]) {
             print_help();
 
             return 0;
+
+        case 'k':
+            std::cout << "All particles will be saved!" << std::endl;
+            ifCheckPoint = true;
+            checkPointName = optarg;
+            break;
+
         case 'x':
             filename = optarg;
             input = std::make_unique<XMLReader::XmlReader>(filename);
@@ -128,11 +138,10 @@ int main(int argc, char* argsv[]) {
     simulation->run();
     MolSimLogger::logInfo("Output written. Terminating...");
 
-    
-    // writer = std::make_unique<outputWriter::XYZWriter>();
-    // simulation->setWriter(writer);
-    simulation->checkpoint("check");
 
+    if (ifCheckPoint) {
+        simulation->checkpoint(checkPointName);
+    }
     return 0;
 }
 
