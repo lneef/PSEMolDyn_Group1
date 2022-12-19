@@ -110,6 +110,23 @@ TEST_F(LinkedCellTest, Outflow){
 
 }
 
+TEST_F(LinkedCellTest, Perioidc){
+    test->addPeriodic(Boundary::TOP);
+    test->addPeriodic(Boundary::BOTTOM);
+    Simulation sim(1, 1);
+
+    sim.setParticle(test);
+    sim.calculateX();
+    auto celllist = test-> getCells();
+    EXPECT_EQ(test->size(), 9);
+    EXPECT_EQ(celllist[6].size(), 1);
+    EXPECT_EQ(celllist[7].size(), 1);
+    EXPECT_EQ(celllist[8].size(), 1);
+    EXPECT_EQ(celllist[21].size(), 0);
+
+
+}
+
 TEST_F(LinkedCellTest, PeriodicTest){
     test->addPeriodic(Boundary::LEFT);
     test->addPeriodic(Boundary::RIGHT);
