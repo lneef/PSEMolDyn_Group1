@@ -15,7 +15,7 @@ namespace XMLReader {
         double temp;
         int n_thermo;
         double temp_tar;
-        double temp_del;
+        double temp_del =  std::numeric_limits<double>::infinity();
     public:
         /**
          * @brief initializes the parser with a instance of Simulation

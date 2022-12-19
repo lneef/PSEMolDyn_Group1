@@ -9,7 +9,7 @@
         <output_frequency>10</output_frequency>
     </simulation>
     <cuboid>
-        <Lower_left_x>20.</Lower_left_x>
+        <lower_left_x>20.</lower_left_x>
         <lower_left_y>20.</lower_left_y>
         <lower_left_z>0.</lower_left_z>
         <number_x>100</number_x>
