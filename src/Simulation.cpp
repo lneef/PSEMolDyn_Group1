@@ -59,9 +59,7 @@ void Simulation::run() {
         calculateX();
 
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
-  
         force->calculateF(particles);
-
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
 
 
@@ -83,7 +81,7 @@ void Simulation::run() {
             writer->plotParticles(particles, out_name, iteration);
         }
 
-        MolSimLogger::logInfo("Itertation {} finished. ", iteration);
+        MolSimLogger::logInfo("Itertation {} finished.", iteration);
 #endif
         current_time += delta_t;
     }
@@ -145,7 +143,6 @@ void Simulation::setOut_name(const std::string& out_name_arg) {
 void Simulation::setN_thermostat(int n_thermostat_arg) {
     n_thermostat = n_thermostat_arg;
 }
-
 
 void Simulation::setThermostat(std::shared_ptr<Thermostat>& thermostat_arg) {
     thermostat = thermostat_arg;
