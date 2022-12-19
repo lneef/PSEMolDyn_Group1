@@ -66,6 +66,9 @@ namespace XMLReader {
          */
         void output_frequency(int) override;
 
+        /**
+         * @brief changes the force calculation method of the simulation to LJGravitation
+         */
         void g_gravitation(double ) override;
         /**
          * @brief Function that sets the domain of the cells

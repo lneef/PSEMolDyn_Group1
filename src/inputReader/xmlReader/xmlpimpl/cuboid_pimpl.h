@@ -36,14 +36,29 @@ namespace XMLReader {
          */
         double width;
 
+        /**
+         * @brief simulation which works with the particles
+         */
         std::shared_ptr<Simulation> sim;
 
+        /**
+         * @brief flag for initialization with brownian motion, default: true to enable backwards compatability
+         */
         bool browMot = true;
 
+        /**
+         * @brief type of the particles in the cuboid
+         */
         int type_p = 1;
 
+        /**
+         * @brief sigma value of the particles for Lennard Jones potential
+         */
         double sigma_p = 1;
 
+        /**
+         * @brief epsilon value of the particles for Lennard Jones potential
+         */
         double epsilon_p = 5;
     public:
         /**
@@ -95,16 +110,29 @@ namespace XMLReader {
          */
         void velocity_z(double) override;
 
+        /**
+         * @brief function to process to flag for brownian motion
+         */
         void brownianMotion(bool) override;
+
+        /**
+         * @brief function to process the type of the particle
+         */
+        void type(int) override;
+
+        /**
+         * @brief function to process the sigma value for the particle
+         */
+        void sigma(double ) override;
+
+        /**
+         * @brief function to process the epsilon value for the particles
+         */
+        void epsilon(double ) override;
+
         /**
          * @brief Function that generates the cuboids
          */
-
-        void type(int) override;
-
-        void sigma(double ) override;
-
-        void epsilon(double ) override;
         void post_cuboid() override;
 
         //bool checkZeroVelocity(std::array<double, 3> v);

@@ -4,6 +4,9 @@
 #include "inputReader/CuboidGenerator.h"
 #include "container/LinkedCellContainer.h"
 
+/**
+ * @brief test if calculated temperature is correct
+ */
 TEST(TemperatureTest, CalcTest){
     std::shared_ptr<Thermostat> thermostat_pointer = std::make_shared<Thermostat>(2.0);
     std::shared_ptr<Container> par = std::make_shared<ParticleContainer>();
@@ -12,6 +15,10 @@ TEST(TemperatureTest, CalcTest){
 
     EXPECT_DOUBLE_EQ(thermostat_pointer->getTemp(), 5.);
 }
+
+/**
+ * @brief TempTest sets up the test environment for cooling, holding and heating tests
+ */
 class TempTest : public testing::Test{
 protected:
     std::shared_ptr<Thermostat> thermostat_pointer;

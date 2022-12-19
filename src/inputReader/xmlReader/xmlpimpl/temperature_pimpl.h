@@ -17,6 +17,10 @@ namespace XMLReader {
         double temp_tar;
         double temp_del;
     public:
+        /**
+         * @brief initializes the parser with a instance of Simulation
+         * @param sim reference to shared pointer pointing to instance of Simulation
+         */
         void init(std::shared_ptr<Simulation> &sim);
 
         void temp_int(double) override;
