@@ -96,7 +96,6 @@ namespace XMLReader {
             cub.generateCuboidBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, type_p);
         }
 
-
         browMot = true;
         type_p = 1;
         sigma_p = 1;

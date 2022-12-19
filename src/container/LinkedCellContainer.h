@@ -9,12 +9,12 @@
 #include <vector>
 
 
-enum class Boundary{VERTICAL, HORIZONTAL};
+enum class Boundary{LEFT, RIGHT, BOTTOM, TOP};
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
  *
  * @warning The default boundary condition is outflow. If for a given boundary reflecting should be used, the condition must be added via addReflecting
- * 
+ *
  * \image html linkedcell.png "Benchmark LinkedCellContainer" width=450cm
  * \image latex linkedcell.png "Benchmark LinkedCellContainer" width=10cm
  */
@@ -124,6 +124,12 @@ public:
     void addParticle(Particle& p);
 
 
+    /**
+     * @brief removes all particles from the halo
+     */
+    void clearHalo();
+
+
 private:
 
     /**
@@ -180,11 +186,7 @@ private:
      */
     void applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)> &fun);
 
-    /**
-     * @brief removes all particles from the halo
-     */
-    void clearHalo();
-    
+
 
     /**
      * @brief check if particle is inside the domain for 2D and 3D simualtions
@@ -206,13 +208,18 @@ private:
             Particle&, Particle&)>& fun);
 
 
-
     bool side(size_t ind);
+
+    void mirrorPeriodic(size_t ind, Particle& p);
+
+    void simpleAdd(Particle&& p);
 
     size_t mirror(Particle &p, size_t ind);
 
     void update(Particle &p, size_t ind);
+    void updatePeriodic();
+    bool bottomBoundary(size_t ind);
+    bool leftBoundary(size_t ind);
+    bool rightBoundary(size_t ind);
+    bool topBoundary(size_t ind);
 };
-
-
-
