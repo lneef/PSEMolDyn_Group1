@@ -30,20 +30,35 @@ namespace XMLReader {
         /**
          * @brief Mass of the molecules in the cuboid
          */
-        double mass;
+        double m;
         /**
          * @brief Distance between the molecules in the cuboid
          */
         double width;
 
+        /**
+         * @brief simulation which works with the particles
+         */
         std::shared_ptr<Simulation> sim;
 
+        /**
+         * @brief flag for initialization with brownian motion, default: true to enable backwards compatability
+         */
         bool browMot = true;
 
+        /**
+         * @brief type of the particles in the cuboid
+         */
         int type_p = 1;
 
+        /**
+         * @brief sigma value of the particles for Lennard Jones potential
+         */
         double sigma_p = 1;
 
+        /**
+         * @brief epsilon value of the particles for Lennard Jones potential
+         */
         double epsilon_p = 5;
     public:
         /**
@@ -53,58 +68,71 @@ namespace XMLReader {
         /**
          * @brief Function that reads the position in x-dimension
          */
-        void x(double) override;
+        void lower_left_x(double) override;
         /**
          * @brief Function that reads the position in y-dimension
          */
-        void y(double) override;
+        void lower_left_y(double) override;
         /**
          * @brief Function that reads the position in z-dimension
          */
-        void z(double) override;
+        void lower_left_z(double) override;
         /**
          * @brief Function that reads the quantity in x-dimension
          */
-        void n_x(int) override;
+        void number_x(int) override;
         /**
          * @brief Function that reads the quantity in x-dimension
          */
-        void n_y(int) override;
+        void number_y(int) override;
         /**
          * @brief Function that reads the quantity in x-dimension
          */
-        void n_z(int) override;
+        void number_z(int) override;
         /**
          * @brief Function that reads the distance between the molecules
          */
-        void h(double) override;
+        void mesh_width(double) override;
         /**
          * @brief Function that reads mass of the molecules
          */
-        void m(double) override;
+        void mass(double) override;
         /**
          * @brief Function that reads the velocity in x-dimension
          */
-        void v_x(double) override;
+        void velocity_x(double) override;
         /**
          * @brief Function that reads the velocity in x-dimension
          */
-        void v_y(double) override;
+        void velocity_y(double) override;
         /**
          * @brief Function that reads the velocity in x-dimension
          */
-        void v_z(double) override;
+        void velocity_z(double) override;
 
+        /**
+         * @brief function to process to flag for brownian motion
+         */
         void brownianMotion(bool) override;
+
+        /**
+         * @brief function to process the type of the particle
+         */
+        void type(int) override;
+
+        /**
+         * @brief function to process the sigma value for the particle
+         */
+        void sigma(double ) override;
+
+        /**
+         * @brief function to process the epsilon value for the particles
+         */
+        void epsilon(double ) override;
+
         /**
          * @brief Function that generates the cuboids
          */
-
-        void type(int) override;
-
-        void sigma(double ) override;
-
-        void epsilon(double ) override;
         void post_cuboid() override;
 
         //bool checkZeroVelocity(std::array<double, 3> v);

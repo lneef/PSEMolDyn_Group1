@@ -17,8 +17,8 @@ protected:
         test = std::make_shared<LinkedCellContainer>();
         std::array<double, 3> domain{3., 3., 0.5};
         test->setDomain(domain);
-        test->setSize(1., domain, 2);
-        cub.generateCuboid(test, {.55, .55, 0}, {3, 3, 1}, 1, 1.0, {0., 1, 0.}, 1);
+        test->setSize(1.1, domain, 2);
+        cub.generateCuboid(test, {.55, .55, 0}, {3, 3, 1}, 1., 1.0, {0., 1, 0.}, 1);
     }
 
     void TearDown() override {
@@ -111,7 +111,7 @@ TEST_F(LinkedCellTest, Outflow){
 }
 
 TEST_F(LinkedCellTest, PeriodicTest){
-    test->addPeriodic(Boundary::HORIZONTAL);
+    test->addPeriodic(Boundary::VERTICAL);
     test->applyF([](Particle &p1, Particle &p2) {
         std::array<double, 3> add = {1., 0., 0.};
         p1.setF(p1.getF() + add);
@@ -120,7 +120,7 @@ TEST_F(LinkedCellTest, PeriodicTest){
 
     auto celllist = test->getCells();
     auto it1 = celllist[16].begin();
-    auto it2 = celllist[17].begin();
+    auto it2 = celllist[11].begin();
 
     EXPECT_DOUBLE_EQ(it1->getF()[0], 6);
     EXPECT_DOUBLE_EQ(it2->getF()[0], 8);

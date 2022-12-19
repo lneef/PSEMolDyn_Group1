@@ -9,7 +9,7 @@
 #include "MolSimLogger.h"
 
 namespace XMLReader {
-    void boundaries_pimpl::top(const ::std::string &top) {
+    void boundaries_pimpl::top_boundary(const ::std::string &top) {
         MolSimLogger::logDebug("XMLReader: boundary {}", top);
 
         if (top == "reflecting"){
@@ -19,7 +19,7 @@ namespace XMLReader {
         }
     }
 
-    void boundaries_pimpl::bottom(const ::std::string &bottom) {
+    void boundaries_pimpl::bottom_boundary(const ::std::string &bottom) {
         MolSimLogger::logDebug("XMLReader: boundary {}", bottom);
 
         if (bottom == "reflecting"){
@@ -29,7 +29,7 @@ namespace XMLReader {
         }
     }
 
-    void boundaries_pimpl::left(const ::std::string &left) {
+    void boundaries_pimpl::left_boundary(const ::std::string &left) {
         MolSimLogger::logDebug("XMLReader: boundary {}", left);
 
         if (left == "reflecting"){
@@ -39,7 +39,7 @@ namespace XMLReader {
         }
     }
 
-    void boundaries_pimpl::right(const ::std::string &right) {
+    void boundaries_pimpl::right_boundary(const ::std::string &right) {
         MolSimLogger::logDebug("XMLReader: boundary {}", right);
 
         if (right == "reflecting"){

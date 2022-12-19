@@ -11,6 +11,7 @@ namespace XMLReader {
 
     void temperature_pimpl::temp_int(double temp_int) {
         temp = temp_int;
+        temp_tar = temp;
     }
 
     void temperature_pimpl::n_thermostat(int n_thermostat) {
@@ -26,16 +27,10 @@ namespace XMLReader {
     }
 
     void temperature_pimpl::post_temperature() {
-        if (temp_tar == NULL) {
-            std::shared_ptr<Thermostat> thermostat_p = std::make_shared<Thermostat>(temp);
-            sim->setThermostat(thermostat_p);
-            sim->setN_thermostat(n_thermo);
-            thermostat_p->setTemp_delta(temp_del);
-        }else{
-            std::shared_ptr<Thermostat> thermostat_p = std::make_shared<Thermostat>(temp_tar, temp);
-            sim->setThermostat(thermostat_p);
-            sim->setN_thermostat(n_thermo);
-            thermostat_p->setTemp_delta(temp_del);
-        }
+        std::shared_ptr<Thermostat> thermostat_p = std::make_shared<Thermostat>(temp);
+        thermostat_p->setDelta(temp_del);
+        thermostat_p->setTarget(temp_tar);
+        sim->setThermostat(thermostat_p);
+        sim->setN_thermostat(n_thermo);
     }
 }

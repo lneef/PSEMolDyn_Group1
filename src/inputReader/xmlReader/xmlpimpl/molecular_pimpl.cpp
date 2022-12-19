@@ -46,5 +46,9 @@ namespace XMLReader {
 
     }
 
+    void molecular_pimpl::from_checkpoint() {
+        molecular_pskel::from_checkpoint();
+    }
+
 
 }

@@ -112,7 +112,8 @@ add_library(lib_test
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/tempCalculation/Thermostat.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/Thermostat.cpp)
+
 
 target_link_libraries(lib_test PRIVATE spdlog::spdlog)
 target_compile_features(lib_test
