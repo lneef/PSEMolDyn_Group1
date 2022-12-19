@@ -74,6 +74,7 @@ void Simulation::run() {
             if (iteration % n_thermostat == 0) {
                 thermostat->applyThermostat(particles);
             }
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Temperature: {}", thermostat->measureTemp(particles));
         }
 
 

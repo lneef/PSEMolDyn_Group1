@@ -6,11 +6,12 @@
         <domain_size_x>63</domain_size_x>
         <domain_size_y>36</domain_size_y>
         <cutOff_radius>2.5</cutOff_radius>
+        <g_gravitation>-12.44</g_gravitation>
     </simulation>
-    <temperture>
+    <temperature>
         <n_thermostat>1000</n_thermostat>
-        <temp_in>40</temp_in>
-    </temperture>
+        <temp_int>40</temp_int>
+    </temperature>
     <cuboid>
         <type>1</type>
         <sigma>1</sigma>
@@ -37,4 +38,10 @@
         <velocity_x>0</velocity_x>
         <velocity_y>0.</velocity_y>
     </cuboid>
+    <boundaries>
+        <top_boundary>reflecting</top_boundary>
+        <bottom_boundary>reflecting</bottom_boundary>
+        <left_boundary>periodic</left_boundary>
+        <right_boundary>periodic</right_boundary>
+    </boundaries>
 </molecular>

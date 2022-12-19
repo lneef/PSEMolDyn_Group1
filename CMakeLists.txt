@@ -105,7 +105,6 @@ add_library(lib_test
         ${FORCE}
         ${INPUT}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Periodic.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
         ${CONTAINER}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Reflecting.cpp
