@@ -6,6 +6,7 @@
 
 Thermostat::Thermostat(double temp) {
     this->temp = temp;
+    this->temp_target = temp;
 }
 
 Thermostat::Thermostat(double temp_target, double temp) {
