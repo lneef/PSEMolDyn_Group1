@@ -124,6 +124,12 @@ public:
     void addParticle(Particle& p);
 
 
+    /**
+     * @brief removes all particles from the halo
+     */
+    void clearHalo();
+
+
 private:
 
     /**
@@ -180,10 +186,6 @@ private:
      */
     void applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)> &fun);
 
-    /**
-     * @brief removes all particles from the halo
-     */
-    void clearHalo();
 
 
     /**

@@ -111,13 +111,17 @@ TEST_F(LinkedCellTest, Outflow){
 }
 
 TEST_F(LinkedCellTest, PeriodicTest){
-    test->addPeriodic(Boundary::VERTICAL);
+    test->addPeriodic(Boundary::LEFT);
+    test->addPeriodic(Boundary::RIGHT);
     test->applyF([](Particle &p1, Particle &p2) {
         std::array<double, 3> add = {1., 0., 0.};
         p1.setF(p1.getF() + add);
         p2.setF(p2.getF() + add);
     });
 
+    int n = std::accumulate(test->getHalo().cbegin(), test->getHalo().cend(), 0, [](int acc,std::reference_wrapper<ParticleContainer> l ){
+        return acc + l.get().size();
+    });
     auto celllist = test->getCells();
     auto it1 = celllist[16].begin();
     auto it2 = celllist[11].begin();
@@ -128,19 +132,21 @@ TEST_F(LinkedCellTest, PeriodicTest){
 }
 
 TEST_F(LinkedCellTest, PeriodicTest1){
-    test->addPeriodic(Boundary::HORIZONTAL);
+    test->addPeriodic(Boundary::TOP);
+    test->addPeriodic(Boundary::BOTTOM);
     LennardJones lj{};
     std::shared_ptr<Container> test1 = test;
     lj.calculateF(test1);
     auto celllist = test->getCells();
     auto it1 = celllist[6].begin();
-    std::array<double, 3> f1{-114.375, -5.6250000000005, 0};
+    std::array<double, 3> f1{-114.375, -5.6250000000005125, 0};
     EXPECT_THAT(it1->getF(), testing::Pointwise(testing::DoubleEq(),f1));
 
 }
 
 TEST_F(LinkedCellTest, PeriodicTest2){
-    test->addPeriodic(Boundary::VERTICAL);
+    test->addPeriodic(Boundary::LEFT);
+    test->addPeriodic(Boundary::RIGHT);
     LennardJones lj{};
     std::shared_ptr<Container> test1 = test;
     lj.calculateF(test1);
@@ -148,7 +154,7 @@ TEST_F(LinkedCellTest, PeriodicTest2){
     auto it1 = celllist[6].begin();
     auto it2 = celllist[11].begin();
 
-    std::array<double, 3> f1{ -5.6250000000005027,-114.375, 0};
+    std::array<double, 3> f1{ -5.6250000000005125,-114.375, 0};
     EXPECT_THAT(it1->getF(), testing::Pointwise(testing::DoubleEq(),f1));
 }
 
@@ -168,6 +174,8 @@ TEST(LinkedCellTest_Outflow_Test, AppTest1){
         p1.setF(p1.getF() + add);
         p2.setF(p2.getF() + add);
     });
+
+
     std::vector<ParticleContainer> celllist = test1->getCells();
     auto it1 = celllist[6].begin();
     auto it4 = celllist[12].begin();
