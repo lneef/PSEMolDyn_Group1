@@ -142,5 +142,15 @@ gtest_discover_tests(MolSimTest)
 
 include(spdlog)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(XERCESC REQUIRED IMPORTED_TARGET xerces-c)
 
+
+target_link_libraries(MolSim
+        # stuff that is used in headers and source files
+        PUBLIC
+        PkgConfig::XERCESC
+        PUBLIC
+        spdlog
+        )
 

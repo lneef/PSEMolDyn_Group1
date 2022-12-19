@@ -70,7 +70,7 @@ namespace XMLReader {
         /**
          * @brief initializes the parser
          * @param lc reference to shared pointer pointing to a LinkedCellContainer
-         * @param sim reference to shared pointer pointing to instance of Simualtion
+         * @param sim reference to shared pointer pointing to instance of Simulation
          */
         void init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &sim);
 
@@ -143,7 +143,5 @@ namespace XMLReader {
          * @brief generates sphere and stores particles in cells
          */
         void post_sphere() override;
-
-        //bool checkZeroVelocity(std::array<double, 3> v);
     };
 }

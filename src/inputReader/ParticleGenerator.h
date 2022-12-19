@@ -7,13 +7,13 @@
 #include "utils/ArrayUtils.h"
 
 /**
- * @brief CuboidGenerator generates cuboids of particles form input values
+ * @brief ParticleGenerator generates cuboids of particles form input values
  *
  * @param T template argument for container type that is used
  *
  */
 template<typename T>
-class CuboidGenerator {
+class ParticleGenerator {
 private:
     double meanV = 0.1;
     MaxwellBoltzmannDistribution mb;
@@ -47,9 +47,9 @@ private:
     }
 
 public:
-    CuboidGenerator() = default;
+    ParticleGenerator() = default;
 
-    virtual ~CuboidGenerator() = default;
+    virtual ~ParticleGenerator() = default;
 
     /**
      * @brief Generates cuboids of particles with given values and stores them in instance of ParticleContainer

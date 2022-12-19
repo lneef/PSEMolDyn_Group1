@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "utils//Thermostat.h"
 #include "container/ParticleContainer.h"
-#include "inputReader/CuboidGenerator.h"
+#include "inputReader/ParticleGenerator.h"
 #include "container/LinkedCellContainer.h"
 
 /**
@@ -25,7 +25,7 @@ protected:
     std::shared_ptr<Container> test;
 
     void SetUp() override{
-        CuboidGenerator<LinkedCellContainer> cub{};
+        ParticleGenerator<LinkedCellContainer> cub{};
         thermostat_pointer = std::make_shared<Thermostat>(2.0);
 
         std::shared_ptr<LinkedCellContainer> par = std::make_shared<LinkedCellContainer>();

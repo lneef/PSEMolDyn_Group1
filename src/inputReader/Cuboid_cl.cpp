@@ -14,7 +14,7 @@ namespace inputReader {
         double m;
         std::array<double, 3> v{};
 
-        CuboidGenerator<ParticleContainer> cuboidGenerator;
+        ParticleGenerator<ParticleContainer> cuboidGenerator;
 
         int num_particles;
 
@@ -173,7 +173,7 @@ namespace inputReader {
 
             MolSimLogger::logDebug("Mean velocity of the particles: {} {} {}", v[0], v[1], v[2]);
 
-            //passes values to CuboidGenerator
+            //passes values to ParticleGenerator
             cuboidGenerator.generateCuboid(particles, x, n, h, m, v);
             MolSimLogger::logInfo("Cuboid generated!");
         }
