@@ -15,7 +15,7 @@ namespace XMLReader {
         if (top == "reflecting"){
             cells->addReflecting(Reflecting(hor, cells->getDomain()[1]));
         }else if(top == "periodic"){
-            periodic.emplace(3);
+            cells->addPeriodic(Boundary::TOP);
         }
     }
 
@@ -25,7 +25,7 @@ namespace XMLReader {
         if (bottom == "reflecting"){
             cells->addReflecting(Reflecting(hor, 0));
         }else if(bottom == "periodic"){
-            periodic.emplace(1);
+            cells->addPeriodic(Boundary::BOTTOM);
         }
     }
 
@@ -35,7 +35,7 @@ namespace XMLReader {
         if (left == "reflecting"){
             cells->addReflecting(Reflecting(vert, 0));
         } if(left == "periodic"){
-            periodic.emplace(4);
+            cells->addPeriodic(Boundary::LEFT);
         }
     }
 
@@ -45,16 +45,11 @@ namespace XMLReader {
         if (right == "reflecting"){
             cells->addReflecting(Reflecting(vert, cells->getDomain()[0]));
         } if(right == "periodic"){
-            periodic.emplace(2);
+            cells->addPeriodic(Boundary::RIGHT);
         }
     }
 
     void boundaries_pimpl::post_boundaries() {
-        if(periodic.contains(2) && periodic.contains(4))
-            cells->addPeriodic(Boundary::VERTICAL);
-
-        if(periodic.contains(3) && periodic.contains(1))
-            cells->addPeriodic(Boundary::HORIZONTAL);
     }
 
     void boundaries_pimpl::init(std::shared_ptr<LinkedCellContainer> &cells_arg) {
