@@ -3,7 +3,7 @@
 //
 
 #include "sphere_pimpl.h"
-#include "inputReader/CuboidGenerator.h"
+#include "inputReader/ParticleGenerator.h"
 
 namespace XMLReader {
     void sphere_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
@@ -51,16 +51,6 @@ namespace XMLReader {
         browMot = bm;
     }
 
-    /*bool sphere_pimpl::checkZeroVelocity(std::array<double, 3> v){
-        bool check = true;
-        for(auto &i : v){
-            if(i != 0){
-                check = false;
-            }
-        }
-        return check;
-    }*/
-
     void sphere_pimpl::post_sphere() {
         std::array<double, 3> c{};
         std::array<double, 3> v{};
@@ -71,7 +61,7 @@ namespace XMLReader {
             centre.pop();
             vel.pop();
         }
-        CuboidGenerator<LinkedCellContainer> cub{};
+        ParticleGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
             cub.generateSphereNoBrownian(cells, c, v, radius_r, mass_r, width);
         } else {

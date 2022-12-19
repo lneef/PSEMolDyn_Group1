@@ -6,7 +6,7 @@
 
 #include <fstream>
 #include "inputReader/FileReader.h"
-#include "CuboidGenerator.h"
+#include "ParticleGenerator.h"
 #include "MolSimLogger.h"
 
 namespace inputReader {
@@ -40,7 +40,7 @@ namespace inputReader {
             double m;
             std::array<double, 3> v{};
 
-            CuboidGenerator<T> generator;
+            ParticleGenerator<T> generator;
 
             int num_particles = 0;
 
@@ -81,7 +81,7 @@ namespace inputReader {
                     for (auto &vj: v) {
                         datastream >> vj;
                     }
-                    //passes values to CuboidGenerator
+                    //passes values to ParticleGenerator
                     generator.generateCuboid(particles, x, n, h, m, v);
                     MolSimLogger::logInfo("Cuboids generated!");
 
@@ -108,7 +108,7 @@ namespace inputReader {
             double m;
             std::array<double, 3> v{};
 
-            CuboidGenerator<T> generator;
+            ParticleGenerator<T> generator;
 
             int num_spheres = 0;
 

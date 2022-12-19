@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "cuboid_pimpl.h"
-#include "inputReader/CuboidGenerator.h"
+#include "inputReader/ParticleGenerator.h"
 #include "MolSimLogger.h"
 
 namespace XMLReader {
@@ -57,16 +57,6 @@ namespace XMLReader {
         browMot = bm;
     }
 
-    /*bool cuboid_pimpl::checkZeroVelocity(std::array<double, 3> v) {
-        bool check = true;
-        for (auto &i: v) {
-            if (i != 0) {
-                check = false;
-            }
-        }
-        return check;
-    }*/
-
     void cuboid_pimpl::post_cuboid() {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
@@ -83,7 +73,7 @@ namespace XMLReader {
 
             ++i;
         }
-        CuboidGenerator<LinkedCellContainer> cub{};
+        ParticleGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
             cub.generateCuboidNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, type_p);
         } else {

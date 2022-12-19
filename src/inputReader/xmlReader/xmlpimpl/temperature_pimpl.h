@@ -23,14 +23,29 @@ namespace XMLReader {
          */
         void init(std::shared_ptr<Simulation> &sim);
 
+        /**
+         * @brief Function that reads the initialization temperature
+         */
         void temp_int(double) override;
 
+        /**
+         * @brief Function that reads the n_thermostat
+         */
         void n_thermostat(int) override;
 
+        /**
+         * @brief Function that reads the target temperature
+         */
         void temp_target(double) override;
 
+        /**
+         * @brief Function that reads the delta temperature
+         */
         void temp_delta(double) override;
 
+        /**
+         * @brief Function that generates the thermostat pointer and passes the parameters to the simulation and the thermostat
+         */
         void post_temperature() override;
     };
 }

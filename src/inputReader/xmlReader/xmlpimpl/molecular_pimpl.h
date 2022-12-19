@@ -20,25 +20,55 @@ namespace XMLReader {
         void pre() override;
         /**
          * @brief Function that initializes the container and the simulation
+         *
+         * @param lc reference to shared pointer pointing to a LinkedCellContainer
+         * @param sim reference to shared pointer pointing to instance of Simulation
          */
         void init(std::shared_ptr<Simulation> &sim, std::shared_ptr<LinkedCellContainer> &lc);
 
+        /**
+         * @brief function to process the subparser cuboid
+         */
         void cuboid() override;
 
+        /**
+         * @brief function to process the subparser simulation
+         */
         void simulation() override;
 
+        /**
+         * @brief function to process the subparser cuboid_input
+         */
         void cuboid_input() override;
 
+        /**
+         * @brief function to process the subparser spheres_input
+         */
         void spheres_input() override;
 
+        /**
+         * @brief function to process the subparser sphere
+         */
         void sphere() override;
 
+        /**
+         * @brief function to process the subparser boundaries
+         */
         void boundaries() override;
 
+        /**
+         * @brief function to process the subparser temperature
+         */
         void temperature() override;
 
+        /**
+         * @brief function to process the subparser from_checkpoint
+         */
         void from_checkpoint() override;
 
+        /**
+         * @brief Function that generates the main parser molecular
+         */
         void post_molecular() override;
     };
 

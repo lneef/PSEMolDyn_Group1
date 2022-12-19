@@ -2,7 +2,7 @@
 #include <gmock/gmock-matchers.h>
 #include "gtest/gtest.h"
 #include "container/LinkedCellContainer.h"
-#include "inputReader/CuboidGenerator.h"
+#include "inputReader/ParticleGenerator.h"
 #include "Simulation.h"
 
 /**
@@ -13,7 +13,7 @@ protected:
     std::shared_ptr<LinkedCellContainer> test;
 
     void SetUp() override {
-        CuboidGenerator<LinkedCellContainer> cub{};
+        ParticleGenerator<LinkedCellContainer> cub{};
         test = std::make_shared<LinkedCellContainer>();
         std::array<double, 3> domain{3., 3., 0.5};
         test->setDomain(domain);
@@ -156,7 +156,7 @@ TEST_F(LinkedCellTest, PeriodicTest2){
  * @brief test applyF with several particles per cell
  */
 TEST(LinkedCellTest_Outflow_Test, AppTest1){
-    CuboidGenerator<LinkedCellContainer> cub{};
+    ParticleGenerator<LinkedCellContainer> cub{};
     std::shared_ptr<LinkedCellContainer> test1 = std::make_shared<LinkedCellContainer>();
     std::array<double, 3> domain{3., 3., 0.5};
     test1->setDomain(domain);

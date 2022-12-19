@@ -134,8 +134,6 @@ namespace XMLReader {
          * @brief Function that generates the cuboids
          */
         void post_cuboid() override;
-
-        //bool checkZeroVelocity(std::array<double, 3> v);
     };
 
 }
