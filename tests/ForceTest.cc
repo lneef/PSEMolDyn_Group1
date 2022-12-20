@@ -6,6 +6,7 @@
 #include "forceCalculation/LJGravitation.h"
 #include <vector>
 #include <gmock/gmock-matchers.h>
+#include "MolSimLogger.h"
 
 /**
  * @brief test whether calculateF of Lennard Jones works a expected with more than 2 particles
@@ -36,8 +37,10 @@ TEST_F(ForceTest, CalcTest){
     std::array<double, 3> f1 = {-114.375,5.625,0};
     std::array<double, 3> f2 = {-5.625,114.375,0};
     std::array<double, 3> f3 = {120,-120,0};
-
     auto &p = dynamic_cast<ParticleContainer&>(*par);
+    MolSimLogger::logInfo("Force: {}", p[2].getF()[0], p[2].getF()[1], p[2].getF()[2]);
+
+
     EXPECT_THAT(p[0].getF(), testing::Pointwise(testing::DoubleEq(),f1));
     EXPECT_THAT(p[1].getF(), testing::Pointwise(testing::DoubleEq(), f2));
     EXPECT_THAT(p[2].getF(), testing::Pointwise(testing::DoubleEq(), f3));

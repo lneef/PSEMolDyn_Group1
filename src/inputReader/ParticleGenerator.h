@@ -160,15 +160,13 @@ public:
             newX[0] = (x * h);
             for (int y = -r + 1; y < r; ++y) {
                 newX[1] = (y * h);
-                for (int z = -r + 1; z < r; ++z) {
-                    newX[2] = (z * h);
                     double rad_test = ArrayUtils::L2Norm(newX);
                     if (rad_test < radius) {
                         std::array<double, 3> newV = calculateV(v);
                         std::array<double, 3> pos = newX + center;
                         particles->addParticle(Particle(pos, newV, m, sigma, epsilon, type));
                     }
-                }
+
             }
         }
 
@@ -193,8 +191,7 @@ public:
             newX[0] = (x * h);
             for (int y = -r + 1; y < r; ++y) {
                 newX[1] = (y * h);
-                for (int z = -r + 1; z < r; ++z) {
-                    newX[2] = (z * h);
+
                     double rad_test = ArrayUtils::L2Norm(newX);
                     if (rad_test < radius) {
                         std::array<double, 3> mbV = calculateVWithMean(meanVelocity);
@@ -205,7 +202,7 @@ public:
                         std::array<double, 3> pos = newX + center;
                         particles->addParticle(Particle(pos, newV, m, sigma, epsilon, type));
                     }
-                }
+
             }
         }
 
@@ -228,14 +225,13 @@ public:
             newX[0] = (x * h);
             for (int y = -r + 1; y < r; ++y) {
                 newX[1] = (y * h);
-                for (int z = -r + 1; z < r; ++z) {
-                    newX[2] = (z * h);
+
                     double rad_test = ArrayUtils::L2Norm(newX);
                     if (rad_test < radius) {
                         std::array<double, 3> pos = newX + center;
                         particles->addParticle(Particle(pos, v, m, sigma, epsilon, type));
                     }
-                }
+
             }
         }
 
