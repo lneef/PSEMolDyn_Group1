@@ -1,5 +1,5 @@
 
-
+//3270301
 #include <iostream>
 #include "LennardJones.h"
 #include "container/ParticleContainer.h"
@@ -33,16 +33,7 @@ void LennardJones::calculateF(Particle &p1, Particle &p2) {
         epsilon = std::sqrt(p1.getEpsilon() * p2.getEpsilon());
     }
 
-
-    std::array<double, 3> xij = p1.getX() - p2.getX();
-    double norm = ArrayUtils::L2Norm(xij);
-    double pow_6 = pow((sigma / norm), 6);
-    double scalar = ((-24 * epsilon) / pow(norm, 2)) * (pow_6 - 2 * pow(pow_6, 2));
-    std::array<double, 3> newF = scalar * xij;
-    p1.setF(p1.getF() + newF);
-    p2.setF(-1 * newF + p2.getF());
-
-    /*
+#ifndef AVX
     std::array<double, 3> xij = p1.getX() - p2.getX();
     double sum = xij[0] * xij[0] + xij[1] * xij[1] + xij[2] * xij[2];
     double pow_6 = pow((sigma * sigma)/sum, 3);
@@ -50,9 +41,9 @@ void LennardJones::calculateF(Particle &p1, Particle &p2) {
     std::array<double, 3> newF = scalar * xij;
     p1.setF(p1.getF() + newF);
     p2.setF(p2.getF() - newF);
-    */
+#endif
 
-    /*
+#ifdef AVX
     auto & pos1 = p1.getX();
     auto & pos2 = p2.getX();
 
@@ -75,8 +66,7 @@ void LennardJones::calculateF(Particle &p1, Particle &p2) {
     std::array<double, 3> newF{acc[1], acc[2], acc[3]};
     p1.setF(p1.getF() + newF);
     p2.setF(p2.getF() - newF);
-    */
-
+#endif
 
 }
 

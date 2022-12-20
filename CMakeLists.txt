@@ -9,6 +9,8 @@ option(SANITIZE "Enable compilation with sanitizer" OFF)
 option(TESTS "Enable generation of tests" ON)
 
 option(PROFILE "Enable compilation with symbols" OFF)
+
+option(VECTOR "Enable vectorization" OFF)
 # option to disable logging in performance critical regions
 option(BMARK "Disable io in benchmark region" OFF)
 # let ccmake and cmake-gui offer the default build type options
@@ -40,7 +42,12 @@ if(PROFILE)
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
 endif()
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+
+if(VECTOR)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+    target_compile_definitions(MolSim PRIVATE AVX)
+endif()
+
 if (BMARK)
     target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF BENCHMARK)
 endif ()
