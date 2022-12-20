@@ -6,6 +6,9 @@ project(PSEMolDyn_Group1 VERSION 0.0.1)
 #option to enable compilation with linter
 option(SANITIZE "Enable compilation with sanitizer" OFF)
 
+option(TESTS "Enable generation of tests" ON)
+
+option(PROFILE "Enable compilation with symbols" OFF)
 # option to disable logging in performance critical regions
 option(BMARK "Disable io in benchmark region" OFF)
 # let ccmake and cmake-gui offer the default build type options
@@ -31,9 +34,16 @@ target_compile_features(MolSim
         PRIVATE
         cxx_std_20
         )
-if(BMARK)
-    target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF BENCHMARK)
+
+if(PROFILE)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -O2")
+    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
+    SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
 endif()
+
+if (BMARK)
+    target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF BENCHMARK)
+endif ()
 target_include_directories(MolSim
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd
@@ -41,13 +51,16 @@ target_include_directories(MolSim
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(XERCESC REQUIRED IMPORTED_TARGET xerces-c)
 target_link_libraries(MolSim
         # stuff that is used in headers and source files
         PUBLIC
-        xerces-c
-        PRIVATE
-        spdlog::spdlog
+        PkgConfig::XERCESC
+        PUBLIC
+        spdlog
         )
+
 # if the option is set, the program will be compiled with fsanitize=address
 if (SANITIZE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
@@ -66,91 +79,84 @@ target_compile_options(MolSim
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 include(doxygen)
-
-
-#set up google test
-include(FetchContent)
-
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG 58d77fa8070e8cec2dc1ed015d66b454c8d78850
-)
-
-FetchContent_MakeAvailable(googletest)
-
-enable_testing()
-
-file(GLOB_RECURSE MY_TEST
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cc"
-        )
-add_executable(
-        MolSimTest
-        ${MY_TEST}
-)
-file(GLOB_RECURSE FORCE
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/forceCalculation/*.cpp"
-        )
-file(GLOB_RECURSE INPUT
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/inputReader/*.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/*.cpp"
-        )
-
-file(GLOB_RECURSE CONTAINER
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/container/*.cpp"
-        )
-
-
-add_library(lib_test
-        ${FORCE}
-        ${INPUT}
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
-        ${CONTAINER}
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Reflecting.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/Thermostat.cpp)
-
-
-target_link_libraries(lib_test PRIVATE spdlog::spdlog)
-target_compile_features(lib_test
-        PRIVATE
-        cxx_std_20
-        )
-target_include_directories(lib_test
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/
-        PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd/)
-target_include_directories(MolSimTest
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/
-        )
-target_link_libraries(MolSimTest
-        GTest::gtest
-        gmock
-        lib_test
-        xerces-c
-        spdlog::spdlog
-        )
-
-include(GoogleTest)
-
-gtest_discover_tests(MolSimTest)
-
 include(spdlog)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(XERCESC REQUIRED IMPORTED_TARGET xerces-c)
+if (TESTS)
+    #set up google test
+    include(FetchContent)
+
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG 58d77fa8070e8cec2dc1ed015d66b454c8d78850
+    )
+
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+
+    file(GLOB_RECURSE MY_TEST
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cc"
+            )
+    add_executable(
+            MolSimTest
+            ${MY_TEST}
+    )
+    file(GLOB_RECURSE FORCE
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/forceCalculation/*.cpp"
+            )
+    file(GLOB_RECURSE INPUT
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/inputReader/*.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/*.cpp"
+            )
+
+    file(GLOB_RECURSE CONTAINER
+            "${CMAKE_CURRENT_SOURCE_DIR}/src/container/*.cpp"
+            )
 
 
-target_link_libraries(MolSim
-        # stuff that is used in headers and source files
-        PUBLIC
-        PkgConfig::XERCESC
-        PUBLIC
-        spdlog
-        )
+    add_library(lib_test
+            ${FORCE}
+            ${INPUT}
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/ArrayUtils.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/MolSimLogger.cpp
+            ${CONTAINER}
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/Reflecting.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/Particle.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/outputWriter/FileWriter.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/Simulation.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/Thermostat.cpp)
+
+
+    target_link_libraries(lib_test PRIVATE spdlog::spdlog)
+    target_compile_features(lib_test
+            PRIVATE
+            cxx_std_20
+            )
+    target_include_directories(lib_test
+            PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/
+            PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd/)
+    target_include_directories(MolSimTest
+            PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/
+            )
+    target_link_libraries(MolSimTest
+            GTest::gtest
+            gmock
+            lib_test
+            xerces-c
+            spdlog::spdlog
+            )
+
+    include(GoogleTest)
+
+    gtest_discover_tests(MolSimTest)
+endif ()
+
+
+
+
+
 
