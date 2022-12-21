@@ -305,9 +305,9 @@ void LinkedCellContainer::addPeriodic(Boundary bound) {
 }
 
 bool LinkedCellContainer::side(size_t ind) {
-    return (ind % mesh[0] == 0 && periodic.contains(Boundary::LEFT)) ||
-           (ind % mesh[0] == mesh[0] - 1 && periodic.contains(Boundary::RIGHT)) ||
-           (ind < mesh[0] && periodic.contains((Boundary::BOTTOM))) ||
+    return (ind % mesh[0] == 0 && containsPeriodic(Boundary::LEFT)) ||
+           (ind % mesh[0] == mesh[0] - 1 && containsPeriodic(Boundary::RIGHT)) ||
+           (ind < mesh[0] && containsPeriodic((Boundary::BOTTOM))) ||
            (ind >= cells.size() - mesh[0] && periodic.contains(Boundary::TOP));
 }
 
@@ -353,45 +353,45 @@ void LinkedCellContainer::update(Particle &p, size_t ind) {
 }
 
 void LinkedCellContainer::mirrorPeriodic(size_t ind, Particle &p){
-    if (leftBoundary(ind) && periodic.contains(Boundary::RIGHT)) {
+    if (leftBoundary(ind) && containsPeriodic(Boundary::RIGHT)) {
         std::array<double, 3> to_add{domain[0], 0, 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
-    if (rightBoundary(ind) && periodic.contains(Boundary::LEFT)) {
+    if (rightBoundary(ind) && containsPeriodic(Boundary::LEFT)) {
         std::array<double, 3> to_add{-domain[0], 0, 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
-    if (bottomBoundary(ind) && periodic.contains(Boundary::TOP)) {
+    if (bottomBoundary(ind) && containsPeriodic(Boundary::TOP)) {
         std::array<double, 3> to_add{0, domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
-    if (topBoundary(ind) && periodic.contains(Boundary::BOTTOM)) {
+    if (topBoundary(ind) && containsPeriodic(Boundary::BOTTOM)) {
         std::array<double, 3> to_add{0, -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
     if (topBoundary(ind) && rightBoundary(ind) &&
-        (periodic.contains(Boundary::BOTTOM) || periodic.contains(Boundary::LEFT))) {
+        (containsPeriodic(Boundary::BOTTOM) || containsPeriodic(Boundary::LEFT))) {
 
         std::array<double, 3> to_add{-domain[0], -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
 
     } else if (topBoundary(ind) && leftBoundary(ind) &&
-               (periodic.contains(Boundary::BOTTOM) || periodic.contains(Boundary::RIGHT))) {
+               (containsPeriodic(Boundary::BOTTOM) || containsPeriodic(Boundary::RIGHT))) {
 
         std::array<double, 3> to_add{domain[0], -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     } else if (bottomBoundary(ind) && leftBoundary(ind) &&
-               (periodic.contains(Boundary::TOP) || periodic.contains(Boundary::RIGHT))) {
+               (containsPeriodic(Boundary::TOP) || containsPeriodic(Boundary::RIGHT))) {
 
         std::array<double, 3> to_add{domain[0], domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
 
     } else if (bottomBoundary(ind) && rightBoundary(ind) &&
-               (periodic.contains(Boundary::TOP) || periodic.contains(Boundary::LEFT))) {
+               (containsPeriodic(Boundary::TOP) || containsPeriodic(Boundary::LEFT))) {
 
         std::array<double, 3> to_add{-domain[0], domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
@@ -437,4 +437,8 @@ void LinkedCellContainer::addParticle(Particle& p){
         cells[ind].addParticle(p);
 
     }
+}
+
+bool LinkedCellContainer::containsPeriodic(Boundary bound) {
+    return periodic.find(bound) != periodic.end();
 }
