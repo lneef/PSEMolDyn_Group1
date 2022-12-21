@@ -5,7 +5,7 @@ MolSim
 Members:
 * Lukas Neef
 * Dominik Rammelsberger
-* Xiyu Wang
+* Xiyu Zhang
 
 # Code #
 * Link: https://github.com/lneef/PSEMolDyn_Group1
@@ -76,4 +76,9 @@ The following command line options are supported:
 # XML #
 * see molsim.xsd for the schema definition
 * simulation has to be the first element since it is needed for initialization
+* for temperature the target temperature must appear after the initial temperature
 * an element named path expects a valid path to an input file (.txt, see sphere.txt and eingabe-cuboid.txt for schema)
+
+# Simulation Runs #
+Videos of runs of the simulation for sheet 4 can be found at:
+https://syncandshare.lrz.de/getlink/fiDGaEwQXQkjmE4VS1c1A8/

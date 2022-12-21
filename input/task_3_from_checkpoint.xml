@@ -8,23 +8,21 @@
         <cutOff_radius>3</cutOff_radius>
         <g_gravitation>-12.44</g_gravitation>
     </simulation>
-    <temperature>
-        <n_thermostat>1000</n_thermostat>
-        <temp_int>0.5</temp_int>
-    </temperature>
-    <cuboid>
+    <from_checkpoint>
+        <path>../input/task3.txt</path>
+    </from_checkpoint>
+    <sphere>
         <type>1</type>
         <sigma>1.2</sigma>
         <epsilon>1</epsilon>
-        <lower_left_x>1.5</lower_left_x>
-        <lower_left_y>2.</lower_left_y>
-        <number_x>250</number_x>
-        <number_y>50</number_y>
+        <center_x>150</center_x>
+        <center_y>150</center_y>
+        <radius>20</radius>
         <mesh_width>1.2</mesh_width>
         <mass>1.0</mass>
         <velocity_x>0</velocity_x>
         <velocity_y>0</velocity_y>
-    </cuboid>
+    </sphere>
     <boundaries>
         <top_boundary>reflecting</top_boundary>
         <bottom_boundary>reflecting</bottom_boundary>

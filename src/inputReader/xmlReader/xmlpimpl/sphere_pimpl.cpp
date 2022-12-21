@@ -4,6 +4,7 @@
 
 #include "sphere_pimpl.h"
 #include "inputReader/ParticleGenerator.h"
+#include <iostream>
 
 namespace XMLReader {
     void sphere_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
@@ -54,7 +55,8 @@ namespace XMLReader {
     void sphere_pimpl::post_sphere() {
         std::array<double, 3> c{};
         std::array<double, 3> v{};
-        for (size_t i = 0; i < 3; ++i) {
+        size_t len= centre.size();
+        for (size_t i = 0; i < len; ++i) {
             c[i] = centre.front();
             v[i] = vel.front();
 
