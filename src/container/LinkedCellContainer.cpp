@@ -308,7 +308,7 @@ bool LinkedCellContainer::side(size_t ind) {
     return (ind % mesh[0] == 0 && containsPeriodic(Boundary::LEFT)) ||
            (ind % mesh[0] == mesh[0] - 1 && containsPeriodic(Boundary::RIGHT)) ||
            (ind < mesh[0] && containsPeriodic((Boundary::BOTTOM))) ||
-           (ind >= cells.size() - mesh[0] && periodic.contains(Boundary::TOP));
+           (ind >= cells.size() - mesh[0] && containsPeriodic(Boundary::TOP));
 }
 
 size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
