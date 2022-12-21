@@ -159,7 +159,7 @@ if (TESTS)
             GTest::gtest
             gmock
             lib_test
-            xerces-c
+            PkgConfig::XERCESC
             spdlog::spdlog
             )
 
