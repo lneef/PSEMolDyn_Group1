@@ -5,7 +5,7 @@ MolSim
 Members:
 * Lukas Neef
 * Dominik Rammelsberger
-* Xiyu Wang
+* Xiyu Zhang
 
 # Code #
 * Link: https://github.com/lneef/PSEMolDyn_Group1
@@ -68,6 +68,8 @@ The following command line options are supported:
 * for planets see input/eingabe-sonne.txt
 * for cuboids via xml see input/input-cuboid.xml
 * for spheres via xml see input/sphere.xml and the specification in sphere.txt
+* for fluids via xml see input/instability_small.xml and input/instability_big.xml
+* for trying checkpointing via xml see input/checkpoint.xml and then the input/from_checkpoint.xml with the checkpoint parameters in input/checkpoint.txt
 
 # Boundary #
 * the default boundary condition is outflow
