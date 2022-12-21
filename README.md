@@ -29,6 +29,11 @@ Members:
 # CMake #
 * by setting SANITIZE=ON compilation with fsanitize=address is enables
 * by setting BMARK=ON compilation in benchmark mode is enabled, i.e. all io in benchmark region is disabled
+* by setting VECTOR=ON compilation with vectorization is enabled
+* by setting PROFILE=ON compilation with profiling flags is enabled
+* by setting DTESTS=OFF test target won't be build
+* by setting FAST_I=ON and using the icpc compiler you can compile with high optimization using icpc
+* by setting FAST_G=ON and using the icpc compiler you can compile with high optimization using gccc
 
 # Usage #
 MolSim is a simulator for simulating the movement of planets and molecules.
