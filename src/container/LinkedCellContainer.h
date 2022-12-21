@@ -222,4 +222,6 @@ private:
     bool leftBoundary(size_t ind);
     bool rightBoundary(size_t ind);
     bool topBoundary(size_t ind);
+
+    bool containsPeriodic(Boundary bound);
 };

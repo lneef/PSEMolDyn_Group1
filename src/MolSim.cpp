@@ -103,7 +103,7 @@ int main(int argc, char* argsv[]) {
             arg_flag = true;
             break;
         case 'l':
-            if (!levels.contains(optarg)) {
+            if (levels.find(optarg) == levels.end()) {
                 exit(-1);
             }
             levels[optarg]();

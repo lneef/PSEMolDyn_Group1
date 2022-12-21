@@ -1,6 +1,6 @@
 #pragma once
 
-#include <filesystem>
+
 #include "../molsim-pskel.h"
 #include "container/LinkedCellContainer.h"
 namespace XMLReader {
@@ -15,7 +15,7 @@ namespace XMLReader {
         /**
          * @brief file name of file containing checkpoint
          */
-        std::filesystem::path filename;
+        std::string filename;
     public:
         /**
          * @brief function to initialize the checkpoint parser
