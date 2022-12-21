@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<molecular>
+    <from_checkpoint>
+        <path>checkpoint.txt</path>
+    </from_checkpoint>
+</molecular>
