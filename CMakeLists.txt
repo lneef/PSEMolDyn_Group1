@@ -11,6 +11,8 @@ option(TESTS "Enable generation of tests" ON)
 option(PROFILE "Enable compilation with symbols" OFF)
 
 option(VECTOR "Enable vectorization" OFF)
+
+option(FAST "Enable fastet Benchmark" OFF)
 # option to disable logging in performance critical regions
 option(BMARK "Disable io in benchmark region" OFF)
 # let ccmake and cmake-gui offer the default build type options
@@ -28,6 +30,10 @@ file(GLOB_RECURSE MY_SRC
         # header don't need to be included but this might be necessary for some IDEs
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
         )
+if (FAST)
+    SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-O3 -ip -ipo -fast")
+    SET(CMAKE_RANLIB ${CMAKE_CXX_COMPILER_RANLIB} CACHE PATH "RANLIB" FORCE)
+endif ()
 
 # create make target
 add_executable(MolSim ${MY_SRC})
@@ -37,16 +43,16 @@ target_compile_features(MolSim
         cxx_std_20
         )
 
-if(PROFILE)
+if (PROFILE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -O2")
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
     SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
-endif()
+endif ()
 
-if(VECTOR)
+if (VECTOR)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
     target_compile_definitions(MolSim PRIVATE AVX)
-endif()
+endif ()
 
 if (BMARK)
     target_compile_definitions(MolSim PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_OFF BENCHMARK)
