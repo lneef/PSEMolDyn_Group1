@@ -5,7 +5,7 @@ MolSim
 Members:
 * Lukas Neef
 * Dominik Rammelsberger
-* Xiyu Wang
+* Xiyu Zhang
 
 # Code #
 * Link: https://github.com/lneef/PSEMolDyn_Group1
