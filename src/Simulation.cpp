@@ -45,6 +45,7 @@ void Simulation::run() {
 #ifdef BENCHMARK
     MolSimLogger::logger()->flush();
 #endif
+    double particles_begin = particles->size();
 
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -89,8 +90,12 @@ void Simulation::run() {
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    std::cout << difference.count() << "ms" << std::endl;
+    MolSimLogger::logInfo("Runtime: {} ms", difference.count());
 
+    double diff_sec = std::chrono::duration<double>(difference).count()/1000;
+    double mups = (particles_begin*iteration)/diff_sec;
+    double mups_round = std::round(mups * 1000.0)/1000.0;
+    MolSimLogger::logInfo("Molecule-updates per second: {} MUPS/s", mups_round);
 }
 
 Simulation::Simulation(std::shared_ptr<Container>& particles, double delta_t, double end_time,
