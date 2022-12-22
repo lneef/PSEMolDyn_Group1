@@ -51,6 +51,7 @@ int main(int argc, char* argsv[]) {
     std::shared_ptr<Simulation> simulation = std::make_shared<Simulation>();
     std::unique_ptr<Force> force;
     std::string filename;
+    MolSimLogger::init();
 
 
     int arg = 0;
@@ -125,7 +126,7 @@ int main(int argc, char* argsv[]) {
         exit(-1);
     }
 
-    MolSimLogger::init();
+
     std::unique_ptr<outputWriter::FileWriter> writer = std::make_unique<outputWriter::VTKWriter>();
 
     simulation->setWriter(writer);
