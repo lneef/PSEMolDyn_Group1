@@ -46,7 +46,7 @@ namespace XMLReader {
             domain.pop();
         }
         cells->setSize(rCutOff, dom, 2);
-        MolSimLogger::logDebug("XMLReader: domain=({}, {}, {}), cutoff_radius = {}", dom[0], dom[1], dom[2], rCutOff);
+        MolSimLogger::logInfo("XMLReader: domain=({}, {}, {}), cutoff_radius = {}", dom[0], dom[1], dom[2], rCutOff);
     }
 
 
