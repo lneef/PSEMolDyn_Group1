@@ -8,7 +8,9 @@
 #include "Reflecting.h"
 #include <vector>
 
-
+/**
+ * @brief enum to store identifiers for sides
+ */
 enum class Boundary {
     LEFT, RIGHT, BOTTOM, TOP
 };
@@ -228,6 +230,11 @@ private:
      */
     bool side(size_t ind);
 
+    /**
+     * @brief mirros particles in boundary cells in the halo if periodic boundary is specified
+     * @param ind index of the cell the particle is contained in
+     * @param p particle to be mirrored
+     */
     void mirrorPeriodic(size_t ind, Particle &p);
 
     /**
