@@ -14,7 +14,8 @@ Members:
 
 
 # Run Instructions #
-* Compiler: GNU 12.2.0, 11.3.0
+* for cluster: load cmake/3.14.5 and xerces/3.2.1, disable tests via -DTESTS=OFF
+* Compiler: GNU 12.2.0, 11.3.0, 11.2.0, icpc 2021.4.0
 * run mkdir build and cd build/
 * run cmake ..
 * run make or make all
@@ -30,10 +31,8 @@ Members:
 * by setting SANITIZE=ON compilation with fsanitize=address is enables
 * by setting BMARK=ON compilation in benchmark mode is enabled, i.e. all io in benchmark region is disabled
 * by setting VECTOR=ON compilation with vectorization is enabled
-* by setting PROFILE=ON compilation with profiling flags is enabled
 * by setting DTESTS=OFF test target won't be build
-* by setting FAST_I=ON and using the icpc compiler you can compile with high optimization using icpc
-* by setting FAST_G=ON and using the icpc compiler you can compile with high optimization using gccc
+* by setting FAST=ON and using the icpc compiler you can compile with high optimization using icpc
 
 # Usage #
 MolSim is a simulator for simulating the movement of planets and molecules.
@@ -89,3 +88,6 @@ The following command line options are supported:
 # Simulation Runs #
 Videos of runs of the simulation for sheet 4 can be found at:
 https://syncandshare.lrz.de/getlink/fiDGaEwQXQkjmE4VS1c1A8/
+
+# Contest #
+* use icpc ad described in Run Instructions and run cmake with -DBMARK=ON -DFAST=ON -DTESTS=OFF
