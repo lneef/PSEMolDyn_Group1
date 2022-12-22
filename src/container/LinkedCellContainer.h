@@ -5,7 +5,9 @@
 #include "Reflecting.h"
 #include <vector>
 
-
+/**
+ * @brief enum to store identifiers for sides
+ */
 enum class Boundary{LEFT, RIGHT, BOTTOM, TOP};
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
@@ -192,33 +194,109 @@ private:
      */
     bool inside3D(Particle& p);
 
-    void rightNeighbour(size_t i,const std::function<void(Particle &)> &partial, Particle &p, std::function<void(
-            Particle&, Particle&)>& fun);
+    /**
+     * @brief applies reflecting boundary to particles in boundary cells
+     * @param cond object representing reflecting boundary condition
+     * @param fun function to calculate force
+     */
+    void rightNeighbour(size_t i,const std::function<void(Particle &)> &partial);
 
-    void upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
-            Particle&, Particle&)>& fun);
+    /**
+     * @brief calculates the force between a particle and its right neighbours
+     * @param i index of the cell of the particle
+     * @param partial function which calculates the force between one specific particle and an arbitrary particle
+     */
+    void upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len);
 
-    void upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
-            Particle&, Particle&)>& fun);
+    /**
+     * @brief calculates the force between a particle and its upper left neighbours
+     * @param i index of the cell of the particle
+     * @param partial function which calculates the force between one specific particle and an arbitrary particle
+     */
+    void upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial);
 
-    void upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p, std::function<void(
-            Particle&, Particle&)>& fun);
+     /**
+     * @brief calculates the force between a particle and its upper right neighbours
+     * @param i index of the cell of the particle
+     * @param partial function which calculates the force between one specific particle and an arbitrary particle
+     */
+    void upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial);
 
 
+    /**
+     * @brief check if for given side periodic boundary is specified
+     * @param ind index of a cell
+     * @return true if periodic boundary is specified, false otherwise
+     */
     bool side(size_t ind);
 
+    /**
+     * @brief mirros particles in boundary cells in the halo if periodic boundary is specified
+     * @param ind index of the cell the particle is contained in
+     * @param p particle to be mirrored
+     */
     void mirrorPeriodic(size_t ind, Particle& p);
 
+    /**
+     * @brief add a particle to the data structure without any checks
+     * @param p rvalue reference to particle
+     * @warning no checks on position are performed
+     */
     void simpleAdd(Particle&& p);
 
+    /**
+     * @brief mirrors particle from halo cell with given index back into the inner cells
+     * @param p lvalue reference to particle
+     * @param ind index of the current halo cell
+     * @return index of the cell particle was mirrored into
+     */
     size_t mirror(Particle &p, size_t ind);
 
+    /**
+     * @brief update the cell a particle is contained in
+     * @param p lvalue reference to particle
+     * @param ind current index of the cell the particle is contained in
+     */
     void update(Particle &p, size_t ind);
+
+
+    /**
+     * @brief updates the mirroring of particles int the boundary cells for periodic boundaty
+     */
     void updatePeriodic();
+
+    /**
+     * @brief check test if cell with given index is in bottom boundary
+     * @param ind index of a cell
+     * @return true if cell in bottom boundary, false otherwise
+     */
     bool bottomBoundary(size_t ind);
+
+    /**
+     * @brief check test if cell with given index is in left boundary
+     * @param ind index of a cell
+     * @return true if cell in left boundary, false otherwise
+     */
     bool leftBoundary(size_t ind);
+
+     /**
+     * @brief check test if cell with given index is in right boundary
+     * @param ind index of a cell
+     * @return true if cell in right boundary, false otherwise
+     */
     bool rightBoundary(size_t ind);
+
+     /**
+     * @brief check test if cell with given index is in upper boundary
+     * @param ind index of a cell
+     * @return true if cell in upper boundary, false otherwise
+     */
     bool topBoundary(size_t ind);
 
+    /**
+     * @brief implements c++20 contains for LinkedCellContainer for icpc
+     * @param bound Boundary
+     * @return true if for bound periodic boundary is specified, false otherwise
+     */
     bool containsPeriodic(Boundary bound);
 };
