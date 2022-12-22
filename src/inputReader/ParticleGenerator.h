@@ -60,6 +60,9 @@ public:
      * @param h Integer representation of distance between the particles
      * @param m Integer representation of mass of one particle
      * @param v Array representation of the velocities of the particles in all three dimensions
+     * @param sigma sigma value for Lennard Jones
+     * @param epsilon epsilon value for Lennard Jones
+     * @param type type of the particle
     */
     void
     generateCuboid(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n, double h, double m,
@@ -90,6 +93,9 @@ public:
      * @param h Integer representation of distance between the particles
      * @param m Integer representation of mass of one particle
      * @param meanVelocity Double representation of mean of the velocity
+     * @param sigma sigma value for Lennard Jones
+     * @param epsilon epsilon value for Lennard Jones
+     * @param type type of the particle
      */
     void
     generateCuboidBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
@@ -123,6 +129,9 @@ public:
      * @param v Array representation of the velocities of the particles in all three dimensions
      * @param h Integer representation of distance between the particles
      * @param m Integer representation of mass of one particle
+     * @param sigma sigma value for Lennard Jones
+     * @param epsilon epsilon value for Lennard Jones
+     * @param type type of the particle
      */
     void
     generateCuboidNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
@@ -151,6 +160,9 @@ public:
      * @param m mass of each particle
      * @param v velocity of the sphere
      * @param h distance between the particles
+     * @param sigma sigma value for Lennard Jones
+     * @param epsilon epsilon value for Lennard Jones
+     * @param type type of the particle
      */
     void generateSphere(std::shared_ptr<T> &particles, std::array<double, 3> center, int r, double m,
                         std::array<double, 3> v, double h, double sigma = 1, double epsilon = 5, int type=1) {
@@ -181,6 +193,9 @@ public:
      * @param m mass of each particle
      * @param h distance between the particles
      * @param meanVelocity double representation of mean of the velocity
+     * @param sigma sigma value for Lennard Jones
+     * @param epsilon epsilon value for Lennard Jones
+     * @param type type of the particle
      */
     void
     generateSphereBrownian(std::shared_ptr<T> &particles, std::array<double, 3> center, std::array<double, 3> v, int r,
@@ -216,6 +231,9 @@ public:
      * @param r number of particles in each direction
      * @param m mass of each particle
      * @param h distance between the particles
+     * @param sigma sigma value for Lennard Jones
+     * @param epsilon epsilon value for Lennard Jones
+     * @param type type of the particle
      */
     void generateSphereNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> center, std::array<double, 3> v, int r,
                                   double m, double h, double sigma = 1, double epsilon = 5, int type=1) {

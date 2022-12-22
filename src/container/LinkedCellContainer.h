@@ -198,14 +198,14 @@ private:
     bool inside3D(Particle& p);
 
     /**
-     * @brief applies reflecting boundary to particles in boundary cells
-     * @param cond object representing reflecting boundary condition
-     * @param fun function to calculate force
+     * @brief calculates the force between a particle and its right neighbours
+     * @param i index of the cell of the particle
+     * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
     void rightNeighbour(size_t i,const std::function<void(Particle &)> &partial);
 
     /**
-     * @brief calculates the force between a particle and its right neighbours
+     * @brief calculates the force between a particle and its upper neighbours
      * @param i index of the cell of the particle
      * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
