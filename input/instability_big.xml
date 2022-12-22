@@ -5,7 +5,7 @@
         <delta_t>0.0005</delta_t>
         <domain_size_x>300.</domain_size_x>
         <domain_size_y>54.</domain_size_y>
-        <cutOff_radius>2.5</cutOff_radius>
+        <cutOff_radius>3.</cutOff_radius>
         <g_gravitation>-12.44</g_gravitation>
     </simulation>
     <temperature>
