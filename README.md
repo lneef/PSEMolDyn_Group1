@@ -90,4 +90,4 @@ Videos of runs of the simulation for sheet 4 can be found at:
 https://syncandshare.lrz.de/getlink/fiDGaEwQXQkjmE4VS1c1A8/
 
 # Contest #
-*use icpc ad described in Run Instructions and run cmake with -DBMARK=ON -DFAST=ON -DTESTS=OFF
+* use icpc ad described in Run Instructions and run cmake with -DBMARK=ON -DFAST=ON -DTESTS=OFF
