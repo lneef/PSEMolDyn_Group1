@@ -1,9 +1,6 @@
-
-//3270301
 #include <iostream>
 #include "LennardJones.h"
 #include "container/ParticleContainer.h"
-#include "../MolSimLogger.h"
 #include  <immintrin.h>
 
 LennardJones::~LennardJones() = default;

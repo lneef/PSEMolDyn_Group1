@@ -12,7 +12,9 @@ option(PROFILE "Enable compilation with symbols" OFF)
 
 option(VECTOR "Enable vectorization" OFF)
 
-option(FAST "Enable fastet Benchmark" OFF)
+option(FAST_I "Enable fastet Benchmark" OFF)
+
+option(FAST_G "Enable fastet Benchmark GCC" OFF)
 # option to disable logging in performance critical regions
 option(BMARK "Disable io in benchmark region" OFF)
 # let ccmake and cmake-gui offer the default build type options
@@ -30,8 +32,15 @@ file(GLOB_RECURSE MY_SRC
         # header don't need to be included but this might be necessary for some IDEs
         "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
         )
-if (FAST)
-    SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-O3 -ip -ipo -fast")
+if (FAST_I)
+    message("Fast ICPC")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ipo -fast")
+    SET(CMAKE_RANLIB ${CMAKE_CXX_COMPILER_RANLIB} CACHE PATH "RANLIB" FORCE)
+endif ()
+
+if (FAST_G)
+    message("FAST G++")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
     SET(CMAKE_RANLIB ${CMAKE_CXX_COMPILER_RANLIB} CACHE PATH "RANLIB" FORCE)
 endif ()
 
