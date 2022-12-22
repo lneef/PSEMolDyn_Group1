@@ -1,6 +1,3 @@
-//
-// Created by lukas on 29.11.22.
-//
 #pragma once
 
 #include "Container.h"

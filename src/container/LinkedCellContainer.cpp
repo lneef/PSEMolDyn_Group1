@@ -1,7 +1,3 @@
-//
-// Created by lukas on 29.11.22.
-//
-
 #include <numeric>
 #include <cmath>
 #include <iostream>
@@ -451,3 +447,4 @@ void LinkedCellContainer::addParticle(Particle& p){
 bool LinkedCellContainer::containsPeriodic(Boundary bound) {
     return periodic.find(bound) != periodic.end();
 }
+
