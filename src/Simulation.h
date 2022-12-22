@@ -86,7 +86,7 @@ public:
 
      /**
      * @brief Function to generate the checkPointing file
-     * @param the name of the outputfile
+     * @param filename name of the outputfile
      */
     void checkpoint(const std::string& filename);
 
