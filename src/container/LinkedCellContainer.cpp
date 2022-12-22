@@ -14,6 +14,7 @@ void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
     for (size_t i = mesh[0] + 1; i < cells.size() - mesh[0] - 1; ++i) {
         cells[i].apply(fun);
 
+        //skip halo cells
         if (i % mesh[0] == mesh[0] - 2)
             i += 2;
     }
@@ -52,12 +53,13 @@ void LinkedCellContainer::update() {
                 continue;
             }
             //add to new cell
-            update(p, ind);
+            updatePosition(p, ind);
 
             //remove from old cell
             it = cells[i].remove(it);
         }
 
+        //skip halo cells
         if (i % mesh[0] == mesh[0] - 2)
             i += 2;
     }
@@ -97,16 +99,16 @@ void LinkedCellContainer::applyF(std::function<void(Particle &, Particle &)> fun
             auto partial = [&p, &fun](Particle &p2) { fun(p, p2); };
 
             //check if right neighbour exists
-            rightNeighbour(i, partial, p, fun);
+            rightNeighbour(i, partial);
 
             //check if upper neighbour exists
-            upperNeighbour(i, partial, len, p, fun);
+            upperNeighbour(i, partial);
 
             //check if upper right neighbour exists
-            upperRightNeighbour(i, partial, len, p, fun);
+            upperRightNeighbour(i, partial);
 
             //check is upper left neighbour exists
-            upperLeftNeighbour(i, partial, len, p, fun);
+            upperLeftNeighbour(i, partial);
         }
 
     }
@@ -247,14 +249,8 @@ LinkedCellContainer::LinkedCellContainer() = default;
 
 LinkedCellContainer::~LinkedCellContainer() = default;
 
-bool LinkedCellContainer::inside3D(Particle &p) {
-    auto &pos = p.getX();
-    return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
-}
 
-
-void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial, Particle &p,
-                                         std::function<void(Particle &, Particle &)> &fun) {
+void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial) {
     if (mesh[0] <= 1)
         return;
 
@@ -265,8 +261,7 @@ void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Part
 }
 
 void
-LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len, Particle &p,
-                                    std::function<void(Particle &, Particle &)> &fun) {
+LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle &)> &partial) {
     if (mesh[1] <= 1)
         return;
 
@@ -277,8 +272,7 @@ LinkedCellContainer::upperNeighbour(size_t i, const std::function<void(Particle 
     }
 }
 
-void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
-                                             Particle &p, std::function<void(Particle &, Particle &)> &fun) {
+void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial) {
     if (mesh[0] <= 1 || mesh[1] <= 1)
         return;
 
@@ -289,8 +283,7 @@ void LinkedCellContainer::upperLeftNeighbour(size_t i, const std::function<void(
     }
 }
 
-void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len,
-                                              Particle &p, std::function<void(Particle &, Particle &)> &fun) {
+void LinkedCellContainer::upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial) {
     if (mesh[0] <= 1 || mesh[1] <= 1)
         return;
 
@@ -344,7 +337,7 @@ size_t LinkedCellContainer::mirror(Particle &p, size_t ind) {
     return ind;
 }
 
-void LinkedCellContainer::update(Particle &p, size_t ind) {
+void LinkedCellContainer::updatePosition(Particle &p, size_t ind) {
     if (side(ind)) {
         ind = mirror(p, ind);
     }
@@ -353,43 +346,53 @@ void LinkedCellContainer::update(Particle &p, size_t ind) {
 }
 
 void LinkedCellContainer::mirrorPeriodic(size_t ind, Particle &p){
+
+    //check if ind belongs to left boundary and periodic boundary is specified for right boundary
     if (leftBoundary(ind) && containsPeriodic(Boundary::RIGHT)) {
         std::array<double, 3> to_add{domain[0], 0, 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
+    //check if ind belongs to right boundary and periodic boundary is specified for left boundary
     if (rightBoundary(ind) && containsPeriodic(Boundary::LEFT)) {
         std::array<double, 3> to_add{-domain[0], 0, 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
+    //check if ind belongs to bottom boundary and periodic boundary is specified for top boundary
     if (bottomBoundary(ind) && containsPeriodic(Boundary::TOP)) {
         std::array<double, 3> to_add{0, domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
+    //check if ind belongs to top boundary and periodic boundary is specified for bottom boundary
     if (topBoundary(ind) && containsPeriodic(Boundary::BOTTOM)) {
         std::array<double, 3> to_add{0, -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
+    //check if ind is to top-right corner cell and periodic is specified for bottom or left boundary
     if (topBoundary(ind) && rightBoundary(ind) &&
         (containsPeriodic(Boundary::BOTTOM) || containsPeriodic(Boundary::LEFT))) {
 
         std::array<double, 3> to_add{-domain[0], -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
 
+        //check if ind is to top-left corner cell and periodic is specified for bottom or right boundary
     } else if (topBoundary(ind) && leftBoundary(ind) &&
                (containsPeriodic(Boundary::BOTTOM) || containsPeriodic(Boundary::RIGHT))) {
 
         std::array<double, 3> to_add{domain[0], -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
+
+        //check if ind is to top-right corner cell and periodic is specified for top or right boundary
     } else if (bottomBoundary(ind) && leftBoundary(ind) &&
                (containsPeriodic(Boundary::TOP) || containsPeriodic(Boundary::RIGHT))) {
 
         std::array<double, 3> to_add{domain[0], domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
 
+        //check if ind is to top-left corner cell and periodic is specified for top or left boundary
     } else if (bottomBoundary(ind) && rightBoundary(ind) &&
                (containsPeriodic(Boundary::TOP) || containsPeriodic(Boundary::LEFT))) {
 

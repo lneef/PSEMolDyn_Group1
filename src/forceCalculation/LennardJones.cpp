@@ -21,10 +21,25 @@ void LennardJones::calculateF(std::shared_ptr<Container> &particles) {
 
 }
 
+std::map<std::pair<int, int>, std::pair<int, int>> LennardJones::lookup{};
+
 LennardJones::LennardJones() = default;
 
 void LennardJones::calculateF(Particle &p1, Particle &p2) {
     double sigma, epsilon;
+    std::pair<int, int> types{p1.getType(), p2.getType()};
+    std::map<std::pair<int, int>, std::pair<int, int>>:: iterator it;
+
+    if((it = lookup.find(types)) != lookup.end()){
+        sigma = it->second.first;
+        epsilon = it->second.second;
+
+    }else{
+        sigma = (p1.getSigma() + p2.getSigma()) / 2.;
+        epsilon = std::sqrt(p1.getEpsilon() * p2.getEpsilon());
+        lookup.insert({types, {sigma, epsilon}});
+    }
+    /**
     if (p1.getType() == p2.getType()) {
         sigma = p1.getSigma();
         epsilon = p1.getEpsilon();
@@ -32,6 +47,7 @@ void LennardJones::calculateF(Particle &p1, Particle &p2) {
         sigma = (p1.getSigma() + p2.getSigma()) / 2.;
         epsilon = std::sqrt(p1.getEpsilon() * p2.getEpsilon());
     }
+     **/
 
 #ifndef AVX
     std::array<double, 3> xij = p1.getX() - p2.getX();

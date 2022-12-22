@@ -9,6 +9,7 @@
  * LennardJones implements the interface provided by Force for calculating the force between particles with the Lennard-Jones potential.
 */
 class LennardJones : public Force {
+    static std::map<std::pair<int, int>, std::pair<int, int>> lookup;
 public:
 
     /**
