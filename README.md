@@ -32,7 +32,8 @@ Members:
 * by setting BMARK=ON compilation in benchmark mode is enabled, i.e. all io in benchmark region is disabled
 * by setting VECTOR=ON compilation with vectorization is enabled
 * by setting DTESTS=OFF test target won't be build
-* by setting FAST=ON and using the icpc compiler you can compile with high optimization using icpc
+* by setting FAST_I=ON and using the icpc compiler you can compile with high optimization using icpc
+* by setting FAST_G=ON and using gcc you can compile with high optimization using gcc
 
 # Usage #
 MolSim is a simulator for simulating the movement of planets and molecules.
@@ -83,11 +84,12 @@ The following command line options are supported:
 # XML #
 * see molsim.xsd for the schema definition
 * simulation has to be the first element since it is needed for initialization
+* to get an idea have a look at the provided files in input/
 * for temperature the target temperature must appear after the initial temperature
 * an element named path expects a valid path to an input file (.txt, see sphere.txt and eingabe-cuboid.txt for schema)
 
 # Simulation Runs #
-Videos of runs of the simulation for sheet 4 can be found at:
+Videos of runs of the simulation for sheet 4 and profiling informationcan be found at:
 https://syncandshare.lrz.de/getlink/fiDGaEwQXQkjmE4VS1c1A8/
 
 # Contest #
