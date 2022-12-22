@@ -74,6 +74,7 @@ The following command line options are supported:
 * for spheres via xml see input/sphere.xml and the specification in sphere.txt
 * for fluids via xml see input/instability_small.xml and input/instability_big.xml
 * for trying checkpointing via xml see input/checkpoint.xml and then the input/from_checkpoint.xml with the checkpoint parameters in input/checkpoint.txt
+* for our profiling setup via xml see input/cluster.xml
 
 # Boundary #
 * the default boundary condition is outflow
