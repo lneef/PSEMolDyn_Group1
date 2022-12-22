@@ -120,6 +120,9 @@ public:
 
     void addPeriodic(Boundary bound);
 
+    /**
+     * @brief set containing periodic boundaries
+     */
     void addParticle(Particle& p);
 
 
@@ -206,7 +209,7 @@ private:
      * @param i index of the cell of the particle
      * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
-    void upperNeighbour(size_t i, const std::function<void(Particle &)> &partial, size_t len);
+    void upperNeighbour(size_t i, const std::function<void(Particle &)> &partial);
 
     /**
      * @brief calculates the force between a particle and its upper left neighbours
