@@ -60,6 +60,8 @@ namespace XMLReader {
          * @brief epsilon value of the particles for Lennard Jones potential
          */
         double epsilon_p = 5;
+
+        double f = 1;
     public:
         /**
          * @brief Function that initializes the container
@@ -129,6 +131,8 @@ namespace XMLReader {
          * @brief function to process the epsilon value for the particles
          */
         void epsilon(double ) override;
+
+        void fz_up(double ) override;
 
         /**
          * @brief Function that generates the cuboids

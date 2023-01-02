@@ -57,6 +57,10 @@ namespace XMLReader {
         browMot = bm;
     }
 
+    void membrane_pimpl::fz_up(double f_arg) {
+        f = f_arg;
+    }
+
     void membrane_pimpl::post_membrane() {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
@@ -75,7 +79,7 @@ namespace XMLReader {
         }
         ParticleGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
-            cub.generateMembraneNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, type_p);
+            cub.generateMembraneNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, type_p, f);
         } else {
             double meanVelocity;
             if (sim->getThermostat() != nullptr) {
@@ -83,13 +87,14 @@ namespace XMLReader {
             } else {
                 meanVelocity = 0.1;
             }
-            cub.generateMembraneBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, type_p);
+            cub.generateMembraneBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, type_p, f);
         }
 
         browMot = true;
         type_p = 1;
         sigma_p = 1;
         epsilon_p = 5;
+        f = 1;
 
         //ToDo: Force
         //sim->setForce(MembraneFore);

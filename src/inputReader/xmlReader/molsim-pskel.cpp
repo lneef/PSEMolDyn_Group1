@@ -40,9 +40,10 @@
 
 #include "molsim-pskel.h"
 
+namespace XMLReader {
 // simulation_pskel
 //
-namespace XMLReader {
+
     void simulation_pskel::
     t_end_parser(xml_schema::double_pskel &p) {
         this->t_end_parser_ = &p;
@@ -373,6 +374,11 @@ namespace XMLReader {
     }
 
     void membrane_pskel::
+    fz_up_parser(xml_schema::double_pskel &p) {
+        this->fz_up_parser_ = &p;
+    }
+
+    void membrane_pskel::
     parsers(xml_schema::int_pskel &type,
             xml_schema::double_pskel &sigma,
             xml_schema::double_pskel &epsilon,
@@ -387,7 +393,8 @@ namespace XMLReader {
             xml_schema::double_pskel &velocity_x,
             xml_schema::double_pskel &velocity_y,
             xml_schema::double_pskel &velocity_z,
-            xml_schema::boolean_pskel &brownianMotion) {
+            xml_schema::boolean_pskel &brownianMotion,
+            xml_schema::double_pskel &fz_up) {
         this->type_parser_ = &type;
         this->sigma_parser_ = &sigma;
         this->epsilon_parser_ = &epsilon;
@@ -403,6 +410,7 @@ namespace XMLReader {
         this->velocity_y_parser_ = &velocity_y;
         this->velocity_z_parser_ = &velocity_z;
         this->brownianMotion_parser_ = &brownianMotion;
+        this->fz_up_parser_ = &fz_up;
     }
 
     membrane_pskel::
@@ -421,7 +429,8 @@ namespace XMLReader {
               velocity_x_parser_(0),
               velocity_y_parser_(0),
               velocity_z_parser_(0),
-              brownianMotion_parser_(0) {
+              brownianMotion_parser_(0),
+              fz_up_parser_(0) {
     }
 
 // cuboid_input_pskel
@@ -1424,6 +1433,10 @@ namespace XMLReader {
     }
 
     void membrane_pskel::
+    fz_up(double) {
+    }
+
+    void membrane_pskel::
     post_membrane() {
     }
 
@@ -1571,6 +1584,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "fz_up" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->fz_up_parser_;
+
+            if (this->fz_up_parser_)
+                this->fz_up_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -1681,6 +1703,13 @@ namespace XMLReader {
         if (n == "brownianMotion" && ns.empty()) {
             if (this->brownianMotion_parser_)
                 this->brownianMotion(this->brownianMotion_parser_->post_boolean());
+
+            return true;
+        }
+
+        if (n == "fz_up" && ns.empty()) {
+            if (this->fz_up_parser_)
+                this->fz_up(this->fz_up_parser_->post_double());
 
             return true;
         }

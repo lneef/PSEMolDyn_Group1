@@ -660,6 +660,9 @@ namespace XMLReader {
         brownianMotion(bool);
 
         virtual void
+        fz_up(double);
+
+        virtual void
         post_membrane();
 
         // Parser construction API.
@@ -710,6 +713,9 @@ namespace XMLReader {
         brownianMotion_parser(xml_schema::boolean_pskel &);
 
         void
+        fz_up_parser(xml_schema::double_pskel &);
+
+        void
         parsers(xml_schema::int_pskel & /* type */,
                 xml_schema::double_pskel & /* sigma */,
                 xml_schema::double_pskel & /* epsilon */,
@@ -724,7 +730,8 @@ namespace XMLReader {
                 xml_schema::double_pskel & /* velocity_x */,
                 xml_schema::double_pskel & /* velocity_y */,
                 xml_schema::double_pskel & /* velocity_z */,
-                xml_schema::boolean_pskel & /* brownianMotion */);
+                xml_schema::boolean_pskel & /* brownianMotion */,
+                xml_schema::double_pskel & /* fz_up */);
 
         // Constructor.
         //
@@ -758,6 +765,7 @@ namespace XMLReader {
         xml_schema::double_pskel *velocity_y_parser_;
         xml_schema::double_pskel *velocity_z_parser_;
         xml_schema::boolean_pskel *brownianMotion_parser_;
+        xml_schema::double_pskel *fz_up_parser_;
     };
 
     class cuboid_input_pskel : public xml_schema::complex_content {
