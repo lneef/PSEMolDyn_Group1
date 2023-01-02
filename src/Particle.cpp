@@ -32,13 +32,13 @@ Particle::Particle(const Particle& other) {
 
 // Todo: maybe use initializater list instead of copy?
 Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
-                   double m_arg, double sigma_arg, double epsilon_arg, int type_arg) {
+    double m_arg, double sigma_arg, double epsilon_arg, int type_arg) {
     x = x_arg;
     v = v_arg;
     m = m_arg;
     type = type_arg;
-    f = {0., 0., 0.};
-    old_f = {0., 0., 0.};
+    f = { 0., 0., 0. };
+    old_f = { 0., 0., 0. };
     sigma = sigma_arg;
     epsilon = epsilon_arg;
 
@@ -54,6 +54,8 @@ const std::array<double, 3>& Particle::getV() const { return v; }
 const std::array<double, 3>& Particle::getF() const { return f; }
 
 const std::array<double, 3>& Particle::getOldF() const { return old_f; }
+
+const std::array<int, 2>& Particle::getIndex() const { return membrane_index; }
 
 void Particle::updateF(const std::array<double, 3>& f) {
     this->old_f = this->f;
@@ -101,6 +103,12 @@ void Particle::setOldF(const std::array<double, 3>& oldf) {
     this->old_f = oldf;
 }
 
+
+void Particle::setIndex(const std::array<int, 2>& index) {
+    this->membrane_index = index;
+}
+
+
 bool Particle::comp(double d1, double d2) {
     return std::abs(d1 - d2) < std::numeric_limits<double>::epsilon();
 }
@@ -111,4 +119,18 @@ double Particle::getSigma() const {
 
 double Particle::getEpsilon() const {
     return epsilon;
+}
+
+bool Particle::ifDirectNeighbor(const Particle& p) {
+    int x_diff = this->membrane_index.at(0) - p.getIndex().at(0);
+    int y_diff = this->membrane_index.at(1) - p.getIndex().at(1);
+    return ((x_diff == 0 && (y_diff == 1 || y_diff == -1)) || (y_diff == 0 && (x_diff == 1 || x_diff == -1)));
+}
+
+
+bool Particle::ifDiagonalNeighbor(const Particle& p) {
+    int x_diff = this->membrane_index.at(0) - p.getIndex().at(0);
+    int y_diff = this->membrane_index.at(1) - p.getIndex().at(1);
+    return ((x_diff == 1 && (y_diff == 1 || y_diff == -1)) || (x_diff == -1 && (y_diff == 1 || y_diff == -1)));
+
 }
