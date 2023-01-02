@@ -54,13 +54,23 @@
 // Forward declarations
 //
 class simulation_pskel;
+
 class temperature_pskel;
+
 class cuboid_pskel;
+
+class membrane_pskel;
+
 class cuboid_input_pskel;
+
 class from_checkpoint_pskel;
+
 class sphere_pskel;
+
 class spheres_input_pskel;
+
 class boundaries_pskel;
+
 class molecular_pskel;
 
 #ifndef XSD_USE_CHAR
@@ -80,9 +90,7 @@ class molecular_pskel;
 #include <xsd/cxx/parser/non-validating/xml-schema-pskel.hxx>
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
 #include <xsd/cxx/parser/xerces/elements.hxx>
-/**
- * @brief XMLReader container functionality to read input from xml-file
- */
+
 namespace XMLReader {
     namespace xml_schema {
         // Built-in XML Schema types mapping.
@@ -599,6 +607,159 @@ namespace XMLReader {
         xml_schema::boolean_pskel *brownianMotion_parser_;
     };
 
+    class membrane_pskel : public xml_schema::complex_content {
+    public:
+        // Parser callbacks. Override them in your implementation.
+        //
+        // virtual void
+        // pre ();
+
+        virtual void
+        type(int);
+
+        virtual void
+        sigma(double);
+
+        virtual void
+        epsilon(double);
+
+        virtual void
+        lower_left_x(double);
+
+        virtual void
+        lower_left_y(double);
+
+        virtual void
+        lower_left_z(double);
+
+        virtual void
+        number_x(int);
+
+        virtual void
+        number_y(int);
+
+        virtual void
+        number_z(int);
+
+        virtual void
+        mesh_width(double);
+
+        virtual void
+        mass(double);
+
+        virtual void
+        velocity_x(double);
+
+        virtual void
+        velocity_y(double);
+
+        virtual void
+        velocity_z(double);
+
+        virtual void
+        brownianMotion(bool);
+
+        virtual void
+        post_membrane();
+
+        // Parser construction API.
+        //
+        void
+        type_parser(xml_schema::int_pskel &);
+
+        void
+        sigma_parser(xml_schema::double_pskel &);
+
+        void
+        epsilon_parser(xml_schema::double_pskel &);
+
+        void
+        lower_left_x_parser(xml_schema::double_pskel &);
+
+        void
+        lower_left_y_parser(xml_schema::double_pskel &);
+
+        void
+        lower_left_z_parser(xml_schema::double_pskel &);
+
+        void
+        number_x_parser(xml_schema::int_pskel &);
+
+        void
+        number_y_parser(xml_schema::int_pskel &);
+
+        void
+        number_z_parser(xml_schema::int_pskel &);
+
+        void
+        mesh_width_parser(xml_schema::double_pskel &);
+
+        void
+        mass_parser(xml_schema::double_pskel &);
+
+        void
+        velocity_x_parser(xml_schema::double_pskel &);
+
+        void
+        velocity_y_parser(xml_schema::double_pskel &);
+
+        void
+        velocity_z_parser(xml_schema::double_pskel &);
+
+        void
+        brownianMotion_parser(xml_schema::boolean_pskel &);
+
+        void
+        parsers(xml_schema::int_pskel & /* type */,
+                xml_schema::double_pskel & /* sigma */,
+                xml_schema::double_pskel & /* epsilon */,
+                xml_schema::double_pskel & /* lower_left_x */,
+                xml_schema::double_pskel & /* lower_left_y */,
+                xml_schema::double_pskel & /* lower_left_z */,
+                xml_schema::int_pskel & /* number_x */,
+                xml_schema::int_pskel & /* number_y */,
+                xml_schema::int_pskel & /* number_z */,
+                xml_schema::double_pskel & /* mesh_width */,
+                xml_schema::double_pskel & /* mass */,
+                xml_schema::double_pskel & /* velocity_x */,
+                xml_schema::double_pskel & /* velocity_y */,
+                xml_schema::double_pskel & /* velocity_z */,
+                xml_schema::boolean_pskel & /* brownianMotion */);
+
+        // Constructor.
+        //
+        membrane_pskel();
+
+        // Implementation.
+        //
+    protected:
+        virtual bool
+        _start_element_impl(const xml_schema::ro_string &,
+                            const xml_schema::ro_string &,
+                            const xml_schema::ro_string *);
+
+        virtual bool
+        _end_element_impl(const xml_schema::ro_string &,
+                          const xml_schema::ro_string &);
+
+    protected:
+        xml_schema::int_pskel *type_parser_;
+        xml_schema::double_pskel *sigma_parser_;
+        xml_schema::double_pskel *epsilon_parser_;
+        xml_schema::double_pskel *lower_left_x_parser_;
+        xml_schema::double_pskel *lower_left_y_parser_;
+        xml_schema::double_pskel *lower_left_z_parser_;
+        xml_schema::int_pskel *number_x_parser_;
+        xml_schema::int_pskel *number_y_parser_;
+        xml_schema::int_pskel *number_z_parser_;
+        xml_schema::double_pskel *mesh_width_parser_;
+        xml_schema::double_pskel *mass_parser_;
+        xml_schema::double_pskel *velocity_x_parser_;
+        xml_schema::double_pskel *velocity_y_parser_;
+        xml_schema::double_pskel *velocity_z_parser_;
+        xml_schema::boolean_pskel *brownianMotion_parser_;
+    };
+
     class cuboid_input_pskel : public xml_schema::complex_content {
     public:
         // Parser callbacks. Override them in your implementation.
@@ -956,6 +1117,9 @@ namespace XMLReader {
         from_checkpoint();
 
         virtual void
+        membrane();
+
+        virtual void
         post_molecular();
 
         // Parser construction API.
@@ -985,6 +1149,9 @@ namespace XMLReader {
         from_checkpoint_parser(from_checkpoint_pskel &);
 
         void
+        membrane_parser(membrane_pskel &);
+
+        void
         parsers(cuboid_pskel & /* cuboid */,
                 simulation_pskel & /* simulation */,
                 cuboid_input_pskel & /* cuboid_input */,
@@ -992,7 +1159,8 @@ namespace XMLReader {
                 spheres_input_pskel & /* spheres_input */,
                 boundaries_pskel & /* boundaries */,
                 temperature_pskel & /* temperature */,
-                from_checkpoint_pskel & /* from_checkpoint */);
+                from_checkpoint_pskel & /* from_checkpoint */,
+                membrane_pskel & /* membrane */);
 
         // Constructor.
         //
@@ -1019,8 +1187,10 @@ namespace XMLReader {
         boundaries_pskel *boundaries_parser_;
         temperature_pskel *temperature_parser_;
         from_checkpoint_pskel *from_checkpoint_parser_;
+        membrane_pskel *membrane_parser_;
     };
 }
+
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.

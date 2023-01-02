@@ -44,6 +44,26 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="membrane">
+        <xs:sequence>
+            <xs:element name="type" type="xs:int"/>
+            <xs:element name="sigma" type="xs:double"/>
+            <xs:element name="epsilon" type="xs:double"/>
+            <xs:element name="lower_left_x" type="xs:double"/>
+            <xs:element name="lower_left_y" type="xs:double"/>
+            <xs:element name="lower_left_z" type="xs:double"/>
+            <xs:element name="number_x" type="xs:int"/>
+            <xs:element name="number_y" type="xs:int"/>
+            <xs:element name="number_z" type="xs:int"/>
+            <xs:element name="mesh_width" type="xs:double"/>
+            <xs:element name="mass" type="xs:double"/>
+            <xs:element name="velocity_x" type="xs:double"/>
+            <xs:element name="velocity_y" type="xs:double"/>
+            <xs:element name="velocity_z" type="xs:double"/>
+            <xs:element name="brownianMotion" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="cuboid_input">
         <xs:sequence>
             <xs:element name="path" type="xs:string"/>
@@ -99,6 +119,7 @@
             <xs:element name="boundaries" type="boundaries"/>
             <xs:element name="temperature" type="temperature"/>
             <xs:element name="from_checkpoint" type="from_checkpoint"/>
+            <xs:element name="membrane" type="membrane"/>
         </xs:sequence>
     </xs:complexType>
 

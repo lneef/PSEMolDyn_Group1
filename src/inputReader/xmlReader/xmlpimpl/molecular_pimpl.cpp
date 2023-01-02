@@ -37,6 +37,10 @@ namespace XMLReader {
 
     }
 
+    void molecular_pimpl::membrane() {
+
+    }
+
     void molecular_pimpl::post_molecular() {
 
 
