@@ -1,6 +1,3 @@
-//
-// Created by lukas on 29.11.22.
-//
 #pragma once
 
 #include "Container.h"
@@ -11,10 +8,7 @@
 /**
  * @brief enum to store identifiers for sides
  */
-enum class Boundary {
-    LEFT, RIGHT, BOTTOM, TOP
-};
-
+enum class Boundary{LEFT, RIGHT, BOTTOM, TOP};
 /**
  * @brief LinkedCellContainer implements the linked cell algorithm for a 2D simulation
  *
@@ -30,13 +24,13 @@ public:
      * @brief the given function to the particles in the container
      * @param fun function taking lvalue reference to particle
      */
-    void apply(std::function<void(Particle & )> fun) override;
+    void apply(std::function<void(Particle &)> fun) override;
 
     /**
      * @brief applies the given function to calculate the position of a particle
      * @param fun function taking lvalue reference to particle
      */
-    void applyX(std::function<void(Particle & )> fun) override;
+    void applyX(std::function<void(Particle &)> fun) override;
 
     /**
      * @brief overridden destructor to prevent memory leaks
@@ -53,7 +47,7 @@ public:
      * @brief calculates the force effective on particles using the given function
      * @param fun std::function taking two lvalue reference to particles
      */
-    void applyF(std::function<void(Particle & , Particle & )> fun) override;
+    void applyF(std::function<void(Particle &, Particle &)> fun) override;
 
     /**
      * @brief returns size of the container
@@ -104,7 +98,7 @@ public:
      * @brief function to get the cells for tests
      * @return std::vector representing the linked cells
      */
-    std::vector <ParticleContainer> &getCells();
+    std::vector<ParticleContainer>& getCells();
 
     /**
      * @brief returns the domain size
@@ -116,17 +110,20 @@ public:
      * @brief returns particles in halo
      * @return lvalue reference to ParticleContainer containing particles in the halo
      */
-    [[nodiscard]] const std::vector <std::reference_wrapper<ParticleContainer>> &getHalo() const;
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getHalo() const;
 
     /**
      * @brief returns reference to boundary cells
      * @return std::vector containing reference wrappers to boundary cells
      */
-    [[nodiscard]] const std::vector <std::reference_wrapper<ParticleContainer>> &getBoundary() const;
+    [[nodiscard]] const std::vector<std::reference_wrapper<ParticleContainer>> &getBoundary() const;
 
     void addPeriodic(Boundary bound);
 
-    void addParticle(Particle &p);
+    /**
+     * @brief set containing periodic boundaries
+     */
+    void addParticle(Particle& p);
 
 
     /**
@@ -140,7 +137,7 @@ private:
     /**
      * @brief std::vector to store the inner cells of the linked cell algorithm
      */
-    std::vector <ParticleContainer> cells;
+    std::vector<ParticleContainer> cells;
 
     /**
      * @brief array to hold the number of cells in all three dimensions
@@ -165,23 +162,12 @@ private:
     /**
      * @brief ParticleContainer storing the particles in the halo
      */
-    std::vector <std::reference_wrapper<ParticleContainer>> halo;
+    std::vector<std::reference_wrapper<ParticleContainer>> halo;
 
     /**
      * @brief vector containing references to boundary cells
      */
-    std::vector <std::reference_wrapper<ParticleContainer>> boundary;
-
-
-    /**
-     * @brief vector containing relecting boundaries
-     */
-    std::vector <Reflecting> conditions;
-
-    /**
-     * @brief set containing side for which periodic boundary is specified
-     */
-    std::set <Boundary> periodic;
+    std::vector<std::reference_wrapper<ParticleContainer>> boundary;
 
     /**
      * @brief updates the boundary field after initialization
@@ -189,39 +175,56 @@ private:
     void setUp();
 
     /**
+     * @brief vector containing reelecting boundaries
+     */
+    std::vector<Reflecting> conditions;
+
+    std::set<Boundary> periodic;
+
+    /**
      * @brief applies reflecting boundary to particles in boundary cells
      * @param cond object representing reflecting boundary condition
      * @param fun function to calculate force
      */
-    void applyFBoundary(Reflecting cond, std::function<void(Particle & , Particle & )> &fun);
+    void applyFBoundary(Reflecting cond, std::function<void(Particle &, Particle &)> &fun);
+
+
+
+    /**
+     * @brief check if particle is inside the domain for 2D and 3D simualtions
+     * @param p lvalue reference to particle
+     * @return true if particle is inside the domain for the fourth dimension
+     */
+    bool inside3D(Particle& p);
 
     /**
      * @brief calculates the force between a particle and its right neighbours
      * @param i index of the cell of the particle
      * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
-    void rightNeighbour(size_t i, const std::function<void(Particle & )> &partial);
+    void rightNeighbour(size_t i,const std::function<void(Particle &)> &partial);
 
     /**
      * @brief calculates the force between a particle and its upper neighbours
      * @param i index of the cell of the particle
      * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
-    void upperNeighbour(size_t i, const std::function<void(Particle & )> &partial);
+    void upperNeighbour(size_t i, const std::function<void(Particle &)> &partial);
 
     /**
      * @brief calculates the force between a particle and its upper left neighbours
      * @param i index of the cell of the particle
      * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
-    void upperLeftNeighbour(size_t i, const std::function<void(Particle & )> &partial);
+    void upperLeftNeighbour(size_t i, const std::function<void(Particle &)> &partial);
 
-    /**
+     /**
      * @brief calculates the force between a particle and its upper right neighbours
      * @param i index of the cell of the particle
      * @param partial function which calculates the force between one specific particle and an arbitrary particle
      */
-    void upperRightNeighbour(size_t i, const std::function<void(Particle & )> &partial);
+    void upperRightNeighbour(size_t i, const std::function<void(Particle &)> &partial);
+
 
     /**
      * @brief check if for given side periodic boundary is specified
@@ -235,14 +238,14 @@ private:
      * @param ind index of the cell the particle is contained in
      * @param p particle to be mirrored
      */
-    void mirrorPeriodic(size_t ind, Particle &p);
+    void mirrorPeriodic(size_t ind, Particle& p);
 
     /**
      * @brief add a particle to the data structure without any checks
      * @param p rvalue reference to particle
      * @warning no checks on position are performed
      */
-    void simpleAdd(Particle &&p);
+    void simpleAdd(Particle&& p);
 
     /**
      * @brief mirrors particle from halo cell with given index back into the inner cells
@@ -257,7 +260,8 @@ private:
      * @param p lvalue reference to particle
      * @param ind current index of the cell the particle is contained in
      */
-    void updatePosition(Particle &p, size_t ind);
+    void update(Particle &p, size_t ind);
+
 
     /**
      * @brief updates the mirroring of particles int the boundary cells for periodic boundaty
@@ -278,14 +282,14 @@ private:
      */
     bool leftBoundary(size_t ind);
 
-    /**
+     /**
      * @brief check test if cell with given index is in right boundary
      * @param ind index of a cell
      * @return true if cell in right boundary, false otherwise
      */
     bool rightBoundary(size_t ind);
 
-    /**
+     /**
      * @brief check test if cell with given index is in upper boundary
      * @param ind index of a cell
      * @return true if cell in upper boundary, false otherwise
