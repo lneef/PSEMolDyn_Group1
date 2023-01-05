@@ -21,6 +21,13 @@ class LinkedCellContainer : public Container {
 public:
 
     /**
+     * @brief Getter for field particles.
+     *
+     * @return vector of particles
+    */
+    std::vector<Particle> getParticles() override;
+
+    /**
      * @brief the given function to the particles in the container
      * @param fun function taking lvalue reference to particle
      */

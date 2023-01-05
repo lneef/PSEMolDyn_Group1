@@ -50,6 +50,13 @@ public:
      * @param p rvalue reference to particle to be added to the container
      */
     virtual void addParticle(Particle&& p) = 0;
+
+    /**
+     * @brief Getter for field particles.
+     *
+     * @return vector of particles
+    */
+    virtual std::vector<Particle> getParticles() = 0;
 };
 
 
