@@ -53,6 +53,11 @@ void Simulation::run() {
 
     int iteration = 0;
 
+    int temp_type = particles.get()->getParticles().at(0).getType();
+    int temp_g = g;
+    //  SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the type of the particle:", temp_type);
+    
+
     force->calculateF(particles);
 
     while (current_time < end_time) {
@@ -60,6 +65,14 @@ void Simulation::run() {
         calculateX();
 
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
+
+        if (iteration<=15000&&temp_type == 3) {
+        particles->apply([temp_g](Particle& p){
+            p.updateF({ 0, 0, p.getM() * temp_g });});
+        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the gravitation has been calculated", iteration);
+        }
+
+        
         force->calculateF(particles);
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
 
@@ -92,7 +105,7 @@ void Simulation::run() {
     auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
     MolSimLogger::logInfo("Runtime: {} ms", difference.count());
 
-    double mups = (particles_begin*iteration*1000.0)/(difference.count());
+    double mups = (particles_begin * iteration * 1000.0) / (difference.count());
     MolSimLogger::logInfo("Molecule-updates per second: {} MUPS/s", mups);
 }
 
@@ -149,6 +162,10 @@ void Simulation::setN_thermostat(int n_thermostat_arg) {
 
 void Simulation::setThermostat(std::shared_ptr<Thermostat>& thermostat_arg) {
     thermostat = thermostat_arg;
+}
+
+void Simulation::setG(double g_arg) {
+    g=g_arg;
 }
 
 const std::shared_ptr<Thermostat>& Simulation::getThermostat() const { return thermostat; }

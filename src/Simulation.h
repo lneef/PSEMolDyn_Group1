@@ -39,6 +39,11 @@ class Simulation {
     double end_time;
 
     /**
+     * @brief gravitation constant 
+     */
+    double g;
+
+    /**
      * @brief FileWriter to print the VTK files
      */
     std::unique_ptr<outputWriter::FileWriter> writer;
@@ -122,6 +127,13 @@ public:
     void setEndTime(double end_time_arg);
 
     /**
+     * @brief setter for g
+     * @param g_arg the gravitaion constant
+     */
+    void setG(double g_arg);
+
+
+    /**
      * @brief setter for force
      * @param force_arg method for calculating the force effective on particles
      */
@@ -142,7 +154,7 @@ public:
     void setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg);
 
     /**
-     * @brief setter for out_name
+      *  @brief setter for out_name
      * @param out_name_arg base name for output file
      */
     void setOut_name(const std::string &out_name_arg);

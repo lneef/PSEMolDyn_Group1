@@ -4,7 +4,7 @@ void ParticleContainer::setParticles(const std::vector<Particle> &particles) {
     this->particles = particles;
 }
 
-std::vector<Particle> &ParticleContainer::getParticles(){
+std::vector<Particle> ParticleContainer::getParticles(){
     return this->particles;
 }
 
