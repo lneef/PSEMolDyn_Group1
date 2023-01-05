@@ -61,6 +61,14 @@ namespace XMLReader {
         f = f_arg;
     }
 
+    void membrane_pimpl::stiffness_const(double stiff_const_arg){
+        stiff_const = stiff_const_arg;
+    }
+
+    void membrane_pimpl::bond_length(double bond_len_arg){
+        bond_len = bond_len_arg;
+    }
+
     void membrane_pimpl::post_membrane() {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
@@ -96,8 +104,8 @@ namespace XMLReader {
         epsilon_p = 5;
         f = 1;
 
-        //ToDo: Force
-        //sim->setForce(MembraneFore);
+        std::unique_ptr<Force> force(new MembraneForce(stiff_const,bond_len));
+        sim->setForce(force);
     }
 
     void membrane_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {

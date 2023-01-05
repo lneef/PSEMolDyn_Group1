@@ -40,10 +40,9 @@
 
 #include "molsim-pskel.h"
 
-namespace XMLReader {
 // simulation_pskel
 //
-
+namespace XMLReader {
     void simulation_pskel::
     t_end_parser(xml_schema::double_pskel &p) {
         this->t_end_parser_ = &p;
@@ -379,6 +378,16 @@ namespace XMLReader {
     }
 
     void membrane_pskel::
+    stiffness_const_parser(xml_schema::double_pskel &p) {
+        this->stiffness_const_parser_ = &p;
+    }
+
+    void membrane_pskel::
+    bond_length_parser(xml_schema::double_pskel &p) {
+        this->bond_length_parser_ = &p;
+    }
+
+    void membrane_pskel::
     parsers(xml_schema::int_pskel &type,
             xml_schema::double_pskel &sigma,
             xml_schema::double_pskel &epsilon,
@@ -394,7 +403,9 @@ namespace XMLReader {
             xml_schema::double_pskel &velocity_y,
             xml_schema::double_pskel &velocity_z,
             xml_schema::boolean_pskel &brownianMotion,
-            xml_schema::double_pskel &fz_up) {
+            xml_schema::double_pskel &fz_up,
+            xml_schema::double_pskel &stiffness_const,
+            xml_schema::double_pskel &bond_length) {
         this->type_parser_ = &type;
         this->sigma_parser_ = &sigma;
         this->epsilon_parser_ = &epsilon;
@@ -411,6 +422,8 @@ namespace XMLReader {
         this->velocity_z_parser_ = &velocity_z;
         this->brownianMotion_parser_ = &brownianMotion;
         this->fz_up_parser_ = &fz_up;
+        this->stiffness_const_parser_ = &stiffness_const;
+        this->bond_length_parser_ = &bond_length;
     }
 
     membrane_pskel::
@@ -430,7 +443,9 @@ namespace XMLReader {
               velocity_y_parser_(0),
               velocity_z_parser_(0),
               brownianMotion_parser_(0),
-              fz_up_parser_(0) {
+              fz_up_parser_(0),
+              stiffness_const_parser_(0),
+              bond_length_parser_(0) {
     }
 
 // cuboid_input_pskel
@@ -1437,6 +1452,14 @@ namespace XMLReader {
     }
 
     void membrane_pskel::
+    stiffness_const(double) {
+    }
+
+    void membrane_pskel::
+    bond_length(double) {
+    }
+
+    void membrane_pskel::
     post_membrane() {
     }
 
@@ -1593,6 +1616,24 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "stiffness_const" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->stiffness_const_parser_;
+
+            if (this->stiffness_const_parser_)
+                this->stiffness_const_parser_->pre();
+
+            return true;
+        }
+
+        if (n == "bond_length" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->bond_length_parser_;
+
+            if (this->bond_length_parser_)
+                this->bond_length_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -1710,6 +1751,20 @@ namespace XMLReader {
         if (n == "fz_up" && ns.empty()) {
             if (this->fz_up_parser_)
                 this->fz_up(this->fz_up_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "stiffness_const" && ns.empty()) {
+            if (this->stiffness_const_parser_)
+                this->stiffness_const(this->stiffness_const_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "bond_length" && ns.empty()) {
+            if (this->bond_length_parser_)
+                this->bond_length(this->bond_length_parser_->post_double());
 
             return true;
         }

@@ -663,6 +663,12 @@ namespace XMLReader {
         fz_up(double);
 
         virtual void
+        stiffness_const(double);
+
+        virtual void
+        bond_length(double);
+
+        virtual void
         post_membrane();
 
         // Parser construction API.
@@ -716,6 +722,12 @@ namespace XMLReader {
         fz_up_parser(xml_schema::double_pskel &);
 
         void
+        stiffness_const_parser(xml_schema::double_pskel &);
+
+        void
+        bond_length_parser(xml_schema::double_pskel &);
+
+        void
         parsers(xml_schema::int_pskel & /* type */,
                 xml_schema::double_pskel & /* sigma */,
                 xml_schema::double_pskel & /* epsilon */,
@@ -731,7 +743,9 @@ namespace XMLReader {
                 xml_schema::double_pskel & /* velocity_y */,
                 xml_schema::double_pskel & /* velocity_z */,
                 xml_schema::boolean_pskel & /* brownianMotion */,
-                xml_schema::double_pskel & /* fz_up */);
+                xml_schema::double_pskel & /* fz_up */,
+                xml_schema::double_pskel & /* stiffness_const */,
+                xml_schema::double_pskel & /* bond_length */);
 
         // Constructor.
         //
@@ -766,6 +780,8 @@ namespace XMLReader {
         xml_schema::double_pskel *velocity_z_parser_;
         xml_schema::boolean_pskel *brownianMotion_parser_;
         xml_schema::double_pskel *fz_up_parser_;
+        xml_schema::double_pskel *stiffness_const_parser_;
+        xml_schema::double_pskel *bond_length_parser_;
     };
 
     class cuboid_input_pskel : public xml_schema::complex_content {

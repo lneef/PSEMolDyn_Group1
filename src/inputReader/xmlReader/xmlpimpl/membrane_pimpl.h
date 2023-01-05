@@ -7,6 +7,7 @@
 #include "inputReader/xmlReader/molsim-pskel.h"
 #include "container/LinkedCellContainer.h"
 #include "Simulation.h"
+#include "forceCalculation/MembraneForce.h"
 
 namespace XMLReader {
     class membrane_pimpl : public membrane_pskel {
@@ -62,6 +63,10 @@ namespace XMLReader {
         double epsilon_p = 5;
 
         double f = 1;
+
+        double stiff_const;
+
+        double bond_len;
     public:
         /**
          * @brief Function that initializes the container
@@ -133,6 +138,10 @@ namespace XMLReader {
         void epsilon(double ) override;
 
         void fz_up(double ) override;
+
+        void stiffness_const(double ) override;
+
+        void bond_length(double ) override;
 
         /**
          * @brief Function that generates the cuboids
