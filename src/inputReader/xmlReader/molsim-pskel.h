@@ -615,9 +615,6 @@ namespace XMLReader {
         // pre ();
 
         virtual void
-        type(int);
-
-        virtual void
         sigma(double);
 
         virtual void
@@ -674,9 +671,6 @@ namespace XMLReader {
         // Parser construction API.
         //
         void
-        type_parser(xml_schema::int_pskel &);
-
-        void
         sigma_parser(xml_schema::double_pskel &);
 
         void
@@ -728,8 +722,7 @@ namespace XMLReader {
         bond_length_parser(xml_schema::double_pskel &);
 
         void
-        parsers(xml_schema::int_pskel & /* type */,
-                xml_schema::double_pskel & /* sigma */,
+        parsers(xml_schema::double_pskel & /* sigma */,
                 xml_schema::double_pskel & /* epsilon */,
                 xml_schema::double_pskel & /* lower_left_x */,
                 xml_schema::double_pskel & /* lower_left_y */,
@@ -764,7 +757,6 @@ namespace XMLReader {
                           const xml_schema::ro_string &);
 
     protected:
-        xml_schema::int_pskel *type_parser_;
         xml_schema::double_pskel *sigma_parser_;
         xml_schema::double_pskel *epsilon_parser_;
         xml_schema::double_pskel *lower_left_x_parser_;

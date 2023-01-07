@@ -46,7 +46,6 @@
 
     <xs:complexType name="membrane">
         <xs:sequence>
-            <xs:element name="type" type="xs:int"/>
             <xs:element name="sigma" type="xs:double"/>
             <xs:element name="epsilon" type="xs:double"/>
             <xs:element name="lower_left_x" type="xs:double"/>

@@ -19,7 +19,7 @@ namespace XMLReader {
                       double_p, double_p, bool_p);
         bou_in_p.parsers(string_p, string_p, string_p, string_p);
         fr_check.parsers(string_p);
-        memb_p.parsers(int_p, double_p, double_p, double_p, double_p, double_p, int_p, int_p, int_p, double_p, double_p,
+        memb_p.parsers(double_p, double_p, double_p, double_p, double_p, int_p, int_p, int_p, double_p, double_p,
                        double_p, double_p, double_p, bool_p, double_p, double_p, double_p);
 
         std::unique_ptr<Force> force = std::make_unique<LennardJones>();

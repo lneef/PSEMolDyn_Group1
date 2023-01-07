@@ -48,11 +48,6 @@ namespace XMLReader {
         bool browMot = true;
 
         /**
-         * @brief type of the particles in the cuboid
-         */
-        int type_p = 3;
-
-        /**
          * @brief sigma value of the particles for Lennard Jones potential
          */
         double sigma_p = 1;
@@ -121,11 +116,6 @@ namespace XMLReader {
          * @brief function to process to flag for brownian motion
          */
         void brownianMotion(bool) override;
-
-        /**
-         * @brief function to process the type of the particle
-         */
-        void type(int) override;
 
         /**
          * @brief function to process the sigma value for the particle

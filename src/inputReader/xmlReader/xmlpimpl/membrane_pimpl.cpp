@@ -87,7 +87,7 @@ namespace XMLReader {
         }
         ParticleGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
-            cub.generateMembraneNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, type_p, f);
+            cub.generateMembraneNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, 3, f);
         } else {
             double meanVelocity;
             if (sim->getThermostat() != nullptr) {
@@ -95,11 +95,10 @@ namespace XMLReader {
             } else {
                 meanVelocity = 0.1;
             }
-            cub.generateMembraneBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, type_p, f);
+            cub.generateMembraneBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, 3, f);
         }
 
         browMot = true;
-        type_p = 3;
         sigma_p = 1;
         epsilon_p = 5;
         f = 1;
@@ -111,10 +110,6 @@ namespace XMLReader {
     void membrane_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
         cells = lc;
         sim = simulation;
-    }
-
-    void membrane_pimpl::type(int type_arg) {
-        type_p = type_arg;
     }
 
     void membrane_pimpl::sigma(double sigma_arg) {

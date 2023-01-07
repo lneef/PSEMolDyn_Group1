@@ -298,11 +298,6 @@ namespace XMLReader {
 //
 
     void membrane_pskel::
-    type_parser(xml_schema::int_pskel &p) {
-        this->type_parser_ = &p;
-    }
-
-    void membrane_pskel::
     sigma_parser(xml_schema::double_pskel &p) {
         this->sigma_parser_ = &p;
     }
@@ -388,8 +383,7 @@ namespace XMLReader {
     }
 
     void membrane_pskel::
-    parsers(xml_schema::int_pskel &type,
-            xml_schema::double_pskel &sigma,
+    parsers(xml_schema::double_pskel &sigma,
             xml_schema::double_pskel &epsilon,
             xml_schema::double_pskel &lower_left_x,
             xml_schema::double_pskel &lower_left_y,
@@ -406,7 +400,6 @@ namespace XMLReader {
             xml_schema::double_pskel &fz_up,
             xml_schema::double_pskel &stiffness_const,
             xml_schema::double_pskel &bond_length) {
-        this->type_parser_ = &type;
         this->sigma_parser_ = &sigma;
         this->epsilon_parser_ = &epsilon;
         this->lower_left_x_parser_ = &lower_left_x;
@@ -428,8 +421,7 @@ namespace XMLReader {
 
     membrane_pskel::
     membrane_pskel()
-            : type_parser_(0),
-              sigma_parser_(0),
+            : sigma_parser_(0),
               epsilon_parser_(0),
               lower_left_x_parser_(0),
               lower_left_y_parser_(0),
@@ -1388,10 +1380,6 @@ namespace XMLReader {
 //
 
     void membrane_pskel::
-    type(int) {
-    }
-
-    void membrane_pskel::
     sigma(double) {
     }
 
@@ -1471,15 +1459,6 @@ namespace XMLReader {
 
         if (this->xml_schema::complex_content::_start_element_impl(ns, n, t))
             return true;
-
-        if (n == "type" && ns.empty()) {
-            this->xml_schema::complex_content::context_.top().parser_ = this->type_parser_;
-
-            if (this->type_parser_)
-                this->type_parser_->pre();
-
-            return true;
-        }
 
         if (n == "sigma" && ns.empty()) {
             this->xml_schema::complex_content::context_.top().parser_ = this->sigma_parser_;
@@ -1642,13 +1621,6 @@ namespace XMLReader {
                       const xml_schema::ro_string &n) {
         if (this->xml_schema::complex_content::_end_element_impl(ns, n))
             return true;
-
-        if (n == "type" && ns.empty()) {
-            if (this->type_parser_)
-                this->type(this->type_parser_->post_int());
-
-            return true;
-        }
 
         if (n == "sigma" && ns.empty()) {
             if (this->sigma_parser_)
