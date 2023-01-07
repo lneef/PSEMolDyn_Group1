@@ -67,9 +67,16 @@ void Simulation::run() {
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
 
         if (iteration<=15000&&isMembrane) {
-        particles->apply([temp_g](Particle& p){
-            p.updateF({ 0, 0, p.getM() * temp_g });});
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the gravitation has been calculated", iteration);
+            particles->apply([temp_g](Particle& p) {
+            if ((p.getIndex()[0] == 17 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 17 && p.getIndex()[1] == 25) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 25)) {
+                    
+                }
+                else {
+                    p.updateF({ 0, 0, p.getM() * temp_g });
+                }
+                });
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the gravitation has been calculated", iteration);
+
         }
 
         
