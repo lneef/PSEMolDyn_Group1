@@ -3,8 +3,6 @@
 //
 
 #pragma once
-
-
 #include "LinkedCellContainer.h"
 
 class LinkedCell3D : Container {
@@ -51,9 +49,11 @@ public:
 
     void addPeriodic(Boundary boundary);
 
+    void addReflecting(Reflecting&& ref);
+
     LinkedCell3D();
 
-    void setUP(std::array<double, 3>& domain_arg, double cutOff_arg);
+    void setSize(std::array<double, 3>& domain_arg, double cutOff_arg);
 
 
 private:

@@ -2,13 +2,18 @@
 // Created by lukas on 29.11.22.
 //
 
-#include <numeric>
 #include <cmath>
 #include <iostream>
 #include "LinkedCellContainer.h"
 #include "ParticleContainer.h"
 #include "Reflecting.h"
 #include "MolSimLogger.h"
+
+std::vector<Reflecting> LinkedCellContainer::conditions{};
+std::set<Boundary> LinkedCellContainer::periodic{};
+std::array<double, 3> LinkedCellContainer::domain{};
+double LinkedCellContainer::rcutoff{};
+std::array<size_t , 3> LinkedCellContainer::mesh{};
 
 void LinkedCellContainer::apply(std::function<void(Particle &)> fun) {
     for (size_t i = mesh[0] + 1; i < cells.size() - mesh[0] - 1; ++i) {
@@ -68,6 +73,7 @@ void LinkedCellContainer::update() {
 }
 
 size_t LinkedCellContainer::size() {
+
     size_t len = 0;
     for (size_t i = mesh[0] + 1; i < cells.size() - mesh[0] - 1; ++i) {
         len+=cells[i].size();
@@ -149,7 +155,7 @@ std::vector<ParticleContainer> &LinkedCellContainer::getCells() {
     return cells;
 }
 
-void LinkedCellContainer::setUp() {
+void LinkedCellContainer::setUpRef() {
     size_t i = 0;
     size_t len = cells.size();
 
@@ -214,17 +220,12 @@ void LinkedCellContainer::setDomain(std::array<double, 3> &domain_arg) {
     domain = domain_arg;
 }
 
-void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &domain_arg, size_t dim) {
+void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &domain_arg) {
     setRCutOff(rcutoff_arg);
     setDomain(domain_arg);
-    for (size_t i = 0; i < dim; ++i) {
+    for (size_t i = 0; i < 2; ++i) {
         mesh[i] = ceil(std::abs(domain_arg[i]) / rcutoff_arg) + 2;
     }
-    size_t len = 1;
-    for (size_t i = 0; i < dim; ++i) {
-        len *= mesh[i] == 0 ? 1 : mesh[i];
-    }
-    cells.resize(len);
     setUp();
 }
 
@@ -248,12 +249,6 @@ std::array<double, 3> &LinkedCellContainer::getDomain() {
 LinkedCellContainer::LinkedCellContainer() = default;
 
 LinkedCellContainer::~LinkedCellContainer() = default;
-
-bool LinkedCellContainer::inside3D(Particle &p) {
-    auto &pos = p.getX();
-    return Particle::comp(0, domain[2]) || ((0 < pos[2] || Particle::comp(pos[2], 0)) && pos[2] < domain[2]);
-}
-
 
 void LinkedCellContainer::rightNeighbour(size_t i, const std::function<void(Particle &)> &partial) {
     if (mesh[0] <= 1)
@@ -426,7 +421,7 @@ bool LinkedCellContainer::rightBoundary(size_t ind) {
 }
 
 bool LinkedCellContainer::topBoundary(size_t ind) {
-    size_t len = cells.size() - mesh[0];
+    size_t len = mesh[0] * mesh[1] - mesh[0];
     return ind < len - 1 && ind > len - mesh[0];
 }
 
@@ -450,4 +445,38 @@ void LinkedCellContainer::addParticle(Particle& p){
 
 bool LinkedCellContainer::containsPeriodic(Boundary bound) {
     return periodic.find(bound) != periodic.end();
+}
+
+ParticleContainer &LinkedCellContainer::operator[](size_t i) {
+    return cells[i];
+}
+
+void LinkedCellContainer::forceTwoD(ParticleContainer &particles, size_t ind, std::function<void(Particle&, Particle&)> fun) {
+    particles.applyF(fun);
+    for(auto & p : particles){
+        auto partial = [&p, &fun](Particle &p2) { fun(p, p2); };
+        rightNeighbour(ind, partial);
+        upperLeftNeighbour(ind, partial);
+        upperRightNeighbour(ind, partial);
+        upperNeighbour(ind, partial);
+    }
+
+}
+
+void LinkedCellContainer::setUp() {
+    size_t len = 1;
+    for (size_t i = 0; i < 2; ++i) {
+        len *= mesh[i] == 0 ? 1 : mesh[i];
+    }
+    cells.resize(len);
+    setUpRef();
+}
+
+void LinkedCellContainer::setMesh(std::array<size_t, 3> &mesh_arg) {
+    mesh = mesh_arg;
+}
+
+void LinkedCellContainer::clearBoundary() {
+    periodic.clear();
+    conditions.clear();
 }
