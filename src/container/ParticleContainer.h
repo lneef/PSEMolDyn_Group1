@@ -32,7 +32,8 @@ public:
      *
      * @return vector of particles
     */
-    std::vector<Particle> getParticles() override;
+    std::vector<Particle> getParticles();
+
 
     /**
      * @brief Setter for field particles

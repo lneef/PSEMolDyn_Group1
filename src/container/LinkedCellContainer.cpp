@@ -149,13 +149,7 @@ std::vector<ParticleContainer> &LinkedCellContainer::getCells() {
     return cells;
 }
 
-std::vector<Particle> LinkedCellContainer::getParticles(){
-    std::vector<Particle> result = {};
-    for (auto container : cells) {
-        result.insert(result.end(), container.getParticles().begin(), container.getParticles().end());
-    }
-    return result;
-}
+
 
 void LinkedCellContainer::setUp() {
     size_t i = 0;
