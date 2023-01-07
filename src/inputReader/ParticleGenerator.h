@@ -124,7 +124,7 @@ public:
     void
     generateMembraneBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
                            std::array<double, 3> v, double h, double m,
-                           double meanVelocity, double sigma = 1, double epsilon = 5, int type=1, double fz = 1) {
+                           double meanVelocity, double sigma = 1, double epsilon = 5, int type=3, double fz = 1) {
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
         std::array<int, 2> index;
@@ -186,7 +186,7 @@ public:
 
     void
     generateMembraneNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
-                             std::array<double, 3> v, double h, double m, double sigma = 1, double epsilon = 5, int type= 1, double fz = 1) {
+                             std::array<double, 3> v, double h, double m, double sigma = 1, double epsilon = 5, int type = 3, double fz = 1) {
         std::array<double, 3> newX{};
         //iterate over cuboid in each dimension
         std::array<int, 2> index;

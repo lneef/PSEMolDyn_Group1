@@ -99,7 +99,7 @@ namespace XMLReader {
         }
 
         browMot = true;
-        type_p = 1;
+        type_p = 3;
         sigma_p = 1;
         epsilon_p = 5;
         f = 1;

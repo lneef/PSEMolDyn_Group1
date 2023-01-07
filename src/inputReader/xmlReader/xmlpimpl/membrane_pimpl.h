@@ -50,7 +50,7 @@ namespace XMLReader {
         /**
          * @brief type of the particles in the cuboid
          */
-        int type_p = 1;
+        int type_p = 3;
 
         /**
          * @brief sigma value of the particles for Lennard Jones potential
