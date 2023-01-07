@@ -61,20 +61,20 @@ namespace XMLReader {
         f = f_arg;
     }
 
-    void membrane_pimpl::stiffness_const(double stiff_const_arg){
+    void membrane_pimpl::stiffness_const(double stiff_const_arg) {
         stiff_const = stiff_const_arg;
     }
 
-    void membrane_pimpl::bond_length(double bond_len_arg){
+    void membrane_pimpl::bond_length(double bond_len_arg) {
         bond_len = bond_len_arg;
     }
 
     void membrane_pimpl::post_membrane() {
         std::array<double, 3> x{};
         std::array<double, 3> v{};
-        std::array<int, 3> n{1, 1, 1};
+        std::array<int, 3> n{ 1, 1, 1 };
         size_t i = 0;
-        while (!pos.empty()){
+        while (!pos.empty()) {
             x[i] = pos.front();
             v[i] = vel.front();
             n[i] = num.front();
@@ -88,11 +88,13 @@ namespace XMLReader {
         ParticleGenerator<LinkedCellContainer> cub{};
         if (!browMot) {
             cub.generateMembraneNoBrownian(cells, x, n, v, width, m, sigma_p, epsilon_p, 3, f);
-        } else {
+        }
+        else {
             double meanVelocity;
             if (sim->getThermostat() != nullptr) {
-                meanVelocity = sqrt(sim->getThermostat()->getTemp()/m);
-            } else {
+                meanVelocity = sqrt(sim->getThermostat()->getTemp() / m);
+            }
+            else {
                 meanVelocity = 0.1;
             }
             cub.generateMembraneBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, 3, f);
@@ -102,11 +104,12 @@ namespace XMLReader {
         sigma_p = 1;
         epsilon_p = 5;
         f = 1;
-
+        
+        sim->setIsMembrane(true);
         sim->setForce(std::make_unique<MembraneForce>(stiff_const, bond_len));
     }
 
-    void membrane_pimpl::init(std::shared_ptr<LinkedCellContainer> &lc, std::shared_ptr<Simulation> &simulation) {
+    void membrane_pimpl::init(std::shared_ptr<LinkedCellContainer>& lc, std::shared_ptr<Simulation>& simulation) {
         cells = lc;
         sim = simulation;
     }

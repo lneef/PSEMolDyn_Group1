@@ -145,7 +145,7 @@ public:
                     index[1] = y_cord;
                     p.setIndex(index);
                     std::array<double, 3> force = {0,0,fz};
-                    if(index[0] == 17 && index[1] == 24 || index[0] == 17 && index[1] == 25 || index[0] == 18 && index[1] == 24 || index[0] == 18 && index[1] == 25){
+                    if((index[0] == 17 && index[1] == 24) ||( index[0] == 17 && index[1] == 25 )|| (index[0] == 18 && index[1] == 24 )||( index[0] == 18 && index[1] == 25)){
                         p.setF(force);
                     }
                     particles->addParticle(p);
@@ -202,7 +202,7 @@ public:
                     index[1] = y_cord;
                     p.setIndex(index);
                     std::array<double, 3> force = {0,0,fz};
-                    if(index[0] == 17 && index[1] == 24 || index[0] == 17 && index[1] == 25 || index[0] == 18 && index[1] == 24 || index[0] == 18 && index[1] == 25){
+                    if((index[0] == 17 && index[1] == 24) || (index[0] == 17 && index[1] == 25 )|| (index[0] == 18 && index[1] == 24 )||( index[0] == 18 && index[1] == 25)){
                         p.setF(force);
                     }
                     particles->addParticle(p);

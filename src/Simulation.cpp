@@ -53,7 +53,7 @@ void Simulation::run() {
 
     int iteration = 0;
 
-    int temp_type = particles.get()->getParticles().at(0).getType();
+   
     int temp_g = g;
     //  SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the type of the particle:", temp_type);
     
@@ -66,7 +66,7 @@ void Simulation::run() {
 
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
 
-        if (iteration<=15000&&temp_type == 3) {
+        if (iteration<=15000&&isMembrane) {
         particles->apply([temp_g](Particle& p){
             p.updateF({ 0, 0, p.getM() * temp_g });});
         SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the gravitation has been calculated", iteration);
@@ -144,6 +144,10 @@ void Simulation::setForce(std::unique_ptr<Force>& force_arg) {
     force = std::move(force_arg);
 }
 
+void Simulation::setIsMembrane(bool input){
+    isMembrane=input;
+}
+
 void Simulation::setOut_frequency(int out_frequency_arg) {
     out_frequency = out_frequency_arg;
 }
@@ -171,6 +175,10 @@ void Simulation::setG(double g_arg) {
 const std::shared_ptr<Thermostat>& Simulation::getThermostat() const { return thermostat; }
 
 void Simulation::setForce(std::unique_ptr<LJGravitation>&& force_arg) {
+    force = std::move(force_arg);
+}
+
+void Simulation::setForce(std::unique_ptr<MembraneForce>&& force_arg) {
     force = std::move(force_arg);
 }
 

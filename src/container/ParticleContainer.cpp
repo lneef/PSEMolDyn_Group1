@@ -8,6 +8,7 @@ std::vector<Particle> ParticleContainer::getParticles(){
     return this->particles;
 }
 
+
 void ParticleContainer::addParticle(Particle &&particle) {
     particles.push_back(particle);
 }

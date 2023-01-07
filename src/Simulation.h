@@ -12,6 +12,7 @@
 #include "container/LinkedCellContainer.h"
 #include "utils/Thermostat.h"
 #include "forceCalculation/LJGravitation.h"
+#include "forceCalculation/MembraneForce.h"
 #include <chrono>
 
 /**
@@ -72,6 +73,8 @@ class Simulation {
      * @brief time step after which temperature values are updated
      */
     int n_thermostat;
+
+    bool isMembrane=false;
 
 public:
     /**
@@ -141,6 +144,8 @@ public:
 
     void setForce(std::unique_ptr<LJGravitation> &&force_arg);
 
+    void setForce(std::unique_ptr<MembraneForce> &&force_arg);
+
     /**
      * @brief setter for particles
      * @param particles_arg ParticleContainer containing the particles
@@ -164,6 +169,8 @@ public:
      * @param out_frequency_arg output frequency of the simulation
      */
     void setOut_frequency(int out_frequency_arg);
+
+    void setIsMembrane(bool input);
 
     /**
      * @brief setter for output writer
