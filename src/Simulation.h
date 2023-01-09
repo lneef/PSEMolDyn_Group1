@@ -74,7 +74,15 @@ class Simulation {
      */
     int n_thermostat;
 
-    bool isMembrane=false;
+    /**
+     * @brief a bool value to show if the Membrane is simulated
+     */
+    bool isMembrane = false;
+
+    /**
+     * @brief the Fz_up parameter of the membrane-calculation
+     */
+    double F_up;
 
 public:
     /**
@@ -171,6 +179,8 @@ public:
     void setOut_frequency(int out_frequency_arg);
 
     void setIsMembrane(bool input);
+
+    void setF_up(double F_up_arg);
 
     /**
      * @brief setter for output writer

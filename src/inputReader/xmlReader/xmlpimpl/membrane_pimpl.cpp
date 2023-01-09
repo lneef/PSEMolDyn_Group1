@@ -100,12 +100,15 @@ namespace XMLReader {
             cub.generateMembraneBrownian(cells, x, n, v, width, m, meanVelocity, sigma_p, epsilon_p, 3, f);
         }
 
+        sim->setIsMembrane(true);
+        sim->setF_up(f);
+
         browMot = true;
         sigma_p = 1;
         epsilon_p = 5;
         f = 1;
 
-        sim->setIsMembrane(true);
+
         sim->setForce(std::make_unique<MembraneForce>(stiff_const, bond_len));
     }
 

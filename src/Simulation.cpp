@@ -53,67 +53,121 @@ void Simulation::run() {
 
     int iteration = 0;
 
-   
-    int temp_g = g;
-    //  SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the type of the particle:", temp_type);
-    
-
-    force->calculateF(particles);
-
-    while (current_time < end_time) {
-
-        calculateX();
-
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
-
-        if (iteration<=15000&&isMembrane) {
-            particles->apply([temp_g](Particle& p) {
-            if ((p.getIndex()[0] == 17 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 17 && p.getIndex()[1] == 25) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 25)) {
-                    
-                }
-                else {
-                    p.updateF({ 0, 0, p.getM() * temp_g });
-                }
-                });
-            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the gravitation has been calculated", iteration);
-
-        }
-
-        
+    if (!isMembrane) {
         force->calculateF(particles);
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
+
+        while (current_time < end_time) {
+
+            calculateX();
+
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
+            force->calculateF(particles);
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
 
 
-        calculateV();
-        SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
+            calculateV();
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
 
-        iteration++;
+            iteration++;
 
-        if (thermostat != nullptr) {
-            if (iteration % n_thermostat == 0) {
-                thermostat->applyThermostat(particles);
+            if (thermostat != nullptr) {
+                if (iteration % n_thermostat == 0) {
+                    thermostat->applyThermostat(particles);
+                }
+                SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Temperature: {}", thermostat->measureTemp(particles));
             }
-            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Temperature: {}", thermostat->measureTemp(particles));
-        }
 
 
 #ifndef BENCHMARK
-        if (iteration % out_frequency == 0) {
-            writer->plotParticles(particles, out_name, iteration);
+            if (iteration % out_frequency == 0) {
+                writer->plotParticles(particles, out_name, iteration);
+            }
+
+            MolSimLogger::logInfo("Itertation {} finished.", iteration);
+#endif
+            current_time += delta_t;
+        }
+    }
+    else {
+        double temp_g = g;
+        double temp_F_up = F_up;
+        //  SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the type of the particle:", temp_type);
+
+
+        // force->calculateF(particles);
+
+
+        // particles->apply([](Particle& p) {
+        //     // p.setIndex({6,6});
+        //     std::cout << p.getIndex()[0] << " " << p.getIndex()[1] << " x value:" << p.getX()[0] << " " << p.getX()[1] << " " << p.getX()[2] << std::endl;
+        //     });
+
+        // std::cout << F_up << std::endl;
+
+        while (current_time < end_time) {
+
+            calculateX();
+
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
+
+            if (iteration <= 15000) {
+                particles->apply([temp_g, temp_F_up](Particle& p) {
+                    if ((p.getIndex()[0] == 17 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 17 && p.getIndex()[1] == 25) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 25)) {
+                        p.updateF({ 0,0,p.getM() * temp_g + temp_F_up });
+                        std::cout << p.getIndex().at(0) << " " << p.getIndex().at(1) << std::endl;
+                    }
+                    else {
+                        p.updateF({ 0, 0, p.getM() * temp_g });
+                    }
+                    });
+                SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the gravitation has been calculated", iteration);
+
+            }
+            else {
+                particles->apply([temp_F_up](Particle& p) {
+                    if ((p.getIndex()[0] == 17 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 17 && p.getIndex()[1] == 25) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 25)) {
+                        p.updateF({ 0,0,temp_F_up });
+                    }
+                    });
+            }
+
+
+            // force->calculateF(particles);
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
+
+
+            calculateV();
+            SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Velocities of particles calculated for iteration {}", iteration);
+
+            iteration++;
+
+            if (thermostat != nullptr) {
+                if (iteration % n_thermostat == 0) {
+                    thermostat->applyThermostat(particles);
+                }
+                SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Temperature: {}", thermostat->measureTemp(particles));
+            }
+
+
+#ifndef BENCHMARK
+            if (iteration % out_frequency == 0) {
+                writer->plotParticles(particles, out_name, iteration);
+            }
+
+            MolSimLogger::logInfo("Itertation {} finished.", iteration);
+#endif
+            current_time += delta_t;
         }
 
-        MolSimLogger::logInfo("Itertation {} finished.", iteration);
-#endif
-        current_time += delta_t;
+
+
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+        MolSimLogger::logInfo("Runtime: {} ms", difference.count());
+
+        double mups = (particles_begin * iteration * 1000.0) / (difference.count());
+        MolSimLogger::logInfo("Molecule-updates per second: {} MUPS/s", mups);
     }
-
-
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    MolSimLogger::logInfo("Runtime: {} ms", difference.count());
-
-    double mups = (particles_begin * iteration * 1000.0) / (difference.count());
-    MolSimLogger::logInfo("Molecule-updates per second: {} MUPS/s", mups);
 }
 
 Simulation::Simulation(std::shared_ptr<Container>& particles, double delta_t, double end_time,
@@ -151,8 +205,12 @@ void Simulation::setForce(std::unique_ptr<Force>& force_arg) {
     force = std::move(force_arg);
 }
 
-void Simulation::setIsMembrane(bool input){
-    isMembrane=input;
+void Simulation::setIsMembrane(bool input) {
+    isMembrane = input;
+}
+
+void Simulation::setF_up(double F_up_arg) {
+    F_up = F_up_arg;
 }
 
 void Simulation::setOut_frequency(int out_frequency_arg) {
@@ -176,7 +234,7 @@ void Simulation::setThermostat(std::shared_ptr<Thermostat>& thermostat_arg) {
 }
 
 void Simulation::setG(double g_arg) {
-    g=g_arg;
+    g = g_arg;
 }
 
 const std::shared_ptr<Thermostat>& Simulation::getThermostat() const { return thermostat; }
