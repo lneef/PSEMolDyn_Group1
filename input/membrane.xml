@@ -15,7 +15,7 @@
         <epsilon>1.0</epsilon>
         <lower_left_x>15</lower_left_x>
         <lower_left_y>15</lower_left_y>
-        <lower_left_z>15</lower_left_z>
+        <lower_left_z>1.5</lower_left_z>
         <number_x>50</number_x>
         <number_y>50</number_y>
         <number_z>1</number_z>
