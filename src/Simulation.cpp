@@ -91,30 +91,18 @@ void Simulation::run() {
     else {
         double temp_g = g;
         double temp_F_up = F_up;
-        //  SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "the type of the particle:", temp_type);
-
-
         // force->calculateF(particles);
-
-
-        // particles->apply([](Particle& p) {
-        //     // p.setIndex({6,6});
-        //     std::cout << p.getIndex()[0] << " " << p.getIndex()[1] << " x value:" << p.getX()[0] << " " << p.getX()[1] << " " << p.getX()[2] << std::endl;
-        //     });
-
-        // std::cout << F_up << std::endl;
-
         while (current_time < end_time) {
 
             calculateX();
-
+            
             SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Position of particles calculated for iteration {} ", iteration);
 
             if (iteration <= 15000) {
                 particles->apply([temp_g, temp_F_up](Particle& p) {
                     if ((p.getIndex()[0] == 17 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 17 && p.getIndex()[1] == 25) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 24) || (p.getIndex()[0] == 18 && p.getIndex()[1] == 25)) {
                         p.updateF({ 0,0,p.getM() * temp_g + temp_F_up });
-                        std::cout << p.getIndex().at(0) << " " << p.getIndex().at(1) << std::endl;
+                        // std::cout << p.getIndex().at(0) << " " << p.getIndex().at(1) << std::endl;
                     }
                     else {
                         p.updateF({ 0, 0, p.getM() * temp_g });
@@ -132,7 +120,8 @@ void Simulation::run() {
             }
 
 
-            // force->calculateF(particles);
+            force->calculateF(particles);
+
             SPDLOG_LOGGER_INFO(MolSimLogger::logger(), "Force on particles calculated for iteration {}", iteration);
 
 

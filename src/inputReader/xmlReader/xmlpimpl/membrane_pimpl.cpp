@@ -109,7 +109,7 @@ namespace XMLReader {
         f = 1;
 
 
-        sim->setForce(std::make_unique<MembraneForce>(stiff_const, bond_len));
+        sim->setForce(std::make_unique<MembraneForce>(bond_len, stiff_const));
     }
 
     void membrane_pimpl::init(std::shared_ptr<LinkedCellContainer>& lc, std::shared_ptr<Simulation>& simulation) {
