@@ -121,6 +121,39 @@ public:
         }
     }
 
+    void
+    generateMembraneBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
+                           std::array<double, 3> v, double h, double m,
+                           double meanVelocity, double sigma = 1, double epsilon = 5, int type=3, double fz = 1) {
+        std::array<double, 3> newX{};
+        //iterate over cuboid in each dimension
+        std::array<int, 2> index;
+        for (int x_cord = 0; x_cord < n[0]; x_cord++) {
+            newX[0] = x[0] + (x_cord * h);
+            for (int y_cord = 0; y_cord < n[1]; y_cord++) {
+                newX[1] = x[1] + (y_cord * h);
+                for (int z_cord = 0; z_cord < n[2]; z_cord++) {
+                    newX[2] = x[2] + (z_cord * h);
+                    std::array<double, 3> mbV = calculateVWithMean(meanVelocity);
+                    std::array<double, 3> newV{};
+                    for (int i = 0; i < 3; i++) {
+                        newV[i] = v[i] + mbV[i];
+                    }
+                    //stores particle in ParticleContainer
+                    Particle p = Particle(newX, newV, m, sigma, epsilon, type);
+                    index[0] = x_cord;
+                    index[1] = y_cord;
+                    p.setIndex(index);
+                    std::array<double, 3> force = {0,0,fz};
+                    if((index[0] == 17 && index[1] == 24) ||( index[0] == 17 && index[1] == 25 )|| (index[0] == 18 && index[1] == 24 )||( index[0] == 18 && index[1] == 25)){
+                        p.setF(force);
+                    }
+                    particles->addParticle(p);
+                }
+            }
+        }
+    }
+
     /**
      * @brief Generates cuboids of particles with given values and stores them in instance of ParticleContainer
      * @param particles ParticleContainer where the particles are stored
@@ -146,6 +179,33 @@ public:
                     newX[2] = x[2] + (z_cord * h);
                     //stores particle in ParticleContainer
                     particles->addParticle(Particle(newX, v, m, sigma, epsilon, type));
+                }
+            }
+        }
+    }
+
+    void
+    generateMembraneNoBrownian(std::shared_ptr<T> &particles, std::array<double, 3> x, std::array<int, 3> n,
+                             std::array<double, 3> v, double h, double m, double sigma = 1, double epsilon = 5, int type = 3, double fz = 1) {
+        std::array<double, 3> newX{};
+        //iterate over cuboid in each dimension
+        std::array<int, 2> index;
+        for (int x_cord = 0; x_cord < n[0]; x_cord++) {
+            newX[0] = x[0] + (x_cord * h);
+            for (int y_cord = 0; y_cord < n[1]; y_cord++) {
+                newX[1] = x[1] + (y_cord * h);
+                for (int z_cord = 0; z_cord < n[2]; z_cord++) {
+                    newX[2] = x[2] + (z_cord * h);
+                    //stores particle in ParticleContainer
+                    Particle p = Particle(newX, v, m, sigma, epsilon, type);
+                    index[0] = x_cord;
+                    index[1] = y_cord;
+                    p.setIndex(index);
+                    std::array<double, 3> force = {0,0,fz};
+                    if((index[0] == 17 && index[1] == 24) || (index[0] == 17 && index[1] == 25 )|| (index[0] == 18 && index[1] == 24 )||( index[0] == 18 && index[1] == 25)){
+                        p.setF(force);
+                    }
+                    particles->addParticle(p);
                 }
             }
         }

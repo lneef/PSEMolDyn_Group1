@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<molecular>
+    <simulation>
+        <t_end>500</t_end>
+        <delta_t>0.01</delta_t>
+        <domain_size_x>148</domain_size_x>
+        <domain_size_y>148</domain_size_y>
+        <domain_size_z>148</domain_size_z>
+        <cutOff_radius>4.0</cutOff_radius>
+        <output_frequency>10</output_frequency>
+        <g_gravitation>-0.001</g_gravitation>
+    </simulation>
+    <membrane>
+        <sigma>1.0</sigma>
+        <epsilon>1.0</epsilon>
+        <lower_left_x>15</lower_left_x>
+        <lower_left_y>15</lower_left_y>
+        <lower_left_z>1.5</lower_left_z>
+        <number_x>50</number_x>
+        <number_y>50</number_y>
+        <number_z>1</number_z>
+        <mesh_width>2.2</mesh_width>
+        <mass>1.0</mass>
+        <velocity_x>0.0</velocity_x>
+        <velocity_y>0.0</velocity_y>
+        <velocity_z>0.0</velocity_z>
+        <fz_up>0.8</fz_up>
+        <stiffness_const>300</stiffness_const>
+        <bond_length>2.2</bond_length>
+    </membrane>
+    <boundaries>
+        <top_boundary>reflecting</top_boundary>
+        <bottom_boundary>reflecting</bottom_boundary>
+        <left_boundary>reflecting</left_boundary>
+        <right_boundary>reflecting</right_boundary>
+    </boundaries>
+</molecular>

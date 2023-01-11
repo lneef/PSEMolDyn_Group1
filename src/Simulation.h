@@ -12,6 +12,7 @@
 #include "container/LinkedCellContainer.h"
 #include "utils/Thermostat.h"
 #include "forceCalculation/LJGravitation.h"
+#include "forceCalculation/MembraneForce.h"
 #include <chrono>
 
 /**
@@ -37,6 +38,11 @@ class Simulation {
      * @brief time at which the simulation ends
      */
     double end_time;
+
+    /**
+     * @brief gravitation constant 
+     */
+    double g;
 
     /**
      * @brief FileWriter to print the VTK files
@@ -67,6 +73,16 @@ class Simulation {
      * @brief time step after which temperature values are updated
      */
     int n_thermostat;
+
+    /**
+     * @brief a bool value to show if the Membrane is simulated
+     */
+    bool isMembrane = false;
+
+    /**
+     * @brief the Fz_up parameter of the membrane-calculation
+     */
+    double F_up;
 
 public:
     /**
@@ -122,12 +138,21 @@ public:
     void setEndTime(double end_time_arg);
 
     /**
+     * @brief setter for g
+     * @param g_arg the gravitaion constant
+     */
+    void setG(double g_arg);
+
+
+    /**
      * @brief setter for force
      * @param force_arg method for calculating the force effective on particles
      */
     void setForce(std::unique_ptr<Force> &force_arg);
 
     void setForce(std::unique_ptr<LJGravitation> &&force_arg);
+
+    void setForce(std::unique_ptr<MembraneForce> &&force_arg);
 
     /**
      * @brief setter for particles
@@ -142,7 +167,7 @@ public:
     void setParticle(std::shared_ptr<LinkedCellContainer> &particles_arg);
 
     /**
-     * @brief setter for out_name
+      *  @brief setter for out_name
      * @param out_name_arg base name for output file
      */
     void setOut_name(const std::string &out_name_arg);
@@ -152,6 +177,10 @@ public:
      * @param out_frequency_arg output frequency of the simulation
      */
     void setOut_frequency(int out_frequency_arg);
+
+    void setIsMembrane(bool input);
+
+    void setF_up(double F_up_arg);
 
     /**
      * @brief setter for output writer

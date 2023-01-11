@@ -20,6 +20,7 @@ enum class Boundary{LEFT, RIGHT, BOTTOM, TOP};
 class LinkedCellContainer : public Container {
 public:
 
+
     /**
      * @brief the given function to the particles in the container
      * @param fun function taking lvalue reference to particle
