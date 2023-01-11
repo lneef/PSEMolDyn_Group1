@@ -104,7 +104,7 @@ namespace XMLReader {
         sigma_p = 1;
         epsilon_p = 5;
         f = 1;
-        
+
         sim->setIsMembrane(true);
         sim->setForce(std::make_unique<MembraneForce>(stiff_const, bond_len));
     }
