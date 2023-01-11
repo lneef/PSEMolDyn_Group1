@@ -319,6 +319,9 @@ namespace XMLReader {
         g_gravitation(double);
 
         virtual void
+        l_radius(double);
+
+        virtual void
         post_simulation();
 
         // Parser construction API.
@@ -351,6 +354,9 @@ namespace XMLReader {
         g_gravitation_parser(xml_schema::double_pskel &);
 
         void
+        l_radius_parser(xml_schema::double_pskel &);
+
+        void
         parsers(xml_schema::double_pskel & /* t_end */,
                 xml_schema::double_pskel & /* delta_t */,
                 xml_schema::double_pskel & /* domain_size_x */,
@@ -359,7 +365,8 @@ namespace XMLReader {
                 xml_schema::double_pskel & /* cutOff_radius */,
                 xml_schema::string_pskel & /* output_name */,
                 xml_schema::int_pskel & /* output_frequency */,
-                xml_schema::double_pskel & /* g_gravitation */);
+                xml_schema::double_pskel & /* g_gravitation */,
+                xml_schema::double_pskel & /* l_radius */);
 
         // Constructor.
         //
@@ -387,6 +394,7 @@ namespace XMLReader {
         xml_schema::string_pskel *output_name_parser_;
         xml_schema::int_pskel *output_frequency_parser_;
         xml_schema::double_pskel *g_gravitation_parser_;
+        xml_schema::double_pskel *l_radius_parser_;
     };
 
     class temperature_pskel : public xml_schema::complex_content {

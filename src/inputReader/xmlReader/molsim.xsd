@@ -12,6 +12,7 @@
             <xs:element name="output_name" type="xs:string"/>
             <xs:element name="output_frequency" type="xs:int"/>
             <xs:element name="g_gravitation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="l_radius" type="xs:double"/>
         </xs:sequence>
     </xs:complexType>
 

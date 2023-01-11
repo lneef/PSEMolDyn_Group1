@@ -89,6 +89,11 @@ namespace XMLReader {
     }
 
     void simulation_pskel::
+    l_radius_parser(xml_schema::double_pskel &p) {
+        this->l_radius_parser_ = &p;
+    }
+
+    void simulation_pskel::
     parsers(xml_schema::double_pskel &t_end,
             xml_schema::double_pskel &delta_t,
             xml_schema::double_pskel &domain_size_x,
@@ -97,7 +102,8 @@ namespace XMLReader {
             xml_schema::double_pskel &cutOff_radius,
             xml_schema::string_pskel &output_name,
             xml_schema::int_pskel &output_frequency,
-            xml_schema::double_pskel &g_gravitation) {
+            xml_schema::double_pskel &g_gravitation,
+            xml_schema::double_pskel &l_radius) {
         this->t_end_parser_ = &t_end;
         this->delta_t_parser_ = &delta_t;
         this->domain_size_x_parser_ = &domain_size_x;
@@ -107,6 +113,7 @@ namespace XMLReader {
         this->output_name_parser_ = &output_name;
         this->output_frequency_parser_ = &output_frequency;
         this->g_gravitation_parser_ = &g_gravitation;
+        this->l_radius_parser_ = &l_radius;
     }
 
     simulation_pskel::
@@ -119,7 +126,8 @@ namespace XMLReader {
               cutOff_radius_parser_(0),
               output_name_parser_(0),
               output_frequency_parser_(0),
-              g_gravitation_parser_(0) {
+              g_gravitation_parser_(0),
+              l_radius_parser_(0) {
     }
 
 // temperature_pskel
@@ -772,6 +780,10 @@ namespace XMLReader {
     }
 
     void simulation_pskel::
+    l_radius(double) {
+    }
+
+    void simulation_pskel::
     post_simulation() {
     }
 
@@ -865,6 +877,15 @@ namespace XMLReader {
             return true;
         }
 
+        if (n == "l_radius" && ns.empty()) {
+            this->xml_schema::complex_content::context_.top().parser_ = this->l_radius_parser_;
+
+            if (this->l_radius_parser_)
+                this->l_radius_parser_->pre();
+
+            return true;
+        }
+
         return false;
     }
 
@@ -933,6 +954,13 @@ namespace XMLReader {
         if (n == "g_gravitation" && ns.empty()) {
             if (this->g_gravitation_parser_)
                 this->g_gravitation(this->g_gravitation_parser_->post_double());
+
+            return true;
+        }
+
+        if (n == "l_radius" && ns.empty()) {
+            if (this->l_radius_parser_)
+                this->l_radius(this->l_radius_parser_->post_double());
 
             return true;
         }
