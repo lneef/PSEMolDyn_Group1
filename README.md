@@ -93,4 +93,5 @@ Videos of runs of the simulation for sheet 4 and profiling informationcan be fou
 https://syncandshare.lrz.de/getlink/fiDGaEwQXQkjmE4VS1c1A8/
 
 # Contest #
-* use icpc ad described in Run Instructions and run cmake with -DBMARK=ON -DFAST=ON -DTESTS=OFF
+* use icpc as described in Run Instructions and run cmake with -DBMARK=ON -DFAST_I=ON -DFAST_G=OFF -DTESTS=OFF (1170241 mups)
+* use gcc as described above and run cmake wih -DBMARK=ON -DFAST_G=ON -DFAST_I=OFF (323315)

@@ -75,6 +75,8 @@ namespace XMLReader {
          */
         from_checkpoint_pimpl fr_check;
 
+        membrane_pimpl memb_p;
+
     public:
         /**
          * @brief constructor of XmlReader

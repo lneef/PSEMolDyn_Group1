@@ -9,7 +9,7 @@
 
 #include <array>
 #include <string>
-
+#include <memory>
 class Particle {
 
 private:
@@ -28,14 +28,19 @@ private:
      */
     std::array<double, 3> f;
 
-    /**3
+    /**
      * Force which was effective on this particle
      */
     std::array<double, 3> old_f;
 
     /**
-     * Mass of this particle
+     * the x/y-indices of the particle
      */
+    std::array<int, 2> membrane_index;
+
+    /**
+    * Mass of this particle
+    */
     double m;
 
     /**
@@ -61,7 +66,7 @@ public:
      * @brief copy constructor of the class particle
      * @param other Particle to be copied
      */
-    Particle(const Particle &other);
+    Particle(const Particle& other);
 
     /**
      * @brief constructor of the class particle
@@ -73,26 +78,28 @@ public:
      * @param type type of the particle (default: 1)
      */
     Particle(
-            // for visualization, we need always 3 coordinates
-            // -> in case of 2d, we use only the first and the second
-            std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, double sigma_arg = 1, double epsilon_arg = 5,
-            int type = 0);
+        // for visualization, we need always 3 coordinates
+        // -> in case of 2d, we use only the first and the second
+        std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, double sigma_arg = 1, double epsilon_arg = 5,
+        int type = 0);
 
     virtual ~Particle();
 
-    [[nodiscard]] const std::array<double, 3> &getX() const;
+    [[nodiscard]] const std::array<double, 3>& getX() const;
 
-    [[nodiscard]] const std::array<double, 3> &getV() const;
+    [[nodiscard]] const std::array<double, 3>& getV() const;
 
-    [[nodiscard]] const std::array<double, 3> &getF() const;
+    [[nodiscard]] const std::array<double, 3>& getF() const;
 
-    [[nodiscard]] const std::array<double, 3> &getOldF() const;
+    [[nodiscard]] const std::array<double, 3>& getOldF() const;
+
+    [[nodiscard]] const std::array<int, 2>& getIndex() const;
 
     [[nodiscard]] double getM() const;
 
     [[nodiscard]] int getType() const;
 
-    bool operator==(Particle &other);
+    bool operator==(Particle& other);
 
     [[nodiscard]] std::string toString() const;
 
@@ -113,7 +120,7 @@ public:
      *
      * @param f Array representing three dimensional vector of forces acting on the particle
     */
-    void setF(const std::array<double, 3> &f);
+    void setF(const std::array<double, 3>& f);
 
     /**
      * @brief Setter for the position of the particle.
@@ -121,14 +128,14 @@ public:
      * @param x Array representing three dimensional position of the particle
     */
 
-    void setX(const std::array<double, 3> &x);
+    void setX(const std::array<double, 3>& x);
 
     /**
      * @brief Setter for the velocity of the particle
      *
      * @param v three dimensional vector of the velocities of the particle in all three dimensions
     */
-    void setV(const std::array<double, 3> &v);
+    void setV(const std::array<double, 3>& v);
 
     /**
      * @brief function which sets f to a new value, it does not update old_f
@@ -136,7 +143,7 @@ public:
      *
      * @warning old_f is set to old value of f
      */
-    void updateF(const std::array<double, 3> &f);
+    void updateF(const std::array<double, 3>& f);
 
     /**
      * @brief Setter for mass of the particle
@@ -148,7 +155,25 @@ public:
      * @brief Setter for old_f of the particle
      * @param oldf Array representing three dimensional vector of forces that were effective on the particle
      */
-    void setOldF(const std::array<double, 3> &oldf);
+    void setOldF(const std::array<double, 3>& oldf);
+
+    /**
+     * @brief Setter for membrane_index of the particle
+     * @param index Array representing two dimensional indices of the membrane-particle
+     */
+    void setIndex(const std::array<int, 2>& index);
+
+    /**
+     * @brief to detect if the another membrane-particle is the direct neighbor  
+     * @param another membrane-particle
+     */
+    bool ifDirectNeighbor(const Particle& p);
+
+    /**
+     * @brief to detect if the another membrane-particle is the diagonal neighbor  
+     * @param another membrane-particle
+     */
+    bool ifDiagonalNeighbor(const Particle& p);
 
     /**
      * @brief compares two values of type double for equality
@@ -159,4 +184,4 @@ public:
     static bool comp(double d1, double d2);
 };
 
-std::ostream &operator<<(std::ostream &stream, Particle &p);
+std::ostream& operator<<(std::ostream& stream, Particle& p);

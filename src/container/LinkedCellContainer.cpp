@@ -224,7 +224,7 @@ void LinkedCellContainer::setSize(double rcutoff_arg, std::array<double, 3> &dom
     setRCutOff(rcutoff_arg);
     setDomain(domain_arg);
     for (size_t i = 0; i < 2; ++i) {
-        mesh[i] = ceil(std::abs(domain_arg[i]) / rcutoff_arg) + 2;
+        mesh[i] = static_cast<size_t>(ceil(std::abs(domain_arg[i]) / rcutoff_arg)) + 2;
     }
     setUp();
 }
@@ -353,24 +353,29 @@ void LinkedCellContainer::mirrorPeriodic(size_t ind, Particle &p){
 
     //mirror to right side if periodic boundary is specified
     if (leftBoundary(ind) && containsPeriodic(Boundary::RIGHT)) {
+
+        //mirror boundary particle
         std::array<double, 3> to_add{domain[0], 0, 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
     //mirror to left side if periodic boundary is specified
     if (rightBoundary(ind) && containsPeriodic(Boundary::LEFT)) {
+        //mirror boundary particle
         std::array<double, 3> to_add{-domain[0], 0, 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
     //mirror to top side if periodic boundary is specified
     if (bottomBoundary(ind) && containsPeriodic(Boundary::TOP)) {
+        //mirror boundary particle
         std::array<double, 3> to_add{0, domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
 
     //mirror to bottom side if periodic boundary is specified
     if (topBoundary(ind) && containsPeriodic(Boundary::BOTTOM)) {
+        //mirror boundary particle
         std::array<double, 3> to_add{0, -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
@@ -379,24 +384,24 @@ void LinkedCellContainer::mirrorPeriodic(size_t ind, Particle &p){
     //mirror particles from corner cells to other corner cells
     if (topBoundary(ind) && rightBoundary(ind) &&
         (containsPeriodic(Boundary::BOTTOM) || containsPeriodic(Boundary::LEFT))) {
-
+         //mirror boundary particle
         std::array<double, 3> to_add{-domain[0], -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
 
     } else if (topBoundary(ind) && leftBoundary(ind) &&
                (containsPeriodic(Boundary::BOTTOM) || containsPeriodic(Boundary::RIGHT))) {
-
+         //mirror boundary particle
         std::array<double, 3> to_add{domain[0], -domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     } else if (bottomBoundary(ind) && leftBoundary(ind) &&
                (containsPeriodic(Boundary::TOP) || containsPeriodic(Boundary::RIGHT))) {
-
+         //mirror boundary particle
         std::array<double, 3> to_add{domain[0], domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
 
     } else if (bottomBoundary(ind) && rightBoundary(ind) &&
                (containsPeriodic(Boundary::TOP) || containsPeriodic(Boundary::LEFT))) {
-
+         //mirror boundary particle
         std::array<double, 3> to_add{-domain[0], domain[1], 0};
         simpleAdd(Particle(p.getX() + to_add, p.getV(), p.getM(), p.getSigma(), p.getEpsilon(), p.getType()));
     }
@@ -426,6 +431,7 @@ bool LinkedCellContainer::topBoundary(size_t ind) {
 }
 
 void LinkedCellContainer::updatePeriodic() {
+    //mirror particles for periodic boundary
     for (auto &cell: boundary) {
         for (auto &p: cell.get()) {
             size_t ind = index(p);
