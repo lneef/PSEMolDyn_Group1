@@ -16,7 +16,7 @@ void SLennardJones::calculateF(std::shared_ptr<Container>& particles) {
     auto rc_arg = rc;
     auto rl_arg = rl;
     particles->applyF([rc_arg, rl_arg](Particle& p1, Particle& p2) {
-        calculateF(p1, p2, rl_arg, rl_arg);
+        calculateF(p1, p2, rc_arg, rl_arg);
         });
 }
 
